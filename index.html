@@ -402,6 +402,14 @@
   z-index: 2;
 }
 
+    .floating-icon i {
+  filter: drop-shadow(0 0 6px rgba(255,255,255,0.35));
+}
+
+.floating-icon:hover {
+  background: rgba(255,255,255,0.25);
+}
+
    /* FLOATING ICONS VISIBILITY CONTROL */
 .floating-icons {
   opacity: 0;
@@ -445,8 +453,18 @@
   font-size: 18px;
   color: white;
 
+  /* GLASS BACKGROUND */
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  /* BORDER HALUS */
+  border: 1px solid rgba(255,255,255,0.35);
+
+  /* SHADOW ELEGAN */
   box-shadow:
-    0 12px 28px rgba(0,0,0,0.35);
+    0 10px 26px rgba(0,0,0,0.35),
+    inset 0 0 0 1px rgba(255,255,255,0.15);
 
   animation: none;
 }
@@ -1202,15 +1220,18 @@
 </div>
     
     <div class="floating-icons">
-<div class="floating-icon left icon-green">
-  <i class="fa-solid fa-shield-check"></i>
-</div>
+  <div class="floating-icon left icon-green">
+    <i class="fa-solid fa-shield-halved"></i>
+  </div>
 
-<div class="floating-icon right icon-gold">
-  <i class="fa-solid fa-sparkles"></i>
-</div>
-</div>
+  <div class="floating-icon center icon-blue">
+    <i class="fa-solid fa-bolt"></i>
+  </div>
 
+  <div class="floating-icon right icon-gold">
+    <i class="fa-solid fa-gem"></i>
+  </div>
+  </div>
     
    <div class="premium-heading">
         <div class="premium-title">Aplikasi Premium</div>
