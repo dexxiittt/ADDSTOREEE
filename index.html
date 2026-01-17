@@ -1,1 +1,1199 @@
-hello word
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hero Background</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,800;1,800&display=swap" rel="stylesheet">
+
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>
+  <style>
+    html, body {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* MODE TERANG (default) */
+  --glow-soft: rgba(255,255,255,0.45);
+  --glow-strong: rgba(255,255,255,0.35);
+  --shadow-base: rgba(0,0,0,0.25);
+  --shadow-contact: rgba(0,0,0,0.18);
+  
+    /* PREMIUM STATS GLOW */
+  --stat-glow-soft: rgba(255,255,255,0.20);
+  --stat-glow-strong: rgba(255,255,255,0.38);
+}
+
+/* MODE GELAP */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --glow-soft: rgba(255,255,255,0.25);
+    --glow-strong: rgba(255,255,255,0.18);
+    --shadow-base: rgba(0,0,0,0.6);
+    --shadow-contact: rgba(0,0,0,0.4);
+  }
+}
+
+.hero-bg {
+  position: relative;
+  min-height: 100vh;
+}
+
+/* BACKGROUND UNGU */
+.hero-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 600vh;
+
+  background: linear-gradient(
+    135deg,
+    #493d84 0%,
+    #ededf1 100%
+  );
+
+  z-index: 0;
+}
+
+/* GAMBAR TETAP 1 LAYAR */
+.hero-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  
+  width: 100%;
+  height: 100vh; /* JANGAN DIUBAH */
+  
+  background-image: url("https://raw.githubusercontent.com/dexxiittt/Image/main/IMG_20240309_012544_356.jpg");
+  background-size: cover;
+  background-position: top center;
+  background-repeat: no-repeat;
+
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0,0,0,1) 45%,
+    rgba(0,0,0,0.6) 70%,
+    rgba(0,0,0,0) 100%
+  );
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0,0,0,1) 45%,
+    rgba(0,0,0,0.6) 70%,
+    rgba(0,0,0,0) 100%
+  );
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+}
+
+/* LOGO BULAT TENGAH */
+.hero-logo {
+  position: absolute;
+  z-index: 2;
+
+  /* KONTROL POSISI */
+  --move-x: 0px;   /* kiri (-) kanan (+) */
+  --move-y: 40px;  /* atas (-) bawah (+) */
+
+  left: 50%;
+  top: 100vh;
+  transform: translate(-50%, -50%)
+             translate(var(--move-x), var(--move-y));
+
+  width: 210px;
+  height: 210px;
+  border-radius: 50%;
+
+  background-image: url("https://raw.githubusercontent.com/dexxiittt/Image/main/20240310_160736_0000.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* efek nyatu */
+  box-shadow:
+  /* glow */
+  0 0 22px var(--glow-soft),
+  0 0 44px rgba(255,255,255,0.12),
+
+  /* ambient shadow */
+  0 28px 60px var(--shadow-base),
+
+  /* contact shadow */
+  0 8px 14px var(--shadow-contact);
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+    
+  animation: logo-breathe 4s ease-in-out infinite;
+}
+
+.hero-logo:hover {
+  transform:
+    translate(-50%, -50%)
+    translate(var(--move-x), calc(var(--move-y) - 8px));
+  
+  box-shadow:
+    0 0 0 10px rgba(255,255,255,0.35),
+    0 30px 50px rgba(0,0,0,0.3);
+}
+
+.hero-logo:active {
+  transform:
+    translate(-50%, -50%)
+    translate(var(--move-x), calc(var(--move-y) + 2px))
+    scale(0.97);
+}
+
+@keyframes logo-breathe {
+  0%, 100% {
+    transform:
+      translate(-50%, -50%)
+      translate(var(--move-x), var(--move-y));
+  }
+  50% {
+    transform:
+      translate(-50%, -50%)
+      translate(var(--move-x), calc(var(--move-y) - 6px));
+  }
+}
+
+.hero-logo:hover,
+.hero-logo:active {
+  box-shadow:
+    /* glow */
+    0 0 30px var(--glow-soft),
+    0 0 70px var(--glow-strong),
+
+    /* shadow */
+    0 34px 70px var(--shadow-base),
+    0 10px 18px var(--shadow-contact);
+}
+
+/* NAMA TOKO */
+.hero-title {
+  position: absolute;
+  z-index: 2;
+
+  left: 50%;
+  top: calc(100vh + 190px);
+  transform: translateX(-50%);
+
+  font-size: 55px;
+  letter-spacing: 2px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
+  font-style: italic;
+
+  /* SHIMMER TEXT */
+  color: transparent;
+  background-image: linear-gradient(
+    120deg,
+    #ffffff 40%,
+    rgba(255,255,255,0.35) 50%,
+    #ffffff 60%
+  );
+  background-size: 200% 100%;
+  background-position: 0% 50%;
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  animation: none;
+
+  text-align: center;
+  text-shadow:
+  0 4px 14px rgba(0,0,0,0.35);
+  
+  will-change: background-position, text-shadow;
+
+}
+
+.hero-title:hover,
+.hero-title:active {
+  animation: title-shimmer 3.5s ease-in-out infinite;
+}
+
+.hero-title:hover,
+.hero-title:active {
+  text-shadow:
+    0 0 14px rgba(255,255,255,0.6),
+    0 0 32px rgba(255,255,255,0.35),
+    0 6px 16px rgba(0,0,0,0.35);
+}
+
+@keyframes title-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* TAGLINE TOKO */
+.hero-tagline {
+  position: absolute;
+  z-index: 2;
+
+  left: 50%;
+  top: calc(100vh + 245px);
+  
+  --move-x: 0px;
+  --move-y: 31px;
+
+  transform: translateX(-50%)
+             translate(var(--move-x), var(--move-y));
+
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+
+  color: rgba(255,255,255,0.9);
+  text-align: center;
+
+  text-shadow:
+    0 2px 6px rgba(0,0,0,0.35);
+
+  opacity: 0.85;
+
+  transition:
+  transform 0.35s cubic-bezier(.34,1.56,.64,1),
+  opacity 0.25s ease,
+  text-shadow 0.35s ease;
+}
+
+/* efek interaksi halus */
+.hero-tagline:hover {
+  opacity: 1;
+}
+
+/* efek timbul saat hover (mouse) */
+.hero-tagline:hover {
+  opacity: 1;
+  transform:
+    translateX(-50%)
+    translate(var(--move-x), calc(var(--move-y) - 4px))
+    scale(1.13);
+
+  text-shadow:
+    0 4px 12px rgba(255,255,255,0.35),
+    0 6px 16px rgba(0,0,0,0.4);
+}
+
+/* efek tekan saat disentuh (HP / tap) */
+.hero-tagline:active {
+  transform:
+    translateX(-50%)
+    translate(var(--move-x), calc(var(--move-y) + 1px))
+    scale(0.96);
+
+  opacity: 1;
+}
+
+/* ICON SOSIAL MEDIA */
+.hero-socials {
+  position: absolute;
+  z-index: 2;
+
+  left: 50%;
+  top: calc(100vh + 295px);
+
+  --move-x: 0px;
+  --move-y: 32px;
+
+  transform: translateX(-50%)
+             translate(var(--move-x), var(--move-y));
+
+  display: flex;
+  gap: 18px;
+}
+
+.hero-socials a {
+  color: rgba(255,255,255,0.85);
+  font-size: 22px;
+
+  text-decoration: none;
+
+  transition:
+    transform 0.3s cubic-bezier(.34,1.56,.64,1),
+    color 0.25s ease,
+    text-shadow 0.3s ease;
+}
+
+/* hover (PC) */
+.hero-socials a:hover {
+  color: #ffffff;
+  transform: translateY(-4px) scale(1.15);
+
+  text-shadow:
+    0 0 12px rgba(255,255,255,0.6),
+    0 6px 14px rgba(0,0,0,0.35);
+}
+
+/* tap (HP) */
+.hero-socials a:active {
+  transform: translateY(1px) scale(0.95);
+}
+
+/* RESPONSIVE MOBILE */
+@media (max-width: 768px) {
+
+ .iphone-frame {
+    width: 220px;
+    height: 440px;
+    border-radius: 36px;
+}
+  .iphone-notch {
+    width: 90px;
+    height: 20px;
+}
+  /* HERO IMAGE */
+  .hero-image {
+    background-position: center top;
+}
+  /* LOGO */
+  .hero-logo {
+    width: 160px;
+    height: 160px;
+
+    --move-y: 24px; /* lebih rapat di mobile */
+}
+  /* JUDUL TOKO */
+  .hero-title {
+    font-size: 34px;
+    letter-spacing: 1px;
+    top: calc(100vh + 150px);
+}
+  /* TAGLINE */
+  .hero-tagline {
+    font-size: 14px;
+    line-height: 1.4;
+    text-align: center;
+
+    top: calc(100vh + 190px);
+    --move-y: 18px;
+}
+  /* SOSIAL MEDIA */
+  .hero-socials {
+    top: calc(100vh + 235px);
+    --move-y: 20px;
+
+    gap: 16px;
+}
+  .hero-socials a {
+    font-size: 20px;
+}  
+    .hero-premium-phone {
+  top: calc(100vh + 300px);
+    
+}
+    .hero-description {
+    font-size: 13px;
+    line-height: 1.55;
+    max-width: 92%;
+
+    --move-y: 480px;
+  }
+}
+
+/* SECTION 2 – PREMIUM APPS ICON (GABUNGAN FINAL) */
+.hero-premium-phone {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  top: calc(100vh + 420px);
+
+  /* KONTROL POSISI */
+  --move-x: 0px;
+  --move-y: 700px;
+  --parallax-y: 0px;
+
+  transform:
+    translateX(-50%)
+    translate(
+      var(--move-x),
+      calc(var(--move-y) + 40px + var(--parallax-y))
+    );
+
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  /* STATE AWAL (SEBELUM MASUK VIEW) */
+  opacity: 0;
+  filter: blur(10px);
+  pointer-events: auto;
+
+  transition:
+    opacity 0.8s ease,
+    transform 0.9s cubic-bezier(.22,1,.36,1),
+    filter 0.8s ease;
+}
+
+/* saat terlihat */
+.hero-premium-phone.is-visible.is-idle {
+  opacity: 0.95;
+  filter: blur(0px);
+
+  animation: phone-float 6s ease-in-out infinite;
+}
+
+/* IDLE FLOATING – HALUS */
+@keyframes phone-float {
+  0%, 100% {
+    transform:
+      translateX(-50%)
+      translate(
+        var(--move-x),
+        calc(var(--move-y) + var(--parallax-y))
+      );
+  }
+  50% {
+    transform:
+      translateX(-50%)
+      translate(
+        var(--move-x),
+        calc(var(--move-y) + var(--parallax-y) - 12px)
+      );
+  }
+}
+
+/* SCROLL SNAP TARGET */
+#snap-phone {
+  position: relative;
+  height: 100vh;
+}
+
+/* APP GRID 3x3 */
+.app-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 18px;
+  padding: 20px;
+  
+  /* KONTROL GRID */
+  --move-x: 0px;
+  --move-y: 255px;
+  --scale: 0.82;
+
+  transform:
+    translate(var(--move-x), var(--move-y))
+    scale(var(--scale));
+}
+
+/* APP ICON – PREMIUM GLASS */
+.app-icon {
+  aspect-ratio: 1 / 1;
+  border-radius: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 22px;
+  color: white;
+
+  background: linear-gradient(
+    145deg,
+    rgba(255,255,255,0.35),
+    rgba(255,255,255,0.08)
+  );
+
+  backdrop-filter: blur(12px);
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.25),
+    0 10px 22px rgba(0,0,0,0.35);
+
+  /* STAGGER */
+  opacity: 0;
+  transform: translateY(10px) scale(0.96);
+  animation: app-icon-in 0.6s ease forwards;
+  animation-delay: calc(var(--i) * 80ms);
+
+  transition:
+    transform 0.35s cubic-bezier(.34,1.56,.64,1),
+    box-shadow 0.35s ease,
+    background 0.35s ease;
+} 
+    /* IDLE PULSE – AKTIF SETELAH PHONE SIAP */
+.hero-premium-phone.is-idle .app-icon {
+  animation-name: app-icon-in, app-icon-pulse;
+  animation-duration: 0.6s, 6s;
+  animation-delay: calc(var(--i) * 80ms), 0s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1, infinite;
+  animation-timing-function: ease, ease-in-out;
+}
+
+@keyframes app-icon-in {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* hover / tap */
+.app-icon:hover {
+  transform: translateY(-6px) scale(1.06);
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.45),
+    0 18px 32px rgba(0,0,0,0.45);
+}
+
+.app-icon:active {
+  transform: translateY(2px) scale(0.96);
+}
+
+/* IPHONE MOCKUP – PURE HTML */
+
+/* FRAME HP */
+.iphone-frame {
+  position: relative;
+  width: 360px;
+  height: 720px;
+  border-radius: 52px;
+
+  background: transparent;
+
+  /* OUTER FRAME */
+  border: 3px solid rgba(255,255,255,0.45);
+
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.25) inset,
+    0 40px 90px rgba(0,0,0,0.35);
+}
+
+.iphone-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.35);
+}
+/* NOTCH */
+.iphone-notch {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 140px;
+  height: 28px;
+  border-radius: 20px;
+
+  background: rgba(255,255,255,0.35);
+  backdrop-filter: blur(12px);
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.35),
+    0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* SCREEN */
+.iphone-screen {
+  position: absolute;
+  top: 48px;
+  left: 16px;
+  right: 16px;
+  bottom: 28px;
+
+  border-radius: 36px;
+  overflow: hidden;
+
+  background: transparent;
+  backdrop-filter: none;
+}
+
+@keyframes app-icon-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+}
+
+/* TAP RIPPLE – MOBILE FEEL */
+.app-icon {
+  position: relative;
+  overflow: hidden;
+}
+
+.app-icon::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: radial-gradient(
+    circle at var(--ripple-x, 50%) var(--ripple-y, 50%),
+    rgba(255,255,255,0.45),
+    rgba(255,255,255,0.25) 35%,
+    rgba(255,255,255,0.12) 55%,
+    transparent 60%
+  );
+
+  transform: scale(0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.app-icon.is-ripple::after {
+  animation: ripple-tap 0.6s ease-out;
+}
+
+@keyframes ripple-tap {
+  from {
+    transform: scale(0.3);
+    opacity: 0.9;
+  }
+  to {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+/* IPHONE SCREEN HEADER */
+.iphone-header {
+  position: absolute;
+  left: 50%;
+  top: 0;
+
+  /* KONTROL TEKS */
+  --move-x: 0px;
+  --move-y: 58px;
+  --scale: 1;
+
+  transform:
+    translateX(-50%)
+    translate(var(--move-x), var(--move-y))
+    scale(var(--scale));
+
+  text-align: center;
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* JUDUL */
+.iphone-title {
+  white-space: nowrap;
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+
+  color: rgba(255,255,255,0.95);
+
+  text-shadow:
+    0 4px 12px rgba(0,0,0,0.35);
+}
+
+/* SUB JUDUL */
+.iphone-subtitle {
+  margin-top: 6px;
+
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+
+  color: rgba(255,255,255,0.6);
+
+  text-shadow:
+    0 2px 6px rgba(0,0,0,0.25);
+}
+
+/* PREMIUM HEADING */
+.premium-heading {
+  position: absolute;
+  left: 50%;
+  top: calc(90vh + 320px);
+
+  --move-x: 0px;
+  --move-y: 370px;
+  --parallax-y: 0px;
+
+  transform:
+    translateX(-50%)
+    translate(
+      var(--move-x),
+      calc(var(--move-y) + 40px + var(--parallax-y))
+    );
+
+  text-align: center;
+  z-index: 3;
+  pointer-events: none;
+
+  /* FADE STATE AWAL */
+  opacity: 0;
+  filter: blur(10px);
+
+  transition:
+    opacity 1s ease,
+    transform 1.1s cubic-bezier(.22,1,.36,1),
+    filter 1s ease;
+
+  transition-delay: 0.1s;
+}
+
+/* PREMIUM HEADING FADE-IN */
+.hero-premium-phone.is-visible ~ .premium-heading {
+  opacity: 0.95;
+  filter: blur(0);
+
+  transform:
+    translateX(-50%)
+    translate(
+      var(--move-x),
+      calc(var(--move-y) + var(--parallax-y))
+    );
+}
+
+/*PREMIUM DESCRIPTION */
+.hero-description {
+  position: absolute;
+  left: 50%;
+
+  /* KONTROL UTAMA */
+  --move-x: 0px;
+  --move-y: 850px;
+
+  --parallax-y: 0px;
+
+  transform:
+    translateX(-50%)
+    translate(
+      var(--move-x),
+      calc(var(--move-y) + 40px + var(--parallax-y))
+    );
+
+  max-width: 720px;
+  padding: 0 18px;
+
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.65;
+
+  color: rgba(255,255,255,0.82);
+  text-align: center;
+
+  text-shadow:
+    0 3px 10px rgba(0,0,0,0.35);
+
+  z-index: 3;
+  pointer-events: none;
+
+  /* FADE STATE */
+  opacity: 0;
+  filter: blur(10px);
+
+  transition:
+    opacity 1s ease,
+    transform 1.1s cubic-bezier(.22,1,.36,1),
+    filter 1s ease;
+
+  transition-delay: 0.14s;
+}
+
+.hero-premium-phone.is-visible ~ .hero-description {
+  opacity: 0.95;
+  filter: blur(0);
+
+  transform:
+    translateX(-50%)
+    translate(
+      var(--move-x),
+      calc(var(--move-y) + var(--parallax-y))
+    );
+}
+
+/* JUDUL UTAMA TRUST */
+.premium-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+
+  color: #ffffff;
+
+  text-shadow:
+    0 6px 18px rgba(0,0,0,0.35);
+}
+
+/* SUB TEKS */
+.premium-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+
+  color: #ffffff;
+
+  text-shadow:
+    0 6px 18px rgba(0,0,0,0.35);
+}
+
+/* TRUST TEXT + ICON */
+.premium-trust {
+  margin-top: 14px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  font-family: 'Poppins', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+
+  color: rgba(255,255,255,0.78);
+
+  text-shadow:
+    0 4px 14px rgba(0,0,0,0.35);
+
+  /* kontrol posisi */
+  --move-x: 0px;
+  --move-y: 8px;
+
+  transform:
+    translate(var(--move-x), var(--move-y));
+}
+.hero-premium-phone.is-visible ~ .premium-heading .premium-trust {
+  animation: trust-pulse-solid 5.5s ease-in-out infinite;
+}
+
+/* ICON CHECK */
+.premium-trust i {
+  font-size: 16px;
+  color: #4ade80;
+
+  text-shadow:
+    0 0 8px rgba(74,222,128,0.45);
+}
+
+/* PREMIUM STATS BAR (ABOVE IPHONE) */
+.premium-stats {
+  position: absolute;
+  left: 50%;
+  top: calc(100vh + 360px);
+
+  --move-x: 0px;
+  --move-y: 600px;
+  --parallax-y: 0px;
+
+  transform:
+    translateX(-50%)
+    translate(
+      var(--move-x),
+      calc(var(--move-y) + 40px + var(--parallax-y))
+    );
+
+  opacity: 0;
+  filter: blur(10px);
+
+  transition:
+    opacity 1s ease,
+    transform 1.1s cubic-bezier(.22,1,.36,1),
+    filter 1s ease;
+
+  transition-delay: 0.12s;
+
+  display: flex;
+  gap: 48px;
+
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* STATS MUNCUL BERSAMA IPHONE */
+.hero-premium-phone.is-visible ~ .premium-stats {
+  opacity: 0.95;
+  filter: blur(0);
+
+  transform:
+    translateX(-50%)
+    translate(
+      var(--move-x),
+      calc(var(--move-y) + var(--parallax-y))
+    );
+}
+
+/* ITEM */
+.stat-item {
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ANGKA */
+.stat-value {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+
+  text-shadow:
+    0 0 12px var(--stat-glow-soft),
+    0 0 28px rgba(255,255,255,0.18),
+    0 6px 18px rgba(0,0,0,0.35);
+
+  animation: none;
+}
+
+.hero-premium-phone.is-visible ~ .premium-stats .stat-value  {
+  animation: stat-glow-breathe 4.8s ease-in-out infinite;
+}
+
+/* LABEL */
+.stat-label {
+  margin-top: 4px;
+
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+
+  color: rgba(255,255,255,0.7);
+}
+
+@keyframes stat-glow-breathe {
+  0%, 100% {
+    text-shadow:
+      0 0 10px rgba(255,255,255,0.18),
+      0 0 22px rgba(255,255,255,0.12),
+      0 6px 18px rgba(0,0,0,0.35);
+  }
+
+  50% {
+    text-shadow:
+      0 0 18px var(--stat-glow-strong),
+      0 0 42px rgba(255,255,255,0.28),
+      0 8px 22px rgba(0,0,0,0.4);
+  }
+}
+
+@keyframes trust-pulse-solid {
+  0% {
+    opacity: 0.55;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  }
+  25% {
+    opacity: 1;
+    text-shadow: 0 6px 18px rgba(0,0,0,0.45);
+  }
+  50% {
+    opacity: 0.55;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  }
+  75% {
+    opacity: 1;
+    text-shadow: 0 6px 18px rgba(0,0,0,0.45);
+  }
+  100% {
+    opacity: 0.55;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  }
+}
+
+  </style>
+</head>
+
+<body>
+
+  <div class="hero-bg">
+
+    <div class="hero-image"></div>
+
+    <div class="hero-logo"></div>
+
+    <div class="hero-title">ADDSTOREEE</div>
+
+    <div class="hero-tagline">
+      Jual Kebutuhan mu paling lengkap
+    </div>
+
+    <div class="hero-socials">
+      <a href="#"><i class="fa-brands fa-instagram"></i></a>
+      <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+      <a href="#"><i class="fa-brands fa-youtube"></i></a>
+      <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="mailto:emailkamu@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+      <a href="https://facebook.com/usernamekamu"><i class="fa-brands fa-facebook-f"></i></a>
+    </div>
+
+<!-- SECTION 2: HTML IPHONE MOCKUP -->
+<div id="snap-phone"></div>
+
+<div class="hero-premium-phone iphone">
+  <div class="iphone-frame">
+    <div class="iphone-notch"></div>
+
+    <div class="iphone-screen">
+    <div class="iphone-header">
+      <div class="iphone-title">Find Your Needed</div>
+      <div class="iphone-subtitle">Akses Cepat</div>
+      </div>
+
+      <div class="app-grid">
+        <div class="app-icon" style="--i:1"><i class="fa-solid fa-bag-shopping"></i></div>
+        <div class="app-icon" style="--i:2"><i class="fa-solid fa-box"></i></div>
+        <div class="app-icon" style="--i:3"><i class="fa-solid fa-truck"></i></div>
+
+        <div class="app-icon" style="--i:4"><i class="fa-solid fa-wallet"></i></div>
+        <div class="app-icon" style="--i:5"><i class="fa-solid fa-tags"></i></div>
+        <div class="app-icon" style="--i:6"><i class="fa-solid fa-headset"></i></div>
+
+        <div class="app-icon" style="--i:7"><i class="fa-solid fa-chart-line"></i></div>
+        <div class="app-icon" style="--i:8"><i class="fa-solid fa-star"></i></div>
+        <div class="app-icon" style="--i:9"><i class="fa-solid fa-gear"></i></div>
+      </div>
+      </div>
+     </div>
+    </div>
+  
+   <div class="premium-heading">
+        <div class="premium-title">Aplikasi Premium</div>
+        <div class="premium-title">Kebutuhan Medsos</div>
+        <div class="premium-title">Topup Game</div>
+        
+        <div class="premium-trust">
+          <i class="fa-solid fa-circle-check"></i>
+        <span>Aman & Terpercaya</span>
+      </div>
+     </div>
+     
+     <div class="hero-description">
+  <span>Dapatkan akses premium ke aplikasi favoritmu, kebutuhan media sosial, dan top up game dengan harga terjangkau, layanan aman, dan support 24/7</span>
+    </div>
+  
+   <div class="premium-stats">
+       <div class="stat-item">
+       <div class="stat-value" style="animation-delay:0s">1000+</div>
+       <div class="stat-label">Pelanggan</div>
+   </div>
+
+   <div class="stat-item">
+       <div class="stat-value" style="animation-delay:0.6s">50+</div>
+       <div class="stat-label">Kategori</div>
+   </div>
+
+   <div class="stat-item">
+       <div class="stat-value" style="animation-delay:1.2s">24/7</div>
+       <div class="stat-label">Support</div>
+  </div>
+</div>
+  
+  <div class="section-app">
+    <!-- konten selanjutnya -->
+  </div>
+
+<script>
+  const premiumPhone = document.querySelector('.hero-premium-phone');
+let phoneActive = false;
+
+const observer = new IntersectionObserver(
+  ([entry], observerInstance) => {
+    if (entry.isIntersecting) {
+
+      
+      premiumPhone.classList.add('is-visible');
+      phoneActive = true;
+
+      setTimeout(() => {
+      }, 350);
+
+      setTimeout(() => {
+        premiumPhone.classList.add('is-idle');
+}, 900);
+
+
+      observerInstance.unobserve(entry.target);
+    }
+  },
+  { threshold: 0.3 }
+);
+
+observer.observe(premiumPhone);
+</script>
+
+<script>
+window.addEventListener('scroll', () => {
+  if (!phoneActive) return;
+
+  const scrollY = window.scrollY;
+  const parallaxValue = Math.min(scrollY * 0.02, 14);
+
+  premiumPhone.style.setProperty('--parallax-y', `${parallaxValue}px`);
+  const stats = document.querySelector('.premium-stats');
+if (stats) {
+  stats.style.setProperty('--parallax-y', `${parallaxValue}px`);
+}
+
+</script>
+
+<script>
+document.querySelectorAll('.app-icon').forEach(icon => {
+  icon.addEventListener('pointerdown', e => {
+    const rect = icon.getBoundingClientRect();
+
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    icon.style.setProperty('--ripple-x', `${x}px`);
+    icon.style.setProperty('--ripple-y', `${y}px`);
+
+    icon.classList.remove('is-ripple'); // reset
+    void icon.offsetWidth;              // force reflow
+    icon.classList.add('is-ripple');
+  });
+});
+</script>
+
+<script>
+let snapLocked = false;
+let snapDone = false;
+
+window.addEventListener('scroll', () => {
+  if (snapDone || snapLocked) return;
+
+  const snapTarget = document.querySelector('.hero-premium-phone');
+  const rect = snapTarget.getBoundingClientRect();
+const distanceToCenter =
+  rect.top + rect.height / 2 - window.innerHeight / 2;
+
+  // trigger snap saat sudah dekat
+  if (Math.abs(distanceToCenter) < 80) {
+    snapLocked = true;
+
+    window.scrollTo({
+      top: window.scrollY + distanceToCenter,
+      behavior: 'smooth'
+    });
+
+    // lock sebentar biar terasa "niat"
+    setTimeout(() => {
+      snapLocked = false;
+      snapDone = true; // snap hanya sekali
+    }, 600);
+  }
+});
+</script>
+
+</body>
+</html>
