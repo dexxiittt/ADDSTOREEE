@@ -485,8 +485,14 @@
 
 .floating-icon.top {
   left: 50%;
-  top: 36px;
-  transform: translateX(-50%);
+  top: 0;
+
+  --offset-x: 0px;
+  --offset-y: 50px;
+
+  transform:
+    translateX(-50%)
+    translate(var(--offset-x), var(--offset-y));
 }
 
     .floating-icon.top {
