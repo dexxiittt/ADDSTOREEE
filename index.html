@@ -414,14 +414,21 @@
 .hero-premium-phone.is-visible ~ .floating-icons {
   opacity: 1;
   transform: translateX(-50%) scale(1);
-  transition-delay: 0.25s;
 }
 
-    /* AKTIFKAN FLOAT SETELAH PHONE MASUK */
+    /* FLOAT SETELAH PHONE MASUK */
 .hero-premium-phone.is-visible ~ .floating-icons .floating-icon {
   animation:
     float-bounce 4.5s ease-in-out infinite,
     float-jiggle 6s ease-in-out infinite;
+}
+
+    .hero-premium-phone.is-visible ~ .floating-icons .floating-icon.left {
+  animation-delay: 0.25s;
+}
+
+.hero-premium-phone.is-visible ~ .floating-icons .floating-icon.right {
+  animation-delay: 0.35s;
 }
 
     /* FLOATING ICON BASE */
