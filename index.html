@@ -416,6 +416,13 @@
   transform: translateX(-50%) scale(1);
 }
 
+    /* AKTIFKAN FLOAT SETELAH PHONE MASUK */
+.hero-premium-phone.is-visible ~ .floating-icons .floating-icon {
+  animation:
+    float-bounce 4.5s ease-in-out infinite,
+    float-jiggle 6s ease-in-out infinite;
+}
+
     /* FLOATING ICON BASE */
 .floating-icon {
   position: absolute;
@@ -433,9 +440,7 @@
   box-shadow:
     0 12px 28px rgba(0,0,0,0.35);
 
-  animation:
-    float-bounce 4.5s ease-in-out infinite,
-    float-jiggle 6s ease-in-out infinite;
+  animation: none;
 }
 
     /* POSISI */
