@@ -40,6 +40,13 @@
   position: relative;
   min-height: 100vh;
 }
+    /* STARFIELD LAYER */
+#starfield {
+  position: absolute;
+  inset: 0;
+  z-index: 0; /* di atas gradient, di bawah hero-image */
+  pointer-events: none;
+}
 
 /* BACKGROUND UNGU */
 .hero-bg::before {
@@ -1018,6 +1025,8 @@
 
   <div class="hero-bg">
 
+  <canvas id="starfield"></canvas>
+    
     <div class="hero-image"></div>
 
     <div class="hero-logo"></div>
@@ -1186,13 +1195,75 @@ const distanceToCenter =
       behavior: 'smooth'
     });
 
-    // lock sebentar biar terasa "niat"
+    // lock sebentar
     setTimeout(() => {
       snapLocked = false;
-      snapDone = true; // snap hanya sekali
+      snapDone = true;
     }, 600);
   }
 });
+</script>
+
+<script>
+const canvas = document.getElementById("starfield");
+const ctx = canvas.getContext("2d");
+
+/* KONTROL BINTANG */
+const STAR_CONFIG = {
+  amount: 90,
+  minSize: 0.6,
+  maxSize: 1.8,
+  glow: 0.7,
+  twinkleSpeed: 0.01
+};
+
+let stars = [];
+let w, h;
+
+function resize() {
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+  createStars();
+}
+
+window.addEventListener("resize", resize);
+
+function createStars() {
+  stars = [];
+  for (let i = 0; i < STAR_CONFIG.amount; i++) {
+    stars.push({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      size:
+        Math.random() *
+          (STAR_CONFIG.maxSize - STAR_CONFIG.minSize) +
+        STAR_CONFIG.minSize,
+      alpha: Math.random(),
+      dir: Math.random() > 0.5 ? 1 : -1
+    });
+  }
+}
+
+function draw() {
+  ctx.clearRect(0, 0, w, h);
+
+  for (const s of stars) {
+    s.alpha += STAR_CONFIG.twinkleSpeed * s.dir;
+    if (s.alpha <= 0.1 || s.alpha >= 1) s.dir *= -1;
+
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255,255,255,${s.alpha * STAR_CONFIG.glow})`;
+    ctx.shadowBlur = 12;
+    ctx.shadowColor = "rgba(255,255,255,0.6)";
+    ctx.fill();
+  }
+
+  requestAnimationFrame(draw);
+}
+
+resize();
+draw();
 </script>
 
 </body>
