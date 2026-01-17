@@ -395,8 +395,8 @@
   left: 50%;
   top: calc(100vh + 420px);
   transform: translateX(-50%);
-  width: 520px;
-  height: 420px;
+  width: 480px;
+  height: 380px;
 
   pointer-events: none;
   z-index: 2;
@@ -438,10 +438,7 @@
 .hero-premium-phone.is-visible ~ .floating-icons .floating-icon.right {
   animation-delay: 0.9s;
 }
-
-.hero-premium-phone.is-visible ~ .floating-icons .floating-icon.top {
-  animation-delay: 1.5s;
-}
+    
     /* FLOATING ICON BASE */
 .floating-icon {
   position: absolute;
@@ -481,31 +478,6 @@
 .floating-icon.right {
   right: 0;
   top: 120px;
-}
-
-.floating-icon.top {
-  left: 50%;
-  top: 0;
-
-  --offset-x: 0px;
-  --offset-y: 50px;
-
-  transform:
-    translateX(-50%)
-    translate(var(--offset-x), var(--offset-y));
-}
-
-    .floating-icon.top {
-  background: rgba(255,255,255,0.16);
-  border: 1px solid rgba(255,255,255,0.28);
-  box-shadow:
-    0 8px 20px rgba(0,0,0,0.28),
-    inset 0 0 0 1px rgba(255,255,255,0.12);
-}
-
-    .floating-icon.top i {
-  font-size: 16px; /* dari default 18px */
-  opacity: 0.85;
 }
 
     @keyframes float-bounce {
@@ -1249,10 +1221,6 @@
 
   <div class="floating-icon right icon-gold">
     <i class="fa-solid fa-gem"></i>
-  </div>
-
-  <div class="floating-icon top">
-    <i class="fa-solid fa-star"></i>
   </div>
   </div>
     
