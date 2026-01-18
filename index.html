@@ -382,8 +382,8 @@
   background-position: center;
 
   /* STATE AWAL (SEBELUM MASUK VIEW) */
-  opacity: 1;
-  filter: blur(0px);
+  opacity: 0;
+  filter: blur(12px);
   pointer-events: auto;
 
   transition:
@@ -426,7 +426,7 @@
 }
 
     /* FLOAT SETELAH PHONE MASUK */
-.hero-premium-phone.is-idle ~ .floating-icons .floating-icon {u
+.hero-premium-phone.is-idle ~ .floating-icons .floating-icon {
   animation:
     float-bounce 4.5s ease-in-out infinite,
     float-jiggle 6s ease-in-out infinite;
@@ -514,10 +514,9 @@
 }
 
 /* saat terlihat */
-.hero-premium-phone.is-visible.is-idle {
+.hero-premium-phone.is-idle {
   opacity: 0.95;
-  filter: blur(0px);
-
+  filter: blur(0);
   animation: phone-float 6s ease-in-out infinite;
 }
 
