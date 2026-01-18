@@ -359,32 +359,25 @@
 
 
 /* SECTION 2 – PREMIUM APPS ICON */
-.hero-premium-phone.is-idle {
+.hero-premium-phone {
   position: absolute;
   z-index: 1;
   left: 50%;
   top: calc(100vh + 420px);
 
-  /* KONTROL POSISI */
   --move-x: 0px;
   --move-y: 730px;
   --parallax-y: 0px;
 
-  transform:
-  translateX(-50%)
-  translate(
-    var(--move-x),
-    calc(var(--move-y) + 80px)
-  );
-
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-
-  /* STATE AWAL (SEBELUM MASUK VIEW) */
   opacity: 0;
   filter: blur(12px);
-  pointer-events: auto;
+
+  transform:
+    translateX(-50%)
+    translate(
+      var(--move-x),
+      calc(var(--move-y) + 80px)
+    );
 
   transition:
     opacity 0.9s ease,
@@ -392,6 +385,20 @@
     transform 1.1s cubic-bezier(.22,1,.36,1);
 }
 
+.hero-premium-phone.is-idle {
+  opacity: 0.95;
+  filter: blur(0);
+
+  transform:
+    translateX(-50%)
+    translate(
+      var(--move-x),
+      calc(var(--move-y) + var(--parallax-y))
+    );
+
+  animation: phone-float 6s ease-in-out infinite;
+}
+    
     /* FLOATING ICONS CONTAINER */
 .floating-icons {
   position: absolute;
