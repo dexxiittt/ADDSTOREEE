@@ -382,14 +382,12 @@
   background-position: center;
 
   /* STATE AWAL (SEBELUM MASUK VIEW) */
-  opacity: 0;
-  filter: blur(10px);
+  opacity: 1;
+  filter: blur(0px);
   pointer-events: auto;
 
   transition:
-    opacity 0.8s ease,
-    transform 0.9s cubic-bezier(.22,1,.36,1),
-    filter 0.8s ease;
+    transform 0.9s cubic-bezier(.22,1,.36,1);
 }
 
     /* FLOATING ICONS CONTAINER */
@@ -1480,23 +1478,11 @@ let phoneActive = false;
 const observer = new IntersectionObserver(
   ([entry], observerInstance) => {
     if (entry.isIntersecting) {
-
-      
-      premiumPhone.classList.add('is-visible');
-      phoneActive = true;
-
-      setTimeout(() => {
-      }, 350);
-
-      setTimeout(() => {
-        premiumPhone.classList.add('is-idle');
-}, 900);
-
-
+      premiumPhone.classList.add('is-idle');
       observerInstance.unobserve(entry.target);
     }
   },
-  { threshold: 0.3 }
+  { threshold: 0.2 }
 );
 
 observer.observe(premiumPhone);
@@ -1542,19 +1528,20 @@ let lastScrollY = window.scrollY;
 let lastTime = Date.now();
 
 window.addEventListener('scroll', () => {
+
+  // ✅ FIX 3 — GUARD PALING ATAS (WAJIB)
+  if (window.scrollY < window.innerHeight * 0.8) return;
+
   if (snapDone || snapLocked) return;
 
   const now = Date.now();
   const deltaY = Math.abs(window.scrollY - lastScrollY);
   const deltaTime = now - lastTime;
-
-  // DETEKSI SCROLL CEPAT
   const scrollSpeed = deltaY / deltaTime;
 
   lastScrollY = window.scrollY;
   lastTime = now;
 
-  // JANGAN SNAP kalau scroll cepat
   if (scrollSpeed > 1.2) return;
 
   const snapTarget = document.querySelector('.hero-premium-phone');
