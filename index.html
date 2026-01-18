@@ -359,7 +359,7 @@
 
 
 /* SECTION 2 – PREMIUM APPS ICON */
-.hero-premium-phone {
+.hero-premium-phone.is-idle {
   position: absolute;
   z-index: 1;
   left: 50%;
@@ -371,11 +371,11 @@
   --parallax-y: 0px;
 
   transform:
-    translateX(-50%)
-    translate(
-      var(--move-x),
-      calc(var(--move-y) + 40px + var(--parallax-y))
-    );
+  translateX(-50%)
+  translate(
+    var(--move-x),
+    calc(var(--move-y) + 80px)
+  );
 
   background-size: contain;
   background-repeat: no-repeat;
@@ -387,7 +387,9 @@
   pointer-events: auto;
 
   transition:
-    transform 0.9s cubic-bezier(.22,1,.36,1);
+    opacity 0.9s ease,
+    filter 0.9s ease,
+    transform 1.1s cubic-bezier(.22,1,.36,1);
 }
 
     /* FLOATING ICONS CONTAINER */
