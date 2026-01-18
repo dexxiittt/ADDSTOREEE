@@ -143,6 +143,8 @@
     box-shadow 0.35s ease;
     
   animation: logo-breathe 4s ease-in-out infinite;
+
+  will-change: transform;
 }
 
 .hero-logo:hover {
@@ -383,6 +385,8 @@
     opacity 0.9s ease,
     filter 0.9s ease,
     transform 1.1s cubic-bezier(.22,1,.36,1);
+
+  will-change: transform;
 }
 
 .hero-premium-phone.is-idle {
@@ -427,6 +431,8 @@
   transition:
     opacity 0.9s ease,
     transform 0.9s ease;
+
+  will-change: transform;
 }
 
 .hero-premium-phone.is-idle ~ .floating-icons {
@@ -478,6 +484,8 @@
     inset 0 0 0 1px rgba(255,255,255,0.15);
 
   animation: none;
+
+  will-change: transform;
 }
 
     /* POSISI */
@@ -601,6 +609,8 @@
     transform 0.35s cubic-bezier(.34,1.56,.64,1),
     box-shadow 0.35s ease,
     background 0.35s ease;
+
+  will-change: transform;
 } 
     /* IDLE PULSE – AKTIF SETELAH PHONE SIAP */
 .hero-premium-phone.is-idle .app-icon {
@@ -1294,6 +1304,12 @@
     height: 40px;
     font-size: 16px;
   }
+
+  .floating-icon,
+  .app-icon {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
 }
     
   </style>
@@ -1492,18 +1508,28 @@ observer.observe(premiumPhone);
 </script>
 
 <script>
+let latestScrollY = 0;
+let ticking = false;
+
 window.addEventListener('scroll', () => {
   if (!phoneActive) return;
+  latestScrollY = window.scrollY;
 
-  const scrollY = window.scrollY;
-  const parallaxValue = Math.min(scrollY * 0.015, 12);
+  if (!ticking) {
+    requestAnimationFrame(() => {
+      const parallaxValue = Math.min(latestScrollY * 0.015, 12);
+      premiumPhone.style.setProperty('--parallax-y', `${parallaxValue}px`);
 
-  premiumPhone.style.setProperty('--parallax-y', `${parallaxValue}px`);
-  const stats = document.querySelector('.premium-stats');
-if (stats) {
-  stats.style.setProperty('--parallax-y', `${parallaxValue}px`);
-}
+      const stats = document.querySelector('.premium-stats');
+      if (stats) {
+        stats.style.setProperty('--parallax-y', `${parallaxValue}px`);
+      }
 
+      ticking = false;
+    });
+    ticking = true;
+  }
+});
 </script>
 
 <script>
@@ -1584,6 +1610,12 @@ const STAR_CONFIG = {
 let stars = [];
 let w, h;
 
+let starRunning = true;
+
+document.addEventListener("visibilitychange", () => {
+  starRunning = !document.hidden;
+});
+ 
 function resize() {
   w = canvas.width = window.innerWidth;
   h = canvas.height = window.innerHeight;
@@ -1609,6 +1641,9 @@ function createStars() {
 }
 
 function draw() {
+
+  if (!starRunning) return;
+  
   ctx.clearRect(0, 0, w, h);
 
   for (const s of stars) {
