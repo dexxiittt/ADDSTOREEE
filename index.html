@@ -41,7 +41,7 @@
   min-height: 100vh;
 }
     .hero-end {
-  height: 100vh;
+  height: 85vh;
 }
     /* STARFIELD LAYER */
 #starfield {
@@ -1507,7 +1507,7 @@ window.addEventListener('scroll', () => {
   if (!phoneActive) return;
 
   const scrollY = window.scrollY;
-  const parallaxValue = Math.min(scrollY * 0.02, 14);
+  const parallaxValue = Math.min(scrollY * 0.015, 12);
 
   premiumPhone.style.setProperty('--parallax-y', `${parallaxValue}px`);
   const stats = document.querySelector('.premium-stats');
@@ -1538,16 +1538,30 @@ document.querySelectorAll('.app-icon').forEach(icon => {
 <script>
 let snapLocked = false;
 let snapDone = false;
+let lastScrollY = window.scrollY;
+let lastTime = Date.now();
 
 window.addEventListener('scroll', () => {
   if (snapDone || snapLocked) return;
 
+  const now = Date.now();
+  const deltaY = Math.abs(window.scrollY - lastScrollY);
+  const deltaTime = now - lastTime;
+
+  // DETEKSI SCROLL CEPAT
+  const scrollSpeed = deltaY / deltaTime;
+
+  lastScrollY = window.scrollY;
+  lastTime = now;
+
+  // JANGAN SNAP kalau scroll cepat
+  if (scrollSpeed > 1.2) return;
+
   const snapTarget = document.querySelector('.hero-premium-phone');
   const rect = snapTarget.getBoundingClientRect();
-const distanceToCenter =
-  rect.top + rect.height / 2 - window.innerHeight / 2;
+  const distanceToCenter =
+    rect.top + rect.height / 2 - window.innerHeight / 2;
 
-  // trigger snap saat sudah dekat
   if (Math.abs(distanceToCenter) < 80) {
     snapLocked = true;
 
@@ -1556,11 +1570,10 @@ const distanceToCenter =
       behavior: 'smooth'
     });
 
-    // lock sebentar
     setTimeout(() => {
       snapLocked = false;
       snapDone = true;
-    }, 600);
+    }, 500);
   }
 });
 </script>
