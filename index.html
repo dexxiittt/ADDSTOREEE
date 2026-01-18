@@ -471,35 +471,18 @@
 
     /* POSISI */
 .floating-icon.left {
-  left: 0;
+  left: -30px;
   bottom: 80px;
-
-  --offset-x: -20px;
-  --offset-y: 0px;
-
-  transform: translate(var(--offset-x), var(--offset-y));
 }
 
 .floating-icon.right {
   right: 0;
   top: 120px;
-
-  --offset-x: 0px;
-  --offset-y: 0px;
-
-  transform: translate(var(--offset-x), var(--offset-y));
 }
 
 .floating-icon.center {
-  left: 50%;
-  top: 0px;
-
-  --offset-x: 0px;
-  --offset-y: 180px;
-
-  transform:
-    translateX(-50%)
-    translate(var(--offset-x), var(--offset-y));
+  left: 0;
+  top: 180px;
 }
 
     @keyframes float-bounce {
