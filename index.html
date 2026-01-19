@@ -231,10 +231,6 @@
 .hero-title:hover,
 .hero-title:active {
   animation: title-shimmer 3.5s ease-in-out infinite;
-}
-
-.hero-title:hover,
-.hero-title:active {
   text-shadow:
     0 0 14px rgba(255,255,255,0.6),
     0 0 32px rgba(255,255,255,0.35),
@@ -408,12 +404,19 @@
   position: absolute;
   left: 50%;
   top: calc(100vh + 420px);
-  transform: translateX(-50%);
+  transform: translateX(-50%) scale(0.96);
   width: 480px;
   height: 380px;
 
+  opacity: 0;
   pointer-events: none;
   z-index: 2;
+
+  transition:
+    opacity 0.9s ease,
+    transform 0.9s ease;
+
+  will-change: transform;
 }
 
     .floating-icon i {
@@ -422,17 +425,6 @@
 
 .floating-icon:hover {
   background: rgba(255,255,255,0.25);
-}
-
-   /* FLOATING ICONS VISIBILITY CONTROL */
-.floating-icons {
-  opacity: 0;
-  transform: translateX(-50%) scale(0.96);
-  transition:
-    opacity 0.9s ease,
-    transform 0.9s ease;
-
-  will-change: transform;
 }
 
 .hero-premium-phone.is-idle ~ .floating-icons {
@@ -924,20 +916,16 @@
   text-shadow:
     0 6px 18px rgba(0,0,0,0.35);
 }
-
-/* SUB TEKS */
-.premium-title {
+    
+ /* SUBTITLE */
+    .premium-subtitle {
   font-family: 'Poppins', sans-serif;
-  font-size: 36px;
-  font-weight: 800;
-  letter-spacing: 0.6px;
-
-  color: #ffffff;
-
-  text-shadow:
-    0 6px 18px rgba(0,0,0,0.35);
+  font-size: 28px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.85);
+  margin-top: 6px;
 }
-
+    
 /* TRUST TEXT + ICON */
 .premium-trust {
   margin-top: 14px;
@@ -1386,8 +1374,8 @@
     
    <div class="premium-heading">
         <div class="premium-title">Aplikasi Premium</div>
-        <div class="premium-title">Kebutuhan Medsos</div>
-        <div class="premium-title">Topup Game</div>
+        <div class="premium-subtitle">Kebutuhan Medsos</div>
+        <div class="premium-subtitle">Topup Game</div>
         
         <div class="premium-trust">
           <i class="fa-solid fa-circle-check"></i>
