@@ -1600,7 +1600,11 @@ const STAR_CONFIG = {
   minSize: 0.6,
   maxSize: 2.1,
   glow: 1.1,
-  twinkleSpeed: 0.018
+  twinkleSpeed: 0.018,
+
+  /* DEPTH DRIFT */
+  minSpeed: 0.05,   // jauh (lambat)
+  maxSpeed: 0.35    // dekat (cepat)
 };
 
 let stars = [];
@@ -1625,15 +1629,23 @@ function createStars() {
   stars = [];
   for (let i = 0; i < STAR_CONFIG.amount; i++) {
     stars.push({
-      x: Math.random() * w,
-      y: Math.random() * h,
-      size:
-        Math.random() *
-          (STAR_CONFIG.maxSize - STAR_CONFIG.minSize) +
-        STAR_CONFIG.minSize,
-      alpha: Math.random(),
-      dir: Math.random() > 0.5 ? 1 : -1
-    });
+  x: Math.random() * w,
+  y: Math.random() * h,
+
+  size:
+    Math.random() *
+      (STAR_CONFIG.maxSize - STAR_CONFIG.minSize) +
+    STAR_CONFIG.minSize,
+
+  alpha: Math.random(),
+  dir: Math.random() > 0.5 ? 1 : -1,
+
+  /* DEPTH */
+  speed:
+    Math.random() *
+      (STAR_CONFIG.maxSpeed - STAR_CONFIG.minSpeed) +
+    STAR_CONFIG.minSpeed
+});
   }
 }
 
@@ -1647,6 +1659,15 @@ function draw() {
     s.alpha += STAR_CONFIG.twinkleSpeed * s.dir;
     if (s.alpha <= 0.1 || s.alpha >= 1) s.dir *= -1;
 
+// DRIFT KE BAWAH (DEPTH)
+    s.y += s.speed;
+
+// recycle ke atas jika keluar layar
+  if (s.y > h + 10) {
+    s.y = -10;
+    s.x = Math.random() * w;
+}
+    
     ctx.beginPath();
     ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
     ctx.fillStyle = `rgba(255,255,255,${s.alpha * STAR_CONFIG.glow})`;
