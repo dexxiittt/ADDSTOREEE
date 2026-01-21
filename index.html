@@ -1597,16 +1597,14 @@ const ctx = canvas.getContext("2d");
 /* KONTROL BINTANG */
 const STAR_CONFIG = {
   amount: 320,
+  minSize: 0.6,
+  maxSize: 2.1,
+  glow: 1.1,
+  twinkleSpeed: 0.018,
 
-  layers: [
-    { ratio: 0.25, minSize: 0.4, maxSize: 1.1, minSpeed: 0.03, maxSpeed: 0.08 },
-    { ratio: 0.45, minSize: 0.8, maxSize: 1.8, minSpeed: 0.08, maxSpeed: 0.18 },
-    { ratio: 0.30, minSize: 1.4, maxSize: 2.4, minSpeed: 0.18, maxSpeed: 0.42 }
-  ],
-
-  glow: 1.05,
-  twinkleSpeed: 0.015,
-  parallaxStrength: 0.04
+  /* DEPTH DRIFT */
+  minSpeed: 0.05,   // jauh (lambat)
+  maxSpeed: 0.35    // dekat (cepat)
 };
 
 let stars = [];
@@ -1629,91 +1627,54 @@ window.addEventListener("resize", resize);
 
 function createStars() {
   stars = [];
+  for (let i = 0; i < STAR_CONFIG.amount; i++) {
+    stars.push({
+  x: Math.random() * w,
+  y: Math.random() * h,
 
-  STAR_CONFIG.layers.forEach(layer => {
-    const count = Math.floor(STAR_CONFIG.amount * layer.ratio);
+  size:
+    Math.random() *
+      (STAR_CONFIG.maxSize - STAR_CONFIG.minSize) +
+    STAR_CONFIG.minSize,
 
-    for (let i = 0; i < count; i++) {
-      stars.push({
-        x: Math.random() * w,
-        y: Math.random() * h,
+  alpha: Math.random(),
+  dir: Math.random() > 0.5 ? 1 : -1,
 
-        size:
-          Math.random() *
-            (layer.maxSize - layer.minSize) +
-          layer.minSize,
-
-        alpha: Math.random() * 0.8 + 0.2,
-        dir: Math.random() > 0.5 ? 1 : -1,
-
-        speed:
-          Math.random() *
-            (layer.maxSpeed - layer.minSpeed) +
-          layer.minSpeed,
-
-        depth: layer
-      });
-    }
-  });
+  /* DEPTH */
+  speed:
+    Math.random() *
+      (STAR_CONFIG.maxSpeed - STAR_CONFIG.minSpeed) +
+    STAR_CONFIG.minSpeed
+});
+  }
 }
 
-  let starScrollOffset = 0;
-
-  window.addEventListener("scroll", () => {
-  starScrollOffset = window.scrollY * STAR_CONFIG.parallaxStrength;
-}, { passive: true });
-  
 function draw() {
 
   if (!starRunning) return;
   
   ctx.clearRect(0, 0, w, h);
 
-ctx.save();
-ctx.globalCompositeOperation = "lighter";
-
-const grad = ctx.createRadialGradient(
-  w * 0.5, h * 0.3, 0,
-  w * 0.5, h * 0.3, h * 0.9
-);
-
-grad.addColorStop(0, "rgba(120,90,255,0.05)");
-grad.addColorStop(0.6, "rgba(80,60,180,0.035)");
-grad.addColorStop(1, "rgba(0,0,0,0)");
-
-ctx.fillStyle = grad;
-ctx.fillRect(0, 0, w, h);
-ctx.restore();
-  
   for (const s of stars) {
+    s.alpha += STAR_CONFIG.twinkleSpeed * s.dir;
+    if (s.alpha <= 0.1 || s.alpha >= 1) s.dir *= -1;
 
-  // twinkle halus
-  s.alpha += STAR_CONFIG.twinkleSpeed * s.dir;
-  if (s.alpha <= 0.15 || s.alpha >= 1) s.dir *= -1;
+// DRIFT KE BAWAH (DEPTH)
+    s.y += s.speed;
 
-  // cinematic drift
-  s.y += s.speed;
-
-  // recycle natural
-  if (s.y > h + 20) {
-    s.y = -20;
+// recycle ke atas jika keluar layar
+  if (s.y > h + 10) {
+    s.y = -10;
     s.x = Math.random() * w;
-  }
-
-  ctx.beginPath();
-  ctx.arc(
-    s.x,
-    s.y + starScrollOffset * s.speed * 0.15,
-    s.size,
-    0,
-    Math.PI * 2
-  );
-
-  ctx.fillStyle = `rgba(255,255,255,${s.alpha * STAR_CONFIG.glow})`;
-  ctx.shadowBlur = s.size * 6;
-  ctx.shadowColor = "rgba(255,255,255,0.55)";
-  ctx.fill();
 }
+    
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255,255,255,${s.alpha * STAR_CONFIG.glow})`;
+    ctx.shadowBlur = 12;
+    ctx.shadowColor = "rgba(255,255,255,0.6)";
+    ctx.fill();
+  }
 
   requestAnimationFrame(draw);
 }
