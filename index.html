@@ -1822,7 +1822,7 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
     .filter(i => i.group === "main")
     .map(i => `
       <a href="${i.checkout_url}" class="package-row" target="_blank">
-        <span>${i.package} • ${i.duration}</span>
+        <span>${i.package} ${i.duration}</span>
         <b>Rp${Number(i.price).toLocaleString("id-ID")}</b>
       </a>
     `).join("")}
@@ -1837,11 +1837,11 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
     ${prod.items
       .filter(i => i.group === "detail")
       .map(i => `
-        <a href="${i.checkout_url}" class="package-row" target="_blank" rel="noopener noreferrer">
-          <span>${i.package}</span>
-          <b>Rp${Number(i.price).toLocaleString("id-ID")}</b>
-        </a>
-      `).join("")}
+  <a href="${i.checkout_url}" class="package-row" target="_blank" rel="noopener noreferrer">
+    <span>${i.package} ${i.duration}</span>
+    <b>Rp${Number(i.price).toLocaleString("id-ID")}</b>
+  </a>
+`).join("")}
   </div>
 
   <small class="note">
