@@ -4,7 +4,8 @@
   <title>Hero Background</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,800;1,800&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600&display=swap" rel="stylesheet">
+  
 <link
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -1517,6 +1518,22 @@
   color: #059669;
 }
 
+    /* ROLE SLIDE-IN */
+.package-detail.open .role-section {
+  animation: role-slide-in .45s ease both;
+}
+
+@keyframes role-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
     /* FONT CARD – SOFT & ELEGANT */
 .glass-card {
   font-family: 'Plus Jakarta Sans', sans-serif;
@@ -1547,6 +1564,14 @@
   font-size: 12px;
   font-weight: 400;
   opacity: 0.65;
+}
+
+    /* HARGA – ELEGAN */
+.package-row b {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14.5px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
 }
     
 /* MOBILE */
@@ -1912,7 +1937,7 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
         <a href="${i.checkout_url}" class="package-row role" target="_blank">
           <span>
             ${i.package} ${i.duration}
-            <em class="role-badge ${i.package.toLowerCase()}">${i.package}</em>
+            <em class="role-badge ${i.package.toLowerCase()}"> ${i.package === "Admin" ? "🛡️ Admin" : "👑 Head"} </em>
           </span>
           <b>Rp${Number(i.price).toLocaleString("id-ID")}</b>
         </a>
