@@ -1401,8 +1401,8 @@
   display: block;
   margin-top: 16px;
 
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 800;
   letter-spacing: 0.3px;
 
   opacity: 1;
@@ -1411,6 +1411,20 @@
 
 .glass-card small::before {
   content: "✔ ";
+}
+
+    /* GARANSI – PULSE HALUS */
+.glass-card small {
+  animation: guarantee-pulse 3.8s ease-in-out infinite;
+}
+
+@keyframes guarantee-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.75;
+  }
 }
 
 .section-title {
