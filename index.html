@@ -3,6 +3,7 @@
 <head>
   <title>Hero Background</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,800;1,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
 <link
   rel="stylesheet"
@@ -1480,6 +1481,73 @@
   0%,100% { opacity: .5; }
   50% { opacity: 1; }
 }
+
+    /* ROLE SECTION */
+.role-section {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(0,0,0,0.15);
+}
+
+.role-title {
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  opacity: 0.7;
+}
+
+/* ROLE BADGE */
+.role-badge {
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+/* VARIAN */
+.role-badge.admin {
+  background: rgba(59,130,246,0.12);
+  color: #2563eb;
+}
+
+.role-badge.head {
+  background: rgba(16,185,129,0.12);
+  color: #059669;
+}
+
+    /* FONT CARD – SOFT & ELEGANT */
+.glass-card {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* JUDUL */
+.glass-card h3 {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+/* PACKAGE */
+.package-row span {
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+/* HARGA */
+.package-row b {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* GARANSI */
+.glass-card small {
+  font-size: 12px;
+  font-weight: 400;
+  opacity: 0.65;
+}
     
 /* MOBILE */
 @media (max-width:768px) {
@@ -1834,15 +1902,25 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
 
   <!-- DETAIL TERSEMBUNYI -->
   <div class="package-detail hidden">
+
+  <div class="role-section">
+    <div class="role-title">Role Access</div>
+
     ${prod.items
       .filter(i => i.group === "detail")
       .map(i => `
-  <a href="${i.checkout_url}" class="package-row" target="_blank" rel="noopener noreferrer">
-    <span>${i.package} ${i.duration}</span>
-    <b>Rp${Number(i.price).toLocaleString("id-ID")}</b>
-  </a>
-`).join("")}
+        <a href="${i.checkout_url}" class="package-row role" target="_blank">
+          <span>
+            ${i.package} • ${i.duration}
+            <em class="role-badge ${i.package.toLowerCase()}">${i.package}</em>
+          </span>
+          <b>Rp${Number(i.price).toLocaleString("id-ID")}</b>
+        </a>
+      `).join("")}
+
   </div>
+
+</div>
 
   <small class="note">
   ${prod.items[0]?.guarantee || "Garansi tersedia"}
