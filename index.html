@@ -1224,19 +1224,30 @@
 .category-tabs {
   display: flex;
   justify-content: center;
-  gap: 16px;
-  margin: 80px 0 40px;
+  gap: 20px;
+  margin: 80px 0 24px;
 }
 
 .category-tabs .tab {
-  padding: 14px 26px;
+  padding: 18px 34px;
   border-radius: 999px;
   border: none;
+
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
   font-weight: 700;
-  font-family: Poppins;
+
   background: rgba(0,0,0,0.06);
   cursor: pointer;
-  transition: all .35s ease;
+
+  transition:
+    transform .3s ease,
+    background .3s ease,
+    box-shadow .3s ease;
+}
+
+.category-tabs .tab:hover {
+  transform: translateY(-2px);
 }
 
 .category-tabs .tab.active {
@@ -1320,6 +1331,20 @@
   display: block;
   margin-top: 14px;
   opacity: .75;
+}
+
+.section-title {
+  margin: 28px 0 48px;   /* jarak dari tab & card */
+  text-align: center;
+
+  font-family: 'Poppins', sans-serif;
+  font-size: 52px;       /* BESAR */
+  font-weight: 600;      /* lebih soft, bukan tegas */
+  letter-spacing: 0.2px;
+
+  color: #111827;
+
+  white-space: nowrap;   /* PAKSA 1 BARIS */
 }
     
 /* MOBILE */
@@ -1412,8 +1437,17 @@
    .floating-icon.center {
     left: 50%;
     transform: translateX(120px);
+ }
+
+  .section-title {
+    font-size: 34px;
+    margin: 22px 0 36px;
   }
-}
+
+  .category-tabs .tab {
+    padding: 14px 22px;
+    font-size: 14px;
+  }
 }
     
   </style>
@@ -1597,9 +1631,9 @@
 
 <section class="category-content">
   <div id="apk" class="category-panel active">
-    <h2>Aplikasi Premium Populer</h2>
-    <div id="product-cards"></div>
-  </div>
+  <h2 class="section-title">Aplikasi Premium Populer</h2>
+  <div id="product-cards"></div>
+</div>
   <div id="medsos" class="category-panel"></div>
   <div id="topup" class="category-panel"></div>
 </section>
