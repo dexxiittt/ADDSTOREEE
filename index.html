@@ -1220,6 +1220,50 @@
   color: #6b7280;
 }
 
+.category-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin: 80px 0 40px;
+}
+
+.category-tabs .tab {
+  padding: 14px 26px;
+  border-radius: 999px;
+  border: none;
+  font-weight: 700;
+  font-family: Poppins;
+  background: rgba(0,0,0,0.06);
+  cursor: pointer;
+  transition: all .35s ease;
+}
+
+.category-tabs .tab.active {
+  background: #111827;
+  color: white;
+}
+
+.category-content {
+  width: 100%;
+  padding: 0 20px 120px;
+}
+
+.category-panel {
+  display: none;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.category-panel.active {
+  display: block;
+}
+
+#product-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+  gap: 24px;
+}
+
 /* MOBILE */
 @media (max-width:768px) {
   .trust-title {
@@ -1480,7 +1524,25 @@
 
   </div>
 </section>
-    
+
+<section class="category-tabs">
+  <button class="tab active" data-target="apk">APK Premium</button>
+  <button class="tab" data-target="medsos">Kebutuhan Medsos</button>
+  <button class="tab" data-target="topup">Topup Game</button>
+</section>
+
+<section class="category-content">
+
+  <div id="apk" class="category-panel active">
+    <h2>Aplikasi Premium Populer</h2>
+    <div id="product-cards"></div>
+  </div>
+
+  <div id="medsos" class="category-panel"></div>
+  <div id="topup" class="category-panel"></div>
+
+</section>
+  
   <div class="section-app">
     <!-- konten selanjutnya -->
   </div>
