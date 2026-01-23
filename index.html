@@ -1385,19 +1385,12 @@
   border-radius: 10px;
 }
     
-.glass-card h3 {
-  margin-bottom: 14px;
-  font-size: 20px;
-  font-weight: 800;
-  transition: transform .3s ease;
-
-}
-    
 .glass-card:hover h3 {
   transform: scale(1.06);
 }
     
-.glass-card small {
+/* GARANSI */
+.glass-card .note {
   display: block;
   margin-top: 16px;
 
@@ -1405,21 +1398,27 @@
   font-weight: 700;
   letter-spacing: 0.3px;
 
-  opacity: 1;
-  color: #16a34a; /* hijau trust */
+  animation: guarantee-pulse 3.8s ease-in-out infinite;
 }
 
-.glass-card small::before {
+.glass-card .note::before {
   content: "✔ ";
 }
 
-.glass-card small:empty {
-  display: none;
+/* ADA GARANSI */
+.note.has-guarantee {
+  color: #16a34a;
 }
 
-    /* GARANSI – PULSE HALUS */
-.glass-card small {
-  animation: guarantee-pulse 3.8s ease-in-out infinite;
+/* TANPA GARANSI */
+.note.no-guarantee {
+  color: #dc2626;
+  animation: none;
+}
+
+/* AUTO HIDE */
+.glass-card .note:empty {
+  display: none;
 }
 
 @keyframes guarantee-pulse {
@@ -1593,13 +1592,6 @@
 .package-row b {
   font-size: 14px;
   font-weight: 600;
-}
-
-/* GARANSI */
-.glass-card small {
-  font-size: 12px;
-  font-weight: 400;
-  opacity: 0.65;
 }
 
     /* HARGA – ELEGAN */
