@@ -1292,10 +1292,16 @@
   -webkit-backdrop-filter: blur(18px);
 
   box-shadow: 0 20px 50px rgba(0,0,0,.2);
-
+  animation: card-float 6s ease-in-out infinite;
+  
   transition:
     transform .4s cubic-bezier(.22,1,.36,1),
     box-shadow .4s ease;
+}
+
+@keyframes card-float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
 
 .glass-card:hover {
@@ -1370,8 +1376,14 @@
   margin-bottom: 14px;
   font-size: 20px;
   font-weight: 800;
+
+  transition: transform .3s ease; /* ⬅️ TAMBAH */
 }
 
+.glass-card:hover h3 {
+  transform: scale(1.06);
+}
+    
 .glass-card small {
   display: block;
   margin-top: 14px;
@@ -1429,6 +1441,7 @@
 
     /* IMAGE PRODUK */
 .product-image {
+  position: relative;
   width: 100%;
   border-radius: 16px;
   overflow: hidden;
@@ -1457,6 +1470,15 @@
   color: white;
 
   box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+}
+
+    .note {
+  animation: pulse-note 3.5s ease-in-out infinite;
+}
+
+@keyframes pulse-note {
+  0%,100% { opacity: .5; }
+  50% { opacity: 1; }
 }
     
 /* MOBILE */
@@ -1806,21 +1828,25 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
     `).join("")}
 
   <!-- TOMBOL -->
-  <button class="toggle-detail">Selengkapnya…</button>
+  ${prod.items.some(i => i.group === "detail")
+  ? `<button class="toggle-detail">Selengkapnya…</button>`
+  : ``}
 
   <!-- DETAIL TERSEMBUNYI -->
   <div class="package-detail hidden">
     ${prod.items
       .filter(i => i.group === "detail")
       .map(i => `
-        <a href="${i.checkout_url}" class="package-row" target="_blank">
+        <a href="${i.checkout_url}" class="package-row" target="_blank" rel="noopener noreferrer">
           <span>${i.package}</span>
           <b>Rp${Number(i.price).toLocaleString("id-ID")}</b>
         </a>
       `).join("")}
   </div>
 
-  <small>${prod.items[0]?.guarantee || "Garansi tersedia"}</small>
+  <small class="note">
+  ${prod.items[0]?.guarantee || "Garansi tersedia"}
+</small>
 </div>
       `;
     });
@@ -2030,5 +2056,32 @@ resize();
 draw();
 </script>
 
+  <script>
+document.addEventListener("click", e => {
+  const btn = e.target.closest(".toggle-detail");
+  if (!btn) return;
+
+  const card = btn.closest(".glass-card");
+  const detail = card.querySelector(".package-detail");
+
+  // tutup card lain
+  document.querySelectorAll(".package-detail.open").forEach(el => {
+    if (el !== detail) {
+      el.classList.remove("open");
+      el.classList.add("hidden");
+      el.previousElementSibling.textContent = "Selengkapnya…";
+    }
+  });
+
+  // toggle card ini
+  const isOpen = detail.classList.contains("open");
+
+  detail.classList.toggle("open", !isOpen);
+  detail.classList.toggle("hidden", isOpen);
+
+  btn.textContent = isOpen ? "Selengkapnya…" : "Tutup";
+});
+</script>
+  
 </body>
 </html>
