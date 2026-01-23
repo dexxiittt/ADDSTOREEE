@@ -1608,6 +1608,43 @@ document.querySelectorAll('.tab').forEach(btn=>{
   }
 });
 </script>
+
+<!-- PRODUCT CARD – FETCH GOOGLE SHEET -->
+<script>
+fetch("https://opensheet.elk.sh/SPREADSHEET_ID/PRODUCT_PACKAGES")
+  .then(res => res.json())
+  .then(data => {
+
+    const grouped = {};
+    data.forEach(p => {
+      if (!grouped[p.product_id]) {
+        grouped[p.product_id] = { title: p.title, items: [] };
+      }
+      grouped[p.product_id].items.push(p);
+    });
+
+    const wrap = document.getElementById("product-cards");
+    if (!wrap) return;
+
+    Object.values(grouped).forEach(prod => {
+      wrap.innerHTML += `
+        <div class="glass-card">
+          <h3>${prod.title}</h3>
+
+          ${prod.items.map(i => `
+            <a href="${i.checkout_url}" class="package-row">
+              <span>${i.package} • ${i.duration}</span>
+              <b>Rp${i.price}</b>
+            </a>
+          `).join("")}
+
+          <small>${prod.items[0].guarantee}</small>
+        </div>
+      `;
+    });
+
+  });
+</script>
   
   <div class="section-app">
     <!-- konten selanjutnya -->
