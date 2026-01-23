@@ -1911,7 +1911,7 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
       .map(i => `
         <a href="${i.checkout_url}" class="package-row role" target="_blank">
           <span>
-            ${i.package} • ${i.duration}
+            ${i.package} ${i.duration}
             <em class="role-badge ${i.package.toLowerCase()}">${i.package}</em>
           </span>
           <b>Rp${Number(i.price).toLocaleString("id-ID")}</b>
