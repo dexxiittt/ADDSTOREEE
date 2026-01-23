@@ -1937,7 +1937,7 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
         <a href="${i.checkout_url}" class="package-row role" target="_blank">
           <span>
             ${i.package} ${i.duration}
-            <em class="role-badge ${i.package.toLowerCase()}"> ${i.package === "Admin" ? "🛡️ Admin" : "👑 Head"} </em>
+            ${i.badge_label ? `<em class="role-badge">${i.badge_icon} ${i.badge_label}</em>` : ``}
           </span>
           <b>Rp${Number(i.price).toLocaleString("id-ID")}</b>
         </a>
