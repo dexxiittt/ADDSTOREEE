@@ -1374,13 +1374,23 @@
   opacity: 0.85;
 }
 
+/* FEATURED / PAKET MAHAL */
+.package-row.featured {
+  background: linear-gradient(
+    90deg,
+    rgba(245,158,11,0.12),
+    rgba(245,158,11,0.04)
+  );
+  padding-inline: 6px;
+  border-radius: 10px;
+}
+    
 .glass-card h3 {
   margin-bottom: 14px;
   font-size: 20px;
   font-weight: 800;
 
-  transition: transform .3s ease; /* ⬅️ TAMBAH */
-}
+  transition: transform .3s ease;
 
 .glass-card:hover h3 {
   transform: scale(1.06);
@@ -1501,22 +1511,19 @@
 /* ROLE BADGE */
 .role-badge {
   margin-left: 8px;
-  padding: 2px 8px;
+  padding: 3px 10px;
   border-radius: 999px;
-  font-size: 10px;
-  font-weight: 600;
-}
 
-/* VARIAN */
-.role-badge.admin {
-  background: rgba(59,130,246,0.12);
-  color: #2563eb;
-}
+  font-size: 11px;
+  font-weight: 500;
 
-.role-badge.head {
-  background: rgba(16,185,129,0.12);
-  color: #059669;
-}
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+
+  background: rgba(17,24,39,0.08);
+  color: #374151;
+}o
 
     /* ROLE SLIDE-IN */
 .package-detail.open .role-section {
@@ -1934,14 +1941,18 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
     ${prod.items
       .filter(i => i.group === "detail")
       .map(i => `
-        <a href="${i.checkout_url}" class="package-row role" target="_blank">
-          <span>
-            ${i.package} ${i.duration}
-            ${i.badge_label ? `<em class="role-badge">${i.badge_icon} ${i.badge_label}</em>` : ``}
-          </span>
-          <b>Rp${Number(i.price).toLocaleString("id-ID")}</b>
-        </a>
-      `).join("")}
+  <a 
+    href="${i.checkout_url}"
+    class="package-row role ${i.is_featured === 'yes' ? 'featured' : ''}"
+    target="_blank"
+  >
+    <span>
+      ${i.package} ${i.duration}
+      ${i.badge_label ? `<em class="role-badge">${i.badge_icon} ${i.badge_label}</em>` : ``}
+    </span>
+    <b>Rp${Number(i.price).toLocaleString("id-ID")}</b>
+  </a>
+`).join("")}
 
   </div>
 
