@@ -1675,11 +1675,11 @@ fetch("https://opensheet.elk.sh/SPREADSHEET_ID/PRODUCT_PACKAGES")
           ${prod.items.map(i => `
             <a href="${i.checkout_url}" class="package-row">
               <span>${i.package} • ${i.duration}</span>
-              <b>Rp${i.price}</b>
+              <b>Rp${Number(i.price).toLocaleString("id-ID")}</b>
             </a>
           `).join("")}
 
-          <small>${prod.items[0].guarantee}</small>
+          <small>${prod.items[0]?.guarantee || "Garansi tersedia"}</small>
         </div>
       `;
     });
