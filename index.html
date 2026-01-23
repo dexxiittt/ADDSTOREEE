@@ -1338,13 +1338,48 @@
   text-align: center;
 
   font-family: 'Poppins', sans-serif;
-  font-size: 52px;       /* BESAR */
-  font-weight: 600;      /* lebih soft, bukan tegas */
+  font-size: 52px;
+  font-weight: 600;
   letter-spacing: 0.2px;
 
   color: #111827;
 
-  white-space: nowrap;   /* PAKSA 1 BARIS */
+  white-space: nowrap; 
+
+}
+
+/* BADGE */
+.badge {
+  margin-left: 8px;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 999px;
+  background: #ef4444;
+  color: white;
+}
+
+/* STATE: PROMO */
+.package-row.promo {
+  background: linear-gradient(
+    90deg,
+    rgba(239,68,68,0.12),
+    rgba(239,68,68,0.05)
+  );
+}
+
+/* STATE: SOLD OUT */
+.package-row.soldout {
+  opacity: 0.45;
+  pointer-events: none;
+  text-decoration: line-through;
+}
+
+/* STATE: EXPIRED */
+.package-row.expired {
+  opacity: 0.35;
+  filter: grayscale(1);
+  pointer-events: none;
 }
     
 /* MOBILE */
@@ -1652,7 +1687,7 @@ document.querySelectorAll('.tab').forEach(btn=>{
 
 <!-- PRODUCT CARD – FETCH GOOGLE SHEET -->
 <script>
-fetch("https://opensheet.elk.sh/SPREADSHEET_ID/PRODUCT_PACKAGES")
+fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRODUCT_PACKAGES")
   .then(res => res.json())
   .then(data => {
 
@@ -1672,12 +1707,25 @@ fetch("https://opensheet.elk.sh/SPREADSHEET_ID/PRODUCT_PACKAGES")
         <div class="glass-card">
           <h3>${prod.title}</h3>
 
-          ${prod.items.map(i => `
-            <a href="${i.checkout_url}" class="package-row">
-              <span>${i.package} • ${i.duration}</span>
-              <b>Rp${Number(i.price).toLocaleString("id-ID")}</b>
-            </a>
-          `).join("")}
+          ${prod.items.map(i => {
+
+  const disabled = i.state === "soldout" || i.state === "expired";
+
+  return `
+    <a 
+      href="${disabled ? '#' : i.checkout_url}"
+      class="package-row ${i.state}"
+      ${disabled ? 'onclick="return false"' : 'target="_blank"'}
+    >
+      <span>
+        ${i.package} • ${i.duration}
+        ${i.badge ? `<em class="badge">${i.badge}</em>` : ''}
+      </span>
+
+      <b>Rp${Number(i.price).toLocaleString("id-ID")}</b>
+    </a>
+  `;
+}).join("")}
 
           <small>${prod.items[0]?.guarantee || "Garansi tersedia"}</small>
         </div>
