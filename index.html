@@ -1264,6 +1264,63 @@
   gap: 24px;
 }
 
+/* ===============================
+   SECTION PRODUCT – GLASS CARD
+   =============================== */
+
+.glass-card {
+  padding: 24px;
+  border-radius: 22px;
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  box-shadow: 0 20px 50px rgba(0,0,0,.2);
+
+  transition:
+    transform .4s cubic-bezier(.22,1,.36,1),
+    box-shadow .4s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 28px 65px rgba(0,0,0,.28);
+}
+
+.package-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 12px 0;
+  text-decoration: none;
+  color: inherit;
+
+  border-bottom: 1px solid rgba(255,255,255,.2);
+
+  transition: opacity .25s ease;
+}
+
+.package-row:last-child {
+  border-bottom: none;
+}
+
+.package-row:hover {
+  opacity: 0.85;
+}
+
+.glass-card h3 {
+  margin-bottom: 14px;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.glass-card small {
+  display: block;
+  margin-top: 14px;
+  opacity: .75;
+}
+    
 /* MOBILE */
 @media (max-width:768px) {
   .trust-title {
@@ -1532,16 +1589,25 @@
 </section>
 
 <section class="category-content">
-
   <div id="apk" class="category-panel active">
     <h2>Aplikasi Premium Populer</h2>
     <div id="product-cards"></div>
   </div>
-
   <div id="medsos" class="category-panel"></div>
   <div id="topup" class="category-panel"></div>
-
 </section>
+
+<script>
+document.querySelectorAll('.tab').forEach(btn=>{
+  btn.onclick = ()=>{
+    document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.category-panel').forEach(p=>p.classList.remove('active'));
+
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.target)?.classList.add('active');
+  }
+});
+</script>
   
   <div class="section-app">
     <!-- konten selanjutnya -->
