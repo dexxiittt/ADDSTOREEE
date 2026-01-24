@@ -1892,6 +1892,27 @@
   font-weight: 700;
   color: #dc2626;
 }
+    /* WRAPPER HARGA + PROMO */
+.price-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* MODE DEFAULT (PROMO KIRI, HARGA KANAN) */
+.price-line.promo-left {
+  justify-content: flex-end;
+}
+
+/* MODE ALTERNATIF (PROMO KANAN) */
+.price-line.promo-right {
+  flex-direction: row-reverse;
+}
+
+/* JIKA TIDAK ADA PROMO */
+.price-line:has(.price-wrap):not(:has(.discount-badge)) {
+  justify-content: flex-end;
+}
 
 /* DISCOUNT BADGE */
 .discount-badge {
@@ -2372,12 +2393,13 @@ let priceHTML = `<b>${formatPrice(price)}</b>`;
 
 if (discount) {
   const finalPrice = Math.round(price - (price * discount / 100));
+
   priceHTML = `
+    <span class="discount-badge">${discount}%</span>
     <div class="price-wrap">
       <span class="price-old">${formatPrice(price)}</span>
       <span class="price-new">${formatPrice(finalPrice)}</span>
     </div>
-    <span class="discount-badge">${discount}%</span>
   `;
 }
   
@@ -2440,7 +2462,9 @@ return `
          ${i.badge_icon} ${i.badge_label}
          ${garBadge(i)} </em>`: garBadge(i)}
 </span>
-    ${priceHTML}
+    <div class="price-line promo-left">
+  ${priceHTML}
+</div>
 </a>
 `;
 })
