@@ -1534,12 +1534,10 @@
 }
 
 @keyframes sparkle-float {
-  from {
-    background-position: 0 0;
-  }
-  to {
-    background-position: 0 120px;
-  }
+  from { background-position: 0 0; }
+  to   { background-position: 0 120px; }
+}
+
 @keyframes sparkle-drift {
   from { background-position: 0 0; }
   to   { background-position: 0 120px; }
@@ -1548,7 +1546,6 @@
 @keyframes sparkle-drift-strong {
   from { background-position: 0 0; }
   to   { background-position: 0 180px; }
-}
 }
     
  .glass-card h3 {
@@ -2177,7 +2174,7 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
     if (glow) cls += ` glow-${glow}`;
 
     if (i.group === "main" && glow === "strong") {
-  cls += " glow-glow";
+  cls = cls.replace("glow-strong", "glow-glow");
 }
   }
 
