@@ -1872,7 +1872,38 @@
   font-size: 13.5px;
   font-weight: 600;
 }
+    /* PRICE PROMO */
+.price-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.1;
+}
 
+.price-old {
+  font-size: 12px;
+  text-decoration: line-through;
+  opacity: 0.55;
+}
+
+.price-new {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #dc2626;
+}
+
+/* DISCOUNT BADGE */
+.discount-badge {
+  margin-left: 8px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 999px;
+
+  background: #ef4444;
+  color: white;
+}
     /* HARGA – ELEGAN */
 .package-row b {
   font-family: 'DM Sans', sans-serif;
@@ -2286,6 +2317,16 @@ const FEATURED_STAR_CONFIG = {
   return "";
 }
   
+  function parseDiscount(promo) {
+  if (!promo) return null;
+  const m = promo.match(/(\d{1,2})%/);
+  return m ? Number(m[1]) : null;
+}
+
+function formatPrice(n) {
+  return "Rp" + Number(n).toLocaleString("id-ID");
+}
+  
 fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRODUCT_PACKAGES")
   .then(res => res.json())
   .then(data => {
@@ -2384,7 +2425,26 @@ return `
          ${i.badge_icon} ${i.badge_label}
          ${garBadge(i)} i</em>`: garBadge(i)}
 </span>
-    <b>Rp${Number(i.price).toLocaleString("id-ID")}</b>
+    (() => {
+  const price = Number(i.price) || 0;
+  const discount = parseDiscount(i.promo_text);
+
+  if (!discount) {
+    return `<b>${formatPrice(price)}</b>`;
+  }
+
+  const finalPrice = Math.round(
+    price - (price * discount / 100)
+  );
+
+  return `
+    <div class="price-wrap">
+      <span class="price-old">${formatPrice(price)}</span>
+      <span class="price-new">${formatPrice(finalPrice)}</span>
+    </div>
+    <span class="discount-badge">${discount}%</span>
+  `;
+})()
   </a>
 `;
 })
