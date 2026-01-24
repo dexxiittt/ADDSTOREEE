@@ -2363,9 +2363,24 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
     .filter(i => i.group === "main")
 .map(i => {
   let cls = "package-row";
-
   let starStyle = "";
 
+const price = Number(i.price) || 0;
+const discount = parseDiscount(i.promo_text);
+
+let priceHTML = `<b>${formatPrice(price)}</b>`;
+
+if (discount) {
+  const finalPrice = Math.round(price - (price * discount / 100));
+  priceHTML = `
+    <div class="price-wrap">
+      <span class="price-old">${formatPrice(price)}</span>
+      <span class="price-new">${formatPrice(finalPrice)}</span>
+    </div>
+    <span class="discount-badge">${discount}%</span>
+  `;
+}
+  
   if (i.is_featured) {
     const [color, glow] = i.is_featured.split(":");
     cls += ` featured featured-${color}`;
@@ -2423,29 +2438,10 @@ return `
   ${i.badge_label
     ? `<em class="role-badge">
          ${i.badge_icon} ${i.badge_label}
-         ${garBadge(i)} i</em>`: garBadge(i)}
+         ${garBadge(i)} </em>`: garBadge(i)}
 </span>
-    (() => {
-  const price = Number(i.price) || 0;
-  const discount = parseDiscount(i.promo_text);
-
-  if (!discount) {
-    return `<b>${formatPrice(price)}</b>`;
-  }
-
-  const finalPrice = Math.round(
-    price - (price * discount / 100)
-  );
-
-  return `
-    <div class="price-wrap">
-      <span class="price-old">${formatPrice(price)}</span>
-      <span class="price-new">${formatPrice(finalPrice)}</span>
-    </div>
-    <span class="discount-badge">${discount}%</span>
-  `;
-})()
-  </a>
+    ${priceHTML}
+</a>
 `;
 })
 .join("")}
