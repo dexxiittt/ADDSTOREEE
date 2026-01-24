@@ -1586,8 +1586,20 @@
   0%,100% { opacity: 0.25; }
   50%     { opacity: 0.65; }
 }
+
+    /* 🚫 NO GARANSI — MATIKAN SEMUA EFEK */
+.package-row.nogar {
+  animation: none !important;
+}
+
+.package-row.nogar::before,
+.package-row.nogar::after {
+  opacity: 0 !important;
+  animation: none !important;
+  display: none;
+}
     
- .glass-card h3 {
+.glass-card h3 {
   transition:
     transform .35s cubic-bezier(.22,1,.36,1),
     color .25s ease;
@@ -1751,6 +1763,19 @@
 @keyframes pulse-note {
   0%,100% { opacity: .5; }
   50% { opacity: 1; }
+}
+    /* BADGE NO GARANSI */
+.badge-nogar {
+  margin-left: 6px;
+  padding: 2px 8px;
+  font-size: 10.5px;
+  font-weight: 700;
+  border-radius: 999px;
+
+  background: rgba(220,38,38,0.12);
+  color: #dc2626;
+
+  border: 1px solid rgba(220,38,38,0.35);
 }
 
     /* ROLE SECTION */
@@ -2299,15 +2324,24 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
 }
   }
 
-  return `
-    <a href="${i.checkout_url}"
-       class="${cls}"
-       style="${starStyle}"
-       target="_blank">
-      <span>${i.package} ${i.duration}</span>
-      <b>Rp${Number(i.price).toLocaleString("id-ID")}</b>
-    </a>
-  `;
+  // NoGar → MATIKAN STAR & GLOW
+if (i.no_gar) {
+  cls += " nogar";
+  starStyle = "";
+}
+
+return `
+  <a href="${i.checkout_url}"
+     class="${cls}"
+     style="${starStyle}"
+     target="_blank">
+    <span>
+      ${i.package} ${i.duration}
+      ${i.no_gar ? `<em class="badge-nogar">NoGar</em>` : ``}
+    </span>
+    <b>Rp${Number(i.price).toLocaleString("id-ID")}</b>
+  </a>
+`;
 })
 .join("")}
 
@@ -2326,16 +2360,24 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
       .filter(i => i.group === "detail")
       .map(i => `
   <a 
-    href="${i.checkout_url}"
-    class="package-row role ${ i.is_featured ? (() => {
+  href="${i.checkout_url}"
+  class="package-row role
+    ${ i.is_featured && !i.no_gar ? (() => {
         const [color, glow] = i.is_featured.split(":");
-        return `featured featured-${color} ${glow ? `glow-${glow}` : ""}`;})(): ""}"
-    target="_blank"
-  >
+        return `featured featured-${color} ${glow ? `glow-${glow}` : ""}`;
+      })() : "" }
+    ${i.no_gar ? "nogar" : ""}
+  "
+  target="_blank"
+>
     <span>
-      ${i.package} ${i.duration}
-      ${i.badge_label ? `<em class="role-badge">${i.badge_icon} ${i.badge_label}</em>` : ``}
-    </span>
+  ${i.package} ${i.duration}
+
+  ${i.badge_label
+    ? `<em class="role-badge">
+         ${i.badge_icon} ${i.badge_label}
+         ${i.no_gar ? `<span class="badge-nogar">NoGar</span>` : ``} 
+         </em>` : i.no_gar ? `<em class="badge-nogar">NoGar</em>`: ``}</span>
     <b>Rp${Number(i.price).toLocaleString("id-ID")}</b>
   </a>
 `).join("")}
@@ -2429,7 +2471,7 @@ let lastTime = Date.now();
 
 window.addEventListener('scroll', () => {
 
-  // ✅ FIX 3 — GUARD PALING ATAS (WAJIB)
+  // GUARD PALING ATAS )
   if (window.scrollY < window.innerHeight) return;
 
   if (snapDone || snapLocked) return;
