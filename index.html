@@ -1522,6 +1522,19 @@
     radial-gradient(circle at 86% 42%, rgba(139,92,246,1) 2.2px, transparent 3.6px);
   animation: star-twinkle 3.2s ease-in-out infinite;
 }
+    /* STAR LAYER BASE */
+.package-row.featured::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background-image: var(--star-bg);
+  background-repeat: no-repeat;
+  opacity: var(--star-opacity, 0.5);
+
+  animation: star-twinkle var(--twinkle-speed, 6s) ease-in-out infinite;
+}
 
 @keyframes glow-breathe {
   0%,100% { transform: scale(1); opacity: 0.75; }
@@ -1534,8 +1547,8 @@
 }
 
 @keyframes star-twinkle {
-  0%, 100% { opacity: 0.35; }
-  50%      { opacity: 0.9; }
+  0%,100% { opacity: 0.25; }
+  50%     { opacity: 0.65; }
 }
     
  .glass-card h3 {
@@ -2125,6 +2138,70 @@ document.querySelectorAll('.tab').forEach(btn=>{
 
 <!-- PRODUCT CARD – FETCH GOOGLE SHEET -->
 <script>
+const FEATURED_STAR_CONFIG = {
+  "orange:soft": {
+    amount: 6,
+    minSize: 0.4,
+    maxSize: 0.8,
+    opacity: 0.25,
+    twinkle: 9
+  },
+  "orange:glow": {
+    amount: 10,
+    minSize: 0.5,
+    maxSize: 1.1,
+    opacity: 0.45,
+    twinkle: 6
+  },
+  "orange:strong": {
+    amount: 14,
+    minSize: 0.6,
+    maxSize: 1.6,
+    opacity: 0.65,
+    twinkle: 4.5
+  },
+
+  "purple:soft": {
+    amount: 7,
+    minSize: 0.45,
+    maxSize: 0.9,
+    opacity: 0.3,
+    twinkle: 8
+  },
+  "purple:glow": {
+    amount: 12,
+    minSize: 0.6,
+    maxSize: 1.3,
+    opacity: 0.55,
+    twinkle: 5.5
+  },
+  "purple:strong": {
+    amount: 16,
+    minSize: 0.7,
+    maxSize: 1.8,
+    opacity: 0.75,
+    twinkle: 4
+  }
+};
+
+  function generateStars(color, cfg) {
+  let layers = [];
+
+  for (let i = 0; i < cfg.amount; i++) {
+    const size =
+      Math.random() * (cfg.maxSize - cfg.minSize) + cfg.minSize;
+
+    const x = Math.random() * 100;
+    const y = Math.random() * 100;
+
+    layers.push(
+      `radial-gradient(circle at ${x}% ${y}%, rgba(${color},1) ${size}px, transparent ${size * 2.4}px)`
+    );
+  }
+
+  return layers.join(",");
+}
+  
 fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRODUCT_PACKAGES")
   .then(res => res.json())
   .then(data => {
@@ -2172,7 +2249,29 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
   }
 
   return `
-    <a href="${i.checkout_url}" class="${cls}" target="_blank">
+    const key = i.is_featured;
+const cfg = FEATURED_STAR_CONFIG[key];
+
+let starStyle = "";
+if (cfg) {
+  const rgb =
+    key.startsWith("orange") ? "245,158,11" : "139,92,246";
+
+  starStyle = `
+    --star-bg: ${generateStars(rgb, cfg)};
+    --star-opacity: ${cfg.opacity};
+    --twinkle-speed: ${cfg.twinkle}s;
+  `;
+}
+
+const phase = -(Math.random() * 6).toFixed(2);
+starStyle += `animation-delay:${phase}s;`;
+
+return `
+<a href="${i.checkout_url}"
+   class="${cls}"
+   style="${starStyle}"
+   target="_blank">
       <span>${i.package} ${i.duration}</span>
       <b>Rp${Number(i.price).toLocaleString("id-ID")}</b>
     </a>
