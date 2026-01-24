@@ -1586,8 +1586,7 @@
   0%,100% { opacity: 0.25; }
   50%     { opacity: 0.65; }
 }
-
-    /* 🚫 NO GARANSI — MATIKAN SEMUA EFEK */
+    /* NO GAR — SEMUA EFEK MATI */
 .package-row.nogar {
   animation: none !important;
 }
@@ -1776,6 +1775,20 @@
   color: #dc2626;
 
   border: 1px solid rgba(220,38,38,0.35);
+}
+
+    /* BADGE BERGARANSI */
+.badge-gar {
+  margin-left: 6px;
+  padding: 2px 8px;
+  font-size: 10.5px;
+  font-weight: 700;
+  border-radius: 999px;
+
+  background: rgba(22,163,74,0.12);
+  color: #16a34a;
+
+  border: 1px solid rgba(22,163,74,0.35);
 }
 
     /* ROLE SECTION */
@@ -2244,6 +2257,16 @@ const FEATURED_STAR_CONFIG = {
 
   return layers.join(",");
 }
+
+  function garBadge(i) {
+  if (i.no_gar === "yes") {
+    return `<em class="badge-nogar">NoGar</em>`;
+  }
+  if (i.no_gar === "no") {
+    return `<em class="badge-gar">Bergaransi</em>`;
+  }
+  return "";
+}
   
 fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRODUCT_PACKAGES")
   .then(res => res.json())
@@ -2325,7 +2348,7 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
   }
 
   // NoGar → MATIKAN STAR & GLOW
-if (i.no_gar) {
+if (i.no_gar === "yes") {
   cls += " nogar";
   starStyle = "";
 }
@@ -2335,10 +2358,14 @@ return `
      class="${cls}"
      style="${starStyle}"
      target="_blank">
+     
     <span>
-      ${i.package} ${i.duration}
-      ${i.no_gar ? `<em class="badge-nogar">NoGar</em>` : ``}
-    </span>
+  ${i.package} ${i.duration}
+  ${i.badge_label
+    ? `<em class="role-badge">
+         ${i.badge_icon} ${i.badge_label}
+         ${garBadge(i)} i</em>`: garBadge(i)}
+</span>
     <b>Rp${Number(i.price).toLocaleString("id-ID")}</b>
   </a>
 `;
@@ -2362,11 +2389,10 @@ return `
   <a 
   href="${i.checkout_url}"
   class="package-row role
-    ${ i.is_featured && !i.no_gar ? (() => {
-        const [color, glow] = i.is_featured.split(":");
-        return `featured featured-${color} ${glow ? `glow-${glow}` : ""}`;
-      })() : "" }
-    ${i.no_gar ? "nogar" : ""}
+    ${ i.is_featured && i.no_gar !== "yes" ? (() => {
+    const [color, glow] = i.is_featured.split(":");
+    return `featured featured-${color} ${glow ? `glow-${glow}` : ""}`;
+  })() : "" } ${i.no_gar === "yes" ? "nogar" : ""}
   "
   target="_blank"
 >
