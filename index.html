@@ -1487,28 +1487,40 @@
   background-repeat: repeat;
   opacity: 0;
 }
-
-.package-row.glow-soft::after {
+.package-row.featured-orange.glow-soft::after {
   opacity: 0.35;
   background-image:
-    radial-gradient(circle, rgba(255,255,255,.8) 1px, transparent 1.6px);
-  background-size: 38px 38px;
+    radial-gradient(circle at 14% 26%, rgba(245,158,11,.9) 1px, transparent 2px),
+    radial-gradient(circle at 62% 18%, rgba(245,158,11,.7) 1.6px, transparent 2.6px),
+    radial-gradient(circle at 38% 72%, rgba(245,158,11,.8) 1.2px, transparent 2.2px);
 }
-
-.package-row.glow-glow::after {
-  opacity: 0.55;
+.package-row.featured-orange.glow-glow::after {
+  opacity: 0.6;
   background-image:
-    radial-gradient(circle, rgba(255,255,255,.9) 1.2px, transparent 2px);
-  background-size: 32px 32px;
-  animation: sparkle-float 6s linear infinite;
+    radial-gradient(circle at 18% 22%, rgba(245,158,11,1) 1.4px, transparent 2.4px),
+    radial-gradient(circle at 72% 34%, rgba(245,158,11,.85) 2px, transparent 3px),
+    radial-gradient(circle at 46% 78%, rgba(245,158,11,.75) 1.6px, transparent 2.6px),
+    radial-gradient(circle at 85% 62%, rgba(245,158,11,.9) 1.2px, transparent 2.2px);
+  animation: sparkle-drift 6s linear infinite;
 }
-
-.package-row.glow-strong::after {
-  opacity: 0.8;
+.package-row.featured-purple.glow-glow::after {
+  opacity: 0.65;
   background-image:
-    radial-gradient(circle, rgba(255,255,255,1) 1.4px, transparent 2.4px);
-  background-size: 24px 24px;
-  animation: sparkle-float 4s linear infinite;
+    radial-gradient(circle at 15% 20%, rgba(139,92,246,1) 1.4px, transparent 2.4px),
+    radial-gradient(circle at 62% 14%, rgba(139,92,246,.85) 2.2px, transparent 3.2px),
+    radial-gradient(circle at 38% 72%, rgba(139,92,246,.75) 1.6px, transparent 2.6px),
+    radial-gradient(circle at 82% 58%, rgba(139,92,246,.9) 1.8px, transparent 2.8px);
+  animation: sparkle-drift 5.5s linear infinite;
+}
+.package-row.featured-purple.glow-strong::after {
+  opacity: 0.85;
+  background-image:
+    radial-gradient(circle at 10% 18%, rgba(139,92,246,1) 2px, transparent 3px),
+    radial-gradient(circle at 28% 64%, rgba(139,92,246,.9) 1.6px, transparent 2.6px),
+    radial-gradient(circle at 54% 32%, rgba(139,92,246,.85) 2.4px, transparent 3.4px),
+    radial-gradient(circle at 74% 74%, rgba(139,92,246,.8) 1.8px, transparent 2.8px),
+    radial-gradient(circle at 88% 42%, rgba(139,92,246,1) 2.2px, transparent 3.2px);
+  animation: sparkle-drift-strong 4s linear infinite;
 }
 
 @keyframes glow-breathe {
@@ -1528,6 +1540,15 @@
   to {
     background-position: 0 120px;
   }
+@keyframes sparkle-drift {
+  from { background-position: 0 0; }
+  to   { background-position: 0 120px; }
+}
+
+@keyframes sparkle-drift-strong {
+  from { background-position: 0 0; }
+  to   { background-position: 0 180px; }
+}
 }
     
  .glass-card h3 {
