@@ -1774,6 +1774,17 @@
     padding: 14px 22px;
     font-size: 14px;
   }
+
+  body::after {
+  content: "";
+  position: fixed;
+  left: 50%;
+  top: 0;
+  width: 1px;
+  height: 100vh;
+  background: red;
+  z-index: 9999;
+}
 }
     
   </style>
