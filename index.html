@@ -2204,7 +2204,6 @@ const FEATURED_STAR_CONFIG = {
     const x = Math.random() * 100;
     const y = Math.random() * 100;
 
-    // 70% putih, 30% warna
     const isWhite = Math.random() < 0.7;
     const starColor = isWhite
       ? "255,255,255"
@@ -2214,9 +2213,6 @@ const FEATURED_STAR_CONFIG = {
       `radial-gradient(circle at ${x}% ${y}%, rgba(${starColor},1) ${size}px, transparent ${size * 2.4}px)`
     );
   }
-
-  return layers.join(",");
-}
 
   return layers.join(",");
 }
