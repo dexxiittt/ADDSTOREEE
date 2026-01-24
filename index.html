@@ -1536,6 +1536,16 @@
   animation: star-twinkle var(--twinkle-speed, 6s) ease-in-out infinite;
 }
 
+.package-row.featured::after {
+  opacity: 0;
+  animation-play-state: paused;
+}
+
+.package-row.featured:hover::after {
+  opacity: var(--star-opacity, 0.5);
+  animation-play-state: running;
+}
+
 @keyframes glow-breathe {
   0%,100% { transform: scale(1); opacity: 0.75; }
   50%     { transform: scale(1.02); opacity: 1; }
@@ -2194,10 +2204,19 @@ const FEATURED_STAR_CONFIG = {
     const x = Math.random() * 100;
     const y = Math.random() * 100;
 
+    // 70% putih, 30% warna
+    const isWhite = Math.random() < 0.7;
+    const starColor = isWhite
+      ? "255,255,255"
+      : color;
+
     layers.push(
-      `radial-gradient(circle at ${x}% ${y}%, rgba(${color},1) ${size}px, transparent ${size * 2.4}px)`
+      `radial-gradient(circle at ${x}% ${y}%, rgba(${starColor},1) ${size}px, transparent ${size * 2.4}px)`
     );
   }
+
+  return layers.join(",");
+}
 
   return layers.join(",");
 }
