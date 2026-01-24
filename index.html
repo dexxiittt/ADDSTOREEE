@@ -1785,11 +1785,6 @@
   color: #374151;
 }
 
-    /* ROLE SLIDE-IN */
-.package-detail.open .role-section {
-  animation: role-slide-in .45s ease both;
-}
-
 @keyframes role-slide-in {
   from {
     opacity: 0;
@@ -1972,6 +1967,8 @@
     padding: 14px 22px;
     font-size: 14px;
   }
+}
+    
 @media (prefers-reduced-motion: reduce) {
   .package-detail {
     transition: none !important;
@@ -2320,7 +2317,7 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
   : ``}
 
   <!-- DETAIL TERSEMBUNYI -->
-  <div class="package-detail hidden">
+  <div class="package-detail">
 
   <div class="role-section">
     <div class="role-title">Role Access</div>
