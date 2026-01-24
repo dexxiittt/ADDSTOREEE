@@ -1430,7 +1430,6 @@
   border-radius: inherit;
   pointer-events: none;
   opacity: 0; 
-  animation: featured-glow 3.6s ease-in-out infinite;
 }
 
 .package-row.glow-soft::before {
@@ -1480,6 +1479,38 @@
     inset 0 0 14px rgba(59,130,246,0.4);
 }
 
+.package-row.featured::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-repeat: repeat;
+  opacity: 0;
+}
+
+.package-row.glow-soft::after {
+  opacity: 0.35;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,.8) 1px, transparent 1.6px);
+  background-size: 38px 38px;
+}
+
+.package-row.glow-glow::after {
+  opacity: 0.55;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,.9) 1.2px, transparent 2px);
+  background-size: 32px 32px;
+  animation: sparkle-float 6s linear infinite;
+}
+
+.package-row.glow-strong::after {
+  opacity: 0.8;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,1) 1.4px, transparent 2.4px);
+  background-size: 24px 24px;
+  animation: sparkle-float 4s linear infinite;
+}
+
 @keyframes glow-breathe {
   0%,100% { transform: scale(1); opacity: 0.75; }
   50%     { transform: scale(1.02); opacity: 1; }
@@ -1488,6 +1519,15 @@
 @keyframes glow-strong {
   0%,100% { transform: scale(1); opacity: 0.85; }
   50%     { transform: scale(1.06); opacity: 1; }
+}
+
+@keyframes sparkle-float {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 120px;
+  }
 }
     
  .glass-card h3 {
