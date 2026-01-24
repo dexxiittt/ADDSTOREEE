@@ -2238,45 +2238,48 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
     .filter(i => i.group === "main")
 .map(i => {
   let cls = "package-row";
+
+  let starStyle = "";
+
   if (i.is_featured) {
     const [color, glow] = i.is_featured.split(":");
     cls += ` featured featured-${color}`;
     if (glow) cls += ` glow-${glow}`;
 
+    // downgrade main strong → glow
     if (i.group === "main" && glow === "strong") {
-  cls = cls.replace("glow-strong", "glow-glow");
-}
+      cls = cls.replace("glow-strong", "glow-glow");
+    }
+
+    const key = i.is_featured;
+    const cfg = FEATURED_STAR_CONFIG[key];
+
+    if (cfg) {
+      const rgb =
+        key.startsWith("orange") ? "245,158,11" : "139,92,246";
+
+      starStyle = `
+        --star-bg: ${generateStars(rgb, cfg)};
+        --star-opacity: ${cfg.opacity};
+        --twinkle-speed: ${cfg.twinkle}s;
+      `;
+
+      const phase = -(Math.random() * 6).toFixed(2);
+      starStyle += `animation-delay:${phase}s;`;
+    }
   }
 
   return `
-    const key = i.is_featured;
-const cfg = FEATURED_STAR_CONFIG[key];
-
-let starStyle = "";
-if (cfg) {
-  const rgb =
-    key.startsWith("orange") ? "245,158,11" : "139,92,246";
-
-  starStyle = `
-    --star-bg: ${generateStars(rgb, cfg)};
-    --star-opacity: ${cfg.opacity};
-    --twinkle-speed: ${cfg.twinkle}s;
-  `;
-}
-
-const phase = -(Math.random() * 6).toFixed(2);
-starStyle += `animation-delay:${phase}s;`;
-
-return `
-<a href="${i.checkout_url}"
-   class="${cls}"
-   style="${starStyle}"
-   target="_blank">
+    <a href="${i.checkout_url}"
+       class="${cls}"
+       style="${starStyle}"
+       target="_blank">
       <span>${i.package} ${i.duration}</span>
       <b>Rp${Number(i.price).toLocaleString("id-ID")}</b>
     </a>
   `;
-}).join("")}
+})
+.join("")}
 
   <!-- TOMBOL -->
   ${prod.items.some(i => i.group === "detail")
