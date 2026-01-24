@@ -1490,37 +1490,37 @@
 .package-row.featured-orange.glow-soft::after {
   opacity: 0.35;
   background-image:
-    radial-gradient(circle at 14% 26%, rgba(245,158,11,.9) 1px, transparent 2px),
-    radial-gradient(circle at 62% 18%, rgba(245,158,11,.7) 1.6px, transparent 2.6px),
-    radial-gradient(circle at 38% 72%, rgba(245,158,11,.8) 1.2px, transparent 2.2px);
+    radial-gradient(circle at 18% 28%, rgba(245,158,11,.8) 1px, transparent 2px),
+    radial-gradient(circle at 62% 22%, rgba(245,158,11,.6) 1.2px, transparent 2.4px),
+    radial-gradient(circle at 44% 74%, rgba(245,158,11,.7) 0.9px, transparent 2px);
 }
 .package-row.featured-orange.glow-glow::after {
-  opacity: 0.6;
+  opacity: 0.55;
   background-image:
-    radial-gradient(circle at 18% 22%, rgba(245,158,11,1) 1.4px, transparent 2.4px),
-    radial-gradient(circle at 72% 34%, rgba(245,158,11,.85) 2px, transparent 3px),
-    radial-gradient(circle at 46% 78%, rgba(245,158,11,.75) 1.6px, transparent 2.6px),
-    radial-gradient(circle at 85% 62%, rgba(245,158,11,.9) 1.2px, transparent 2.2px);
-  animation: sparkle-drift 6s linear infinite;
+    radial-gradient(circle at 14% 22%, rgba(245,158,11,1) 1.2px, transparent 2.4px),
+    radial-gradient(circle at 36% 62%, rgba(245,158,11,.8) 1.6px, transparent 2.8px),
+    radial-gradient(circle at 68% 18%, rgba(245,158,11,.7) 1px, transparent 2.2px),
+    radial-gradient(circle at 82% 74%, rgba(245,158,11,.9) 1.4px, transparent 2.6px);
+  animation: star-twinkle 4.8s ease-in-out infinite;
 }
 .package-row.featured-purple.glow-glow::after {
-  opacity: 0.65;
+  opacity: 0.6;
   background-image:
-    radial-gradient(circle at 15% 20%, rgba(139,92,246,1) 1.4px, transparent 2.4px),
-    radial-gradient(circle at 62% 14%, rgba(139,92,246,.85) 2.2px, transparent 3.2px),
-    radial-gradient(circle at 38% 72%, rgba(139,92,246,.75) 1.6px, transparent 2.6px),
-    radial-gradient(circle at 82% 58%, rgba(139,92,246,.9) 1.8px, transparent 2.8px);
-  animation: sparkle-drift 5.5s linear infinite;
+    radial-gradient(circle at 16% 18%, rgba(139,92,246,1) 1.3px, transparent 2.6px),
+    radial-gradient(circle at 42% 64%, rgba(139,92,246,.85) 1.8px, transparent 3px),
+    radial-gradient(circle at 66% 24%, rgba(139,92,246,.7) 1.1px, transparent 2.4px),
+    radial-gradient(circle at 84% 72%, rgba(139,92,246,.9) 1.5px, transparent 2.8px);
+  animation: star-twinkle 4.2s ease-in-out infinite;
 }
 .package-row.featured-purple.glow-strong::after {
   opacity: 0.85;
   background-image:
-    radial-gradient(circle at 10% 18%, rgba(139,92,246,1) 2px, transparent 3px),
-    radial-gradient(circle at 28% 64%, rgba(139,92,246,.9) 1.6px, transparent 2.6px),
-    radial-gradient(circle at 54% 32%, rgba(139,92,246,.85) 2.4px, transparent 3.4px),
-    radial-gradient(circle at 74% 74%, rgba(139,92,246,.8) 1.8px, transparent 2.8px),
-    radial-gradient(circle at 88% 42%, rgba(139,92,246,1) 2.2px, transparent 3.2px);
-  animation: sparkle-drift-strong 4s linear infinite;
+    radial-gradient(circle at 10% 16%, rgba(139,92,246,1) 1.8px, transparent 3px),
+    radial-gradient(circle at 26% 58%, rgba(139,92,246,.95) 1.4px, transparent 2.6px),
+    radial-gradient(circle at 48% 34%, rgba(139,92,246,.85) 2px, transparent 3.4px),
+    radial-gradient(circle at 66% 72%, rgba(139,92,246,.8) 1.6px, transparent 2.8px),
+    radial-gradient(circle at 86% 42%, rgba(139,92,246,1) 2.2px, transparent 3.6px);
+  animation: star-twinkle 3.2s ease-in-out infinite;
 }
 
 @keyframes glow-breathe {
@@ -1533,19 +1533,9 @@
   50%     { transform: scale(1.06); opacity: 1; }
 }
 
-@keyframes sparkle-float {
-  from { background-position: 0 0; }
-  to   { background-position: 0 120px; }
-}
-
-@keyframes sparkle-drift {
-  from { background-position: 0 0; }
-  to   { background-position: 0 120px; }
-}
-
-@keyframes sparkle-drift-strong {
-  from { background-position: 0 0; }
-  to   { background-position: 0 180px; }
+@keyframes star-twinkle {
+  0%, 100% { opacity: 0.35; }
+  50%      { opacity: 0.9; }
 }
     
  .glass-card h3 {
@@ -1810,6 +1800,9 @@
   #product-cards {
     grid-template-columns: 1fr;
     max-width: 420px;
+  }
+  .package-row.featured::after {
+    display: none;
   }
 }
 
