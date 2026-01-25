@@ -2507,8 +2507,13 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
 
   <!-- PACKAGE UTAMA (yang langsung terlihat) -->
   ${prod.items
-    .filter(i => i.group === "main")
-.map(i => {
+  .filter(i => i.group === "main")
+  .sort((a, b) => {
+    const orderA = Number(a.sort_order ?? 999);
+    const orderB = Number(b.sort_order ?? 999);
+    return orderA - orderB;
+  })
+  .map(i => {
   let cls = "package-row";
   let starStyle = "";
 
@@ -2609,7 +2614,12 @@ return `
 
     ${prod.items
       .filter(i => i.group === "detail")
-      .map(i => `
+.sort((a, b) => {
+  const orderA = Number(a.sort_order ?? 999);
+  const orderB = Number(b.sort_order ?? 999);
+  return orderA - orderB;
+})
+.map(i => `
   <a 
   href="${i.checkout_url}"
   class="package-row role
