@@ -2158,6 +2158,18 @@
   .category-tabs .tab {
     padding: 14px 22px;
     font-size: 14px;
+
+  .floating-icon,
+  .app-icon,
+  .glass-card,
+  .trust-card {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+    
+  .trust-card,
+  .glass-card {
+    animation: none !important;
   }
 }
     
@@ -2166,7 +2178,10 @@
     transition: none !important;
   }
 }
-    
+    /* ===== PERFORMANCE MODE SAAT SCROLL ===== */
+body.is-scrolling * {
+  animation-play-state: paused !important;
+}
   </style>
 </head>
 
@@ -2675,10 +2690,18 @@ observer.observe(premiumPhone);
 <script>
 let latestScrollY = 0;
 let ticking = false;
+let scrollTimeout;
 
 window.addEventListener('scroll', () => {
-  if (typeof phoneActive === "undefined" || !phoneActive) return;
-  
+  document.body.classList.add('is-scrolling');
+  clearTimeout(scrollTimeout);
+
+  scrollTimeout = setTimeout(() => {
+    document.body.classList.remove('is-scrolling');
+  }, 120);
+
+  if (!phoneActive) return;
+
   latestScrollY = window.scrollY;
 
   if (!ticking) {
@@ -2766,15 +2789,13 @@ const ctx = canvas.getContext("2d");
 
 /* KONTROL BINTANG */
 const STAR_CONFIG = {
-  amount: 320,
+  amount: window.innerWidth < 768 ? 120 : 320,
   minSize: 0.6,
   maxSize: 2.1,
   glow: 1.1,
   twinkleSpeed: 0.018,
-
-  /* DEPTH DRIFT */
-  minSpeed: 0.05,   // jauh (lambat)
-  maxSpeed: 0.35    // dekat (cepat)
+  minSpeed: 0.05,
+  maxSpeed: 0.35
 };
 
 let stars = [];
@@ -2851,6 +2872,15 @@ function draw() {
 
 resize();
 draw();
+
+window.addEventListener("scroll", () => {
+  starRunning = false;
+  clearTimeout(window.__starResume);
+  window.__starResume = setTimeout(() => {
+    starRunning = true;
+    requestAnimationFrame(draw);
+  }, 150);
+});
 </script>
 
   <script>
