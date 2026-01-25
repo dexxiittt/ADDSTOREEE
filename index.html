@@ -2365,7 +2365,10 @@ function formatPrice(n) {
 }
   
 fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRODUCT_PACKAGES")
-  .then(res => res.json())
+  .then(r => {
+    if (!r.ok) throw new Error("Fetch gagal");
+    return r.json();
+  })
   .then(data => {
 
     const grouped = {};
@@ -2565,7 +2568,8 @@ let latestScrollY = 0;
 let ticking = false;
 
 window.addEventListener('scroll', () => {
-  if (!phoneActive) return;
+  if (typeof phoneActive === "undefined" || !phoneActive) return;
+  
   latestScrollY = window.scrollY;
 
   if (!ticking) {
