@@ -2410,7 +2410,7 @@ const discount = parseDiscount(i.promo_text);
 
 let priceHTML = `<b>${formatPrice(price)}</b>`;
 
-if (discount) {
+if (discount !== null) {
   const finalPrice = Math.round(price - (price * discount / 100));
 
   priceHTML = `
