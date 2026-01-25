@@ -2491,9 +2491,16 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
     );
     const orderB = Number( 
       b.items.find(i => i.group === "main")?.product_order ?? 9999
-    );return orderA - orderB;}).forEach(prod => {
-      wrap.innerHTML += `
+    );return orderA - orderB;}).
+    forEach(prod => {
+
+  const sortedItems = [...prod.items].sort((a, b) => {
+  const orderA = Number(a.sort_order ?? 999);
+  const orderB = Number(b.sort_order ?? 999);
+  return orderA - orderB;
+});
       
+      wrap.innerHTML += `
 <div class="glass-card">
 
   <!-- IMAGE + BADGE -->
