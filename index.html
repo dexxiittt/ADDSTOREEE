@@ -2495,6 +2495,8 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
     forEach(prod => {
 
   const sortedItems = [...prod.items].sort((a, b) => {
+  const primaryItem =
+  sortedItems.find(i => i.group === "main") || sortedItems[0];
   const orderA = Number(a.sort_order ?? 999);
   const orderB = Number(b.sort_order ?? 999);
   return orderA - orderB;
@@ -2505,8 +2507,8 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
 
   <!-- IMAGE + BADGE -->
   <div class="product-image">
-    <img src="${prod.items[0].image_url}" alt="${prod.title}">
-    ${renderBadges(prod.items[0].badge)}
+    <img src="${primaryItem.image_url}" alt="${prod.title}">
+${renderBadges(primaryItem.badge)}
   </div>
 
   <!-- JUDUL -->
@@ -2515,7 +2517,7 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
   <!-- PACKAGE UTAMA (yang langsung terlihat) -->
   ${sortedItems
   .filter(i => i.group === "main")
-  .sort((a, b) => {
+  .map(i => {
     const orderA = Number(a.sort_order ?? 999);
     const orderB = Number(b.sort_order ?? 999);
     return orderA - orderB;
@@ -2773,6 +2775,7 @@ window.addEventListener('scroll', () => {
   const now = Date.now();
   const deltaY = Math.abs(window.scrollY - lastScrollY);
   const deltaTime = now - lastTime;
+  if (!deltaTime) return;
   const scrollSpeed = deltaY / deltaTime;
 
   lastScrollY = window.scrollY;
@@ -2781,6 +2784,7 @@ window.addEventListener('scroll', () => {
   if (scrollSpeed > 1.2) return;
 
   const snapTarget = document.querySelector('.hero-premium-phone');
+  if (!snapTarget) return;
   const rect = snapTarget.getBoundingClientRect();
   const distanceToCenter =
     rect.top + rect.height / 2 - window.innerHeight / 2;
