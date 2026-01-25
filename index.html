@@ -2747,6 +2747,7 @@ let lastTime = Date.now();
 
 window.addEventListener('scroll', () => {
 
+  if (document.body.classList.contains('is-scrolling')) return;
   // GUARD PALING ATAS )
   if (window.scrollY < window.innerHeight) return;
 
