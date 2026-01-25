@@ -1358,7 +1358,13 @@
   opacity: 1;
   transform: translateY(0);
 }
-    
+/* FALLBACK: JIKA TABS/CONTENT SUDAH MASUK VIEWPORT */
+.fade-sync.is-visible {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
+}
+       
 /* SECTION PRODUCT – GLASS CARD */
 
 .glass-card {
@@ -2893,6 +2899,23 @@ const fadeObserver = new IntersectionObserver(
 
 document.querySelectorAll(".fade-on-scroll")
   .forEach(el => fadeObserver.observe(el));
+</script>
+
+<script>
+const fadeSyncObserver = new IntersectionObserver(
+  entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        fadeSyncObserver.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.12 }
+);
+
+document.querySelectorAll(".fade-sync")
+  .forEach(el => fadeSyncObserver.observe(el));
 </script>
   
 </body>
