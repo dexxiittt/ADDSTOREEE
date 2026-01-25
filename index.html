@@ -2538,6 +2538,18 @@ return `
       `;
     });
 
+  })
+  .catch(err => {
+    console.error("Sheet error:", err);
+
+    const wrap = document.getElementById("product-cards");
+    if (wrap) {
+      wrap.innerHTML = `
+        <div style="text-align:center; padding:40px; opacity:.7">
+          Produk sedang tidak tersedia
+        </div>
+      `;
+    }
   });
 </script>
   
