@@ -1752,9 +1752,8 @@
   box-shadow: 0 18px 36px rgba(0,0,0,.35);
 }
 
-    .badge-hot {
+.badge-hot {
   position: absolute;
-  top: 10px;
   right: 10px;
 
   padding: 4px 10px;
@@ -1767,6 +1766,24 @@
   color: white;
 
   box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+}
+
+/* OFFSET KE BAWAH OTOMATIS */
+.badge-line-0 { top: 10px; }
+.badge-line-1 { top: 34px; }
+.badge-line-2 { top: 58px; }
+.badge-line-3 { top: 82px; }
+
+.badge-hot-red {
+  background: #ef4444;
+}
+
+.badge-hot-green {
+  background: #22c55e;
+}
+
+.badge-hot-orange {
+  background: #f59e0b;
 }
 
     .note {
@@ -2364,6 +2381,30 @@ function formatPrice(n) {
   return "Rp" + Number(n).toLocaleString("id-ID");
 }
   
+function renderBadges(badgeText) {
+  if (!badgeText) return "";
+
+  return badgeText
+    .split(":")
+    .map(b => b.trim())
+    .filter(Boolean)
+    .map((label, i) => {
+      const key = label.toLowerCase();
+
+      let colorClass = "";
+      if (key === "hot") colorClass = "badge-hot-red";
+      else if (key === "new") colorClass = "badge-hot-green";
+      else if (key === "promo") colorClass = "badge-hot-orange";
+
+      return `
+        <span class="badge-hot badge-line-${i} ${colorClass}">
+          ${label}
+        </span>
+      `;
+    })
+    .join("");
+}
+  
 fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRODUCT_PACKAGES")
   .then(r => {
     if (!r.ok) throw new Error("Fetch gagal");
@@ -2397,9 +2438,7 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
   <!-- IMAGE + BADGE -->
   <div class="product-image">
     <img src="${prod.items[0].image_url}" alt="${prod.title}">
-    ${prod.items[0].badge
-      ? `<span class="badge-hot">${prod.items[0].badge}</span>`
-      : ``}
+    ${renderBadges(prod.items[0].badge)}
   </div>
 
   <!-- JUDUL -->
