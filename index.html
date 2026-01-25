@@ -1343,6 +1343,21 @@
 .category-content.fade-sync {
   transition-delay: 0.4s;
 }
+
+    /* FADE UNTUK SECTION PUTIH (TRUST) */
+.fade-on-scroll {
+  opacity: 0;
+  transform: translateY(48px);
+  transition:
+    opacity 0.9s ease,
+    transform 1s cubic-bezier(.22,1,.36,1);
+}
+
+/* AKTIF SAAT MASUK VIEWPORT */
+.fade-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
     
 /* SECTION PRODUCT – GLASS CARD */
 
@@ -2253,7 +2268,7 @@
   </div>
   
 <!-- SECTION 3 : TRUST -->
-<section class="section-trust fade-sync">
+<section class="section-trust fade-on-scroll">
   <div class="trust-container">
 
     <!-- Heading -->
@@ -2861,6 +2876,23 @@ document.addEventListener("click", e => {
     });
   }
 });
+</script>
+
+<script>
+const fadeObserver = new IntersectionObserver(
+  entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        fadeObserver.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.15 }
+);
+
+document.querySelectorAll(".fade-on-scroll")
+  .forEach(el => fadeObserver.observe(el));
 </script>
   
 </body>
