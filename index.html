@@ -2626,7 +2626,25 @@ return `
          ${i.badge_icon} ${i.badge_label}
          ${i.no_gar ? `<span class="badge-nogar">NoGar</span>` : ``} 
          </em>` : i.no_gar ? `<em class="badge-nogar">NoGar</em>`: ``}</span>
-    <b>Rp${Number(i.price).toLocaleString("id-ID")}</b>
+    ${(() => {
+  const price = Number(i.price) || 0;
+  const discount = parseDiscount(i.promo_text);
+
+  if (discount !== null) {
+    const finalPrice = Math.round(price - (price * discount / 100));
+    return `
+      <div class="price-line promo-left">
+        <span class="discount-badge">${discount}%</span>
+        <div class="price-wrap">
+          <span class="price-old">${formatPrice(price)}</span>
+          <span class="price-new">${formatPrice(finalPrice)}</span>
+        </div>
+      </div>
+    `;
+  }
+
+  return `<b>${formatPrice(price)}</b>`;
+})()}
   </a>
 `).join("")}
 
