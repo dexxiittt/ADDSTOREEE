@@ -32,35 +32,6 @@
   --grid-max-width: 840px;
   --grid-offset-x: -17px;
 
-      /* FEATURED → SHADOW COLOR MAP */
-.package-row.featured-purple,
-.glass-card:has(.featured-purple) {
-  --shadow-r: 139;
-  --shadow-g: 92;
-  --shadow-b: 246;
-}
-
-.package-row.featured-blue,
-.glass-card:has(.featured-blue) {
-  --shadow-r: 59;
-  --shadow-g: 130;
-  --shadow-b: 246;
-}
-
-.package-row.featured-orange,
-.glass-card:has(.featured-orange) {
-  --shadow-r: 245;
-  --shadow-g: 158;
-  --shadow-b: 11;
-}
-
-  /* DEFAULT SHADOW COLOR (fallback) */
-.glass-card {
-  --shadow-r: 139;
-  --shadow-g: 92;
-  --shadow-b: 246; /* default ungu */
-}
-
     @media (max-width: 640px) {
   :root {
     --grid-offset-x: 8px;
@@ -1850,7 +1821,6 @@
     transform .45s cubic-bezier(.22,1,.36,1);
 }
 
-/* SHADOW BAWAH */
 .product-image::after {
   content: "";
   position: absolute;
@@ -1858,13 +1828,14 @@
   right: 6%;
   bottom: -18px;
   height: 34px;
+
   border-radius: 50%;
 
   background: radial-gradient(
     ellipse at center bottom,
-    rgba(var(--shadow-r), var(--shadow-g), var(--shadow-b), 0.8) 0%,
-    rgba(var(--shadow-r), var(--shadow-g), var(--shadow-b), 0.45) 35%,
-    rgba(var(--shadow-r), var(--shadow-g), var(--shadow-b), 0.18) 60%,
+    rgba(139,92,246,0.75) 0%,
+    rgba(139,92,246,0.45) 35%,
+    rgba(139,92,246,0.18) 60%,
     transparent 75%
   );
 
@@ -1877,7 +1848,11 @@
   pointer-events: none;
 }
 
-.glass-card:active .product-image::after,
+.glass-card:active .product-image::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
 .glass-card:has(.package-detail.open) .product-image::after {
   opacity: 1;
   transform: scale(1);
