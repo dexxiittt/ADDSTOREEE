@@ -2584,7 +2584,9 @@ ${renderBadges(primaryItem.badge)}
   let cls = "package-row";
   let starStyle = "";
 
-const price = Number(i.price) || 0;
+const price = Number(
+  String(i.price).replace(/[^\d]/g, "")
+) || 0;
 const discount = parseDiscount(i.promo_text);
 
 let priceHTML = `<b>${formatPrice(price)}</b>`;
@@ -2701,7 +2703,9 @@ return `
        ${i.badge_icon} ${i.badge_label}
        ${garBadge(i)}</em>` : garBadge(i) }</span>
     ${(() => {
-  const price = Number(i.price) || 0;
+  const price = Number(
+  String(i.price).replace(/[^\d]/g, "")
+) || 0;
   const discount = parseDiscount(i.promo_text);
 
   if (discount !== null) {
