@@ -2503,8 +2503,11 @@ const FEATURED_STAR_CONFIG = {
   
   function parseDiscount(promo) {
   if (!promo) return null;
-  const m = promo.match(/(\d{1,2})%/);
-  return m ? Number(m[1]) : null;
+
+  const normalized = promo.replace(",", ".");
+
+  const m = normalized.match(/(\d+(?:\.\d+)?)\s*%/);
+  return m ? parseFloat(m[1]) : null;
 }
 
 function formatPrice(n) {
