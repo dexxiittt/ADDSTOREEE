@@ -2485,43 +2485,11 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
     if (!wrap) return;
 
     Object.values(grouped)
-  .sort((a, b) => {
-    const orderA = Number(
-      a.items.find(i => i.product_order)?.product_order ?? 9999
-    );
-    const orderB = Number(
-      b.items.find(i => i.product_order)?.product_order ?? 9999
-    );
-    return orderA - orderB;
-  })
   .forEach(prod => {
 
-    const sortedItems = [...prod.items].sort((a, b) => {
-      const orderA = Number(a.sort_order ?? 999);
-      const orderB = Number(b.sort_order ?? 999);
-      return orderA - orderB;
-    });
-
-    const originalMain   = sortedItems.filter(i => i.group === "main");
-    const originalDetail = sortedItems.filter(i => i.group === "detail");
-
-    let mainItems = [...originalMain];
-    let detailItems = [...originalDetail];
-
-// kandidat swap
-    const topDetail = originalDetail[0];
-    const topMain   = originalMain[0];
-
-// swap jika detail lebih prioritas
-if (
-  topDetail &&
-  topMain &&
-  Number(topDetail.sort_order) < Number(topMain.sort_order)
-) {
-  mainItems = [topDetail, ...originalMain.slice(1)];
-  detailItems = [topMain, ...originalDetail.slice(1)];
-
-}
+    const sortedItems = [...prod.items];
+    const mainItems   = sortedItems.filter(i => i.group === "main");
+    const detailItems = sortedItems.filter(i => i.group === "detail");
     const primaryItem =
       sortedItems.find(i => i.group === "main" && i.image_url)
       || sortedItems.find(i => i.image_url)
