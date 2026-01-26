@@ -2431,6 +2431,9 @@ const FEATURED_STAR_CONFIG = {
   }
   return "";
 }
+  function isNoGar(i) {
+  return String(i.no_gar).toLowerCase() === "yes";
+}
   
   function parseDiscount(promo) {
   if (!promo) return null;
@@ -2570,7 +2573,7 @@ if (discount !== null) {
   }
 
   // NoGar → MATIKAN STAR & GLOW
-if (i.no_gar === "yes") {
+if (isNoGar(i)) {
   cls += " nogar";
   starStyle = "";
 }
@@ -2611,21 +2614,24 @@ return `
   <a 
   href="${i.checkout_url}"
   class="package-row role
-    ${ i.is_featured && i.no_gar !== "yes" ? (() => {
-    const [color, glow] = i.is_featured.split(":");
-    return `featured featured-${color} ${glow ? `glow-${glow}` : ""}`;
-  })() : "" } ${i.no_gar === "yes" ? "nogar" : ""}
-  "
+  ${ i.is_featured && !isNoGar(i)
+    ? (() => {
+        const [color, glow] = i.is_featured.split(":");
+        return `featured featured-${color} ${glow ? `glow-${glow}` : ""}`;
+      })()
+    : ""
+  }
+  ${ isNoGar(i) ? "nogar" : "" }
+"
   target="_blank"
 >
     <span>
   ${i.package} ${i.duration}
 
   ${i.badge_label
-    ? `<em class="role-badge">
-         ${i.badge_icon} ${i.badge_label}
-         ${i.no_gar ? `<span class="badge-nogar">NoGar</span>` : ``} 
-         </em>` : i.no_gar ? `<em class="badge-nogar">NoGar</em>`: ``}</span>
+  ? `<em class="role-badge">
+       ${i.badge_icon} ${i.badge_label}
+       ${garBadge(i)}</em>` : garBadge(i) }</span>
     ${(() => {
   const price = Number(i.price) || 0;
   const discount = parseDiscount(i.promo_text);
