@@ -2519,7 +2519,7 @@ ${renderBadges(primaryItem.badge)}
 
   <!-- PACKAGE UTAMA (yang langsung terlihat) -->
   ${sortedItems
-  .filter(i => i.group === "main")
+  .filter(i => i.group === "main" || i.sort_order <= 3)
   .map(i => {
   let cls = "package-row";
   let starStyle = "";
@@ -2620,7 +2620,7 @@ return `
     <div class="role-title">Role Access</div>
 
     ${sortedItems
-      .filter(i => i.group === "detail")
+      .filter(i => i.group === "detail" && i.sort_order > 3)
 .sort((a, b) => {
   const orderA = Number(a.sort_order ?? 999);
   const orderB = Number(b.sort_order ?? 999);
