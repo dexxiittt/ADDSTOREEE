@@ -1850,14 +1850,18 @@
   pointer-events: none;
 }
 
-/* TAP / CLICK — AKTIF */
 .glass-card:active .product-image::after {
   opacity: 1;
   transform: scale(1);
 }
 
-/* TAP / CLICK — IMAGE TERANGKAT */
-.glass-card:active .product-image img {
+.glass-card:has(.package-detail.open) .product-image::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.glass-card:active .product-image img,
+.glass-card:has(.package-detail.open) .product-image img {
   transform: translateY(-3px) scale(1.045);
 }
 
