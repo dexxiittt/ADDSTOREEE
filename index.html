@@ -1646,16 +1646,22 @@
   0%,100% { opacity: 0.25; }
   50%     { opacity: 0.65; }
 }
-    /* NO GAR — SEMUA EFEK MATI */
+    /* NO GAR */
 .package-row.nogar {
   animation: none !important;
 }
 
-.package-row.nogar::before,
+/* MATIKAN STAR SAJA (AFTER) */
 .package-row.nogar::after {
   opacity: 0 !important;
   animation: none !important;
   display: none;
+}
+
+/* BIARKAN ::before (GLOW) TETAP HIDUP */
+.package-row.nogar::before {
+  display: block !important;
+  opacity: 0.6;
 }
     
 .glass-card h3 {
@@ -2575,7 +2581,6 @@ if (discount !== null) {
   // NoGar → MATIKAN STAR & GLOW
 if (isNoGar(i)) {
   cls += " nogar";
-  starStyle = "";
 }
 
 return `
