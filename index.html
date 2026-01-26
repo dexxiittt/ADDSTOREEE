@@ -2494,16 +2494,24 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
     );
     return orderA - orderB;
   })
+      
   .forEach(prod => {
 
   const sortedItems = [...prod.items].sort((a, b) => {
-  const orderA = Number(a.sort_order ?? 999);
-  const orderB = Number(b.sort_order ?? 999);
-  return orderA - orderB;
-});
+    const orderA = Number(a.sort_order ?? 999);
+    const orderB = Number(b.sort_order ?? 999);
+    return orderA - orderB;
+  });
 
-const primaryItem =
-  sortedItems.find(i => i.group === "main") || sortedItems[0];
+  const mainItems   = sortedItems.filter(i => i.group === "main");
+  const detailItems = sortedItems.filter(i => i.group === "detail");
+
+  const primaryItem =
+    sortedItems.find(i => i.group === "main" && i.image_url)
+    || sortedItems.find(i => i.image_url)
+    || sortedItems[0];
+
+});
       
       wrap.innerHTML += `
 <div class="glass-card">
@@ -2518,9 +2526,7 @@ ${renderBadges(primaryItem.badge)}
   <h3>${prod.title}</h3>
 
   <!-- PACKAGE UTAMA (yang langsung terlihat) -->
-  ${sortedItems
-  .filter(i => i.group === "main" || i.sort_order <= 3)
-  .map(i => {
+  ${mainItems.map(i => {
   let cls = "package-row";
   let starStyle = "";
 
@@ -2609,24 +2615,17 @@ return `
 .join("")}
 
   <!-- TOMBOL -->
-  ${prod.items.some(i => i.group === "detail")
+  ${detailItems.length
   ? `<button class="toggle-detail">Selengkapnya…</button>`
   : ``}
-
+  
   <!-- DETAIL TERSEMBUNYI -->
   <div class="package-detail">
 
   <div class="role-section">
     <div class="role-title">Role Access</div>
 
-    ${sortedItems
-      .filter(i => i.group === "detail" && i.sort_order > 3)
-.sort((a, b) => {
-  const orderA = Number(a.sort_order ?? 999);
-  const orderB = Number(b.sort_order ?? 999);
-  return orderA - orderB;
-})
-.map(i => `
+    ${detailItems.map(i => `
   <a 
   href="${i.checkout_url}"
   class="package-row role
