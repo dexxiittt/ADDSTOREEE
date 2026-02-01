@@ -2648,11 +2648,9 @@ if (isNoGar(i)) {
   cls += " nogar";
 }
 
-return `
-  <a href="${i.checkout_url}"
-     class="${cls}"
-     style="${starStyle}"
-     target="_blank">
+<a href="package.html?product=${i.product_id}&package=${i.package_id}"
+   class="${cls}"
+>
      
     <span>
   ${i.package} ${i.duration}
