@@ -69,10 +69,9 @@ body.package-page {
 
 .package-info img {
   width: 100%;
-  height: 180px;
+  height: clamp(160px, 28vh, 260px); /* responsif & aman */
   object-fit: cover;
-  border-radius: 16px;
-  margin-bottom: 14px;
+  border-radius: 18px;
 }
 
 #pkg-title {
