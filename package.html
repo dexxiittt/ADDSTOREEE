@@ -57,7 +57,7 @@ const q = new URLSearchParams(location.search);
 const product = q.get("product");
 const pkg = q.get("package");
 
-fetch("https://opensheet.elk.sh/ID_SHEET/PACKAGE_DETAIL")
+fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PACKAGE_DETAIL")
 .then(r=>r.json())
 .then(rows=>{
   const data = rows.find(
