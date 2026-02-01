@@ -2648,22 +2648,27 @@ if (isNoGar(i)) {
   cls += " nogar";
 }
 
-<a href="package.html?product=${i.product_id}&package=${i.package_id}">
-     
-    <span>
-  ${i.package} ${i.duration}
-  ${i.badge_label
-    ? `<em class="role-badge">
-         ${i.badge_icon} ${i.badge_label}
-         ${garBadge(i)} </em>`: garBadge(i)}
-</span>
-    <div class="price-line promo-left">
-  ${priceHTML}
-</div>
-</a>
-`;
-})
-.join("")}
+return `
+    <a href="package.html?product=${i.product_id}&package=${i.package_id}"
+       class="${cls}"
+       style="${starStyle}">
+       
+      <span>
+        ${i.package} ${i.duration}
+        ${i.badge_label
+          ? `<em class="role-badge">
+               ${i.badge_icon ?? ""} ${i.badge_label}
+               ${garBadge(i)}
+             </em>`
+          : garBadge(i)}
+      </span>
+
+      <div class="price-line promo-left">
+        ${priceHTML}
+      </div>
+    </a>
+  `;
+}).join("")}
 
   <!-- TOMBOL -->
   ${detailItems.length
