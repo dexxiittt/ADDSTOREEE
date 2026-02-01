@@ -221,24 +221,6 @@ body.package-page {
   animation: skeleton-shimmer 1.4s infinite;
 }
 
-.trust-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 14px;
-}
-
-.trust-row span {
-  font-size: 12px;
-  padding: 6px 12px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.08);
-  color: rgba(255,255,255,0.9);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
 @keyframes skeleton-shimmer {
   to { transform: translateX(100%); }
 }
@@ -250,27 +232,24 @@ body.package-page {
 .sk-meta    { height: 38px; border-radius: 12px; }
 .sk-button  { height: 52px; border-radius: 16px; margin-top: 22px; }
 
-/* TRUST MICRO DETAIL */
+/* TRUST ROW – HORIZONTAL PREMIUM */
 .trust-row {
   display: flex;
-  justify-content: center;   /* 🔥 center */
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 14px;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.trust-row::-webkit-scrollbar {
+  display: none;
 }
 
 .trust-row span {
-  font-size: 13px;
-  padding: 8px 14px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.08);
-  color: rgba(255,255,255,0.92);
-
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-
-  animation: trust-fade-in .5s ease both;
+  white-space: nowrap;
 }
 
 .trust-row span:nth-child(1){animation-delay:.05s}
