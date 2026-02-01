@@ -257,6 +257,9 @@ body.package-page {
     inset 0 1px 0 rgba(255,255,255,0.25),
     0 4px 12px rgba(0,0,0,0.25);
 
+  position: relative;
+  overflow: hidden;
+  
   transition:
     box-shadow .25s ease,
     background-color .25s ease,
@@ -274,16 +277,34 @@ body.package-page {
     inset 0 1px 0 rgba(255,255,255,0.35),
     0 6px 18px rgba(139,92,246,0.35); /* glow ungu halus */
 
-  transform: translateY(-1px);
+  transform: translateY(-2px) scale(1.03);
 }
 
 .trust-row span:active {
-  transform: scale(0.97);
+  transform: scale(0.95);
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.25),
     0 4px 12px rgba(139,92,246,0.25);
 }
 
+.trust-row span::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.35),
+    transparent
+  );
+  transform: translateX(-120%);
+  transition: transform .6s ease;
+}
+
+.trust-row span:hover::after {
+  transform: translateX(120%);
+}
+  
 #pkg-trust {
   grid-column: 1 / -1;   /* ⬅️ KUNCI UTAMA */
   justify-self: center;
@@ -307,22 +328,24 @@ body.package-page {
 
 @keyframes trust-pulse-once {
   0% {
+    opacity: 0;
+    transform: scale(0.92) translateY(4px);
     box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.25),
+      inset 0 1px 0 rgba(255,255,255,0.15),
       0 0 0 rgba(139,92,246,0);
-    transform: translateY(0);
   }
-  50% {
+  60% {
+    opacity: 1;
+    transform: scale(1.02) translateY(-1px);
     box-shadow:
       inset 0 1px 0 rgba(255,255,255,0.35),
-      0 8px 22px rgba(139,92,246,0.45);
-    transform: translateY(-1px);
+      0 10px 28px rgba(139,92,246,0.45);
   }
   100% {
+    transform: scale(1) translateY(0);
     box-shadow:
       inset 0 1px 0 rgba(255,255,255,0.25),
       0 4px 12px rgba(0,0,0,0.25);
-    transform: translateY(0);
   }
 }
 
