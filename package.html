@@ -67,25 +67,31 @@ body.package-page {
     0 30px 80px rgba(0,0,0,0.45);
 }
 
+.package-info {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
 .package-info img {
   width: 100%;
-  max-height: 300px;        /* kunci tinggi */
-  height: 40vw;             /* responsif di mobile */
-  object-fit: cover;        /* crop rapi */
-  object-position: center;  /* fokus tengah */
+  height: clamp(160px, 38vw, 240px);q
+  max-height: 240px;
+  object-fit: cover;
   border-radius: 18px;
 }
 
 #pkg-title {
   font-family: 'Poppins', sans-serif;
   font-size: 22px;
-  font-weight: 700;
+  font-weight: 600;
+  letter-spacing: -0.3px;
   margin: 8px 0 4px;
 }
 
 #pkg-subtitle {
-  font-size: 14px;
-  opacity: .7;
+  font-size: 15px;
+  line-height: 1.6;
+  opacity: 0.85;
 }
   
 .pkg-title {
@@ -115,7 +121,7 @@ body.package-page {
 
 .package-meta span {
   display: block;
-  font-size: 11px;
+  font-size: 12px;
   opacity: .6;
   margin-bottom: 4px;
 }
@@ -148,19 +154,20 @@ body.package-page {
   
 .pay-button {
   display: block;
-  max-width: 520px;
+  max-width: 560px;
   margin: 26px auto 60px;
 
-  padding: 16px;
+  padding: 18px 20px;
   text-align: center;
   text-decoration: none;
 
   font-family: 'Poppins', sans-serif;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
+  letter-spacing: -0.2px;
 
   color: white;
-  border-radius: 16px;
+  border-radius: 18px;
 
   background: linear-gradient(
     135deg,
@@ -241,14 +248,15 @@ body.package-page {
 /* TRUST MICRO DETAIL */
 .trust-row {
   display: flex;
+  justify-content: center;   /* 🔥 center */
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 14px;
 }
 
 .trust-row span {
-  font-size: 12px;
-  padding: 6px 12px;
+  font-size: 13px;
+  padding: 8px 14px;
   border-radius: 999px;
   background: rgba(255,255,255,0.08);
   color: rgba(255,255,255,0.92);
