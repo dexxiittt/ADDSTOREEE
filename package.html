@@ -200,7 +200,10 @@ body.package-page {
   padding: 6px 12px;
   border-radius: 999px;
   background: rgba(255,255,255,0.08);
-  color: rgba(255,255,255,0.85);
+  color: rgba(255,255,255,0.9);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 @keyframes skeleton-shimmer {
@@ -306,11 +309,14 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PAC
 
   const trustWrap = document.getElementById("pkg-trust");
 
-  if (data.trust_points) {
-  trustWrap.innerHTML = data.trust_points
-    .split("|")
-    .map(t => `<span>✔ ${t.trim()}</span>`)
-    .join("");
+if (trustWrap && data.trust_points) {
+  const points = data.trust_points.split("|").map(t => t.trim());
+  const icons  = (data.trust_icons || "").split("|").map(i => i.trim());
+
+  trustWrap.innerHTML = points.map((text, i) => {
+    const icon = icons[i] || "✔";
+    return `<span>${icon} ${text}</span>`;
+  }).join("");
 }
   
   // harga setelah diskon
