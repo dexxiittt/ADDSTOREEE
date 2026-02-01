@@ -127,16 +127,22 @@ body.package-page {
 
 /* FULL STAGE CARD */
 .package-stage {
-  min-height: calc(100vh - 120px); /* hero dikurangin */
+  min-height: calc(100vh - 140px); /* hero */
+  display: flex;
 }
 
 .package-shell {
-  width: 100%;
-  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .package-shell > .glass {
   max-width: 100%;
+}
+
+.package-info {
+  flex: 1;
 }
   
 .pay-button {
@@ -390,10 +396,15 @@ body.package-page {
   padding: 32px 16px 80px;
 }
 
+.package-stage .glass {
+  max-width: none;
+  width: 100%;
+}
+  
 /* CONTAINER UTAMA */
 .package-shell {
   width: 100%;
-  max-width: 560px;
+  max-width: none;
 }
   
 /* STICKY CTA – MOBILE ONLY */
