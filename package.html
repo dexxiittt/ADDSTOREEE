@@ -1,1 +1,89 @@
-herehello word
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+<style>
+  
+.package-hero {
+  background: linear-gradient(135deg,#493d84,#8662b2);
+  padding: 64px 20px;
+  text-align: center;
+  color: white;
+}
+
+.glass {
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(16px);
+  border-radius: 20px;
+  padding: 20px;
+  margin: 16px;
+}
+
+</style>
+</head>
+
+<body class="package-page">
+
+<!-- HEADER GRADIENT -->
+<section class="package-hero">
+  <h1>Pilihan Paket</h1>
+  <p>Lengkapi informasi sebelum melanjutkan</p>
+</section>
+
+<!-- CARD INFO -->
+<section class="package-info glass">
+  <img id="pkg-image">
+  <h2 id="pkg-title"></h2>
+  <p id="pkg-subtitle"></p>
+</section>
+
+<!-- STATS -->
+<section class="package-meta glass">
+  <div><span>Durasi</span><b id="pkg-duration"></b></div>
+  <div><span>Harga</span><b id="pkg-price"></b></div>
+  <div><span>Garansi</span><b id="pkg-guarantee"></b></div>
+</section>
+
+<!-- INFO PENTING -->
+<section class="package-note glass" id="pkg-note"></section>
+
+<!-- CTA -->
+<a id="pay-btn" class="pay-button">Lanjut ke Pembayaran</a>
+
+
+
+<script>
+const q = new URLSearchParams(location.search);
+const product = q.get("product");
+const pkg = q.get("package");
+
+fetch("https://opensheet.elk.sh/ID_SHEET/PACKAGE_DETAIL")
+.then(r=>r.json())
+.then(rows=>{
+  const data = rows.find(
+    i => i.product_id===product && i.package_id===pkg
+  );
+  if(!data) return;
+
+  document.getElementById("pkg-image").src = data.image_url;
+  document.getElementById("pkg-title").textContent = data.title;
+  document.getElementById("pkg-subtitle").textContent = data.subtitle;
+  document.getElementById("pkg-duration").textContent = data.duration;
+  document.getElementById("pkg-guarantee").textContent = data.guarantee;
+
+  // harga setelah diskon
+  const price = Number(data.price);
+  const final = data.discount
+    ? Math.round(price - price*data.discount/100)
+    : price;
+
+  document.getElementById("pkg-price").textContent =
+    "Rp" + final.toLocaleString("id-ID");
+
+  document.getElementById("pkg-note").textContent = data.note_legal;
+  document.getElementById("pay-btn").href = data.lynk_id;
+});
+
+</script>
+</body>
+</html>
