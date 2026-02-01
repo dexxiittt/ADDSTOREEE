@@ -188,6 +188,21 @@ body.package-page {
   animation: skeleton-shimmer 1.4s infinite;
 }
 
+.trust-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.trust-row span {
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.85);
+}
+
 @keyframes skeleton-shimmer {
   to { transform: translateX(100%); }
 }
@@ -245,11 +260,7 @@ body.package-page {
   <div><span>Harga</span><b id="pkg-price"></b></div>
   <div><span>Garansi</span><b id="pkg-guarantee"></b></div>
 
-<div class="trust-row glass">
-  <span>✔ Akun Aman</span>
-  <span>✔ Garansi Aktif</span>
-  <span>✔ Support Responsif</span>
-</div>
+<div id="pkg-trust" class="trust-row"></div>
   
 </section>
 
@@ -293,6 +304,15 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PAC
   document.getElementById("pkg-duration").textContent = data.duration;
   document.getElementById("pkg-guarantee").textContent = data.guarantee;
 
+  const trustWrap = document.getElementById("pkg-trust");
+
+  if (data.trust_points) {
+  trustWrap.innerHTML = data.trust_points
+    .split("|")
+    .map(t => `<span>✔ ${t.trim()}</span>`)
+    .join("");
+}
+  
   // harga setelah diskon
   const price = Number(data.price);
   const final = data.discount
