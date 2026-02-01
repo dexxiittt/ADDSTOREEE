@@ -69,8 +69,10 @@ body.package-page {
 
 .package-info img {
   width: 100%;
-  height: clamp(160px, 28vh, 260px); /* responsif & aman */
-  object-fit: cover;
+  max-height: 200px;        /* kunci tinggi */
+  height: 32vw;             /* responsif di mobile */
+  object-fit: cover;        /* crop rapi */
+  object-position: center;  /* fokus tengah */
   border-radius: 18px;
 }
 
