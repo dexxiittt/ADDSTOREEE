@@ -229,14 +229,14 @@ body.package-page {
 /* TRUST ROW – HORIZONTAL PREMIUM */
 .trust-row {
   display: flex;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  padding-inline: 6px;
   gap: 12px;
   margin-top: 16px;
 
   overflow-x: auto;
   scrollbar-width: none;
+
+  justify-content: flex-start;
+  padding-inline: calc((100% - 260px) / 2);
 }
 
 .trust-row::-webkit-scrollbar {
