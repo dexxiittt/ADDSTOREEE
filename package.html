@@ -217,19 +217,184 @@ body.package-page {
 .sk-meta    { height: 38px; border-radius: 12px; }
 .sk-button  { height: 52px; border-radius: 16px; margin-top: 22px; }
 
+/* TRUST MICRO DETAIL */
 .trust-row {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
   gap: 10px;
-  font-size: 12.5px;
-  opacity: .85;
+  margin-top: 14px;
 }
 
 .trust-row span {
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.92);
+
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  white-space: nowrap;
+
+  animation: trust-fade-in .5s ease both;
+}
+
+.trust-row span:nth-child(1){animation-delay:.05s}
+.trust-row span:nth-child(2){animation-delay:.12s}
+.trust-row span:nth-child(3){animation-delay:.18s}
+
+@keyframes trust-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* PREMIUM TYPOGRAPHY SYSTEM */
+.package-page {
+  font-family: 'Inter', 'Plus Jakarta Sans', system-ui, sans-serif;
+  letter-spacing: -0.1px;
+}
+
+/* HERO */
+.package-hero h1 {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.package-hero p {
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+/* TITLE PRODUK */
+#pkg-title {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.25px;
+  margin-top: 12px;
+}
+
+/* SUBTITLE */
+#pkg-subtitle {
+  font-size: 13.5px;
+  font-weight: 400;
+  opacity: 0.8;
+  line-height: 1.55;
+}
+
+/* META LABEL */
+.package-meta span {
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  opacity: 0.65;
+}
+
+/* META VALUE */
+.package-meta b {
+  font-size: 14.5px;
+  font-weight: 600;
+  letter-spacing: -0.15px;
+}
+
+/* HARGA → PALING “MAHAL” */
+#pkg-price {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+/* NOTE / LEGAL */
+.package-note {
+  font-size: 12.5px;
+  line-height: 1.6;
+  opacity: 0.75;
+}
+
+/* PREMIUM CTA MICRO INTERACTION */
+.pay-button {
+  display: block;
+  margin: 22px 16px 32px;
+  padding: 14px 18px;
+  border-radius: 16px;
+
+  text-align: center;
+  text-decoration: none;
+
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.15px;
+
+  color: #fff;
+  background: linear-gradient(135deg, #6d5dfc, #8b5cf6);
+
+  box-shadow:
+    0 12px 28px rgba(109,93,252,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.35);
+
+  transition:
+    transform .25s cubic-bezier(.22,1,.36,1),
+    box-shadow .25s ease,
+    filter .25s ease;
+}
+
+/* hover (desktop) */
+.pay-button:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 18px 38px rgba(109,93,252,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.45);
+}
+
+/* tap (mobile feel) */
+.pay-button:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow:
+    0 8px 18px rgba(109,93,252,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.25);
+}
+
+/* loading state */
+.pay-button.is-loading {
+  pointer-events: none;
+  opacity: 0.75;
+  filter: grayscale(.2);
+}
+
+/* STICKY CTA – MOBILE ONLY */
+
+.sticky-cta {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  background: rgba(10,10,20,0.75);
+  backdrop-filter: blur(14px);
+
+  box-shadow: 0 -8px 28px rgba(0,0,0,0.35);
+  z-index: 999;
+
+  display: none;
+}
+
+/* mobile only */
+@media (max-width: 768px) {
+  .sticky-cta {
+    display: block;
+  }
+
+  /* biar konten gak ketutup */
+  body {
+    padding-bottom: 96px;
+  }
 }
   
 @media (max-width: 480px) {
@@ -280,7 +445,9 @@ body.package-page {
 </section>
   
 <!-- CTA -->
-<a id="pay-btn" class="pay-button">Lanjut ke Pembayaran</a>
+<div id="sticky-cta" class="sticky-cta">
+  <a id="sticky-pay" class="pay-button">Lanjut ke Pembayaran</a>
+</div>
 
 
 
@@ -299,6 +466,11 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PAC
   );
   if(!data) return;
   sk?.remove();
+
+  const stickyPay = document.getElementById("sticky-pay");
+  if (stickyPay) {
+  stickyPay.href = data.lynk_id;
+}
   
   document.getElementById("pay-btn")?.classList.remove("is-loading");
   document.getElementById("pkg-image").src = data.image_url;
@@ -331,6 +503,17 @@ if (trustWrap && data.trust_points) {
   document.getElementById("pkg-note").textContent = data.note_legal;
   document.getElementById("pay-btn").href = data.lynk_id;
 });
+
+const mainCTA = document.getElementById("pay-btn");
+const stickyCTA = document.getElementById("sticky-cta");
+
+if (mainCTA && stickyCTA) {
+  const obs = new IntersectionObserver(
+    ([e]) => stickyCTA.style.opacity = e.isIntersecting ? "0" : "1",
+    { threshold: 0.6 }
+  );
+  obs.observe(mainCTA);
+}
 
 </script>
 </body>
