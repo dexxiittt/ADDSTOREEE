@@ -368,6 +368,20 @@ body.package-page {
   filter: grayscale(.2);
 }
 
+.package-stage {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 32px 16px 80px;
+}
+
+/* CONTAINER UTAMA */
+.package-shell {
+  width: 100%;
+  max-width: 560px;
+}
+  
 /* STICKY CTA – MOBILE ONLY */
 
 .sticky-cta {
@@ -391,7 +405,6 @@ body.package-page {
     display: block;
   }
 
-  /* biar konten gak ketutup */
   body {
     padding-bottom: 96px;
   }
@@ -401,6 +414,12 @@ body.package-page {
   .package-meta {
     grid-template-columns: 1fr;
     gap: 10px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .package-shell {
+    max-width: 960px;
   }
 }
   
@@ -415,6 +434,9 @@ body.package-page {
   <p>Lengkapi informasi sebelum melanjutkan</p>
 </section>
 
+<section class="package-stage">
+  <div class="package-shell">
+  
 <!-- CARD INFO -->
 <section class="package-info glass">
   <img id="pkg-image" alt="Paket" loading="lazy">
@@ -449,7 +471,8 @@ body.package-page {
 <div id="sticky-cta" class="sticky-cta">
   <a id="sticky-pay" class="pay-button">Lanjut ke Pembayaran</a>
 </div>
-
+</div>
+</section>
 
 
 <script>
