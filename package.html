@@ -137,12 +137,6 @@ body.package-page {
   font-weight: 700;
 }
 
-/* FULL STAGE CARD */
-.package-stage {
-  min-height: calc(100vh - 140px); /* hero */
-  display: flex;
-}
-
 .package-shell {
   display: flex;
   flex-direction: column;
@@ -236,7 +230,8 @@ body.package-page {
 .trust-row {
   display: flex;
   flex-wrap: nowrap;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-inline: 6px;
   gap: 12px;
   margin-top: 16px;
 
@@ -250,6 +245,7 @@ body.package-page {
 
 .trust-row span {
   white-space: nowrap;
+  animation: trust-fade-in .4s ease both;
 }
 
 .trust-row span:nth-child(1){animation-delay:.05s}
