@@ -226,25 +226,37 @@ body.package-page {
 .sk-meta    { height: 38px; border-radius: 12px; }
 .sk-button  { height: 52px; border-radius: 16px; margin-top: 22px; }
 
-/* TRUST ROW – HORIZONTAL PREMIUM */
+/* TRUST – AUTO WRAP CENTER */
 .trust-row {
   display: flex;
-  gap: 12px;
-  margin-top: 16px;
-
-  overflow-x: auto;
-  scrollbar-width: none;
-
-  justify-content: flex-start;
-  padding-inline: calc((100% - 260px) / 2);
+  flex-wrap: wrap;              /* ⬅️ boleh turun baris */
+  justify-content: center;      /* ⬅️ SEMUA BARIS TENGAH */
+  align-items: center;
+  gap: 10px 12px;               /* row-gap | column-gap */
+  margin-top: 14px;
 }
 
-.trust-row::-webkit-scrollbar {
-  display: none;
-}
-
+/* TRUST CHIP */
 .trust-row span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 6px 14px;
+  font-size: 12.5px;
   white-space: nowrap;
+
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  border-radius: 999px;
+  color: rgba(255,255,255,0.92);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.25),
+    0 4px 12px rgba(0,0,0,0.25);
+
   animation: trust-fade-in .4s ease both;
 }
 
