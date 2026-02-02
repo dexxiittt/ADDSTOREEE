@@ -569,6 +569,62 @@ body.package-page {
   }
 }
 
+  /* GLOBAL FADE FLOW */
+.fade-flow {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: fade-flow 0.9s cubic-bezier(.22,1,.36,1) forwards;
+}
+
+.fade-delay-1 { animation-delay: .15s }
+.fade-delay-2 { animation-delay: .3s }
+.fade-delay-3 { animation-delay: .45s }
+.fade-delay-4 { animation-delay: .6s }
+
+@keyframes fade-flow {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* META ITEM ANIMATION */
+.package-meta > div {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: meta-in .6s cubic-bezier(.22,1,.36,1) forwards;
+}
+
+.package-meta > div:nth-child(1) { animation-delay: .45s }
+.package-meta > div:nth-child(2) { animation-delay: .55s }
+.package-meta > div:nth-child(3) { animation-delay: .65s }
+
+@keyframes meta-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* PRICE SOFT PULSE */
+.price-animate {
+  animation:
+    price-pop .45s ease-out both,
+    price-pulse 1.4s ease-out .6s both;
+}
+
+@keyframes price-pulse {
+  0% {
+    text-shadow: 0 0 0 rgba(239,68,68,0);
+  }
+  50% {
+    text-shadow: 0 8px 24px rgba(239,68,68,.35);
+  }
+  100% {
+    text-shadow: 0 6px 18px rgba(239,68,68,.25);
+  }
+}
+  
 /* mobile only */
 @media (max-width: 768px) {
   .sticky-cta {
@@ -599,7 +655,7 @@ body.package-page {
 <body class="package-page">
 
 <!-- HEADER GRADIENT -->
-<section class="package-hero">
+<section class="package-hero fade-flow fade-delay-1">
   <h1>Pilihan Paket</h1>
   <p>Lengkapi informasi sebelum melanjutkan</p>
 </section>
@@ -608,14 +664,14 @@ body.package-page {
   <div class="package-shell">
   
 <!-- CARD INFO -->
-<section class="package-info glass">
+<section class="package-info glass fade-flow fade-delay-2">
   <img id="pkg-image" alt="Paket" loading="lazy">
   <h2 id="pkg-title"></h2>
   <p id="pkg-subtitle"></p>
 </section>
 
 <!-- STATS -->
-<section class="package-meta glass">
+<section class="package-meta glass fade-flow fade-delay-3">
   <div><span>Durasi</span><b id="pkg-duration"></b></div>
   <div><span>Harga</span><b id="pkg-price"></b></div>
   <div><span>Garansi</span><b id="pkg-guarantee"></b></div>
@@ -634,8 +690,10 @@ body.package-page {
 </section>
   
 <!-- INFO PENTING -->
-<section class="package-note glass" id="pkg-note"></section>
-<a id="pay-btn" class="pay-button">Lanjut ke Pembayaran</a>
+<section class="package-note glass fade-flow fade-delay-4" id="pkg-note"></section>
+<a id="pay-btn" class="pay-button fade-flow fade-delay-4">
+  Lanjut ke Pembayaran
+</a>
   
 <!-- CTA -->
 <div id="sticky-cta" class="sticky-cta">
