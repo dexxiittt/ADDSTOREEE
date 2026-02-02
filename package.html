@@ -545,6 +545,9 @@ body.package-page {
 .price-animate {
   font-weight: 800;
   text-shadow: 0 6px 18px rgba(239,68,68,.25);
+  animation:
+    price-pop .45s ease-out both,
+    price-pulse 1.4s ease-out .6s both;
 }
 
 #pkg-price {
@@ -598,6 +601,10 @@ body.package-page {
       0 12px 28px rgba(109,93,252,0.35),
       inset 0 1px 0 rgba(255,255,255,0.35);
   }
+}
+
+#sticky-cta .pay-button {
+  animation: cta-breathe 4s ease-in-out infinite;
 }
 
 .pay-button::after {
@@ -662,13 +669,6 @@ body.package-page {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-/* PRICE SOFT PULSE */
-.price-animate {
-  animation:
-    price-pop .45s ease-out both,
-    price-pulse 1.4s ease-out .6s both;
 }
 
 @keyframes price-pulse {
