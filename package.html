@@ -318,6 +318,27 @@ body.package-page {
   margin-top: 10px;
 }
 
+#pkg-trust {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+#pkg-trust::-webkit-scrollbar {
+  display: none;
+}
+
+#pkg-trust span {
+  white-space: nowrap;
+  font-size: 11.5px;
+  padding: 5px 10px;
+}
+
 .trust-row span:nth-child(1) { animation-delay: .15s; }
 .trust-row span:nth-child(2) { animation-delay: .3s; }
 .trust-row span:nth-child(3) { animation-delay: .45s; }
@@ -819,11 +840,10 @@ body.package-page {
   <div><span>Durasi</span><b id="pkg-duration"></b></div>
   <div><span>Harga</span><b id="pkg-price"></b></div>
   <div><span>Garansi</span><b id="pkg-guarantee"></b></div>
+</section>
 
 <div id="pkg-trust" class="trust-row"></div>
   
-</section>
-
 <!-- SKELETON LOADING -->
 <section id="skeleton-wrap" class="glass">
   <div class="skeleton sk-image"></div>
