@@ -674,13 +674,6 @@ if (trustWrap && data.trust_points) {
 }
   
   // harga setelah diskon
-const price = Number(data.price) || 0;
-const discount = parseDiscount(data.discount);
-
-const final = discount > 0
-  ? Math.round(price - (price * discount / 100))
-  : price;
-
 const priceEl = document.getElementById("pkg-price");
 
 const price = Number(data.price) || 0;
