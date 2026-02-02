@@ -515,8 +515,9 @@ body.package-page {
 .discount-badge {
   display: inline-block;
   margin-left: 8px;
-  padding: 2px 8px;
+  margin-top: 4px;
 
+  padding: 3px 10px;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: .3px;
@@ -527,23 +528,29 @@ body.package-page {
   border-radius: 999px;
 
   box-shadow:
-    0 6px 18px rgba(239,68,68,.45),
+    0 4px 12px rgba(239,68,68,.35),
     inset 0 1px 0 rgba(255,255,255,.35);
-}
+
+  animation: badge-pop .35s ease-out both;
+  }
 
 @keyframes price-pop {
   0% {
     opacity: 0;
-    transform: translateY(4px) scale(.96);
+    transform: translateY(6px) scale(.95);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-1px) scale(1.03);
   }
   100% {
-    opacity: 1;
     transform: translateY(0) scale(1);
   }
 }
 
 .price-animate {
-  animation: price-pop .35s ease-out both;
+  font-weight: 800;
+  text-shadow: 0 6px 18px rgba(239,68,68,.25);
 }
   
 /* mobile only */
