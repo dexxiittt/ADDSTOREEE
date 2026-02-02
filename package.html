@@ -227,7 +227,6 @@ body.package-page {
 .sk-button  { height: 52px; border-radius: 16px; margin-top: 22px; }
 
 /* TRUST – AUTO WRAP CENTER */
-/* TRUST – AUTO WRAP CENTER */
 .trust-row {
   display: flex;
   flex-wrap: wrap;              /* ⬅️ boleh turun baris */
@@ -310,6 +309,10 @@ body.package-page {
     inset 0 1px 0 rgba(255,255,255,0.25),
     0 4px 12px rgba(139,92,246,0.25);
 }
+
+.trust-row span:focus:not(:focus-visible) {
+  outline: none;
+}
   
 #pkg-trust {
   grid-column: 1 / -1;   /* ⬅️ KUNCI UTAMA */
@@ -355,6 +358,31 @@ body.package-page {
   }
   }
 
+@media (hover: hover) and (pointer: fine) {
+
+  .trust-row span:hover {
+    background: rgba(255,255,255,0.12);
+    z-index: 2;
+
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.35),
+      0 6px 18px rgba(139,92,246,0.35);
+
+    background:
+      linear-gradient(
+        120deg,
+        rgba(255,255,255,0.08),
+        rgba(255,255,255,0.35),
+        rgba(255,255,255,0.08)
+      );
+    background-size: 200% 100%;
+    background-position: 100% 50%;
+
+    transform: translateY(-2px) scale(1.03);
+  }
+
+}
+  
 /* PREMIUM TYPOGRAPHY SYSTEM */
 .package-page {
   font-family: 'Inter', 'Plus Jakarta Sans', system-ui, sans-serif;
