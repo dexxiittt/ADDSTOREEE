@@ -594,6 +594,17 @@ const q = new URLSearchParams(location.search);
 const product = q.get("product");
 const pkg = q.get("package");
 
+function parseDiscount(val) {
+  if (!val) return 0;
+
+  return Number(
+    String(val)
+      .replace('%', '')
+      .replace(',', '.')
+      .trim()
+  ) || 0;
+}
+  
 document.getElementById("pay-btn")?.classList.add("is-loading");
 fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PACKAGE_DETAIL")
 .then(r=>r.json())
@@ -629,13 +640,31 @@ if (trustWrap && data.trust_points) {
 }
   
   // harga setelah diskon
-  const price = Number(data.price);
-  const final = data.discount
-    ? Math.round(price - price*data.discount/100)
-    : price;
+const price = Number(data.price) || 0;
+const discount = parseDiscount(data.discount);
 
-  document.getElementById("pkg-price").textContent =
-    "Rp" + final.toLocaleString("id-ID");
+const final = discount > 0
+  ? Math.round(price - (price * discount / 100))
+  : price;
+
+const priceEl = document.getElementById("pkg-price");
+if (discount > 0) {
+  priceEl.innerHTML = `
+    <span style="
+      font-size:13px;
+      opacity:.55;
+      text-decoration:line-through;
+      margin-right:6px
+    ">
+      Rp${price.toLocaleString("id-ID")}
+    </span>
+    <span style="font-size:17px;font-weight:700">
+      Rp${final.toLocaleString("id-ID")}
+    </span>
+  `;
+} else {
+  priceEl.textContent = "Rp" + price.toLocaleString("id-ID");
+}
 
   document.getElementById("pkg-note").textContent = data.note_legal;
   document.getElementById("pay-btn").href = data.lynk_id;
