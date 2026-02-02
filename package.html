@@ -65,7 +65,7 @@ body.package-page {
   border-radius: 22px;
   padding: 22px;
   margin: 18px auto;
-  max-width: 200px;
+  max-width: 100%;
 
   box-shadow:
     0 30px 80px rgba(0,0,0,0.45);
@@ -73,6 +73,7 @@ body.package-page {
 
 .package-info.glass {
   max-height: 320px;
+  max-width: 720px;
   padding: 18px;
 }
 
@@ -439,15 +440,13 @@ body.package-page {
 }
 
 #pkg-price {
+  font-family: 'DM Sans', sans-serif;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
+  line-height: 1.2;
   white-space: nowrap; /* aman kalau layar kecil */
-}
-
-.package-meta > div:nth-child(2) {
-  transform: scale(1.06);
 }
 
 @keyframes price-pop {
