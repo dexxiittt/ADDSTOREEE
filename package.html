@@ -109,12 +109,6 @@ body.package-page {
   font-weight: 700;
 }
 
-.pkg-price {
-  font-family: 'DM Sans';
-  font-size: 28px;
-  font-weight: 800;
-}
-
 .package-note {
   font-size: 12px;
   line-height: 1.6;
@@ -230,218 +224,30 @@ body.package-page {
 .sk-meta    { height: 38px; border-radius: 12px; }
 .sk-button  { height: 52px; border-radius: 16px; margin-top: 22px; }
 
-/* TRUST – AUTO WRAP CENTER */
-.trust-row {
+/* TRUST – FINAL, BERSIH */
+#pkg-trust {
   display: flex;
-  flex-wrap: nowrap; 
   justify-content: center;
-  align-items: center;
-  gap: 10px 12px;
-  overflow-x: auto;
-  scrollbar-width: none;
+  gap: 10px;
   margin-top: 14px;
 }
 
-.trust-row::-webkit-scrollbar {
-  display: none;
-}
-  
-/* TRUST CHIP */
-.trust-row span {
-  display: inline-flex !important;
-  align-items: center;
-  gap: 6px;
-
-  padding: 5px 10px;
-  font-size: 11.5px;
-  white-space: nowrap;
-
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-
-  background-size: 200% 100%;
-  background-position: 0% 50%;
-  
-  border-radius: 999px;
-  color: rgba(255,255,255,0.92);
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.25),
-    0 4px 12px rgba(0,0,0,0.25);
-
-  position: relative;
-  overflow: hidden;
-  z-index: 0;
-  isolation: isolate;
-  
-  transition:
-    background-position .6s ease,
-    box-shadow .25s ease,
-    background-color .25s ease,
-    transform .25s ease;
-
-  animation:
-    trust-fade-in .4s ease both,
-    trust-pulse-once 0.9s ease-out both;
-}
-
-/* TRUST – FINAL CLEAN VERSION */
 #pkg-trust span {
   display: inline-flex;
   align-items: center;
   gap: 6px;
 
-  padding: 11px 168px;          /* lebih gede */
-  font-size: 15px;          /* naik dikit */
-  font-weight: 800;           /* lebih tegas */
+  padding: 8px 14px;
+  font-size: 13.5px;
+  font-weight: 700;
 
   border-radius: 999px;
-  background: rgba(255,255,255,0.12); /* lebih terang */
+  background: rgba(255,255,255,0.14);
   color: #ffffff;
 
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.35),
-    0 6px 18px rgba(0,0,0,0.35);
-}
-
-#pkg-trust::-webkit-scrollbar {
-  display: none;
-}
-
-#pkg-trust span {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-
-  padding: 5px 10px;
-  font-size: 11.5px;
-
-  border-radius: 999px;
-  background: rgba(255,255,255,0.08);
-  color: rgba(255,255,255,0.92);
-}
-
-.trust-row span:hover {
-  background: rgba(255,255,255,0.12);
-  z-index: 2;
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.35),
-    0 6px 18px rgba(139,92,246,0.35); /* glow ungu halus */
-
-  background-size: 200% 100%;
-  background-position: 100% 50%;
-  
-  transform: translateY(-2px) scale(1.03);
-}
-
-.trust-row span:active {
-  background: rgba(255,255,255,0.14);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.35),
-    0 6px 18px rgba(139,92,246,0.35);
-  transform: scale(0.97);
-}
-
-.trust-row span:focus:not(:focus-visible) {
-  outline: none;
-}
-
-.trust-row span:nth-child(1) { animation-delay: .15s; }
-.trust-row span:nth-child(2) { animation-delay: .3s; }
-.trust-row span:nth-child(3) { animation-delay: .45s; }
-.trust-row span:nth-child(4) { animation-delay: .6s; }
-
-@keyframes trust-fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes trust-pulse-once {
-  0% {
-    opacity: 0;
-    transform: scale(0.92) translateY(4px);
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.15),
-      0 0 0 rgba(139,92,246,0);
-  }
-  60% {
-    opacity: 1;
-    transform: scale(1.02) translateY(-1px);
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.35),
-      0 10px 28px rgba(139,92,246,0.45);
-  }
-  100% {
-    transform: scale(1) translateY(0);
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.25),
-      0 4px 12px rgba(0,0,0,0.25);
-  }
-  }
-
-@media (hover: hover) and (pointer: fine) {
-
-  .trust-row span:hover {
-    background: rgba(255,255,255,0.12);
-    z-index: 2;
-
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.35),
-      0 6px 18px rgba(139,92,246,0.35);
-
-    background:
-      linear-gradient(
-        120deg,
-        rgba(255,255,255,0.08),
-        rgba(255,255,255,0.35),
-        rgba(255,255,255,0.08)
-      );
-    background-size: 200% 100%;
-    background-position: 100% 50%;
-
-    transform: translateY(-2px) scale(1.03);
-  }
-}
-
-.trust-row span:active {
-  transform: scale(0.96);
-}
-
-@media (hover: none) {
-  .trust-row span:hover {
-    background: rgba(255,255,255,0.08) !important;
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.25),
-      0 4px 12px rgba(0,0,0,0.25);
-    transform: none !important;
-    background-position: 0% 50% !important;
-  }
-
-  .trust-row span:active {
-    transform: scale(0.96);
-  }
-}
-
-@media (hover: none) and (pointer: coarse) {
-  .trust-row span {
-    transition: transform .15s ease;
-  }
-
-  .trust-row span:hover {
-    background: rgba(255,255,255,0.08) !important;
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.25),
-      0 4px 12px rgba(0,0,0,0.25) !important;
-    transform: none !important;
-  }
+    0 6px 16px rgba(0,0,0,0.35);
 }
   
 /* PREMIUM TYPOGRAPHY SYSTEM */
@@ -485,8 +291,15 @@ body.package-page {
 
 /* HARGA → PALING “MAHAL” */
 #pkg-price {
-  font-size: 17px;
-  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  font-size: 19px;     /* lebih gede dari meta lain */
+  font-weight: 900;    /* PALING BOLD */
+  color: #a78bfa;      /* ungu terang */
+
   letter-spacing: -0.3px;
 }
 
@@ -619,11 +432,10 @@ body.package-page {
 
 .price-animate {
   font-weight: 900;
-  color: #a78bfa;
-  text-shadow: 0 6px 22px rgba(139,92,246,.55);
-  animation:
-    price-pop .45s ease-out both,
-    price-pulse 1.4s ease-out .6s both;
+  color: #a78bfa; /* KUNCI WARNA */
+
+  text-shadow:
+    0 6px 22px rgba(139,92,246,.55);
 }
 
 #pkg-price {
@@ -749,13 +561,13 @@ body.package-page {
 
 @keyframes price-pulse {
   0% {
-    text-shadow: 0 0 0 rgba(239,68,68,0);
+    text-shadow: 0 0 0 rgba(139,92,246,0);
   }
   50% {
-    text-shadow: 0 8px 24px rgba(239,68,68,.35);
+    text-shadow: 0 8px 26px rgba(139,92,246,.65);
   }
   100% {
-    text-shadow: 0 6px 18px rgba(239,68,68,.25);
+    text-shadow: 0 6px 22px rgba(139,92,246,.55);
   }
 }
 
@@ -953,11 +765,7 @@ if (discount > 0) {
       Rp${price.toLocaleString("id-ID")}
     </span>
 
-    <span class="price-animate" style="
-      font-size:18px;
-      font-weight:800;
-      color:#ef4444;
-    ">
+    <span class="price-animate" style="font-size:18px">
       Rp${final.toLocaleString("id-ID")}
     </span>
 
