@@ -443,7 +443,11 @@ body.package-page {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  flex-wrap: wrap; /* aman kalau layar kecil */
+  white-space: nowrap; /* aman kalau layar kecil */
+}
+
+.package-meta > div:nth-child(2) {
+  transform: scale(1.06);
 }
 
 @keyframes price-pop {
@@ -765,7 +769,7 @@ if (discount > 0) {
       Rp${price.toLocaleString("id-ID")}
     </span>
 
-    <span class="price-animate" style="font-size:18px">
+    <span class="price-animate">
       Rp${final.toLocaleString("id-ID")}
     </span>
 
