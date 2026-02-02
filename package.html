@@ -569,6 +569,64 @@ body.package-page {
   }
 }
 
+/* CTA – SUBTLE BREATHING GLOW (IDLE) */
+.pay-button {
+  position: relative;
+  animation: cta-breathe 3.2s ease-in-out infinite;
+}
+
+/* HENTIKAN SAAT INTERAKSI */
+.pay-button:hover,
+.pay-button:active {
+  animation-play-state: paused;
+}
+
+/* BREATHING KEYFRAMES */
+@keyframes cta-breathe {
+  0% {
+    box-shadow:
+      0 12px 28px rgba(109,93,252,0.35),
+      inset 0 1px 0 rgba(255,255,255,0.35);
+  }
+  50% {
+    box-shadow:
+      0 18px 40px rgba(139,92,246,0.55),
+      inset 0 1px 0 rgba(255,255,255,0.45);
+  }
+  100% {
+    box-shadow:
+      0 12px 28px rgba(109,93,252,0.35),
+      inset 0 1px 0 rgba(255,255,255,0.35);
+  }
+}
+
+.pay-button::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle at center,
+    rgba(139,92,246,0.35),
+    transparent 65%
+  );
+  opacity: .25;
+  filter: blur(12px);
+  z-index: -1;
+  animation: halo-breathe 3.2s ease-in-out infinite;
+}
+
+@keyframes halo-breathe {
+  0%,100% { opacity: .25; }
+  50% { opacity: .45; }
+}
+
+/* stop saat interaksi */
+.pay-button:hover::after,
+.pay-button:active::after {
+  animation-play-state: paused;
+}
+
   /* GLOBAL FADE FLOW */
 .fade-flow {
   opacity: 0;
@@ -640,6 +698,9 @@ body.package-page {
   .package-meta {
     grid-template-columns: 1fr;
     gap: 10px;
+  }
+  .pay-button {
+    animation-duration: 4.2s;
   }
 }
 
