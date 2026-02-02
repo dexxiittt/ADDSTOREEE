@@ -40,14 +40,18 @@ body.package-page {
 
 .package-hero h1 {
   font-family: 'Poppins', sans-serif;
-  font-size: 100px;
+  font-size: clamp(36px, 6vw, 100px);
   font-weight: 800;
-  margin-bottom: 20px;
+  letter-spacing: -0.3px;
+  margin-bottom: 12px;
 }
 
 .package-hero p {
-  opacity: .8;
-  font-size: 36px;
+  font-size: clamp(13px, 2.6vw, 16px);
+  line-height: 1.6;
+  opacity: 0.85;
+  max-width: 520px;
+  margin: 0 auto;
 }
   
 .glass {
@@ -374,18 +378,6 @@ body.package-page {
 .package-page {
   font-family: 'Inter', 'Plus Jakarta Sans', system-ui, sans-serif;
   letter-spacing: -0.1px;
-}
-
-/* HERO */
-.package-hero h1 {
-  font-size: 28px;
-  font-weight: 700;
-  letter-spacing: -0.3px;
-}
-
-.package-hero p {
-  font-size: 14px;
-  opacity: 0.85;
 }
 
 /* TITLE PRODUK */
