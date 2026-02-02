@@ -233,10 +233,10 @@ body.package-page {
 /* TRUST – AUTO WRAP CENTER */
 .trust-row {
   display: flex;
-  flex-wrap: wrap;              /* ⬅️ boleh turun baris */
-  justify-content: center;      /* ⬅️ SEMUA BARIS TENGAH */
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
-  gap: 10px 12px;               /* row-gap | column-gap */
+  gap: 10px 12px;
   margin-top: 14px;
 }
 
@@ -307,8 +307,9 @@ body.package-page {
 }
   
 #pkg-trust {
-  grid-column: 1 / -1;   /* ⬅️ KUNCI UTAMA */
+  grid-column: 1 / -1;
   justify-self: center;
+  margin-top: 10px;
 }
 
 .trust-row span:nth-child(1) { animation-delay: .15s; }
@@ -372,7 +373,21 @@ body.package-page {
 
     transform: translateY(-2px) scale(1.03);
   }
+}
 
+@media (hover: none) {
+  .trust-row span:hover {
+    background: rgba(255,255,255,0.08) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.25),
+      0 4px 12px rgba(0,0,0,0.25);
+    transform: none !important;
+    background-position: 0% 50% !important;
+  }
+
+  .trust-row span:active {
+    transform: scale(0.96);
+  }
 }
   
 /* PREMIUM TYPOGRAPHY SYSTEM */
@@ -685,7 +700,7 @@ body.package-page {
   }
 }
 
-/* META ITEM – TOUCH FRIENDLY INTERACTION */
+/* META ITEM – INTERAKSI AMAN */
 .package-meta > div {
   display: inline-flex;
   flex-direction: column;
@@ -695,26 +710,26 @@ body.package-page {
   border-radius: 14px;
 
   transition:
-    background-color .25s ease,
-    transform .2s ease,
-    box-shadow .25s ease;
+    background-color .2s ease,
+    transform .15s ease,
+    box-shadow .2s ease;
 }
 
-/* desktop hover */
-@media (hover: hover) {
+/* HOVER KHUSUS DESKTOP SAJA */
+@media (hover: hover) and (pointer: fine) {
   .package-meta > div:hover {
     background: rgba(255,255,255,0.04);
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.15);
-    transform: translateY(-1px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
+    transform: translateY -1px);
   }
 }
 
+/* TAP MOBILE */
 @media (hover: none) {
   .package-meta > div:hover {
-    background: none;
-    box-shadow: none;
-    transform: none;
+    background: none !important;
+    box-shadow: none !important;
+    transform: none !important;
   }
 
   .package-meta > div:active {
@@ -722,29 +737,7 @@ body.package-page {
     transform: scale(0.96);
   }
 }
-
-@media (hover: none) {
-  .trust-row span:hover {
-    background: rgba(255,255,255,0.08);
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.25),
-      0 4px 12px rgba(0,0,0,0.25);
-    transform: none;
-    background-position: 0% 50%;
-  }
-}
-
-/* mobile tap */
-.package-meta > div:active {
-  background: rgba(255,255,255,0.06);
-  transform: scale(0.97);
-}
-
-.package-meta > div:active b {
-  transform: scale(1.05);
-  transition: transform .15s ease;
-}
-
+  
 /* mobile only */
 @media (max-width: 768px) {
   .sticky-cta {
