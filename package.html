@@ -287,18 +287,22 @@ body.package-page {
 }
 
 /* TRUST – FINAL CLEAN VERSION */
-#pkg-trust {
-  display: flex;
+#pkg-trust span {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
+  gap: 6px;
 
-  margin: 14px auto;
-  padding: 8px 10px;
+  padding: 7px 14px;          /* lebih gede */
+  font-size: 12.5px;          /* naik dikit */
+  font-weight: 600;           /* lebih tegas */
 
-  overflow-x: auto;
-  white-space: nowrap;
-  scrollbar-width: none;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.12); /* lebih terang */
+  color: #ffffff;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.35),
+    0 6px 18px rgba(0,0,0,0.35);
 }
 
 #pkg-trust::-webkit-scrollbar {
@@ -590,28 +594,33 @@ body.package-page {
   width: auto;
   max-width: max-content;
 
-  padding: 3px 6px;
+  padding: 4px 8px;
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 800;
 
   letter-spacing: 0;
   font-variant-numeric: tabular-nums;
 
   color: #fff;
-  background: linear-gradient(135deg, #ef4444, #dc2626);
+  background: linear-gradient(
+    135deg,
+    #ff4d4d,
+    #dc2626
+  );
 
   border-radius: 999px;
 
   box-shadow:
-    0 4px 12px rgba(239,68,68,.35),
-    inset 0 1px 0 rgba(255,255,255,.35);
+    0 6px 18px rgba(239,68,68,.55),
+    inset 0 1px 0 rgba(255,255,255,.4);
 
   animation: badge-pop .35s ease-out both;
 }
 
 .price-animate {
-  font-weight: 800;
-  text-shadow: 0 6px 18px rgba(239,68,68,.25);
+  font-weight: 900;
+  color: #a78bfa;
+  text-shadow: 0 6px 22px rgba(139,92,246,.55);
   animation:
     price-pop .45s ease-out both,
     price-pulse 1.4s ease-out .6s both;
