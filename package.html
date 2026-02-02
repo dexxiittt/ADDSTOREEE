@@ -286,6 +286,38 @@ body.package-page {
     trust-pulse-once 0.9s ease-out both;
 }
 
+/* TRUST – FINAL CLEAN VERSION */
+#pkg-trust {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  margin: 14px auto;
+  padding: 8px 10px;
+
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+
+#pkg-trust::-webkit-scrollbar {
+  display: none;
+}
+
+#pkg-trust span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 5px 10px;
+  font-size: 11.5px;
+
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.92);
+}
+
 .trust-row span:hover {
   background: rgba(255,255,255,0.12);
   z-index: 2;
@@ -310,33 +342,6 @@ body.package-page {
 
 .trust-row span:focus:not(:focus-visible) {
   outline: none;
-}
-  
-#pkg-trust {
-  grid-column: 1 / -1;
-  justify-self: center;
-  margin-top: 10px;
-}
-
-#pkg-trust {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-#pkg-trust::-webkit-scrollbar {
-  display: none;
-}
-
-#pkg-trust span {
-  white-space: nowrap;
-  font-size: 11.5px;
-  padding: 5px 10px;
 }
 
 .trust-row span:nth-child(1) { animation-delay: .15s; }
