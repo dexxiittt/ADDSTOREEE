@@ -538,6 +538,19 @@ body.package-page {
   animation: badge-pop .35s ease-out both;
 }
 
+.price-animate {
+  font-weight: 800;
+  text-shadow: 0 6px 18px rgba(239,68,68,.25);
+}
+
+#pkg-price {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap; /* aman kalau layar kecil */
+}
+
 @keyframes price-pop {
   0% {
     opacity: 0;
@@ -552,11 +565,6 @@ body.package-page {
   }
 }
 
-.price-animate {
-  font-weight: 800;
-  text-shadow: 0 6px 18px rgba(239,68,68,.25);
-}
-  
 /* mobile only */
 @media (max-width: 768px) {
   .sticky-cta {
