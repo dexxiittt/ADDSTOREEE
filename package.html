@@ -513,14 +513,18 @@ body.package-page {
 }
 
 .discount-badge {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+
   margin-left: 8px;
   margin-top: 4px;
 
-  padding: 3px 10px;
+  padding: 3px 6px;
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: .3px;
+
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
 
   color: #fff;
   background: linear-gradient(135deg, #ef4444, #dc2626);
@@ -532,7 +536,7 @@ body.package-page {
     inset 0 1px 0 rgba(255,255,255,.35);
 
   animation: badge-pop .35s ease-out both;
-  }
+}
 
 @keyframes price-pop {
   0% {
