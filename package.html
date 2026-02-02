@@ -685,13 +685,16 @@ body.package-page {
 
 /* META ITEM – TOUCH FRIENDLY INTERACTION */
 .package-meta > div {
-  position: relative;
-  padding: 10px 6px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 8px 10px;
   border-radius: 14px;
 
   transition:
     background-color .25s ease,
-    transform .25s ease,
+    transform .2s ease,
     box-shadow .25s ease;
 }
 
@@ -702,6 +705,19 @@ body.package-page {
     box-shadow:
       inset 0 1px 0 rgba(255,255,255,0.15);
     transform: translateY(-1px);
+  }
+}
+
+@media (hover: none) {
+  .package-meta > div:hover {
+    background: none;
+    box-shadow: none;
+    transform: none;
+  }
+
+  .package-meta > div:active {
+    background: rgba(255,255,255,0.06);
+    transform: scale(0.96);
   }
 }
 
