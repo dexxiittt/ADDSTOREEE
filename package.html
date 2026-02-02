@@ -295,10 +295,11 @@ body.package-page {
 }
 
 .trust-row span:active {
-  transform: scale(0.95);
+  background: rgba(255,255,255,0.14);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.25),
-    0 4px 12px rgba(139,92,246,0.25);
+    inset 0 1px 0 rgba(255,255,255,0.35),
+    0 6px 18px rgba(139,92,246,0.35);
+  transform: scale(0.97);
 }
 
 .trust-row span:focus:not(:focus-visible) {
@@ -719,6 +720,17 @@ body.package-page {
   .package-meta > div:active {
     background: rgba(255,255,255,0.06);
     transform: scale(0.96);
+  }
+}
+
+@media (hover: none) {
+  .trust-row span:hover {
+    background: rgba(255,255,255,0.08);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.25),
+      0 4px 12px rgba(0,0,0,0.25);
+    transform: none;
+    background-position: 0% 50%;
   }
 }
 
