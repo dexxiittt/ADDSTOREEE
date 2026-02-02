@@ -512,6 +512,40 @@ body.package-page {
   display: none;
 }
 
+.discount-badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .3px;
+
+  color: #fff;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+
+  border-radius: 999px;
+
+  box-shadow:
+    0 6px 18px rgba(239,68,68,.45),
+    inset 0 1px 0 rgba(255,255,255,.35);
+}
+
+@keyframes price-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(4px) scale(.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.price-animate {
+  animation: price-pop .35s ease-out both;
+}
+  
 /* mobile only */
 @media (max-width: 768px) {
   .sticky-cta {
@@ -522,7 +556,7 @@ body.package-page {
     padding-bottom: 96px;
   }
 }
-  
+
 @media (max-width: 480px) {
   .package-meta {
     grid-template-columns: 1fr;
@@ -648,22 +682,46 @@ const final = discount > 0
   : price;
 
 const priceEl = document.getElementById("pkg-price");
+
+const price = Number(data.price) || 0;
+const discount = parseDiscount(data.discount);
+
+const final = discount > 0
+  ? Math.round(price - (price * discount / 100))
+  : price;
+
 if (discount > 0) {
   priceEl.innerHTML = `
     <span style="
       font-size:13px;
-      opacity:.55;
+      opacity:.5;
       text-decoration:line-through;
       margin-right:6px
     ">
       Rp${price.toLocaleString("id-ID")}
     </span>
-    <span style="font-size:17px;font-weight:700">
+
+    <span class="price-animate" style="
+      font-size:18px;
+      font-weight:800;
+      color:#ef4444;
+    ">
       Rp${final.toLocaleString("id-ID")}
+    </span>
+
+    <span class="discount-badge">
+      -${Math.round(discount)}%
     </span>
   `;
 } else {
-  priceEl.textContent = "Rp" + price.toLocaleString("id-ID");
+  priceEl.innerHTML = `
+    <span class="price-animate" style="
+      font-size:17px;
+      font-weight:800;
+    ">
+      Rp${price.toLocaleString("id-ID")}
+    </span>
+  `;
 }
 
   document.getElementById("pkg-note").textContent = data.note_legal;
