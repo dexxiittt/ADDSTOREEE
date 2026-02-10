@@ -428,6 +428,34 @@ body.package-page {
   opacity: .6;
 }
 
+/* collapse logic */
+.package-note.collapsed .note-line:not(:first-child) {
+  display: none;
+}
+
+.package-note.expanded .note-line {
+  display: block;
+}
+
+/* tombol selengkapnya */
+.note-toggle {
+  margin-top: 6px;
+  background: none;
+  border: none;
+  padding: 0;
+
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.7);
+
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.note-toggle:hover {
+  color: #fff;
+}
+
 /* PREMIUM CTA MICRO INTERACTION */
 .pay-button {
   display: block;
@@ -984,9 +1012,29 @@ if (data.not_legal) {
     .map(t => t.trim())
     .filter(Boolean);
 
+  // render baris
   noteEl.innerHTML = lines
-    .map(line => `<div>${line}</div>`)
+    .map(line => `<div class="note-line">${line}</div>`)
     .join("");
+
+  // kalau lebih dari 1 baris → collapse
+  if (lines.length > 1) {
+    noteEl.classList.add("collapsed");
+
+    const toggle = document.createElement("button");
+    toggle.className = "note-toggle";
+    toggle.textContent = "Selengkapnya…";
+
+    toggle.onclick = () => {
+      noteEl.classList.toggle("expanded");
+      toggle.textContent = noteEl.classList.contains("expanded")
+        ? "Tutup"
+        : "Selengkapnya…";
+    };
+
+    noteEl.appendChild(toggle);
+  }
+
 } else {
   noteEl.remove();
 }
