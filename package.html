@@ -428,8 +428,13 @@ body.package-page {
 
 /* bullet halus (opsional) */
 .package-note div::before {
-  content: "• ";
+  content: "•";
   opacity: .6;
+}
+
+/* HAPUS BULLET UNTUK BARIS KOSONG */
+.package-note div:empty::before {
+  content: none;
 }
   
 /* tombol selengkapnya */
@@ -1073,9 +1078,9 @@ const noteEl = document.getElementById("pkg-note");
 
 if (data.not_legal) {
   const lines = data.not_legal
-    .split("|")
-    .map(t => t.trim())
-    .filter(Boolean);
+  .split("|")
+  .map(t => t.trim())
+  .filter(t => t.length > 0); // ⬅️ ini penting
 
 // render judul + baris
 const firstLine = lines[0];
