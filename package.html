@@ -305,6 +305,16 @@ body.package-page {
   
 }
 
+/* HARGA UTAMA – PALING DOMINAN */
+.price-main {
+  font-size: 26px;       /* ⬅️ ini kuncinya */
+  font-weight: 900;
+  letter-spacing: -0.4px;
+
+  text-shadow:
+    0 6px 22px rgba(139,92,246,.55);
+}
+  
 /* NOTE / LEGAL */
 .package-note {
   font-size: 14px;
@@ -409,8 +419,8 @@ body.package-page {
   width: auto;
   max-width: max-content;
 
-  padding: 4px 8px;
-  font-size: 11px;
+  padding: 3px 7px;
+  font-size: 10px;
   font-weight: 800;
 
   letter-spacing: 0;
@@ -760,15 +770,15 @@ const final = discount > 0
 if (discount > 0) {
   priceEl.innerHTML = `
     <span style="
-      font-size:13px;
-      opacity:.5;
-      text-decoration:line-through;
-      margin-right:6px
-    ">
+  font-size:12px;
+  opacity:.45;
+  text-decoration:line-through;
+  margin-right:6px
+">
       Rp${price.toLocaleString("id-ID")}
     </span>
 
-    <span class="price-animate">
+    <span class="price-animate price-main">
       Rp${final.toLocaleString("id-ID")}
     </span>
 
