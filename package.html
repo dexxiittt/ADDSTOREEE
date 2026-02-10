@@ -428,13 +428,30 @@ body.package-page {
   opacity: .6;
 }
 
-/* collapse logic */
-.package-note.collapsed .note-line:not(:first-child) {
-  display: none;
+/* ===== COLLAPSE + EXPAND (FADE + SLIDE) ===== */
+
+/* default state */
+.package-note .note-line {
+  overflow: hidden;
+  transition:
+    opacity .35s ease,
+    transform .35s ease,
+    max-height .35s ease;
 }
 
+/* collapsed → hanya baris pertama */
+.package-note.collapsed .note-line:not(:first-child) {
+  opacity: 0;
+  transform: translateY(-6px);
+  max-height: 0;
+  pointer-events: none;
+}
+
+/* expanded → semua baris muncul */
 .package-note.expanded .note-line {
-  display: block;
+  opacity: 1;
+  transform: translateY(0);
+  max-height: 80px; /* aman untuk 1 baris */
 }
 
 /* tombol selengkapnya */
@@ -446,15 +463,30 @@ body.package-page {
 
   font-size: 12px;
   font-weight: 600;
-  color: rgba(255,255,255,0.7);
+  color: rgba(255,255,255,0.65);
 
   cursor: pointer;
+
+  opacity: 0;
+  animation: toggle-fade-in .45s ease forwards;
+  animation-delay: .15s;
+
   transition: color .2s ease, opacity .2s ease;
 }
 
 .note-toggle:hover {
-  color: #fff;
-  opacity: .9;
+  color: #ffffff;
+}
+
+@keyframes toggle-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* PREMIUM CTA MICRO INTERACTION */
@@ -1029,13 +1061,18 @@ if (data.not_legal) {
     toggle.onclick = () => {
   const expanded = noteEl.classList.toggle("expanded");
 
-  if (expanded) {
-    noteEl.classList.remove("collapsed");
-    toggle.textContent = "Tutup";
-  } else {
-    noteEl.classList.add("collapsed");
-    toggle.textContent = "Selengkapnya…";
-  }
+  toggle.style.opacity = 0;
+
+  setTimeout(() => {
+    if (expanded) {
+      noteEl.classList.remove("collapsed");
+      toggle.textContent = "Tutup";
+    } else {
+      noteEl.classList.add("collapsed");
+      toggle.textContent = "Selengkapnya…";
+    }
+    toggle.style.opacity = 1;
+  }, 180);
 };
 
     noteEl.appendChild(toggle);
