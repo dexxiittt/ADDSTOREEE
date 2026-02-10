@@ -413,6 +413,21 @@ body.package-page {
   opacity: 0.75;
 }
 
+/* baris-baris not_legal */
+.package-note div {
+  margin-top: 4px;
+}
+
+.package-note div:first-child {
+  margin-top: 0;
+}
+
+/* bullet halus (opsional) */
+.package-note div::before {
+  content: "• ";
+  opacity: .6;
+}
+
 /* PREMIUM CTA MICRO INTERACTION */
 .pay-button {
   display: block;
