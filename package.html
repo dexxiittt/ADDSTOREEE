@@ -773,7 +773,7 @@ if (discount > 0) {
     </span>
 
     <span class="discount-badge">
-      -${Math.round(discount)}%
+  -${discount.toFixed(2).replace('.', ',')}%
     </span>
   `;
 } else {
