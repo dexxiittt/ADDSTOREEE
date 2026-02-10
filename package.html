@@ -964,7 +964,14 @@ if (discount > 0) {
 const noteEl = document.getElementById("pkg-note");
 
 if (data.not_legal) {
-  noteEl.textContent = data.not_legal;
+  const lines = data.not_legal
+    .split("|")
+    .map(t => t.trim())
+    .filter(Boolean);
+
+  noteEl.innerHTML = lines
+    .map(line => `<div>${line}</div>`)
+    .join("");
 } else {
   noteEl.remove();
 }
