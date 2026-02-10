@@ -1026,11 +1026,16 @@ if (data.not_legal) {
     toggle.textContent = "Selengkapnya…";
 
     toggle.onclick = () => {
-      noteEl.classList.toggle("expanded");
-      toggle.textContent = noteEl.classList.contains("expanded")
-        ? "Tutup"
-        : "Selengkapnya…";
-    };
+  const expanded = noteEl.classList.toggle("expanded");
+
+  if (expanded) {
+    noteEl.classList.remove("collapsed");
+    toggle.textContent = "Tutup";
+  } else {
+    noteEl.classList.add("collapsed");
+    toggle.textContent = "Selengkapnya…";
+  }
+};
 
     noteEl.appendChild(toggle);
   }
