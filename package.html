@@ -276,6 +276,8 @@ body.package-page {
 #pkg-trust span {
   display: inline-flex;
   align-items: center;
+  position: relative;
+  overflow: hidden;
   gap: 8px;
 
   padding: 10px 22px;
@@ -286,10 +288,55 @@ body.package-page {
   background: rgba(255,255,255,0.14);
   color: #ffffff;
 
+  opacity: 0;
+  animation: trust-in .6s cubic-bezier(.22,1,.36,1) forwards;
+
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.35),
-    0 6px 16px rgba(0,0,0,0.35);
+    0 6px 16px rgba(0,0,0,0.35),
+    0 0 0 rgba(139,92,246,0); /* awalnya mati */
+
+  transition: box-shadow .35s ease;
 }
+
+#pkg-trust span {
+  animation: trust-glow 4.5s ease-in-out infinite;
+}
+
+@keyframes trust-glow {
+  0%, 100% {
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.35),
+      0 6px 16px rgba(0,0,0,0.35),
+      0 0 0 rgba(139,92,246,0);
+  }
+  50% {
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.45),
+      0 10px 26px rgba(139,92,246,0.25),
+      0 0 18px rgba(139,92,246,0.35);
+  }
+}
+
+@keyframes trust-in {
+  from {
+    opacity: 0;
+    transform: translateX(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+#pkg-trust span:nth-child(1) { animation-delay: .05s }
+#pkg-trust span:nth-child(2) { animation-delay: .12s }
+#pkg-trust span:nth-child(3) { animation-delay: .19s }
+#pkg-trust span:nth-child(4) { animation-delay: .26s }
+#pkg-trust span:nth-child(5) { animation-delay: .33s }
+#pkg-trust span:nth-child(6) { animation-delay: .40s }
+#pkg-trust span:nth-child(7) { animation-delay: .47s }
+#pkg-trust span:nth-child(8) { animation-delay: .54s }
   
 /* PREMIUM TYPOGRAPHY SYSTEM */
 .package-page {
