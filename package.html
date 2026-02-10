@@ -631,6 +631,37 @@ body.package-page {
     box-shadow .2s ease;
 }
 
+/* ===============================
+   PRICE CLEAN ZONE (PURE WHITE)
+   =============================== */
+
+/* matikan semua efek WARISAN */
+.meta-price,
+.meta-price * {
+  opacity: 1 !important;
+  filter: none !important;
+  text-shadow: none !important;
+  mix-blend-mode: normal !important;
+}
+
+/* harga utama: PUTIH MURNI */
+#pkg-price,
+#pkg-price *,
+.price-main {
+  color: #ffffff !important;
+}
+
+/* harga core (dicoret) tetap lembut tapi putih */
+#pkg-price span[style*="line-through"] {
+  color: #ffffff !important;
+  opacity: 0.6 !important;
+}
+
+/* pastikan tidak ada animasi sisa */
+#pkg-price,
+.price-animate {
+  animation: none !important;
+}
 /* HOVER KHUSUS DESKTOP SAJA */
 @media (hover: hover) and (pointer: fine) {
   .package-meta > div:hover {
