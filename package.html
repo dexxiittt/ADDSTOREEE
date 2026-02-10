@@ -25,6 +25,12 @@
   color: var(--price-color);
 }
 
+:root {
+  --blue-accent: #60a5fa;          /* blue-400 */
+  --blue-accent-soft: rgba(96,165,250,.35);
+  --blue-accent-glow: rgba(96,165,250,.55);
+}
+
 /* BODY */
 body.package-page {
   margin: 0;
@@ -467,33 +473,45 @@ body.package-page {
   
 /* tombol selengkapnya */
 .note-toggle {
-  margin-top: 2px;          /* ⬅️ dari 6px → 2px */
+  margin-top: 2px;
   background: none;
   border: none;
   padding: 0;
-  opacity: .75;
-  
+
   font-size: 12px;
   font-weight: 600;
-  color: rgba(255,255,255,0.65);
+  letter-spacing: .2px;
 
+  color: var(--blue-accent);
   cursor: pointer;
 
   opacity: 0;
   animation: toggle-fade-in .45s ease forwards;
-  animation-delay: .12s;    /* sedikit lebih cepat */
+  animation-delay: .12s;
+
+  text-shadow:
+    0 0 8px var(--blue-accent-soft);
 
   transition:
-    color .2s ease,
+    color .25s ease,
     opacity .25s ease,
-    transform .25s ease;
+    transform .25s cubic-bezier(.22,1,.36,1),
+    text-shadow .35s ease;
 
-  transform: translateY(-2px); /* ⬅️ ini kuncinya (rapetin) */
+  transform: translateY(-2px);
 }
 
 .note-toggle:hover {
-  color: #ffffff;
-  opacity: 1;
+  color: #bfdbfe; /* blue-200 */
+  text-shadow:
+    0 0 12px var(--blue-accent-glow);
+  transform: translateY(-3px);
+}
+
+.note-toggle:active {
+  transform: translateY(-1px) scale(.97);
+  text-shadow:
+    0 0 6px var(--blue-accent-soft);
 }
 
 @keyframes toggle-fade-in {
