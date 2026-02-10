@@ -435,24 +435,32 @@ body.package-page {
 .package-note .note-line {
   overflow: hidden;
 
+  --d: calc(var(--i, 0) * 0.06s);
+
   transition-property: opacity, transform, max-height;
-  transition-timing-function: cubic-bezier(.22,1,.36,1);
+  transition-timing-function: cubic-bezier(.18,.89,.32,1.28); /* spring-like */
+}
+
+.package-note .note-line:first-child {
+  transition-delay: 0s !important;
 }
 
 /* EXPAND — lebih slow & elegan */
 .package-note.expanded .note-line {
-  transition-duration: .45s;
+  transition-duration: .55s;
+  transition-delay: var(--d);
 }
 
 /* COLLAPSE — lebih cepat & responsif */
 .package-note.collapsed .note-line {
-  transition-duration: .22s;
+  transition-duration: .25s;
+  transition-delay: calc(var(--d) * 0.6);
 }
 
 /* collapsed → hanya baris pertama */
 .package-note.collapsed .note-line:not(:first-child) {
   opacity: 0;
-  transform: translateY(-6px);
+  transform: translateY(-4px) scale(.98);
   max-height: 0;
   pointer-events: none;
 }
@@ -460,10 +468,10 @@ body.package-page {
 /* expanded → semua baris muncul */
 .package-note.expanded .note-line {
   opacity: 1;
-  transform: translateY(0);
-  max-height: 80px; /* aman untuk 1 baris */
+  transform: translateY(0) scale(1);
+  max-height: 80px;
 }
-
+  
 /* tombol selengkapnya */
 .note-toggle {
   margin-top: 2px;          /* ⬅️ dari 6px → 2px */
