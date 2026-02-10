@@ -426,15 +426,20 @@ body.package-page {
   margin-top: 0;
 }
 
-/* bullet halus (opsional) */
-.package-note div::before {
+/* bullet HANYA untuk baris teks */
+.package-note .note-line::before {
   content: "•";
+  margin-right: 6px;
   opacity: .6;
 }
 
-/* HAPUS BULLET UNTUK BARIS KOSONG */
-.package-note div:empty::before {
+/* safety: baris kosong benar-benar nol */
+.package-note .note-line:empty::before {
   content: none;
+}
+
+.note-extra:empty {
+  display: none;
 }
   
 /* tombol selengkapnya */
