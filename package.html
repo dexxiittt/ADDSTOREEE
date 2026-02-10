@@ -915,6 +915,10 @@ if (trustWrap && data.trust_points) {
     const icon = icons[i] || "✔";
     return `<span>${icon} ${text}</span>`;
   }).join("");
+
+  trustWrap.querySelectorAll('span').forEach((el, i) => {
+  el.style.setProperty('--i', i);
+});
 }
   
   // harga setelah diskon
