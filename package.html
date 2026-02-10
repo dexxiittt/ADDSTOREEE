@@ -961,7 +961,13 @@ if (discount > 0) {
   `;
 }
 
-  document.getElementById("pkg-note").textContent = data.note_legal;
+const noteEl = document.getElementById("pkg-note");
+
+if (data.not_legal) {
+  noteEl.textContent = data.not_legal;
+} else {
+  noteEl.remove();
+}
   document.getElementById("pay-btn").href = data.lynk_id;
 });
 
