@@ -334,12 +334,15 @@ body.package-page {
 
 /* HARGA UTAMA – PALING DOMINAN */
 .price-main {
-  font-size: 40px;       /* ⬅️ ini kuncinya */
+  position: relative;
+  font-size: 32px;       /* ⬅️ ini kuncinya */
   font-weight: 900;
   letter-spacing: -0.4px;
 
+  color: #ffffff;
   text-shadow:
-    0 6px 22px rgba(139,92,246,.55);
+    0 4px 14px rgba(139,92,246,.45),
+    0 0 22px rgba(139,92,246,.35);
 }
   
 /* NOTE / LEGAL */
@@ -446,8 +449,12 @@ body.package-page {
   width: auto;
   max-width: max-content;
 
-  padding: 3px 7px;
-  font-size: 10px;
+  position: absolute;
+  bottom: -14px;      /* nempel bawah harga */
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px 10px;
+  font-size: 11px;
   font-weight: 800;
 
   letter-spacing: 0;
@@ -463,8 +470,8 @@ body.package-page {
   border-radius: 999px;
 
   box-shadow:
-    0 8px 22px rgba(239,68,68,.65),
-    inset 0 1px 0 rgba(255,255,255,.45);
+    0 10px 26px rgba(239,68,68,.75),
+    inset 0 1px 0 rgba(255,255,255,.55);
 
   animation: badge-pop .35s ease-out both;
 }
@@ -798,7 +805,7 @@ if (discount > 0) {
   priceEl.innerHTML = `
     <span style="
   font-size:12px;
-  opacity:.45;
+  opacity:.6;
   text-decoration:line-through;
   margin-right:6px
 ">
