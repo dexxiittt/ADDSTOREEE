@@ -332,27 +332,28 @@ body.package-page {
   color: #ffffff; /* SAMA dengan Durasi & Garansi */
 
   letter-spacing: -0.3px;
-  
+
+  animation: none !important;
 }
 
 #pkg-price span[style*="line-through"] {
   opacity: .7;
 }
   
-/* HARGA UTAMA – PALING DOMINAN */
+/* HARGA UTAMA – PUTIH BERSIH TANPA EFEK */
 .price-main {
   position: relative;
-  font-size: 32px;       /* ⬅️ ini kuncinya */
+
+  font-size: 32px;
   font-weight: 900;
+  line-height: 1.1;
   letter-spacing: -0.4px;
 
   color: #ffffff;
-  color: #ffffff;
-  text-shadow:
-    0 0 0 rgba(0,0,0,0), /* reset layer gelap */
-    0 6px 18px rgba(139,92,246,.35);
 
-  filter: brightness(1.15);
+  /* ⛔ bersihin semua efek */
+  text-shadow: none !important;
+  filter: none !important;
 }
   
 /* NOTE / LEGAL */
@@ -475,10 +476,9 @@ body.package-page {
 }
 
 .price-animate {
-  font-weight: 900;
-  color: inherit; /* ikut warna #pkg-price */
-
-  text-shadow: inherit;
+  color: inherit;
+  text-shadow: none;
+  animation: none;
 }
 
 #pkg-price {
