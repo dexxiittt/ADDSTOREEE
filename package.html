@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -433,10 +434,19 @@ body.package-page {
 /* default state */
 .package-note .note-line {
   overflow: hidden;
-  transition:
-    opacity .35s ease,
-    transform .35s ease,
-    max-height .35s ease;
+
+  transition-property: opacity, transform, max-height;
+  transition-timing-function: cubic-bezier(.22,1,.36,1);
+}
+
+/* EXPAND — lebih slow & elegan */
+.package-note.expanded .note-line {
+  transition-duration: .45s;
+}
+
+/* COLLAPSE — lebih cepat & responsif */
+.package-note.collapsed .note-line {
+  transition-duration: .22s;
 }
 
 /* collapsed → hanya baris pertama */
