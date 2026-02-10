@@ -16,6 +16,13 @@
   --accent-strong: #6d28d9;
 }
 
+:root {
+  --price-color: #a78bfa;
+}
+.price-main {
+  color: var(--price-color);
+}
+
 /* BODY */
 body.package-page {
   margin: 0;
@@ -631,9 +638,7 @@ body.package-page {
     box-shadow .2s ease;
 }
 
-/* ===============================
-   PRICE CLEAN ZONE (PURE WHITE)
-   =============================== */
+/* PRICE CLEAN ZONE (PURE WHITE) */
 
 /* matikan semua efek WARISAN */
 .meta-price,
@@ -648,7 +653,7 @@ body.package-page {
 #pkg-price,
 #pkg-price *,
 .price-main {
-  color: #ffffff !important;
+  color: var(--price-color)
 }
 
 /* harga core (dicoret) tetap lembut tapi putih */
