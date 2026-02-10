@@ -271,6 +271,10 @@ body.package-page {
   justify-content: center;
   gap: 10px 12px;
   margin-top: 6px;
+
+  transition:
+    opacity .25s ease,
+    transform .25s cubic-bezier(.22,1,.36,1);
 }
 
 #pkg-trust span {
@@ -1130,6 +1134,24 @@ if (mainCTA && stickyCTA) {
     { threshold: 0.6 }
   );
   obs.observe(mainCTA);
+}
+
+const payBtn = document.getElementById("pay-btn");
+const noteEl = document.getElementById("pkg-note");
+const trustEl = document.getElementById("pkg-trust");
+
+if (payBtn && noteEl) {
+  payBtn.addEventListener("click", () => {
+    // auto collapse not_legal
+    noteEl.classList.remove("expanded");
+    noteEl.classList.add("collapsed");
+
+    // optional: collapse / hide trust
+    if (trustEl) {
+      trustEl.style.opacity = "0";
+      trustEl.style.transform = "translateY(-6px)";
+    }
+  });
 }
 
 </script>
