@@ -546,6 +546,24 @@ body.package-page {
 
   text-shadow: 0 0 8px rgba(96,165,250,0.25);
 }
+
+.note-extra {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-6px);
+
+  transition:
+    max-height .45s cubic-bezier(.22,1,.36,1),
+    opacity .3s ease,
+    transform .3s ease;
+}
+
+.package-note.expanded .note-extra {
+  max-height: 500px; /* aman, isi kecil */
+  opacity: 1;
+  transform: translateY(0);
+}
   
 /* PREMIUM CTA MICRO INTERACTION */
 .pay-button {
@@ -1103,9 +1121,17 @@ if (data.not_legal) {
     .filter(Boolean);
 
 // render judul + baris
+const firstLine = lines[0];
+const restLines = lines.slice(1);
+
 noteEl.innerHTML = `
   <div class="note-title">ⓘ Catatan Penting</div>
-  ${lines.map(line => `<div class="note-line">${line}</div>`).join("")}
+
+  <div class="note-line">${firstLine}</div>
+
+  <div class="note-extra">
+    ${restLines.map(line => `<div class="note-line">${line}</div>`).join("")}
+  </div>
 `;
 
   // kalau lebih dari 1 baris → collapse
