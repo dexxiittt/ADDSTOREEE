@@ -806,6 +806,25 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PAC
   if(!data) return;
   sk?.remove();
 
+  // ===== APPLY PRICE & DISCOUNT COLOR FROM SHEET =====
+const root = document.documentElement;
+
+// warna harga
+if (data.price_color) {
+  root.style.setProperty('--price-color', data.price_color);
+}
+
+// warna / background badge diskon
+if (data.discount_color) {
+  const badgeStyle = document.createElement("style");
+  badgeStyle.innerHTML = `
+    .discount-badge {
+      background: ${data.discount_color} !important;
+    }
+  `;
+  document.head.appendChild(badgeStyle);
+}
+
   const stickyPay = document.getElementById("sticky-pay");
   if (stickyPay) {
   stickyPay.href = data.lynk_id;
