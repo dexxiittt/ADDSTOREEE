@@ -144,10 +144,10 @@ body.package-page {
 
 /* BIKIN HARGA “KELUAR” DARI GRID RASA INFO */
 .meta-price #pkg-price {
-  display: flex;
-  flex-direction: column;
+  display: inline-flex;
   align-items: center;
-  gap: 4px;
+  justify-content: center;
+  gap: 8px;
 }
 
 /* HARGA FINAL PALING BESAR */
@@ -439,10 +439,8 @@ body.package-page {
 }
 
 .discount-badge {
-  position: absolute;
-  bottom: -14px;      /* nempel bawah harga */
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative; /* ⬅️ bukan absolute lagi */
+  top: -2px;          /* naik dikit biar sejajar optik */
 
   padding: 5px 10px;
   font-size: 11px;
@@ -461,7 +459,9 @@ body.package-page {
     0 10px 26px rgba(239,68,68,.75),
     inset 0 1px 0 rgba(255,255,255,.55);
 
-  opacity: 1; /* ⬅️ terang penuh */
+  opacity: 1; /* terang penuh */
+
+  filter: saturate(1.2);
 }
 
 .price-animate {
