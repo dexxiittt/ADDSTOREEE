@@ -140,6 +140,9 @@ body.package-page {
 .meta-price {
   grid-column: 2; /* tetap di tengah */
   align-self: center;
+
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 /* BIKIN HARGA “KELUAR” DARI GRID RASA INFO */
@@ -340,9 +343,12 @@ body.package-page {
   letter-spacing: -0.4px;
 
   color: #ffffff;
+  color: #ffffff;
   text-shadow:
-    0 4px 14px rgba(139,92,246,.45),
-    0 0 22px rgba(139,92,246,.35);
+    0 0 0 rgba(0,0,0,0), /* reset layer gelap */
+    0 6px 18px rgba(139,92,246,.35);
+
+  filter: brightness(1.15);
 }
   
 /* NOTE / LEGAL */
