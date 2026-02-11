@@ -1337,11 +1337,9 @@ if (payBtn && noteEl) {
 </script>
 
 <script>
-/* contoh data (idealnya kamu sudah punya) */
 const currentBrand = "CANVA";
 const currentPkg = "invite-1-bulan";
 
-/* ambil card dari index */
 fetch("index.html")
   .then(r => r.text())
   .then(html => {
@@ -1352,22 +1350,25 @@ fetch("index.html")
         card.dataset.brand === currentBrand &&
         card.dataset.pkg !== currentPkg
       )
-      .slice(0, 3); // max 3 aja biar clean
+      .slice(0, 3);
 
     const target = document.getElementById("related-canva");
+    if (!target) return;
 
     cards.forEach(card => {
-  const clone = card.cloneNode(true);
+      const clone = card.cloneNode(true);
 
-  // hapus toggle
-  clone.querySelector(".toggle-detail")?.remove();
+      // hapus toggle
+      clone.querySelector(".toggle-detail")?.remove();
 
-  // paksa detail open
-  clone.querySelector(".package-detail")
-       ?.classList.add("open");
+      // buka detail
+      clone.querySelector(".package-detail")
+           ?.classList.add("open");
 
-  target.appendChild(clone);
-});
+      target.appendChild(clone);
+    });
+  })
+  .catch(err => console.error("Related fetch error:", err));
 </script>
   
 </body>
