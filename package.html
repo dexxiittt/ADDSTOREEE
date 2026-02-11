@@ -570,7 +570,14 @@ body.package-page {
 
 .related-grid {
   display: grid;
-  gap: 14px;
+  gap: 18px;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .related-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 /* clone rasa card index */
@@ -598,6 +605,90 @@ body.package-page {
 @keyframes card-float {
   0%,100% { transform: translateY(0); }
   50% { transform: translateY(-4px); }
+}
+
+/* ===== RELATED: DETAIL LANGSUNG TERBUKA ===== */
+.related-grid .package-detail {
+  grid-template-rows: 1fr !important;
+  opacity: 1 !important;
+}
+
+.related-grid .package-detail > * {
+  overflow: visible;
+}
+
+/* hilangkan tombol toggle */
+.related-grid .toggle-detail {
+  display: none !important;
+}
+
+.package-row {
+  padding: 12px 0;
+  margin-bottom: 6px;
+  border-bottom: 1px solid rgba(255,255,255,.2);
+}
+
+.related-grid .package-row {
+  padding: 12px 0;
+  margin-bottom: 6px;
+  border-bottom: 1px solid rgba(255,255,255,.2);
+}
+
+.related-grid .package-row:last-child {
+  border-bottom: none;
+}
+
+.related-grid .package-row.featured {
+  overflow: visible;
+}
+
+/* ===== RELATED ANIMATION ===== */
+.related-grid .glass-card {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: related-in .7s cubic-bezier(.22,1,.36,1) forwards;
+}
+
+.related-grid .glass-card:nth-child(1) { animation-delay: .1s }
+.related-grid .glass-card:nth-child(2) { animation-delay: .2s }
+.related-grid .glass-card:nth-child(3) { animation-delay: .3s }
+
+@keyframes related-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== RELATED COMPACT MODE ===== */
+.related-grid .glass-card {
+  padding: 16px;
+}
+
+.related-grid .package-row {
+  padding: 10px 0;
+}
+
+.related-grid .package-row span {
+  font-size: 14px;
+}
+
+.related-products {
+  position: relative;
+}
+
+.related-products::before {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border-radius: 26px;
+  background: radial-gradient(
+    circle at center,
+    rgba(139,92,246,0.15),
+    transparent 70%
+  );
+  filter: blur(40px);
+  z-index: -1;
 }
   
 /* PREMIUM CTA MICRO INTERACTION */
@@ -1262,11 +1353,17 @@ fetch("index.html")
     const target = document.getElementById("related-canva");
 
     cards.forEach(card => {
-      const clone = card.cloneNode(true);
-      clone.querySelector(".toggle-detail")?.remove();
-      target.appendChild(clone);
-    });
-  });
+  const clone = card.cloneNode(true);
+
+  // hapus toggle
+  clone.querySelector(".toggle-detail")?.remove();
+
+  // paksa detail open
+  clone.querySelector(".package-detail")
+       ?.classList.add("open");
+
+  target.appendChild(clone);
+});
 </script>
   
 </body>
