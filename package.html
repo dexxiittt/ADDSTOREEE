@@ -1334,35 +1334,33 @@ if (payBtn && noteEl) {
   });
 }
 
-</script>
-
 <script>
 fetch("index.html")
   .then(r => r.text())
   .then(html => {
     const doc = new DOMParser().parseFromString(html, "text/html");
 
-    // ambil card Canva berdasarkan judul
-    const cards = [...doc.querySelectorAll(".glass-card")]
-      .filter(card =>
-        card.textContent.includes("CANVA")
-      )
-      .slice(0, 2); // ambil 2 dulu tes
+    // ambil semua glass-card dari index
+    const cards = [...doc.querySelectorAll(".glass-card")];
 
     const target = document.getElementById("related-canva");
     if (!target) return;
 
-    cards.forEach(card => {
+    // ambil maksimal 2 dulu supaya ringan
+    cards.slice(0, 2).forEach(card => {
       const clone = card.cloneNode(true);
 
+      // hapus toggle
       clone.querySelector(".toggle-detail")?.remove();
+
+      // paksa detail kebuka
       clone.querySelector(".package-detail")
            ?.classList.add("open");
 
       target.appendChild(clone);
     });
   })
-  .catch(err => console.error(err));
+  .catch(err => console.error("Related fetch error:", err));
 </script>
   
 </body>
