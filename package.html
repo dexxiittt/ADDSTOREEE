@@ -1337,20 +1337,17 @@ if (payBtn && noteEl) {
 </script>
 
 <script>
-const currentBrand = "CANVA";
-const currentPkg = "invite-1-bulan";
-
 fetch("index.html")
   .then(r => r.text())
   .then(html => {
     const doc = new DOMParser().parseFromString(html, "text/html");
 
+    // ambil card Canva berdasarkan judul
     const cards = [...doc.querySelectorAll(".glass-card")]
       .filter(card =>
-        card.dataset.brand === currentBrand &&
-        card.dataset.pkg !== currentPkg
+        card.textContent.includes("CANVA")
       )
-      .slice(0, 3);
+      .slice(0, 2); // ambil 2 dulu tes
 
     const target = document.getElementById("related-canva");
     if (!target) return;
@@ -1358,17 +1355,14 @@ fetch("index.html")
     cards.forEach(card => {
       const clone = card.cloneNode(true);
 
-      // hapus toggle
       clone.querySelector(".toggle-detail")?.remove();
-
-      // buka detail
       clone.querySelector(".package-detail")
            ?.classList.add("open");
 
       target.appendChild(clone);
     });
   })
-  .catch(err => console.error("Related fetch error:", err));
+  .catch(err => console.error(err));
 </script>
   
 </body>
