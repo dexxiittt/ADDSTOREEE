@@ -639,26 +639,6 @@ body.package-page::after {
   animation-play-state: paused;
 }
 
-#sticky-cta .pay-button {
-  animation: cta-breathe 4s ease-in-out infinite;
-}
-
-.pay-button::after {
-  content: "";
-  position: absolute;
-  inset: -6px;
-  border-radius: inherit;
-  background: radial-gradient(
-    circle at center,
-    rgba(139,92,246,0.35),
-    transparent 65%
-  );
-  opacity: .25;
-  filter: blur(12px);
-  z-index: -1;
-  animation: halo-breathe 3.2s ease-in-out infinite;
-}
-
 /* stop saat interaksi */
 .pay-button:hover::after,
 .pay-button:active::after {
