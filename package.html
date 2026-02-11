@@ -236,6 +236,16 @@ body.package-page::after {
 .sk-meta    { height: 38px; border-radius: 12px; }
 .sk-button  { height: 52px; border-radius: 16px; margin-top: 22px; }
 
+ #skeleton-wrap {
+  position: relative;
+  z-index: 2;
+}
+
+#pay-btn {
+  position: relative;
+  z-index: 3;
+}
+ 
 /* TRUST – FINAL, BERSIH */
 #pkg-trust {
   display: flex;
@@ -950,6 +960,7 @@ function hexToRgba(hex, alpha = 1) {
 }
 
 document.getElementById("pay-btn")?.classList.add("is-loading");
+document.getElementById("pay-btn").style.display = "none";
 fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PACKAGE_DETAIL")
 .then(r=>r.json())
 .then(rows=>{
@@ -958,6 +969,7 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PAC
   );
   if(!data) return;
   sk?.remove();
+ document.getElementById("pay-btn").style.display = "block";
 
   // ===== APPLY PRICE & DISCOUNT COLOR FROM SHEET =====
 const root = document.documentElement;
