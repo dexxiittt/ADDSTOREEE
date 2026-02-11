@@ -569,11 +569,10 @@ body.package-page {
 }
 
 .related-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 24px;
-  max-width: 840px;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
 }
 
 @media (min-width: 768px) {
@@ -585,7 +584,7 @@ body.package-page {
 /* clone rasa card index */
 .related-grid .glass-card {
   padding: 20px;
-  border-radius: 20px;
+  border-radius: 22px;
   max-width: 420px;
   width: 100%;
   margin: 0 auto;
@@ -1101,7 +1100,7 @@ body.package-page {
   Lanjut ke Pembayaran
 </a>
 
-<section class="related-products glass fade-flow fade-delay-4">
+<section class="related-products fade-flow fade-delay-4">
   <h3 class="related-title">Produk Canva Lainnya</h3>
   <div id="related-canva" class="related-grid"></div>
 </section>
