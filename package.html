@@ -1337,32 +1337,37 @@ if (payBtn && noteEl) {
 </script>
 
 <script>
-fetch("index.html")
-  .then(r => r.text())
-  .then(html => {
-    const doc = new DOMParser().parseFromString(html, "text/html");
+const currentProduct = new URLSearchParams(location.search).get("product");
 
-    // ambil semua glass-card dari index
-    const cards = [...doc.querySelectorAll(".glass-card")];
+fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRODUCT_PACKAGES")
+  .then(r => r.json())
+  .then(rows => {
+
+    const related = rows
+      .filter(i => i.product_id === currentProduct)
+      .slice(0, 2); // ambil 2 saja dulu
 
     const target = document.getElementById("related-canva");
     if (!target) return;
 
-    // ambil maksimal 2 dulu supaya ringan
-    cards.slice(0, 2).forEach(card => {
-      const clone = card.cloneNode(true);
+    related.forEach(data => {
+      const card = document.createElement("div");
+      card.className = "glass-card";
 
-      // hapus toggle
-      clone.querySelector(".toggle-detail")?.remove();
+      card.innerHTML = `
+        <img src="${data.image_url}" style="width:100%;border-radius:16px;margin-bottom:12px">
+        <h3 style="margin:0 0 8px">${data.title}</h3>
+        <div class="package-row">
+          <span>${data.duration}</span>
+          <b>Rp${Number(data.price).toLocaleString("id-ID")}</b>
+        </div>
+      `;
 
-      // paksa detail kebuka
-      clone.querySelector(".package-detail")
-           ?.classList.add("open");
-
-      target.appendChild(clone);
+      target.appendChild(card);
     });
+
   })
-  .catch(err => console.error("Related fetch error:", err));
+  .catch(err => console.error("Related error:", err));
 </script>
   
 </body>
