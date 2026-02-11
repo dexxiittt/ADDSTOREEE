@@ -570,8 +570,10 @@ body.package-page {
 
 .related-grid {
   display: grid;
-  gap: 18px;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  max-width: 840px;
+  margin: 0 auto;
 }
 
 @media (min-width: 768px) {
@@ -584,6 +586,9 @@ body.package-page {
 .related-grid .glass-card {
   padding: 20px;
   border-radius: 20px;
+  max-width: 420px;
+  width: 100%;
+  margin: 0 auto;
 
   background: rgba(255,255,255,0.25);
   backdrop-filter: blur(18px);
