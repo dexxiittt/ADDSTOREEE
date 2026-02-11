@@ -553,7 +553,32 @@ body.package-page {
 
   transform: translateY(-1px);
 }
-  
+
+.related-products {
+  max-width: 720px;
+  margin: 0 auto 80px;
+  padding: 18px;
+}
+
+.related-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  opacity: .85;
+}
+
+.related-grid {
+  display: grid;
+  gap: 14px;
+}
+
+/* clone rasa card index */
+.related-grid .glass-card {
+  padding: 14px;
+  border-radius: 16px;
+  animation: none;
+}
 /* PREMIUM CTA MICRO INTERACTION */
 .pay-button {
   display: block;
@@ -958,7 +983,12 @@ body.package-page {
 <a id="pay-btn" class="pay-button fade-flow fade-delay-4">
   Lanjut ke Pembayaran
 </a>
-  
+
+<section class="related-products glass fade-flow fade-delay-4">
+  <h3 class="related-title">Produk Canva Lainnya</h3>
+  <div id="related-canva" class="related-grid"></div>
+</section>
+    
 <!-- CTA -->
 <div id="sticky-cta" class="sticky-cta">
   <a id="sticky-pay" class="pay-button">Lanjut ke Pembayaran</a>
@@ -1189,5 +1219,34 @@ if (payBtn && noteEl) {
 }
 
 </script>
+
+<script>
+/* contoh data (idealnya kamu sudah punya) */
+const currentBrand = "CANVA";
+const currentPkg = "invite-1-bulan";
+
+/* ambil card dari index */
+fetch("index.html")
+  .then(r => r.text())
+  .then(html => {
+    const doc = new DOMParser().parseFromString(html, "text/html");
+
+    const cards = [...doc.querySelectorAll(".glass-card")]
+      .filter(card =>
+        card.dataset.brand === currentBrand &&
+        card.dataset.pkg !== currentPkg
+      )
+      .slice(0, 3); // max 3 aja biar clean
+
+    const target = document.getElementById("related-canva");
+
+    cards.forEach(card => {
+      const clone = card.cloneNode(true);
+      clone.querySelector(".toggle-detail")?.remove();
+      target.appendChild(clone);
+    });
+  });
+</script>
+  
 </body>
 </html>
