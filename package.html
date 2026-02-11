@@ -960,14 +960,17 @@ function hexToRgba(hex, alpha = 1) {
 }
 
 document.getElementById("pay-btn")?.classList.add("is-loading");
-document.getElementById("pay-btn").style.display = "none";
 fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PACKAGE_DETAIL")
 .then(r=>r.json())
 .then(rows=>{
   const data = rows.find(
     i => i.product_id===product && i.package_id===pkg
   );
-  if(!data) return;
+  if(!data){
+  sk?.remove();
+  document.getElementById("pay-btn").classList.remove("is-loading");
+  return;
+}
   sk?.remove();
  document.getElementById("pay-btn").style.display = "block";
 
