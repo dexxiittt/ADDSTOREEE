@@ -96,7 +96,6 @@ body.package-page::after {
 }
 
 .package-info.glass {
-  max-height: 320px;
   max-width: 720px;
   padding: 18px;
 }
@@ -236,15 +235,7 @@ body.package-page::after {
 .sk-meta    { height: 38px; border-radius: 12px; }
 .sk-button  { height: 52px; border-radius: 16px; margin-top: 22px; }
 
- #skeleton-wrap {
-  position: relative;
-  z-index: 2;
-}
 
-#pay-btn {
-  position: relative;
-  z-index: 3;
-}
  
 /* TRUST – FINAL, BERSIH */
 #pkg-trust {
@@ -971,7 +962,10 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PAC
   document.getElementById("pay-btn").classList.remove("is-loading");
   return;
 }
-  sk?.remove();
+  if (sk) {
+  sk.style.display = "none";
+  sk.remove();
+}
  document.getElementById("pay-btn").style.display = "block";
 
   // ===== APPLY PRICE & DISCOUNT COLOR FROM SHEET =====
