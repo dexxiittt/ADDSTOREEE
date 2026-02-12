@@ -370,6 +370,28 @@ body.package-page::after {
  animation: luxury-breathe-strong 4.5s ease-in-out infinite;
 }
 
+ #pkg-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#pkg-title .badge-icon {
+  font-size: 24px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+
+  filter: drop-shadow(0 0 8px var(--title-glow));
+
+  animation: badge-breathe 4.5s ease-in-out infinite;
+}
+
+@keyframes badge-breathe {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
 /* SUBTITLE */
 #pkg-subtitle {
   font-size: 21px;
@@ -1120,7 +1142,16 @@ if (data.color_title_subtitle) {
   
   document.getElementById("pay-btn")?.classList.remove("is-loading");
   document.getElementById("pkg-image").src = data.image_url;
-  document.getElementById("pkg-title").textContent = data.title;
+  const titleEl = document.getElementById("pkg-title");
+
+if (data.badge_icon) {
+  titleEl.innerHTML = `
+    ${data.title}
+    <span class="badge-icon">${data.badge_icon}</span>
+  `;
+} else {
+  titleEl.textContent = data.title;
+}
   document.getElementById("pkg-subtitle").textContent = data.subtitle;
   document.getElementById("pkg-duration").textContent = data.duration;
   document.getElementById("pkg-guarantee").textContent = data.guarantee;
