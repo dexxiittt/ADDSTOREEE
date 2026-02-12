@@ -8,6 +8,10 @@
 }
 
 :root {
+  --badge-glow: rgba(255,255,255,0.75);
+}
+ 
+:root {
   --title-glow: rgba(255,255,255,0.75);
   --subtitle-glow: rgba(255,255,255,0.7);
 }
@@ -382,7 +386,9 @@ body.package-page::after {
   display: inline-flex;
   align-items: center;
 
-  filter: drop-shadow(0 0 8px var(--title-glow));
+  filter:
+    drop-shadow(0 0 10px var(--badge-glow))
+    drop-shadow(0 0 22px var(--badge-glow));
 
   animation: badge-breathe 4.5s ease-in-out infinite;
 }
@@ -1145,10 +1151,32 @@ if (data.color_title_subtitle) {
   const titleEl = document.getElementById("pkg-title");
 
 if (data.badge_icon) {
+
+  const parts = data.badge_icon.split("|").map(s => s.trim());
+  const icon = parts[0];
+  const iconColor = parts[1];
+
+  const colorMap = {
+    white: "#ffffff",
+    blue: "#60a5fa",
+    orange: "#fb923c",
+    purple: "#a78bfa",
+    green: "#22c55e",
+    red: "#ef4444"
+  };
+
+  if (iconColor && colorMap[iconColor.toLowerCase()]) {
+    document.documentElement.style.setProperty(
+      "--badge-glow",
+      hexToRgba(colorMap[iconColor.toLowerCase()], 0.8)
+    );
+  }
+
   titleEl.innerHTML = `
     ${data.title}
-    <span class="badge-icon">${data.badge_icon}</span>
+    <span class="badge-icon">${icon}</span>
   `;
+
 } else {
   titleEl.textContent = data.title;
 }
