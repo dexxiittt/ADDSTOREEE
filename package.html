@@ -6,7 +6,12 @@
  html {
   scroll-behavior: smooth;
 }
-  
+
+:root {
+  --title-glow: rgba(255,255,255,0.6);
+  --subtitle-glow: rgba(255,255,255,0.35);
+}
+ 
 :root {
   --bg-main: #0b0f19;
   --bg-soft: rgba(255,255,255,0.06);
@@ -355,14 +360,21 @@ body.package-page::after {
   font-weight: 700;
   letter-spacing: -0.25px;
   margin-top: 8px;
+
+  text-shadow:
+    0 0 12px var(--title-glow),
+    0 0 28px var(--title-glow);
 }
 
 /* SUBTITLE */
 #pkg-subtitle {
   font-size: 21px;
   font-weight: 400;
-  opacity: 0.8;
+  opacity: 0.9;
   line-height: 0.5;
+
+  text-shadow:
+    0 0 6px var(--subtitle-glow);
 }
 
 /* HANYA LABEL META (Durasi / Harga / Garansi) */
@@ -1039,6 +1051,36 @@ if (data.discount_color) {
   `;
 
   document.head.appendChild(style);
+}
+
+ // ===== APPLY TITLE & SUBTITLE GLOW FROM SHEET =====
+if (data.color_title_subtitle) {
+
+  const [titleColor, subtitleColor] = 
+    data.color_title_subtitle.split("|").map(c => c.trim());
+
+  const colorMap = {
+    white: "#ffffff",
+    blue: "#60a5fa",
+    orange: "#fb923c",
+    purple: "#a78bfa"
+  };
+
+  const root = document.documentElement;
+
+  if (colorMap[titleColor.toLowerCase()]) {
+    root.style.setProperty(
+      "--title-glow",
+      hexToRgba(colorMap[titleColor.toLowerCase()], 0.75)
+    );
+  }
+
+  if (colorMap[subtitleColor.toLowerCase()]) {
+    root.style.setProperty(
+      "--subtitle-glow",
+      hexToRgba(colorMap[subtitleColor.toLowerCase()], 0.45)
+    );
+  }
 }
 
   const stickyPay = document.getElementById("sticky-pay");
