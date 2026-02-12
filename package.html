@@ -390,14 +390,13 @@ body.package-page::after {
     drop-shadow(0 0 10px var(--badge-glow))
     drop-shadow(0 0 22px var(--badge-glow));
 
-  animation: badge-breathe 4.5s ease-in-out infinite;
-}
+  animation:
+    luxury-jiggle 8s cubic-bezier(.25,.8,.25,1) infinite,
+    badge-breathe 4.5s ease-in-out infinite;
 
-@keyframes badge-breathe {
-  0%,100% { transform: scale(1); }
-  50% { transform: scale(1.08); }
+  will-change: transform;
 }
-
+ 
 /* SUBTITLE */
 #pkg-subtitle {
   font-size: 21px;
@@ -828,6 +827,21 @@ body.package-page::after {
   50% {
     text-shadow: 0 0 12px var(--subtitle-glow);
   }
+}
+
+@keyframes luxury-jiggle {
+
+  0%   { transform: translateY(0) scale(1); }
+
+  20%  { transform: translateY(-4px) scale(1.04); }
+
+  40%  { transform: translateY(0) scale(1); }
+
+  60%  { transform: translateY(-2px) scale(1.02); }
+
+  80%  { transform: translateY(0) scale(1); }
+
+  100% { transform: translateY(0) scale(1); }
 }
 
 /* stop saat interaksi */
