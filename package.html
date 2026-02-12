@@ -361,9 +361,13 @@ body.package-page::after {
   letter-spacing: -0.25px;
   margin-top: 8px;
 
+  position: relative;
+ 
   text-shadow:
     0 0 12px var(--title-glow),
     0 0 28px var(--title-glow);
+
+ animation: luxury-breathe-strong 4.5s ease-in-out infinite;
 }
 
 /* SUBTITLE */
@@ -770,6 +774,28 @@ body.package-page::after {
 @keyframes halo-breathe {
   0%,100% { opacity: .25; }
   50% { opacity: .45; }
+}
+
+@keyframes luxury-breathe-strong {
+  0%, 100% {
+    text-shadow:
+      0 0 10px var(--title-glow),
+      0 0 24px var(--title-glow);
+  }
+  50% {
+    text-shadow:
+      0 0 18px var(--title-glow),
+      0 0 38px var(--title-glow);
+  }
+}
+
+@keyframes luxury-breathe-soft {
+  0%, 100% {
+    text-shadow: 0 0 6px var(--subtitle-glow);
+  }
+  50% {
+    text-shadow: 0 0 12px var(--subtitle-glow);
+  }
 }
 
 /* stop saat interaksi */
