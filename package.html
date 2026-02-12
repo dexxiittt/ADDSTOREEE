@@ -391,8 +391,8 @@ body.package-page::after {
     drop-shadow(0 0 22px var(--badge-glow));
 
   animation:
-    luxury-jiggle 6s cubic-bezier(.25,.8,.25,1) infinite,
-    badge-breathe 4.5s ease-in-out infinite;
+    luxury-jiggle 8s cubic-bezier(.22,1,.36,1) infinite,
+    badge-breathe 5s ease-in-out infinite;
 
   will-change: transform;
 }
@@ -831,17 +831,15 @@ body.package-page::after {
 
 @keyframes luxury-jiggle {
 
-  0%   { transform: translateY(0) scale(1); }
+  0%   { transform: translateY(0); }
 
-  20%  { transform: translateY(-4px) scale(1.04); }
+  25%  { transform: translateY(-2.5px); }
 
-  40%  { transform: translateY(0) scale(1); }
+  50%  { transform: translateY(0); }
 
-  60%  { transform: translateY(-2px) scale(1.02); }
+  75%  { transform: translateY(-1px); }
 
-  80%  { transform: translateY(0) scale(1); }
-
-  100% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(0); }
 }
 
 /* stop saat interaksi */
