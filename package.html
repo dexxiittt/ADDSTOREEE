@@ -8,7 +8,7 @@
 }
 
 :root {
-  --badge-glow: rgba(255,255,255,0.75);
+  --title-glow: rgba(255,255,255,0.75)
 }
  
 :root {
@@ -1148,13 +1148,16 @@ if (data.color_title_subtitle) {
   
   document.getElementById("pay-btn")?.classList.remove("is-loading");
   document.getElementById("pkg-image").src = data.image_url;
+ 
   const titleEl = document.getElementById("pkg-title");
 
 if (data.badge_icon) {
 
   const parts = data.badge_icon.split("|").map(s => s.trim());
+
   const icon = parts[0];
   const iconColor = parts[1];
+  const iconIntensity = parseFloat(parts[2]);
 
   const colorMap = {
     white: "#ffffff",
@@ -1162,13 +1165,21 @@ if (data.badge_icon) {
     orange: "#fb923c",
     purple: "#a78bfa",
     green: "#22c55e",
-    red: "#ef4444"
+    red: "#ef4444",
+    gold: "#fbbf24"
   };
+
+  // default intensitas elegan (lebih soft dari title)
+  let intensity = 0.6;
+
+  if (!isNaN(iconIntensity)) {
+    intensity = Math.min(Math.max(iconIntensity, 0.1), 1);
+  }
 
   if (iconColor && colorMap[iconColor.toLowerCase()]) {
     document.documentElement.style.setProperty(
       "--badge-glow",
-      hexToRgba(colorMap[iconColor.toLowerCase()], 0.8)
+      hexToRgba(colorMap[iconColor.toLowerCase()], intensity)
     );
   }
 
@@ -1180,6 +1191,7 @@ if (data.badge_icon) {
 } else {
   titleEl.textContent = data.title;
 }
+ 
   document.getElementById("pkg-subtitle").textContent = data.subtitle;
   document.getElementById("pkg-duration").textContent = data.duration;
   document.getElementById("pkg-guarantee").textContent = data.guarantee;
