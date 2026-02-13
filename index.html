@@ -2685,20 +2685,21 @@ return `
     <div class="role-title">Role Access</div>
 
     ${detailItems.map(i => `
-  <a 
-  href="${i.checkout_url}"
-  class="package-row role
-  ${ i.is_featured && !isNoGar(i)
-    ? (() => {
-        const [color, glow] = i.is_featured.split(":");
-        return `featured featured-${color} ${glow ? `glow-${glow}` : ""}`;
-      })()
-    : ""
-  }
-  ${ isNoGar(i) ? "nogar" : "" }
-"
-  target="_blank"
->
+  <a
+    href="package.html?package_id=${i.package_id}"
+    class="package-row role
+    ${i.is_featured && !isNoGar(i)
+      ? (() => {
+          const [color, glow] = i.is_featured.split(":");
+          return `featured featured-${color} ${glow ? `glow-${glow}` : ""}`;
+        })()
+      : ""
+    }
+    ${isNoGar(i) ? "nogar" : ""}
+    "
+    target="_self"
+    onclick="event.stopPropagation();"
+  >
     <span>
   ${i.package} ${i.duration}
 
