@@ -1060,8 +1060,7 @@ body.package-page::after {
 <script>
 const sk = document.getElementById("skeleton-wrap");
 const q = new URLSearchParams(location.search);
-const product = q.get("product");
-const pkg = q.get("package");
+const packageId = q.get("package_id");
 
 function parseDiscount(val) {
   if (!val) return 0;
@@ -1086,8 +1085,8 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PAC
 .then(r=>r.json())
 .then(rows=>{
   const data = rows.find(
-    i => i.product_id===product && i.package_id===pkg
-  );
+  i => i.package_id === packageId
+);
   if(!data) return;
   sk?.remove();
 
