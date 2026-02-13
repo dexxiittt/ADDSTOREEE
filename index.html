@@ -2649,25 +2649,28 @@ if (isNoGar(i)) {
 }
 
 return `
-    <a href="package.html?package_id=${i.package_id}">
-       class="${cls}"
-       style="${starStyle}">
-       
-      <span>
-        ${i.package} ${i.duration}
-        ${i.badge_label
+  <a href="package.html?package_id=${i.package_id}"
+     class="${cls}"
+     style="${starStyle}">
+
+    <span>
+      ${i.package} ${i.duration}
+      ${
+        i.badge_label
           ? `<em class="role-badge">
                ${i.badge_icon ?? ""} ${i.badge_label}
                ${garBadge(i)}
              </em>`
-          : garBadge(i)}
-      </span>
+          : garBadge(i)
+      }
+    </span>
 
-      <div class="price-line promo-left">
-        ${priceHTML}
-      </div>
-    </a>
-  `;
+    <div class="price-line promo-left">
+      ${priceHTML}
+    </div>
+
+  </a>
+`;
 }).join("")}
 
   <!-- TOMBOL -->
