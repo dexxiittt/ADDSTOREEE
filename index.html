@@ -92,7 +92,7 @@
   --move-y: 40px;  /* atas (-) bawah (+) */
 
   left: 50%;
-  top: 100vh;
+  top: var(--hero-offset);
   transform: translate(-50%, -50%)
              translate(var(--move-x), var(--move-y));
 
@@ -782,7 +782,7 @@
 .premium-heading {
   position: absolute;
   left: 50%;
-  top: calc(90vh + 320px);
+  top: calc(var(--hero-offset) + 320px);
 
   --move-x: 0px;
   --move-y: 470px;
@@ -951,7 +951,7 @@
 .premium-stats {
   position: absolute;
   left: 50%;
-  top: calc(100vh + 360px);
+  top: calc(var(--hero-offset) + 360px);
 
   --move-x: 0px;
   --move-y: 645px;
@@ -2125,7 +2125,7 @@
   .hero-title {
     font-size: 34px;
     letter-spacing: 1px;
-    top: calc(100vh + 150px);
+    top: calc(var(--hero-offset) + 150px);
 }
   /* TAGLINE */
   .hero-tagline {
@@ -2138,7 +2138,7 @@
 }
   /* SOSIAL MEDIA */
   .hero-socials {
-    top: calc(100vh + 235px);
+    top: calc(var(--hero-offset) + 235px);
     --move-y: 20px;
 
     gap: 16px;
