@@ -1946,6 +1946,31 @@
   }
 }
 
+.lihat-semua-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 14px 28px;
+  border-radius: 12px;
+
+  background: #2563eb;
+  color: white;
+  text-decoration: none;
+
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+
+  box-shadow: 0 10px 24px rgba(37,99,235,.35);
+
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.lihat-semua-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(37,99,235,.45);
+}
+    
     /* FONT CARD – SOFT & ELEGANT */
 .glass-card {
   font-family: 'Plus Jakarta Sans', sans-serif;
@@ -2392,10 +2417,18 @@ body.is-scrolling * {
 <section class="category-content fade-sync">
   <div id="apk" class="category-panel active">
   <h2 class="section-title">Aplikasi Premium Populer</h2>
+
   <div id="product-cards"></div>
+
+  <!-- TOMBOL LIHAT SEMUA -->
+  <div style="text-align:center; margin-top:40px;">
+    <a href="semua-aplikasi.html" class="lihat-semua-btn">
+      <i class="fa-solid fa-grid-2"></i>
+      Lihat Semua Aplikasi →
+    </a>
+  </div>
+
 </div>
-  <div id="medsos" class="category-panel"></div>
-  <div id="topup" class="category-panel"></div>
 </section>
 
 <script>
@@ -2513,7 +2546,7 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
   .then(data => {
 
     const grouped = {};
-    data.forEach(p => {
+    data.slice(0,4).forEach(item => {
       if (!grouped[p.product_id]) {
         grouped[p.product_id] = { title: p.title, items: [] };
       }
@@ -2523,8 +2556,7 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
     const wrap = document.getElementById("product-cards");
     if (!wrap) return;
 
-    Object.values(grouped)
-  .forEach(prod => {
+    Object.values(grouped).slice(0,4).forEach(prod => {
 
     const sortedItems = [...prod.items];
     const mainItems   = sortedItems.filter(i => i.group === "main");
