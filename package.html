@@ -161,7 +161,43 @@ body.package-page::after {
   font-size: 15px;
   font-weight: 700;
 }
+ 
+/* GUARANTEE BADGE - NOGAR */
+.guarantee-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
+  padding: 6px 14px;
+  border-radius: 999px;
+
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+
+  color: #fff;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+
+  box-shadow:
+    0 6px 18px rgba(239,68,68,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.35);
+
+  animation: nogar-breathe 3.2s ease-in-out infinite;
+}
+
+@keyframes nogar-breathe {
+  0%,100% {
+    box-shadow:
+      0 6px 18px rgba(239,68,68,0.45),
+      inset 0 1px 0 rgba(255,255,255,0.35);
+  }
+  50% {
+    box-shadow:
+      0 10px 26px rgba(239,68,68,0.65),
+      inset 0 1px 0 rgba(255,255,255,0.45);
+  }
+}
+ 
 /* ===== HARGA JADI FOKUS UTAMA ===== */
 .meta-price {
   grid-column: 2; /* tetap di tengah */
@@ -1205,7 +1241,16 @@ if (data.badge_icon) {
  
   document.getElementById("pkg-subtitle").textContent = data.subtitle;
   document.getElementById("pkg-duration").textContent = data.duration;
-  document.getElementById("pkg-guarantee").textContent = data.guarantee;
+ 
+  const guaranteeEl = document.getElementById("pkg-guarantee");
+
+if (data.guarantee && data.guarantee.toLowerCase() === "nogar") {
+  guaranteeEl.innerHTML = `
+    <span class="guarantee-badge">NoGar</span>
+  `;
+} else {
+  guaranteeEl.textContent = data.guarantee;
+}
 
   const trustWrap = document.getElementById("pkg-trust");
 
