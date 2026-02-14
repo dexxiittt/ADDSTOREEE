@@ -1456,15 +1456,15 @@ if (data.not_product && productNoteEl) {
     (data.badge_label || "").toLowerCase().includes("premium") ||
     (data.is_featured || "").toLowerCase().includes("strong");
 
-  const premiumClass = isPremium ? " premium-highlight" : "";
+  if (isPremium) {
+    productNoteEl.classList.add("premium-highlight");
+  }
 
   productNoteEl.innerHTML = `
-    <div class="package-product-note${premiumClass}">
-      <div class="product-note-title">Informasi Paket</div>
-      ${lines.map(line => `
-        <div class="product-note-line">${line}</div>
-      `).join("")}
-    </div>
+    <div class="product-note-title">Informasi Paket</div>
+    ${lines.map(line => `
+      <div class="product-note-line">${line}</div>
+    `).join("")}
   `;
 
 } else {
