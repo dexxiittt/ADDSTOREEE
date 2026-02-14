@@ -1452,13 +1452,19 @@ if (data.not_product && productNoteEl) {
     .map(t => t.trim())
     .filter(t => t.length > 0);
 
-  const isPremium =
-    (data.badge_label || "").toLowerCase().includes("premium") ||
-    (data.is_featured || "").toLowerCase().includes("strong");
+  const feature = (data.is_featured || "").toLowerCase();
 
-  if (isPremium) {
-    productNoteEl.classList.add("premium-highlight");
-  }
+if (feature.includes("soft")) {
+  productNoteEl.classList.add("soft-highlight");
+}
+
+if (feature.includes("glow")) {
+  productNoteEl.classList.add("glow-highlight");
+}
+
+if (feature.includes("strong")) {
+  productNoteEl.classList.add("premium-highlight");
+}
 
   productNoteEl.innerHTML = `
     <div class="product-note-title">Informasi Paket</div>
