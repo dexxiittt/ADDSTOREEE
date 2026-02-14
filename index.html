@@ -18,6 +18,9 @@
 }
 
 :root {
+
+  --hero-offset: 0vh;
+  
   /* MODE TERANG (default) */
   --glow-soft: rgba(255,255,255,0.45);
   --glow-strong: rgba(255,255,255,0.35);
@@ -171,7 +174,7 @@
   z-index: 2;
 
   left: 50%;
-  top: calc(100vh + 190px);
+  top: calc(var(--hero-offset) + 190px);
   transform: translateX(-50%);
 
   font-size: 55px;
@@ -231,7 +234,7 @@
   z-index: 2;
 
   left: 50%;
-  top: calc(100vh + 245px);
+  top: calc(var(--hero-offset) + 245px);
   
   --move-x: 0px;
   --move-y: 31px;
@@ -292,7 +295,7 @@
   z-index: 2;
 
   left: 50%;
-  top: calc(100vh + 295px);
+  top: calc(var(--hero-offset) + 295px);
 
   --move-x: 0px;
   --move-y: 32px;
@@ -337,7 +340,7 @@
   position: absolute;
   z-index: 1;
   left: 50%;
-  top: calc(100vh + 420px);
+  top: calc(var(--hero-offset) + 420px);
 
   --move-x: 0px;
   --move-y: 730px;
@@ -379,7 +382,7 @@
 .floating-icons {
   position: absolute;
   left: 50%;
-  top: calc(100vh + 420px);
+  top: calc(var(--hero-offset) + 420px);
   transform: translateX(-50%) scale(0.96);
   width: 480px;
   height: 380px;
@@ -2130,7 +2133,7 @@
     line-height: 1.4;
     text-align: center;
 
-    top: calc(100vh + 190px);
+    top: calc(var(--hero-offset) + 190px);
     --move-y: 18px;
 }
   /* SOSIAL MEDIA */
@@ -2144,7 +2147,7 @@
     font-size: 20px;
 }  
     .hero-premium-phone {
-  top: calc(100vh + 300px);
+  top: calc(var(--hero-offset) + 300px);
     
 }
     .hero-description {
