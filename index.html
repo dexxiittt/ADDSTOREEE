@@ -79,40 +79,6 @@
   z-index: 0;
 }
 
-/* GAMBAR TETAP 1 LAYAR */
-.hero-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  
-  width: 100%;
-  height: 100vh; /* JANGAN DIUBAH */
-  
-  background-image: url("https://raw.githubusercontent.com/dexxiittt/Image/main/IMG_20240309_012544_356.jpg");
-  background-size: cover;
-  background-position: top center;
-  background-repeat: no-repeat;
-
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    rgba(0,0,0,1) 45%,
-    rgba(0,0,0,0.6) 70%,
-    rgba(0,0,0,0) 100%
-  );
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-size: 100% 100%;
-
-  mask-image: linear-gradient(
-    to bottom,
-    rgba(0,0,0,1) 45%,
-    rgba(0,0,0,0.6) 70%,
-    rgba(0,0,0,0) 100%
-  );
-  mask-repeat: no-repeat;
-  mask-size: 100% 100%;
-}
-
 /* LOGO BULAT TENGAH */
 .hero-logo {
   position: absolute;
@@ -429,7 +395,7 @@
   will-change: transform;
 }
 
-    .floating-icon i {
+.floating-icon i {
   filter: drop-shadow(0 0 6px rgba(255,255,255,0.35));
 }
 
@@ -2251,8 +2217,6 @@ body.is-scrolling * {
   <div class="hero-bg">
 
   <canvas id="starfield"></canvas>
-    
-    <div class="hero-image"></div>
 
     <div class="hero-logo"></div>
 
