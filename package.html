@@ -510,7 +510,49 @@ body.package-page::after {
   text-shadow: none !important;
   filter: none !important;
 }
-  
+
+/* PRODUCT NOTE CONTAINER */
+.package-product-note {
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.85);
+
+  padding: 16px 18px;
+  border-radius: 18px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(139,92,246,0.12),
+    rgba(139,92,246,0.06)
+  );
+
+  border: 1px solid rgba(139,92,246,0.25);
+
+  box-shadow:
+    0 8px 24px rgba(139,92,246,0.18),
+    inset 0 1px 0 rgba(255,255,255,0.15);
+
+  backdrop-filter: blur(12px);
+}
+
+/* title kecil elegan */
+.product-note-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .3px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+
+  color: rgba(255,255,255,0.6);
+}
+
+/* bullet styling */
+.product-note-line::before {
+  content: "✦";
+  margin-right: 8px;
+  color: #a78bfa;
+}
+ 
 /* NOTE / LEGAL */
 .package-note {
   font-size: 18px;
@@ -1087,7 +1129,8 @@ body.package-page::after {
   <div class="skeleton sk-meta"></div>
   <div class="skeleton sk-button"></div>
 </section>
-  
+
+<section class="package-product-note glass fade-flow fade-delay-4" id="pkg-product-note"></section>
 <!-- INFO PENTING -->
 <section class="package-note glass fade-flow fade-delay-4" id="pkg-note"></section>
   <div id="pkg-trust" class="trust-row fade-flow fade-delay-4"></div>
@@ -1318,6 +1361,27 @@ if (discount > 0) {
   `;
 }
 
+// ===== PRODUCT NOTE =====
+const productNoteEl = document.getElementById("pkg-product-note");
+
+if (data.not_product && productNoteEl) {
+
+  const lines = data.not_product
+    .split("|")
+    .map(t => t.trim())
+    .filter(t => t.length > 0);
+
+  productNoteEl.innerHTML = `
+    <div class="product-note-title">Informasi Paket</div>
+    ${lines.map(line => `
+      <div class="product-note-line">${line}</div>
+    `).join("")}
+  `;
+
+} else {
+  productNoteEl?.remove();
+}
+ 
 const noteEl = document.getElementById("pkg-note");
 
 if (data.not_legal) {
