@@ -14,7 +14,13 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
   />
 
-  <style>
+<style>
+
+ :root {
+  --card-min-width: 300px;
+  --grid-max-width: 840px;
+  --grid-offset-x: -17px;
+}
 
 /* SECTION PRODUCT – GLASS CARD */
 .glass-card {
@@ -745,12 +751,25 @@
   animation: none; /* tanpa pulse */
 }
 
+.category-content {
+  width: 100%;
+  padding: 0 20px 120px;
+}
+
+.category-panel {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+    
 #product-cards {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(var(--card-min-width), 1fr));
   gap: 28px 22px;
-  max-width: 1000px;
-  margin: 0 auto;
+
+  max-width: var(--grid-max-width);
+  margin-inline: auto;
+
+  transform: translateX(var(--grid-offset-x));
 }
 
 @media (max-width: 640px) {
