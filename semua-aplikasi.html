@@ -25,11 +25,11 @@ html, body {
   padding: 0;
 }
 
- :root {
-  --card-min-width: 300px;
-  --grid-max-width: 840px;
+:root {
+  --card-min-width: 260px;   /* lebih fleksibel */
+  --grid-max-width: 1000px;  /* lebih lega */
 }
-
+  
 /* SECTION PRODUCT – GLASS CARD */
 .glass-card {
   padding: 20px;
@@ -812,24 +812,20 @@ html, body {
     
 #product-cards {
   display: grid;
-  grid-template-columns: repeat(2, minmax(var(--card-min-width), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 28px 22px;
 
-  max-width: var(--grid-max-width);
-  margin-left: auto;
-  margin-right: auto;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 16px; /* biar ada jarak kiri kanan */
 }
-@media (max-width: 640px) {
-  #product-cards {
-    grid-template-columns: 1fr;
-    max-width: 420px;
-  }
-
+  
   .package-row.featured::after {
     opacity: 0.18;
     filter: blur(0.6px);
 }
-}
+ }
 
 @media (max-width: 480px) {
   #product-cards {
