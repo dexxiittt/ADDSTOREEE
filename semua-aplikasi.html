@@ -827,39 +827,14 @@ body.is-scrolling * {
   
 <body style="background:#f9fafb; font-family:'Plus Jakarta Sans',sans-serif;">
 
-<section class="category-tabs">
-  <button class="tab active" data-target="apk">APK Premium</button>
-  <button class="tab" data-target="medsos">Kebutuhan Medsos</button>
-  <button class="tab" data-target="topup">Topup Game</button>
-</section>
-
 <section class="category-content">
   <div id="apk" class="category-panel active">
     <h2 class="section-title">Semua Aplikasi</h2>
     <div id="product-cards"></div>
   </div>
 
-  <div id="medsos" class="category-panel">
-    <div id="product-cards-medsos"></div>
-  </div>
-
-  <div id="topup" class="category-panel">
-    <div id="product-cards-topup"></div>
-  </div>
 </section>
 
-
-<script>
-document.querySelectorAll('.tab').forEach(btn=>{
-  btn.onclick = ()=>{
-    document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
-    document.querySelectorAll('.category-panel').forEach(p=>p.classList.remove('active'));
-
-    btn.classList.add('active');
-    document.getElementById(btn.dataset.target)?.classList.add('active');
-  }
-});
-</script>
   
 <!-- PRODUCT CARD – FETCH GOOGLE SHEET -->
 <script>
