@@ -20,15 +20,354 @@
 
 <body style="background:#f9fafb; font-family:'Plus Jakarta Sans',sans-serif;">
 
-<section style="padding:60px 20px;">
-  <h1 style="text-align:center; font-family:Poppins; font-size:36px;">
-    Semua Aplikasi
-  </h1>
+<section class="category-tabs">
+  <button class="tab active" data-target="apk">APK Premium</button>
+  <button class="tab" data-target="medsos">Kebutuhan Medsos</button>
+  <button class="tab" data-target="topup">Topup Game</button>
+</section>
 
-  <div id="product-cards" style="margin-top:40px;"></div>
+<section class="category-content">
+  <div id="apk" class="category-panel active">
+    <h2 class="section-title">Semua Aplikasi</h2>
+    <div id="product-cards"></div>
+  </div>
+
+  <div id="medsos" class="category-panel">
+    <div id="product-cards-medsos"></div>
+  </div>
+
+  <div id="topup" class="category-panel">
+    <div id="product-cards-topup"></div>
+  </div>
 </section>
 
 
+<script>
+document.querySelectorAll('.tab').forEach(btn=>{
+  btn.onclick = ()=>{
+    document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.category-panel').forEach(p=>p.classList.remove('active'));
 
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.target)?.classList.add('active');
+  }
+});
+</script>
+  
+<!-- PRODUCT CARD – FETCH GOOGLE SHEET -->
+<script>
+const FEATURED_STAR_CONFIG = {
+  "orange:soft":   { amount: 24, minSize: 0.18, maxSize: 0.35, opacity: 0.18, twinkle: 10 },
+  "orange:glow":   { amount: 32, minSize: 0.2,  maxSize: 0.45, opacity: 0.25, twinkle: 8 },
+  "orange:strong": { amount: 44, minSize: 0.25, maxSize: 0.6,  opacity: 0.35, twinkle: 6 },
+
+  "purple:soft":   { amount: 24, minSize: 0.18, maxSize: 0.35, opacity: 0.18, twinkle: 10 },
+  "purple:glow":   { amount: 32, minSize: 0.2,  maxSize: 0.45, opacity: 0.25, twinkle: 8 },
+  "purple:strong": { amount: 44, minSize: 0.25, maxSize: 0.6,  opacity: 0.35, twinkle: 6 }
+};
+
+  function generateStars(color, cfg) {
+  const layers = [];
+
+  for (let i = 0; i < cfg.amount; i++) {
+    const x = Math.random() * 100;
+    const y = Math.random() * 100;
+
+    const baseSize =
+      Math.random() * (cfg.maxSize - cfg.minSize) + cfg.minSize;
+
+    const jitter = () => (Math.random() - 0.5) * 1.8;
+
+    // core glow (sangat kecil)
+    layers.push(
+      `radial-gradient(circle at ${x}% ${y}%, rgba(${color},0.9) ${baseSize}px, transparent ${baseSize * 2}px)`
+    );
+
+    // soft halo
+    layers.push(
+      `radial-gradient(circle at ${x + jitter()}% ${y + jitter()}%, rgba(${color},0.25) ${baseSize * 1.6}px, transparent ${baseSize * 4}px)`
+    );
+
+    // white dust sparkle
+    if (Math.random() < 0.55) {
+      layers.push(
+        `radial-gradient(circle at ${x + jitter()}% ${y + jitter()}%, rgba(255,255,255,0.35) ${baseSize * 0.8}px, transparent ${baseSize * 2.8}px)`
+      );
+    }
+  }
+
+  return layers.join(",");
+}
+
+  function garBadge(i) {
+  if (i.no_gar === "yes") {
+    return `<em class="badge-nogar">NoGar</em>`;
+  }
+  if (i.no_gar === "no") {
+    return `<em class="badge-gar">Bergaransi</em>`;
+  }
+  return "";
+}
+  function isNoGar(i) {
+  return String(i.no_gar).toLowerCase() === "yes";
+}
+  
+  function parseDiscount(promo) {
+  if (!promo) return null;
+
+  const normalized = promo.replace(",", ".");
+
+  const m = normalized.match(/(\d+(?:\.\d+)?)\s*%/);
+  return m ? parseFloat(m[1]) : null;
+}
+
+function formatPrice(n) {
+  return "Rp" + Number(n).toLocaleString("id-ID");
+}
+  
+function renderBadges(badgeText) {
+  if (!badgeText) return "";
+
+  return badgeText
+    .split(":")
+    .map(b => b.trim())
+    .filter(Boolean)
+    .map((label, i) => {
+      const key = label.toLowerCase();
+
+      let colorClass = "";
+      if (key === "hot") colorClass = "badge-hot-red";
+      else if (key === "new") colorClass = "badge-hot-green";
+      else if (key === "promo") colorClass = "badge-hot-orange";
+
+      return `
+        <span class="badge-hot badge-line-${i} ${colorClass}">
+          ${label}
+        </span>
+      `;
+    })
+    .join("");
+}
+  fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRODUCT_PACKAGES")
+  .then(r => {
+    if (!r.ok) throw new Error("Fetch gagal");
+    return r.json();
+  })
+  .then(data => {
+
+    const grouped = {};
+
+data.forEach(p => {
+  if (!grouped[p.product_id]) {
+    grouped[p.product_id] = { title: p.title, items: [] };
+  }
+  grouped[p.product_id].items.push(p);
+});
+
+const wrap = document.getElementById("product-cards");
+if (!wrap) return;
+
+Object.values(grouped)
+  .slice(0,4)
+  .forEach(prod => {
+
+    const sortedItems = [...prod.items];
+    const mainItems   = sortedItems.filter(i => i.group === "main");
+    const detailItems = sortedItems.filter(i => i.group === "detail");
+    const primaryItem =
+      sortedItems.find(i => i.group === "main" && i.image_url)
+      || sortedItems.find(i => i.image_url)
+      || sortedItems[0];
+      
+      wrap.innerHTML += `
+<div class="glass-card">
+
+  <!-- IMAGE + BADGE -->
+  <div class="product-image">
+    <img src="${primaryItem.image_url}" alt="${prod.title}">
+${renderBadges(primaryItem.badge)}
+  </div>
+
+  <!-- JUDUL -->
+  <h3>${prod.title}</h3>
+
+  <!-- PACKAGE UTAMA (yang langsung terlihat) -->
+  ${mainItems.map(i => {
+  let cls = "package-row";
+  let starStyle = "";
+
+const price = Number(
+  String(i.price).replace(/[^\d]/g, "")
+) || 0;
+const discount = parseDiscount(i.promo_text);
+
+let priceHTML = `<b>${formatPrice(price)}</b>`;
+
+if (discount !== null) {
+  const finalPrice = Math.round(price - (price * discount / 100));
+
+  priceHTML = `
+    <span class="discount-badge">${discount}%</span>
+    <div class="price-wrap">
+      <span class="price-old">${formatPrice(price)}</span>
+      <span class="price-new">${formatPrice(finalPrice)}</span>
+    </div>
+  `;
+      }
+
+  if (i.is_featured) {
+    const [color, glow] = i.is_featured.split(":");
+    cls += ` featured featured-${color}`;
+    if (glow) cls += ` glow-${glow}`;
+
+    // downgrade main strong → glow
+    if (i.group === "main" && glow === "strong") {
+      cls = cls.replace("glow-strong", "glow-glow");
+    }
+
+    const key = i.is_featured;
+    const cfg = FEATURED_STAR_CONFIG[key];
+
+    const price = Number(i.price) || 0;
+
+// multiplier halus (aman)
+    let densityBoost = 1;
+    if (price >= 50000) densityBoost = 1.6;
+    else if (price >= 20000) densityBoost = 1.3;
+    else if (price >= 10000) densityBoost = 1.15;
+
+// clone config supaya tidak rusak global
+    const adaptiveCfg = cfg
+     ? { ...cfg, amount: Math.round(cfg.amount * densityBoost) }: null;
+    
+    if (adaptiveCfg) {
+  const rgb =
+    key.startsWith("orange") ? "245,158,11" : "139,92,246";
+
+  starStyle = `
+    --star-bg: ${generateStars(rgb, adaptiveCfg)};
+    --star-opacity: ${adaptiveCfg.opacity};
+    --twinkle-speed: ${adaptiveCfg.twinkle}s;
+  `;
+
+  const phase = -(Math.random() * 6).toFixed(2);
+  starStyle += `animation-delay:${phase}s;`;
+}
+  }
+
+  // NoGar → MATIKAN STAR & GLOW
+if (isNoGar(i)) {
+  cls += " nogar";
+}
+
+return `
+  <a href="package.html?package_id=${i.package_id}"
+     class="${cls}"
+     style="${starStyle}">
+
+    <span>
+      ${i.package} ${i.duration}
+      ${
+        i.badge_label
+          ? `<em class="role-badge">
+               ${i.badge_icon ?? ""} ${i.badge_label}
+               ${garBadge(i)}
+             </em>`
+          : garBadge(i)
+      }
+    </span>
+
+    <div class="price-line promo-left">
+      ${priceHTML}
+    </div>
+
+  </a>
+`;
+}).join("")}
+
+<!-- TOMBOL -->
+  ${detailItems.length
+  ? `<button class="toggle-detail">Selengkapnya…</button>`
+  : ``}
+  
+  <!-- DETAIL TERSEMBUNYI -->
+  <div class="package-detail">
+
+  <div class="role-section">
+    <div class="role-title">Role Access</div>
+
+    ${detailItems.map(i => `
+  <a
+    href="package.html?package_id=${i.package_id}"
+    class="package-row role
+    ${i.is_featured && !isNoGar(i)
+      ? (() => {
+          const [color, glow] = i.is_featured.split(":");
+          return `featured featured-${color} ${glow ? `glow-${glow}` : ""}`;
+        })()
+      : ""
+    }
+    ${isNoGar(i) ? "nogar" : ""}
+    "
+    target="_self"
+    onclick="event.stopPropagation();"
+  >
+    <span>
+  ${i.package} ${i.duration}
+
+  ${i.badge_label
+  ? `<em class="role-badge">
+       ${i.badge_icon} ${i.badge_label}
+       ${garBadge(i)}</em>` : garBadge(i) }</span>
+    ${(() => {
+  const price = Number(
+  String(i.price).replace(/[^\d]/g, "")
+) || 0;
+  const discount = parseDiscount(i.promo_text);
+
+  if (discount !== null) {
+    const finalPrice = Math.round(price - (price * discount / 100));
+    return `
+      <div class="price-line promo-left">
+        <span class="discount-badge">${discount}%</span>
+        <div class="price-wrap">
+          <span class="price-old">${formatPrice(price)}</span>
+          <span class="price-new">${formatPrice(finalPrice)}</span>
+        </div>
+      </div>
+    `;
+  }
+
+  return `<b>${formatPrice(price)}</b>`;
+})()}
+  </a>
+`).join("")}
+
+  </div>
+</div>
+
+  <small class="note ${prod.items[0]?.guarantee ? 'has-guarantee' : 'no-guarantee'}">
+  ${prod.items[0]?.guarantee
+  ? prod.items[0].guarantee
+  : ''}
+</small>
+</div>
+      `;
+    });
+
+    })
+  .catch(err => {
+    console.error("Sheet error:", err);
+
+    const wrap = document.getElementById("product-cards");
+    if (wrap) {
+      wrap.innerHTML = `
+        <div style="text-align:center; padding:40px; opacity:.7">
+          Produk sedang tidak tersedia
+        </div>
+      `;
+    }
+  });
+</script>
 </body>
 </html>
