@@ -1175,5 +1175,25 @@ return `
     }
   });
 </script>
+
+  
+<script>
+document.addEventListener("click", function(e) {
+  const btn = e.target.closest(".toggle-detail");
+  if (!btn) return;
+
+  const card = btn.closest(".glass-card");
+  const detail = card.querySelector(".package-detail");
+
+  if (!detail) return;
+
+  detail.classList.toggle("open");
+
+  btn.textContent = detail.classList.contains("open")
+    ? "Tutup"
+    : "Selengkapnya...";
+});
+</script>
+  
 </body>
 </html>
