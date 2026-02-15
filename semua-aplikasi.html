@@ -803,29 +803,14 @@ html, body {
   animation: none; /* tanpa pulse */
 }
 
-.category-content {
-  width: 100%;
-  padding-bottom: 120px;
-}
-
 .category-panel {
   width: 100%;
 }
     
 #product-cards {
   display: grid;
-
   width: 100%;
-  max-width: 900px;
-
-  margin-left: auto;
-  margin-right: auto;
-
-  padding-left: 20px;
-  padding-right: 20px;
-
   gap: 32px 24px;
-
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
@@ -843,8 +828,10 @@ html, body {
 
 .category-content {
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: 1000px;   /* kontrol lebar layout */
+  margin: 0 auto;      /* center horizontal */
+  padding: 0 20px;     /* jarak kiri kanan biar gak mentok */
+  padding-bottom: 120px; /* jarak bawah */
 }
 
 @media (max-width: 480px) {
