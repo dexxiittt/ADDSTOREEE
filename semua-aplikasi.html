@@ -16,6 +16,11 @@
 
 <style>
 
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
  :root {
   --card-min-width: 300px;
   --grid-max-width: 840px;
@@ -396,13 +401,19 @@
 .apps-hero {
   position: relative;
 
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+
   background: linear-gradient(
     135deg,
     #493d84,
     #6d28d9
   );
 
-  padding: 72px 20px 64px;
+  padding: 90px 20px 80px;
 
   overflow: hidden;
 }
@@ -412,7 +423,7 @@
   margin: 0 auto;
   text-align: center;
 }
-
+  
 .apps-hero .section-title {
   color: #ffffff;
   margin: 0;
@@ -793,7 +804,7 @@
 
 .category-content {
   width: 100%;
-  padding: 0 20px 120px;
+  padding-bottom: 120px;
 }
 
 .category-panel {
