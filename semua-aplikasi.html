@@ -18,6 +18,9 @@
 
 body {
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 html, body {
@@ -814,14 +817,19 @@ html, body {
     
 #product-cards {
   display: grid;
-  gap: 32px 24px;
 
   width: 100%;
   max-width: 900px;
-  margin: 0 auto;
-  padding: 0 20px;
 
-  grid-template-columns: repeat(2, 1fr);
+  margin-left: auto;
+  margin-right: auto;
+
+  padding-left: 20px;
+  padding-right: 20px;
+
+  gap: 32px 24px;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 @media (min-width: 1200px) {
@@ -835,6 +843,11 @@ html, body {
     filter: blur(0.6px);
 }
  }
+
+.category-content {
+  width: 100%;
+  max-width: 1200px;
+}
 
 @media (max-width: 480px) {
   #product-cards {
