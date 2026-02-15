@@ -392,6 +392,46 @@
   }
 }
 
+/* ===== APPS HERO (AMBIL DARI PACKAGE HERO) ===== */
+.apps-hero {
+  position: relative;
+
+  background: linear-gradient(
+    135deg,
+    #493d84,
+    #6d28d9
+  );
+
+  padding: 72px 20px 64px;
+
+  overflow: hidden;
+}
+
+.apps-hero-inner {
+  max-width: 840px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.apps-hero .section-title {
+  color: #ffffff;
+  margin: 0;
+}
+
+.apps-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: radial-gradient(
+    circle at 50% 30%,
+    rgba(255,255,255,0.12),
+    transparent 60%
+  );
+
+  pointer-events: none;
+}
+  
 .section-title {
   margin: 44px 0 48px;
   text-align: center;
@@ -829,7 +869,11 @@ body.is-scrolling * {
 
 <section class="category-content">
   <div id="apk" class="category-panel active">
+    <section class="apps-hero">
+  <div class="apps-hero-inner">
     <h2 class="section-title">Semua Aplikasi</h2>
+  </div>
+</section>
     <div id="product-cards"></div>
   </div>
 
