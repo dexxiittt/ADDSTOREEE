@@ -26,8 +26,8 @@ html, body {
 }
 
 :root {
-  --card-min-width: 260px;   /* lebih fleksibel */
-  --grid-max-width: 1000px;  /* lebih lega */
+  --card-min-width: 360px;
+  --grid-max-width: 840px;  /* lebih lega */
 }
   
 /* SECTION PRODUCT – GLASS CARD */
@@ -407,7 +407,7 @@ html, body {
   position: relative;
 
   width: 100%;
-  margin: 0;
+  margin: 0 0 70px 0;
 
   background: linear-gradient(
     135deg,
@@ -809,9 +809,11 @@ html, body {
     
 #product-cards {
   display: grid;
-  width: 100%;
-  gap: 32px 24px;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(var(--card-min-width), 1fr));
+  gap: 28px 22px;
+
+  max-width: var(--grid-max-width);
+  margin-inline: auto;
 }
 
 @media (min-width: 1200px) {
@@ -828,10 +830,9 @@ html, body {
 
 .category-content {
   width: 100%;
-  max-width: 800px;   /* kontrol lebar layout */
-  margin: 0 auto;      /* center horizontal */
-  padding: 0 20px;     /* jarak kiri kanan biar gak mentok */
-  padding-bottom: 120px; /* jarak bawah */
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px 120px;
 }
 
 @media (max-width: 480px) {
@@ -877,16 +878,17 @@ body.is-scrolling * {
   
 <body style="background:#f9fafb; font-family:'Plus Jakarta Sans',sans-serif;">
 
-<section class="category-content">
-  <div id="apk" class="category-panel active">
-    <section class="apps-hero">
+<!-- HERO PINDAH KE ATAS -->
+<section class="apps-hero">
   <div class="apps-hero-inner">
     <h2 class="section-title">Semua Aplikasi</h2>
   </div>
 </section>
+
+<section class="category-content">
+  <div id="apk" class="category-panel active">
     <div id="product-cards"></div>
   </div>
-
 </section>
 
   
