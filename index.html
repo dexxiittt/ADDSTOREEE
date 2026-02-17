@@ -780,21 +780,9 @@
 
 /* PREMIUM HEADING */
 .premium-heading {
-  position: absolute;
-  left: 50%;
-  top: calc(var(--hero-offset) + 320px);
-
-  --move-x: 0px;
-  --move-y: 280px;
-  --parallax-y: 0px;
-
-  transform:
-    translateX(-50%)
-    translate(
-      var(--move-x),
-      calc(var(--move-y) + 40px + var(--parallax-y))
-    );
-
+  position: relative;
+  margin-top: 520px;
+  
   text-align: center;
   z-index: 3;
   pointer-events: none;
@@ -826,11 +814,9 @@
 
 /*PREMIUM DESCRIPTION */
 .hero-description {
-  position: absolute;
-  left: 50%;
-  top: calc(var(--hero-offset) + 560px);
-
-  transform: translateX(-50%);
+  position: relative;
+  max-width: 780px;
+  margin: 20px auto 40px;
 
   max-width: 780px;
   padding: 0 18px;
@@ -935,20 +921,8 @@
 
 /* PREMIUM STATS BAR (ABOVE IPHONE) */
 .premium-stats {
-  position: absolute;
-  left: 50%;
-  top: calc(var(--hero-offset) + 360px);
-
-  --move-x: 0px;
-  --move-y: 670px;
-  --parallax-y: 0px;
-
-  transform:
-    translateX(-50%)
-    translate(
-      var(--move-x),
-      calc(var(--move-y) + 40px + var(--parallax-y))
-    );
+  position: relative;
+  justify-content: center;
 
   opacity: 0;
   filter: blur(10px);
