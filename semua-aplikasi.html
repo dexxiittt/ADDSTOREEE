@@ -27,7 +27,7 @@ html, body {
 
 :root {
   --card-min-width: 360px;
-  --grid-max-width: 840px;
+  --grid-max-width: 880px; /* lebar card */
 }
   
 /* SECTION PRODUCT – GLASS CARD */
@@ -825,9 +825,9 @@ html, body {
   grid-template-columns: repeat(2, minmax(var(--card-min-width), 1fr));
   gap: 28px 22px;
 
+  width: 100%;
   max-width: var(--grid-max-width);
-  margin-inline: auto;
-  transform: translateX(17px);
+  margin: 0 auto;
 }
 
 @media (min-width: 1200px) {
