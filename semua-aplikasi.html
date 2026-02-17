@@ -835,6 +835,44 @@ html, body {
   padding-bottom: 120px;
 }
 
+/* ===== CARD FADE UP SYSTEM ===== */
+.glass-card {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity .7s cubic-bezier(.22,1,.36,1),
+    transform .7s cubic-bezier(.22,1,.36,1);
+  will-change: transform, opacity;
+}
+
+/* saat muncul */
+.glass-card.reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* stagger delay halus */
+.glass-card[data-delay="1"] { transition-delay: .05s; }
+.glass-card[data-delay="2"] { transition-delay: .1s; }
+.glass-card[data-delay="3"] { transition-delay: .15s; }
+.glass-card[data-delay="4"] { transition-delay: .2s; }
+
+/* mode hp kentang */
+@media (max-width:768px) {
+  .glass-card {
+    transition-duration: .55s;
+  }
+}
+
+/* respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .glass-card {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
 @media (max-width: 480px) {
   #product-cards {
     gap: 26px 18px;
@@ -1241,6 +1279,32 @@ document.addEventListener("click", function(e) {
   btn.textContent = detail.classList.contains("open")
     ? "Tutup"
     : "Selengkapnya...";
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const cards = document.querySelectorAll(".glass-card");
+
+  // kasih delay stagger
+  cards.forEach((card, i) => {
+    card.dataset.delay = (i % 4) + 1;
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("reveal");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.12,
+    rootMargin: "0px 0px -40px 0px"
+  });
+
+  cards.forEach(card => observer.observe(card));
 });
 </script>
   
