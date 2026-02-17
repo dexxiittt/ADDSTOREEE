@@ -809,17 +809,12 @@ html, body {
     
 #product-cards {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(var(--card-min-width), 1fr));
   gap: 28px 22px;
 
-  width: 100%;
-  max-width: 840px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 10px;
-  padding-right: 10px;
-
- transform: translateX(6px);
+  max-width: var(--grid-max-width);
+  margin-inline: auto;
+  transform: translateX(-17px); /* samakan dengan index */
 }
 
 @media (min-width: 1200px) {
