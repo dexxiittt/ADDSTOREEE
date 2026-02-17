@@ -46,9 +46,12 @@ html, body {
 
   animation: card-float 6s ease-in-out infinite;
 
+  opacity: 0;
+  transform: translateY(24px);
   transition:
-    transform .35s cubic-bezier(.22,1,.36,1),
-    box-shadow .35s ease;
+    opacity .7s cubic-bezier(.22,1,.36,1),
+    transform .7s cubic-bezier(.22,1,.36,1);
+  will-change: transform, opacity;
 }
 
 @keyframes card-float {
@@ -60,6 +63,16 @@ html, body {
   transform: translateY(-4px);
   box-shadow: 0 24px 52px rgba(0,0,0,.25);
 }
+
+.glass-card.reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.glass-card[data-delay="1"] { transition-delay: .05s; }
+.glass-card[data-delay="2"] { transition-delay: .1s; }
+.glass-card[data-delay="3"] { transition-delay: .15s; }
+.glass-card[data-delay="4"] { transition-delay: .2s; }
 
 .toggle-detail {
   width: 100%;
@@ -835,44 +848,6 @@ html, body {
   padding-bottom: 120px;
 }
 
-/* ===== CARD FADE UP SYSTEM ===== */
-.glass-card {
-  opacity: 0;
-  transform: translateY(24px);
-  transition:
-    opacity .7s cubic-bezier(.22,1,.36,1),
-    transform .7s cubic-bezier(.22,1,.36,1);
-  will-change: transform, opacity;
-}
-
-/* saat muncul */
-.glass-card.reveal {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* stagger delay halus */
-.glass-card[data-delay="1"] { transition-delay: .05s; }
-.glass-card[data-delay="2"] { transition-delay: .1s; }
-.glass-card[data-delay="3"] { transition-delay: .15s; }
-.glass-card[data-delay="4"] { transition-delay: .2s; }
-
-/* mode hp kentang */
-@media (max-width:768px) {
-  .glass-card {
-    transition-duration: .55s;
-  }
-}
-
-/* respect reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .glass-card {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
-}
-
 @media (max-width: 480px) {
   #product-cards {
     gap: 26px 18px;
@@ -898,6 +873,7 @@ html, body {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     animation: none !important;
+    transition-duration: .55s;
   }
 }
 
@@ -913,6 +889,10 @@ html, body {
     
 @media (prefers-reduced-motion: reduce) {
   .package-detail {
+    transition: none !important;
+  .glass-card {
+    opacity: 1 !important;
+    transform: none !important;
     transition: none !important;
   }
 }
