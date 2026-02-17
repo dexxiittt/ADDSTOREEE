@@ -804,11 +804,6 @@
   opacity: 0.95;
   filter: blur(0);
 
-  transform:
-    translateX(-50%)
-    translate(
-      var(--move-x),
-      calc(var(--move-y) + var(--parallax-y))
     );
 }
 
@@ -847,11 +842,6 @@
   opacity: 0.95;
   filter: blur(0);
 
-  transform:
-    translateX(-50%)
-    translate(
-      var(--move-x),
-      calc(var(--move-y) + var(--parallax-y))
     );
 }
 
@@ -945,12 +935,7 @@
 .hero-premium-phone.is-idle ~ .premium-stats {
   opacity: 0.95;
   filter: blur(0);
-
-  transform:
-    translateX(-50%)
-    translate(
-      var(--move-x),
-      calc(var(--move-y) + var(--parallax-y))
+  
     );
 }
 
@@ -2136,7 +2121,6 @@
     
 }
 .hero-description {
-    top: calc(var(--hero-offset) + 420px);
     font-size: 13px;
     line-height: 1.55;
     max-width: 92%;
