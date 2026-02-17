@@ -407,7 +407,7 @@ html, body {
   position: relative;
 
   width: 100%;
-  margin: 0 0 70px 0;
+  margin: 0 0 90px 0;
 
   background: linear-gradient(
     135deg,
@@ -809,7 +809,7 @@ html, body {
     
 #product-cards {
   display: grid;
-  grid-template-columns: repeat(2, minmax(var(--card-min-width), 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 28px 22px;
 
   max-width: var(--grid-max-width);
@@ -881,6 +881,14 @@ html, body {
     /* ===== PERFORMANCE MODE SAAT SCROLL ===== */
 body.is-scrolling * {
   animation-play-state: paused !important;
+}
+
+/* ===== MOBILE LAYOUT FIX ===== */
+@media (max-width: 768px) {
+  #product-cards {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+  }
 }
 
 </style>
