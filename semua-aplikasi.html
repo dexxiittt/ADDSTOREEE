@@ -18,6 +18,9 @@
 
 body {
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 html, body {
@@ -812,8 +815,12 @@ html, body {
   grid-template-columns: repeat(2, 1fr);
   gap: 28px 22px;
 
-  max-width: var(--grid-max-width);
-  margin-inline: auto;
+  width: 100%;
+  max-width: 840px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 @media (min-width: 1200px) {
@@ -830,9 +837,8 @@ html, body {
 
 .category-content {
   width: 100%;
-  max-width: 1400px;
   margin: 0 auto;
-  padding: 0 20px 120px;
+  padding-bottom: 120px;
 }
 
 @media (max-width: 480px) {
