@@ -1228,6 +1228,27 @@ return `
       `;
     });
 
+   // ==== REVEAL SYSTEM ====
+const cards = document.querySelectorAll(".glass-card");
+
+cards.forEach((card, i) => {
+  card.dataset.delay = (i % 4) + 1;
+});
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("reveal");
+      observer.unobserve(entry.target);
+    }
+  });
+}, {
+  threshold: 0.12,
+  rootMargin: "0px 0px -40px 0px"
+});
+
+cards.forEach(card => observer.observe(card));
+  
     })
   .catch(err => {
     console.error("Sheet error:", err);
@@ -1262,31 +1283,6 @@ document.addEventListener("click", function(e) {
 });
 </script>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-
-  const cards = document.querySelectorAll(".glass-card");
-
-  // kasih delay stagger
-  cards.forEach((card, i) => {
-    card.dataset.delay = (i % 4) + 1;
-  });
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("reveal");
-        observer.unobserve(entry.target);
-      }
-    });
-  }, {
-    threshold: 0.12,
-    rootMargin: "0px 0px -40px 0px"
-  });
-
-  cards.forEach(card => observer.observe(card));
-});
-</script>
   
 </body>
 </html>
