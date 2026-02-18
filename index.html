@@ -20,6 +20,7 @@
 :root {
 
   --hero-offset: 15vh;
+  --premium-offset: 1150px;
   
   /* MODE TERANG (default) */
   --glow-soft: rgba(255,255,255,0.45);
@@ -778,7 +779,15 @@
 }
 
 .premium-section {
-  margin-top: -1100px; /* atur sampai pas di bawah iphone */
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
+  top: calc(var(--hero-offset) + var(--premium-offset)); /* sesuaikan angka ini */
+
+  width: 100%;
+  max-width: 1000px;
+
   text-align: center;
   padding: 0 20px;
 
