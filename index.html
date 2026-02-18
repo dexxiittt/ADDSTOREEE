@@ -884,11 +884,21 @@
 
   transform:
     translate(var(--move-x), var(--move-y));
-}
-.hero-premium-phone.is-idle ~ .premium-heading .premium-trust {
-  animation: trust-pulse-solid 5.5s ease-in-out infinite;
+
+  animation: trustPulse 4s ease-in-out infinite;
 }
 
+@keyframes trustPulse {
+  0%, 100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 6px rgba(34,197,94,0.3));
+  }
+  50% {
+    opacity: 0.8;
+    filter: drop-shadow(0 0 2px rgba(34,197,94,0.15));
+  }
+}
+    
 /* ICON CHECK */
 .premium-trust i {
   font-size: 16px;
@@ -2190,6 +2200,8 @@
   .package-detail {
     transition: none !important;
   .premium-stats .stat-item {
+    animation: none;
+  .premium-trust {
     animation: none;
   }
 }
