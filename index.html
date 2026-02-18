@@ -916,6 +916,43 @@
   pointer-events: none;
 }
 
+/* Base floating */
+.premium-stats .stat-item {
+  animation: statFloat 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Delay beda tiap item */
+.premium-stats .stat-item:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.premium-stats .stat-item:nth-child(2) {
+  animation-delay: 0.8s;
+}
+
+.premium-stats .stat-item:nth-child(3) {
+  animation-delay: 1.6s;
+}
+
+@keyframes statFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes premium-stats-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
 /* ITEM */
 .stat-item {
   text-align: center;
@@ -2152,6 +2189,8 @@
 @media (prefers-reduced-motion: reduce) {
   .package-detail {
     transition: none !important;
+  .premium-stats .stat-item {
+    animation: none;
   }
 }
     /* ===== PERFORMANCE MODE SAAT SCROLL ===== */
