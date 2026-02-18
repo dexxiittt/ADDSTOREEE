@@ -1,1 +1,130 @@
-hello world
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+<style>
+
+/* ===== NAVBAR ===== */
+
+.main-navbar {
+  position: fixed;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 94%;
+  max-width: 1100px;
+  z-index: 999;
+
+  backdrop-filter: blur(18px);
+  background: rgba(255,255,255,0.08);
+  border-radius: 18px;
+
+  box-shadow: 0 18px 40px rgba(0,0,0,.25);
+}
+
+.nav-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: white;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+}
+
+.nav-brand img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
+.nav-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* DROPDOWN */
+
+.nav-dropdown {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .4s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-dropdown a {
+  padding: 14px 20px;
+  text-decoration: none;
+  color: white;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-weight: 500;
+  transition: background .3s;
+}
+
+.nav-dropdown a:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+/* ACTIVE */
+.nav-dropdown.open {
+  max-height: 400px;
+}
+  
+</style>
+</head>
+<body>
+<nav class="main-navbar">
+  <div class="nav-inner">
+
+    <!-- LEFT: LOGO -->
+    <a href="index.html" class="nav-brand">
+      <img src="https://raw.githubusercontent.com/dexxiittt/Image/main/logo.png" alt="Logo">
+      <span>Addstoreee</span>
+    </a>
+
+    <!-- RIGHT: MENU BUTTON -->
+    <button class="nav-toggle" id="navToggle">
+      <i class="fa-solid fa-ellipsis-vertical"></i>
+    </button>
+
+  </div>
+
+  <!-- DROPDOWN -->
+  <div class="nav-dropdown" id="navDropdown">
+    <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+    <a href="semua-aplikasi.html"><i class="fa-solid fa-box"></i> Semua Produk</a>
+    <a href="#testimoni"><i class="fa-solid fa-star"></i> Testimoni</a>
+    <a href="invoice.html"><i class="fa-solid fa-receipt"></i> Invoice</a>
+  </div>
+</nav>
+
+<script>
+document.addEventListener("click", function(e) {
+  const toggle = document.getElementById("navToggle");
+  const dropdown = document.getElementById("navDropdown");
+
+  if (!toggle) return;
+
+  if (toggle.contains(e.target)) {
+    dropdown.classList.toggle("open");
+  } else {
+    dropdown.classList.remove("open");
+  }
+});
+</script>
+  
+</body>
+</html>
