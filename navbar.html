@@ -1,7 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Navbar</title>
 <style>
 
 /* ===== NAVBAR ===== */
@@ -101,8 +97,9 @@
 }
   
 </style>
-</head>
-<body>
+
+
+
 <nav class="main-navbar">
   <div class="nav-inner">
 
@@ -128,25 +125,23 @@
   </div>
 </nav>
 
+
+
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   const toggle = document.getElementById("navToggle");
-  const dropdown = document.getElementById("navDropdown");
+const dropdown = document.getElementById("navDropdown");
 
-  if (!toggle || !dropdown) return;
-
+if (toggle && dropdown) {
   toggle.addEventListener("click", function (e) {
     e.stopPropagation();
     dropdown.classList.toggle("open");
   });
 
   document.addEventListener("click", function (e) {
-  if (!dropdown.contains(e.target) && !toggle.contains(e.target)) {
-    dropdown.classList.remove("open");
-  }
-});
-});
+    if (!dropdown.contains(e.target) && !toggle.contains(e.target)) {
+      dropdown.classList.remove("open");
+    }
+  });
+}
 </script>
-  
-</body>
-</html>
