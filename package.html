@@ -1190,6 +1190,15 @@ body.package-page::after {
   
 </style>
 </head>
+<div id="navbar-placeholder"></div>
+
+<script>
+fetch("navbar.html")
+  .then(res => res.text())
+  .then(data => {
+    document.getElementById("navbar-placeholder").innerHTML = data;
+  });
+</script>
 
 <body class="package-page">
 
