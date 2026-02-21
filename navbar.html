@@ -8,6 +8,7 @@
 
 .main-navbar {
   position: fixed;
+  overflow: visible;
   top: 0;
   left: 0;
   width: 100%;
@@ -46,6 +47,8 @@
 }
 
 .nav-toggle {
+  position: relative;
+  z-index: 10000;
   background: none;
   border: none;
   color: white;
@@ -55,7 +58,6 @@
 
 /* DROPDOWN */
 
-/* DROPDOWN FIX */
 .nav-dropdown {
   position: absolute;
   top: 100%;
@@ -70,6 +72,9 @@
 
   max-height: 0;
   overflow-y: auto;
+
+  pointer-events: none;   /* PENTING */
+  z-index: 9998;
 
   transition: max-height .45s cubic-bezier(.22,1,.36,1);
 }
@@ -91,7 +96,8 @@
 
 /* OPEN STATE */
 .nav-dropdown.open {
-  max-height: 300px;
+  max-height: 70vh;
+  pointer-events: auto;   /* aktif saat buka */
 }
   
 </style>
