@@ -8,25 +8,26 @@
 
 .main-navbar {
   position: fixed;
-  top: 18px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 94%;
-  max-width: 1100px;
-  z-index: 999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
 
   backdrop-filter: blur(18px);
   background: rgba(255,255,255,0.08);
-  border-radius: 18px;
 
-  box-shadow: 0 18px 40px rgba(0,0,0,.25);
+  box-shadow: 0 12px 30px rgba(0,0,0,.25);
 }
 
 .nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 18px;
+
+  padding: 14px 20px;
 }
 
 .nav-brand {
@@ -58,7 +59,7 @@
 .nav-dropdown {
   max-height: 0;
   overflow: hidden;
-  transition: max-height .4s ease;
+  transition: max-height .45s cubic-bezier(.22,1,.36,1);
   display: flex;
   flex-direction: column;
 }
@@ -80,7 +81,7 @@
 
 /* ACTIVE */
 .nav-dropdown.open {
-  max-height: 400px;
+  max-height: 500px;
 }
   
 </style>
@@ -112,17 +113,22 @@
 </nav>
 
 <script>
-document.addEventListener("click", function(e) {
+document.addEventListener("DOMContentLoaded", function () {
   const toggle = document.getElementById("navToggle");
   const dropdown = document.getElementById("navDropdown");
 
-  if (!toggle) return;
+  if (!toggle || !dropdown) return;
 
-  if (toggle.contains(e.target)) {
+  toggle.addEventListener("click", function (e) {
+    e.stopPropagation();
     dropdown.classList.toggle("open");
-  } else {
-    dropdown.classList.remove("open");
-  }
+  });
+
+  document.addEventListener("click", function (e) {
+    if (!dropdown.contains(e.target)) {
+      dropdown.classList.remove("open");
+    }
+  });
 });
 </script>
   
