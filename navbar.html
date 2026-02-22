@@ -7,30 +7,27 @@
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 9999;
+  z-index: 999999;
 
   backdrop-filter: blur(18px);
   background: rgba(255,255,255,0.08);
-
   box-shadow: 0 12px 30px rgba(0,0,0,.25);
-}
 
-/* ===== SCROLL EFFECT ===== */
-
-.main-navbar {
   transition:
     background 0.35s ease,
     backdrop-filter 0.35s ease,
     box-shadow 0.35s ease,
     padding 0.35s ease;
-    will-change: background, box-shadow;
-}
 
+  will-change: background, box-shadow;
+}
+  
 /* STATE SAAT SCROLL */
 .main-navbar.scrolled {
   background: rgba(73,61,132,0.85);
   backdrop-filter: blur(22px);
   box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+  background: red !important;
 }
 
 /* NAV INNER SMOOTH */
