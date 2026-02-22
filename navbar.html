@@ -27,7 +27,6 @@
   background: rgba(73,61,132,0.85);
   backdrop-filter: blur(22px);
   box-shadow: 0 18px 40px rgba(0,0,0,0.35);
-  background: red !important;
 }
 
 /* NAV INNER SMOOTH */
@@ -144,10 +143,10 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   document.addEventListener("click", function (e) {
-    if (!dropdown.contains(e.target)) {
-      dropdown.classList.remove("open");
-    }
-  });
+  if (!dropdown.contains(e.target) && !toggle.contains(e.target)) {
+    dropdown.classList.remove("open");
+  }
+});
 });
 </script>
 
