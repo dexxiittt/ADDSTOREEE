@@ -2225,6 +2225,17 @@ fetch("navbar.html")
   .then(res => res.text())
   .then(data => {
     document.getElementById("navbar-placeholder").innerHTML = data;
+
+    // pastikan scroll attach setelah navbar masuk DOM
+    const navbar = document.querySelector(".main-navbar");
+
+    window.addEventListener("scroll", function () {
+      if (window.scrollY > 30) {
+        navbar.classList.add("scrolled");
+      } else {
+        navbar.classList.remove("scrolled");
+      }
+    });
   });
 </script>
 
