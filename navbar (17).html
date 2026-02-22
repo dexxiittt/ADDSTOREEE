@@ -1,0 +1,121 @@
+<style>
+
+/* ===== NAVBAR ===== */
+
+.main-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999999;
+
+  backdrop-filter: blur(18px);
+  background: rgba(255,255,255,0.08);
+  box-shadow: 0 12px 30px rgba(0,0,0,.25);
+
+  transition:
+    background 0.35s ease,
+    backdrop-filter 0.35s ease,
+    box-shadow 0.35s ease,
+    padding 0.35s ease;
+
+  will-change: background, box-shadow;
+}
+
+.main-navbar.scrolled .nav-inner {
+  padding: 10px 20px;
+}
+
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 14px 20px;
+  transition: padding 0.35s ease;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: white;
+  font-weight: 700;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.nav-brand img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
+.nav-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* DROPDOWN */
+
+.nav-dropdown {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .45s cubic-bezier(.22,1,.36,1);
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-dropdown a {
+  padding: 14px 20px;
+  text-decoration: none;
+  color: white;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-weight: 500;
+  transition: background .3s;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.nav-dropdown a:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+/* ACTIVE */
+.nav-dropdown.open {
+  max-height: 500px;
+}
+  
+</style>
+
+<nav class="main-navbar">
+  <div class="nav-inner">
+
+    <!-- LEFT: LOGO -->
+    <a href="index.html" class="nav-brand">
+      <img src="https://raw.githubusercontent.com/dexxiittt/Image/main/logo.png" alt="Logo">
+      <span>Addstoreee</span>
+    </a>
+
+    <!-- RIGHT: MENU BUTTON -->
+    <button class="nav-toggle" id="navToggle">
+      <i class="fa-solid fa-ellipsis-vertical"></i>
+    </button>
+
+  </div>
+
+  <!-- DROPDOWN -->
+  <div class="nav-dropdown" id="navDropdown">
+    <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+    <a href="semua-aplikasi.html"><i class="fa-solid fa-box"></i> Semua Produk</a>
+    <a href="#testimoni"><i class="fa-solid fa-star"></i> Testimoni</a>
+    <a href="invoice.html"><i class="fa-solid fa-receipt"></i> Invoice</a>
+  </div>
+</nav>
