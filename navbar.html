@@ -57,9 +57,39 @@
 .nav-toggle {
   background: none;
   border: none;
-  color: white;
-  font-size: 20px;
   cursor: pointer;
+
+  width: 28px;
+  height: 22px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: 0;
+  position: relative;
+}
+
+.nav-toggle span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: white;
+  border-radius: 2px;
+  transition: all 0.35s cubic-bezier(.22,1,.36,1);
+}
+
+/* ANIMASI JADI X */
+.nav-toggle.active span:nth-child(1) {
+  transform: translateY(10px) rotate(45deg);
+}
+
+.nav-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle.active span:nth-child(3) {
+  transform: translateY(-10px) rotate(-45deg);
 }
 
 /* DROPDOWN */
@@ -106,8 +136,10 @@
 
     <!-- RIGHT: MENU BUTTON -->
     <button class="nav-toggle" id="navToggle">
-      <i class="fa-solid fa-ellipsis-vertical"></i>
-    </button>
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
 
   </div>
 
