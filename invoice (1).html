@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cek Invoice</title>
+
+<style>
+/* ====== IMPORT STYLE DARI PACKAGE ====== */
+/* Kamu bisa copy semua :root, body.package-page, 
+   .package-hero, .glass dari package.html */
+
+/* HERO tetap ungu */
+.package-hero {
+  background: linear-gradient(
+    135deg,
+    #493d84,
+    #6d28d9
+  );
+  padding: 72px 20px 56px;
+  text-align: center;
+}
+
+.package-hero h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(36px, 6vw, 100px);
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.package-hero p {
+  font-size: 15px;
+  opacity: .85;
+}
+
+/* ===== GLASS CONTAINER KHUSUS INVOICE ===== */
+
+.invoice-box {
+  max-width: 720px;
+  margin: -40px auto 80px; /* naik dikit biar masuk area ungu */
+  padding: 32px;
+  text-align: center;
+}
+
+.invoice-box h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.invoice-box p {
+  font-size: 15px;
+  opacity: .75;
+  margin-bottom: 24px;
+}
+
+/* ===== INPUT GROUP ===== */
+
+.invoice-input-wrap {
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 6px;
+  backdrop-filter: blur(10px);
+}
+
+.invoice-input-wrap input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 14px;
+  color: white;
+  font-size: 15px;
+}
+
+.invoice-input-wrap button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  border: none;
+  cursor: pointer;
+
+  padding: 12px 18px;
+  border-radius: 14px;
+
+  font-weight: 600;
+  color: white;
+
+  background: linear-gradient(
+    135deg,
+    #8b5cf6,
+    #6d28d9
+  );
+
+  box-shadow: 0 10px 24px rgba(139,92,246,.45);
+
+  transition: .25s;
+}
+
+.invoice-input-wrap button:hover {
+  transform: translateY(-2px);
+}
+</style>
+</head>
+
+<body class="package-page">
+
+<!-- HERO -->
+<section class="package-hero">
+  <h1>Cek Invoice</h1>
+  <p>Lacak status pembayaran dan detail pesanan</p>
+</section>
+
+<!-- GLASS CONTAINER -->
+<section class="glass invoice-box">
+
+  <h2>Masukan Invoice Anda</h2>
+  <p>Lacak status pembayaran dan detail pesanan</p>
+
+  <div class="invoice-input-wrap">
+    <input 
+      type="text" 
+      placeholder="Masukkan nomor invoice (contoh: INV20241201001)"
+    >
+    <button>
+      🔍 Cek
+    </button>
+  </div>
+
+</section>
+
+</body>
+</html>
