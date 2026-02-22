@@ -2240,6 +2240,16 @@ fetch("navbar.html")
     dropdown.classList.remove("open");
     toggle.classList.remove("active"); // ← TAMBAHAN INI
   }
+
+   // ===== ACTIVE LINK AUTO DETECT =====
+const currentPage = window.location.pathname.split("/").pop() || "index.html";
+
+document.querySelectorAll(".nav-dropdown a").forEach(link => {
+  const linkPage = link.getAttribute("href");
+
+  if (linkPage === currentPage) {
+    link.classList.add("active");
+  }
 });
 
     // SCROLL EFFECT
