@@ -2230,15 +2230,17 @@ fetch("navbar.html")
 
     // TOGGLE
     toggle.addEventListener("click", function (e) {
-      e.stopPropagation();
-      dropdown.classList.toggle("open");
-    });
+  e.stopPropagation();
+  dropdown.classList.toggle("open");
+  toggle.classList.toggle("active"); // ← TAMBAHAN INI
+});
 
     document.addEventListener("click", function (e) {
-      if (!dropdown.contains(e.target) && !toggle.contains(e.target)) {
-        dropdown.classList.remove("open");
-      }
-    });
+  if (!dropdown.contains(e.target) && !toggle.contains(e.target)) {
+    dropdown.classList.remove("open");
+    toggle.classList.remove("active"); // ← TAMBAHAN INI
+  }
+});
 
     // SCROLL EFFECT
     window.addEventListener("scroll", function () {
