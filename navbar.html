@@ -76,9 +76,7 @@
   width: 100%;
   background: white;
   border-radius: 2px;
-  transition:
-  transform 0.4s cubic-bezier(.22,1,.36,1),
-  opacity 0.25s ease;
+  transition: all 0.35s cubic-bezier(.22,1,.36,1);
 }
 
 /* ANIMASI JADI X */
@@ -94,6 +92,12 @@
   transform: translateY(-10px) rotate(-45deg);
 }
 
+.nav-toggle.active {
+  transition:
+  transform 0.4s cubic-bezier(.22,1,.36,1),
+  opacity 0.25s ease;
+}
+
 /* ===== BOUNCE HALUS ===== */
 
 @keyframes toggleBounce {
@@ -101,10 +105,6 @@
   40%  { transform: scale(0.92); }
   70%  { transform: scale(1.05); }
   100% { transform: scale(1); }
-}
-
-.nav-toggle.active {
-  animation: toggleBounce 0.35s cubic-bezier(.22,1,.36,1);
 }
 
 /* DROPDOWN */
