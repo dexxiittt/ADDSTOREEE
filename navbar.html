@@ -129,23 +129,3 @@
     <a href="invoice.html"><i class="fa-solid fa-receipt"></i> Invoice</a>
   </div>
 </nav>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const toggle = document.getElementById("navToggle");
-  const dropdown = document.getElementById("navDropdown");
-
-  if (!toggle || !dropdown) return;
-
-  toggle.addEventListener("click", function (e) {
-    e.stopPropagation();
-    dropdown.classList.toggle("open");
-  });
-
-  document.addEventListener("click", function (e) {
-  if (!dropdown.contains(e.target) && !toggle.contains(e.target)) {
-    dropdown.classList.remove("open");
-  }
-});
-});
-</script>
