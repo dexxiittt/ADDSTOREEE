@@ -43,25 +43,49 @@ html, body {
   opacity: .85;
 }
 
-/* ===== GLASS CONTAINER KHUSUS INVOICE ===== */
+/* ===== PREMIUM GLASS INVOICE ===== */
 
 .invoice-box {
   max-width: 720px;
-  margin: -40px auto 80px; /* naik dikit biar masuk area ungu */
-  padding: 32px;
+  margin: -60px auto 100px;
+  padding: 36px 32px;
+
+  border-radius: 22px;
+
+  background: rgba(15,15,20,0.55);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+
+  border: 1px solid rgba(255,255,255,0.06);
+
   text-align: center;
+
+  transition: transform .4s ease, box-shadow .4s ease;
+}
+
+.invoice-box:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 30px 80px rgba(0,0,0,0.55),
+    inset 0 1px 0 rgba(255,255,255,0.08);
 }
 
 .invoice-box h2 {
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 700;
   margin-bottom: 8px;
+  color: #fff;
 }
 
 .invoice-box p {
-  font-size: 15px;
-  opacity: .75;
-  margin-bottom: 24px;
+  font-size: 14px;
+  opacity: .65;
+  margin-bottom: 28px;
+  color: #e5e7eb;
 }
 
 /* ===== INPUT GROUP ===== */
@@ -69,20 +93,26 @@ html, body {
 .invoice-input-wrap {
   display: flex;
   align-items: center;
-  background: rgba(255,255,255,0.08);
-  border-radius: 16px;
-  padding: 6px;
-  backdrop-filter: blur(10px);
-}
 
+  background: rgba(255,255,255,0.06);
+  border-radius: 18px;
+  padding: 6px;
+
+  border: 1px solid rgba(255,255,255,0.08);
+}
+  
 .invoice-input-wrap input {
   flex: 1;
   background: transparent;
   border: none;
   outline: none;
-  padding: 14px;
+  padding: 14px 16px;
   color: white;
   font-size: 15px;
+}
+
+.invoice-input-wrap input::placeholder {
+  color: rgba(255,255,255,0.4);
 }
 
 .invoice-input-wrap button {
