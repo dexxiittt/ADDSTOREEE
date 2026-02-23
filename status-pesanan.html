@@ -110,5 +110,49 @@ wrapper.innerHTML = `
   </div>
 `;
 </script>
+
+<script>
+// =============================
+// AMBIL PARAMETER INVOICE
+// =============================
+const params = new URLSearchParams(window.location.search);
+const invoice = params.get("inv");
+
+if (!invoice) {
+  window.location.href = "invoice.html";
+}
+
+// =============================
+// KONFIGURASI SHEET
+// =============================
+const sheetID = "1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08";
+const sheetName = "WARRANTY_DATA";
+const sheetURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
+
+// =============================
+// FETCH WARRANTY_DATA
+// =============================
+async function fetchWarrantyData() {
+  try {
+    const res = await fetch(sheetURL);
+    const text = await res.text();
+
+    const json = JSON.parse(text.substr(47).slice(0, -2));
+    const rows = json.table.rows;
+
+    console.log("Semua Data Warranty:", rows);
+
+    // Filter berdasarkan invoice
+    const matched = rows.find(row => row.c[0]?.v == invoice);
+
+    console.log("Data yang cocok:", matched);
+
+  } catch (err) {
+    console.error("Error ambil warranty_data:", err);
+  }
+}
+
+fetchWarrantyData();
+</script>
 </body>
 </html>
