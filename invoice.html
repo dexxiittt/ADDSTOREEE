@@ -335,9 +335,9 @@ async function checkInvoice() {
     const json = JSON.parse(text.substr(47).slice(0, -2));
     const rows = json.table.rows;
 
-    const invoiceList = rows.map(row => row.c[0]?.v);
+    const invoiceList = rows.map(row => String(row.c[0]?.v));
 
-    if (invoiceList.includes(invoiceValue)) {
+if (invoiceList.includes(String(invoiceValue))) {
       window.location.href = `status-pesanan.html?inv=${invoiceValue}`;
     } else {
       alert("Invoice tidak ditemukan ❌");
