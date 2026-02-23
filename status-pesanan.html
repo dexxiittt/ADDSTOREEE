@@ -72,18 +72,17 @@ html, body {
 
 <script>
 // =============================
-// AMBIL PARAMETER INVOICE DARI URL
+// AMBIL PARAMETER INVOICE
 // =============================
 const params = new URLSearchParams(window.location.search);
 const invoice = params.get("inv");
 
-// Kalau tidak ada invoice di URL → balik ke invoice page
 if (!invoice) {
   window.location.href = "invoice.html";
 }
 
 // =============================
-// TAMPILKAN INVOICE SEMENTARA
+// TAMPILKAN LOADING CARD
 // =============================
 const wrapper = document.querySelector(".status-wrapper");
 
@@ -101,29 +100,14 @@ wrapper.innerHTML = `
     color:white;
     font-family: 'Plus Jakarta Sans', sans-serif;
   ">
-    <h2 style="margin-bottom:15px;">Invoice Ditemukan</h2>
-    <p style="opacity:0.7;">Nomor Invoice:</p>
+    <h2 style="margin-bottom:15px;">Memuat Data...</h2>
+    <p style="opacity:0.7;">Invoice:</p>
     <h3 style="margin-top:5px; color:#9f7aea;">${invoice}</h3>
-    <p style="margin-top:25px; opacity:0.6;">
-      Mengambil data status pesanan...
-    </p>
   </div>
 `;
-</script>
-
-<script>
-// =============================
-// AMBIL PARAMETER INVOICE
-// =============================
-const params = new URLSearchParams(window.location.search);
-const invoice = params.get("inv");
-
-if (!invoice) {
-  window.location.href = "invoice.html";
-}
 
 // =============================
-// KONFIGURASI SHEET
+// KONFIGURASI SHEET WARRANTY_DATA
 // =============================
 const sheetID = "1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08";
 const sheetName = "WARRANTY_DATA";
@@ -136,16 +120,17 @@ async function fetchWarrantyData() {
   try {
     const res = await fetch(sheetURL);
     const text = await res.text();
-
     const json = JSON.parse(text.substr(47).slice(0, -2));
     const rows = json.table.rows;
 
     console.log("Semua Data Warranty:", rows);
 
-    // Filter berdasarkan invoice
     const matched = rows.find(row => row.c[0]?.v == invoice);
 
     console.log("Data yang cocok:", matched);
+
+    // Untuk sementara cuma log dulu
+    // Step berikutnya kita render detail produk
 
   } catch (err) {
     console.error("Error ambil warranty_data:", err);
