@@ -321,41 +321,34 @@ const button = document.querySelector(".invoice-input-wrap button");
 
 button.addEventListener("click", checkInvoice);
 
-async function fetchWarrantyData() {
+async function checkInvoice() {
+  const invoiceValue = input.value.trim();
+
+  if (!invoiceValue) {
+    alert("Masukkan nomor invoice dulu.");
+    return;
+  }
+
   try {
-    const res = await fetch(sheetURL);
+    const res = await fetch(url);
     const text = await res.text();
     const json = JSON.parse(text.substr(47).slice(0, -2));
     const rows = json.table.rows;
 
-    console.log("Semua Data Warranty:", rows);
+    const invoiceList = rows.map(row => row.c[0]?.v);
 
-    // =============================
-    // FILTER BERDASARKAN INVOICE
-    // =============================
-    let matchedData = null;
-
-    rows.forEach(row => {
-      if (!row.c) return;
-
-      const invoiceCell = row.c[0]?.v; // Kolom A = invoice
-      if (String(invoiceCell) === String(invoice)) {
-        matchedData = row;
-      }
-    });
-
-    console.log("Hasil Filter:", matchedData);
-
-    if (matchedData) {
-      console.log("Invoice ditemukan di warranty_data ✅");
+    if (invoiceList.includes(invoiceValue)) {
+      window.location.href = `status-pesanan.html?inv=${invoiceValue}`;
     } else {
-      console.log("Invoice tidak ditemukan di warranty_data ❌");
+      alert("Invoice tidak ditemukan ❌");
     }
 
   } catch (err) {
-    console.error("Error ambil warranty_data:", err);
+    console.error(err);
+    alert("Terjadi kesalahan mengambil data.");
   }
 }
+  
 </script>
 
 </body>
