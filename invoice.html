@@ -329,16 +329,13 @@ async function checkInvoice() {
     const res = await fetch(url);
     const text = await res.text();
 
-    // parsing aneh dari gviz
     const json = JSON.parse(text.substr(47).slice(0, -2));
     const rows = json.table.rows;
 
     const invoiceList = rows.map(row => row.c[0]?.v);
 
     if (invoiceList.includes(invoiceValue)) {
-      alert("Invoice ditemukan ✅");
-      // nanti redirect ke status-pesanan
-      // window.location.href = `status-pesanan.html?inv=${invoiceValue}`;
+      window.location.href = `status-pesanan.html?inv=${invoiceValue}`;
     } else {
       alert("Invoice tidak ditemukan ❌");
     }
