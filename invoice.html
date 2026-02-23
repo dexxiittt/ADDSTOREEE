@@ -53,27 +53,57 @@ html, body {
 /* ===== PREMIUM GLASS INVOICE ===== */
 
 .invoice-box {
-  width: 80%;              /* INI YANG BIKIN LEBAR */
-  max-width: 900px;
+  width: 85%;
+  max-width: 950px;
 
-  margin: 40px auto 100px;
-  padding: 48px 56px;
+  margin: 50px auto 120px;
+  padding: 60px 70px;
 
-  border-radius: 22px;
+  border-radius: 28px;
 
-  background: rgba(15,15,20,0.55);
-  backdrop-filter: blur(22px);
-  -webkit-backdrop-filter: blur(22px);
+  position: relative;
+  overflow: hidden;
+
+  background: linear-gradient(
+    145deg,
+    rgba(18,18,28,0.75),
+    rgba(10,10,18,0.65)
+  );
+
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+
+  border: 1px solid rgba(255,255,255,0.08);
 
   box-shadow:
-    0 20px 60px rgba(0,0,0,0.45),
-    inset 0 1px 0 rgba(255,255,255,0.06);
-
-  border: 1px solid rgba(255,255,255,0.06);
+    0 40px 120px rgba(0,0,0,0.75),
+    inset 0 1px 0 rgba(255,255,255,0.08);
 
   text-align: center;
+  transition: all .45s cubic-bezier(.22,1,.36,1);
 }
 
+.invoice-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    120deg,
+    rgba(139,92,246,0.6),
+    transparent 40%,
+    transparent 60%,
+    rgba(139,92,246,0.4)
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+  
 .invoice-box:hover {
   transform: translateY(-4px);
   box-shadow:
@@ -104,11 +134,16 @@ html, body {
   display: flex;
   align-items: center;
 
-  background: rgba(255,255,255,0.06);
-  border-radius: 18px;
-  padding: 6px;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.06),
+    rgba(255,255,255,0.02)
+  );
 
-  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 22px;
+  padding: 8px;
+
+  border: 1px solid rgba(255,255,255,0.06);
 }
   
 .invoice-input-wrap input {
@@ -126,32 +161,29 @@ html, body {
 }
 
 .invoice-input-wrap button {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-
-  border: none;
-  cursor: pointer;
-
-  padding: 12px 18px;
-  border-radius: 14px;
+  padding: 14px 22px;
+  border-radius: 18px;
 
   font-weight: 600;
-  color: white;
 
   background: linear-gradient(
     135deg,
-    #8b5cf6,
+    #9f7aea,
     #6d28d9
   );
 
-  box-shadow: 0 10px 24px rgba(139,92,246,.45);
+  box-shadow:
+    0 12px 30px rgba(139,92,246,.55),
+    0 0 40px rgba(139,92,246,.35);
 
-  transition: .25s;
+  transition: all .35s ease;
 }
 
 .invoice-input-wrap button:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px) scale(1.04);
+  box-shadow:
+    0 18px 45px rgba(139,92,246,.75),
+    0 0 60px rgba(139,92,246,.45);
 }
 
 .invoice-wrapper {
