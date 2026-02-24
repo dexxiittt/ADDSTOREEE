@@ -3,8 +3,9 @@
 <head>
 <title>Status Pesanan</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&
+  family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  
 <style>
 body {
   overflow-x: hidden;
@@ -120,6 +121,31 @@ html, body {
     0 30px 80px rgba(0,0,0,0.45);
 
   color: white;
+}
+
+.package-preview {
+  font-family: 'Manrope', sans-serif;
+}
+
+.package-preview h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  letter-spacing: 0.6px;
+}
+
+.detail-card {
+  font-family: 'Manrope', sans-serif;
+}
+
+.detail-card h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 34px;
+  letter-spacing: 0.8px;
+}
+
+.package-preview h3,
+.detail-card h2 {
+  text-shadow: 0 4px 12px rgba(0,0,0,0.35);
 }
   
 </style>
@@ -237,7 +263,6 @@ const image_url   = rowData.image_url || "";
   <div class="detail-card">
 
     <h2 style="
-      font-family:'Playfair Display', serif;
       font-size:32px;
       margin-bottom:30px;
       text-align:center;
