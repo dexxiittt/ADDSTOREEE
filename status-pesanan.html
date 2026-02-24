@@ -110,9 +110,9 @@ html, body {
   border-radius: 22px;
 
   background: linear-gradient(
-    180deg,
-    rgba(255,255,255,0.10),
-    rgba(255,255,255,0.04)
+  180deg,
+  rgba(255,255,255,0.12),
+  rgba(255,255,255,0.05)
   );
 
   backdrop-filter: blur(18px);
@@ -146,6 +146,40 @@ html, body {
 .package-preview h3,
 .detail-card h2 {
   text-shadow: 0 4px 12px rgba(0,0,0,0.35);
+}
+
+/* ===== PURPLE BACKGROUND SECTION FOR DETAIL ===== */
+.detail-section {
+  position: relative;
+  margin-top: 40px;
+  padding: 80px 16px;
+}
+
+.detail-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 900px;
+  height: 100%;
+  border-radius: 40px;
+
+  background: radial-gradient(
+    circle at center,
+    rgba(109, 40, 217, 0.35),
+    rgba(109, 40, 217, 0.15),
+    transparent 70%
+  );
+
+  filter: blur(60px);
+  z-index: 0;
+}
+
+.detail-section .detail-card {
+  position: relative;
+  z-index: 1;
 }
   
 </style>
@@ -259,7 +293,8 @@ const image_url   = rowData.image_url || "";
     <p>${packageName}</p>
   </div>
 
-   <!-- DETAIL CARD -->
+   <!-- DETAIL SECTION -->
+<div class="detail-section">
   <div class="detail-card">
 
     <h2 style="
@@ -290,6 +325,7 @@ const image_url   = rowData.image_url || "";
       </div>
 
     </div>
+  </div>
   </div>
 `;
 
