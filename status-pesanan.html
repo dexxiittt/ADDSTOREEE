@@ -211,7 +211,10 @@ async function fetchWarrantyData() {
       wrapper.innerHTML = `
   <!-- PACKAGE PREVIEW -->
   <div class="package-preview">
-    <img src="https://via.placeholder.com/800x400/6d28d9/ffffff?text=${encodeURIComponent(title)}" alt="${title}">
+    <img 
+  src="${image_url || 'https://dummyimage.com/800x400/111827/ffffff&text=Package'}" 
+  alt="${title}"
+  onerror="this.src='https://dummyimage.com/800x400/111827/ffffff&text=Package';">
     <h3>${title}</h3>
     <p>${packageName}</p>
   </div>
