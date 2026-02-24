@@ -52,6 +52,10 @@ html, body {
 .status-wrapper {
   min-height: 60vh;
   padding: 40px 16px 80px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* ===== PACKAGE PREVIEW CARD ===== */
@@ -202,11 +206,19 @@ async function fetchWarrantyData() {
     // =============================
     if (matchedData) {
 
-      const product_id   = matchedData.c[1]?.v || "-";
-      const title        = matchedData.c[2]?.v || "-";
-      const packageName  = matchedData.c[3]?.v || "-";
-      const duration     = matchedData.c[4]?.v || "-";
-      const status       = matchedData.c[5]?.v || "-";
+      const headers = data.table.cols.map(col => col.label);
+
+const rowData = {};
+headers.forEach((header, index) => {
+  rowData[header] = matchedData.c[index]?.v || "";
+});
+
+const product_id  = rowData.product_id || "-";
+const title       = rowData.title || "-";
+const packageName = rowData.package || "-";
+const duration    = rowData.duration_days || "-";
+const status      = rowData.status || "-";
+const image_url   = rowData.image_url || "";
 
       wrapper.innerHTML = `
   <!-- PACKAGE PREVIEW -->
