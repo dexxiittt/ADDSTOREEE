@@ -206,7 +206,9 @@ async function fetchWarrantyData() {
     // =============================
     if (matchedData) {
 
-      const headers = data.table.cols.map(col => col.label);
+      wrapper.style.display = "block";
+
+    const headers = json.table.cols.map(col => col.label);
 
 const rowData = {};
 headers.forEach((header, index) => {
@@ -255,7 +257,7 @@ const image_url   = rowData.image_url || "";
         <span style="
           padding:6px 14px;
           border-radius:20px;
-          background:${status === "Active" ? "#16a34a" : "#dc2626"};
+          background:${String(status).toLowerCase() === "active" ? "#16a34a" : "#dc2626"};
           font-size:13px;
         ">
           ${status}
