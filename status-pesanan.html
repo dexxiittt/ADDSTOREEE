@@ -351,11 +351,12 @@ if (durationDays > 0) {
   // ==========================
   // JIKA BELUM ACTIVE
   // ==========================
-  if (status.toLowerCase() !== "active") {
+if (status.toLowerCase() !== "active") {
+  statusText.style.color = "#9ca3af";
     countdownTimer.innerHTML =
       `${durationDays} Hari 00:00:00`;
     return;
-  }
+}
 
   // ==========================
   // JIKA SUDAH ACTIVE
@@ -411,9 +412,6 @@ if (durationDays > 0) {
   const expiryDate = new Date(activatedDate);
 expiryDate.setDate(expiryDate.getDate() + durationDays);
 expiryDate.setSeconds(expiryDate.getSeconds() - 1);
-
-  const countdownTimer = document.getElementById("countdownTimer");
-  const statusText = document.getElementById("statusText");
 
   function updateCountdown() {
     const now = new Date();
