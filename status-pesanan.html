@@ -338,36 +338,27 @@ const durationDays  = parseInt(rowData.duration_days) || 0;
 
 if (activated_at && durationDays > 0) {
 
-  function parseDateUniversal(value) {
+  let activatedDate;
 
-    if (!value) return null;
-
-    // Kalau sudah Date object
-    if (value instanceof Date) {
-      return value;
-    }
-
-    // Kalau number (serial Google Sheets)
-    if (typeof value === "number") {
-      const excelEpoch = new Date(1899, 11, 30);
-      return new Date(excelEpoch.getTime() + value * 86400000);
-    }
-
-    // Kalau string format Indonesia 26/02/2026 21:00:00
-    if (typeof value === "string" && value.includes("/")) {
-      const [datePart, timePart] = value.split(" ");
-      const [day, month, year] = datePart.split("/");
-      return new Date(`${year}-${month}-${day}T${timePart}`);
-    }
-
-    // Kalau ISO
-    return new Date(value);
+  // Kalau Google kirim Date object
+  if (activated_at && typeof activated_at === "object") {
+    activatedDate = new Date(activated_at);
   }
 
-  const activatedDate = parseDateUniversal(activated_at);
+  // Kalau string Indonesia
+  else if (typeof activated_at === "string" && activated_at.includes("/")) {
+    const [datePart, timePart] = activated_at.split(" ");
+    const [day, month, year] = datePart.split("/");
+    activatedDate = new Date(`${year}-${month}-${day}T${timePart}`);
+  }
 
-  if (!activatedDate || isNaN(activatedDate)) {
-    console.log("Tanggal tidak valid:", activated_at);
+  // Kalau ISO
+  else {
+    activatedDate = new Date(activated_at);
+  }
+
+  if (!activatedDate || isNaN(activatedDate.getTime())) {
+    console.log("Tanggal gagal parse:", activated_at);
     return;
   }
 
@@ -379,8 +370,9 @@ if (activated_at && durationDays > 0) {
   const statusText = document.getElementById("statusText");
 
   function updateCountdown() {
+
     const now = new Date();
-    const diff = expiryDate - now;
+    const diff = expiryDate.getTime() - now.getTime();
 
     if (diff <= 0) {
       countdownTimer.innerHTML = "Expired";
