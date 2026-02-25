@@ -359,32 +359,19 @@ console.log("durationDays raw:", durationDays);
  
 if (activated_at && durationDays > 0) {
 
-  let activatedDate;
+  let activatedDate = new Date(activated_at);
 
-  // Kalau Google kirim Date object
-  if (activated_at && typeof activated_at === "object") {
-    activatedDate = new Date(activated_at);
+  // Kalau gagal parse otomatis (format Indonesia)
+  if (isNaN(activatedDate.getTime())) {
+    const [datePart, timePart] = activated_at.split(" ");
+    const [day, month, year] = datePart.split("/");
+
+    activatedDate = new Date(
+      `${year}-${month.padStart(2,"0")}-${day.padStart(2,"0")}T${timePart}`
+    );
   }
 
-  // Kalau string Indonesia
-  else if (typeof activated_at === "string" && activated_at.includes("/")) {
-  const [datePart, timePart] = activated_at.split(" ");
-  const [day, month, year] = datePart.split("/");
-
-  const isoString = `${year}-${month.padStart(2,"0")}-${day.padStart(2,"0")}T${timePart}`;
-
-  activatedDate = new Date(isoString);
-
-    console.log("Activated Date Parsed:", activatedDate);
-    console.log("countdownTimer:", countdownTimer);
-}
-
-  // Kalau ISO
-  else {
-    activatedDate = new Date(activated_at);
-  }
-
-  if (!activatedDate || isNaN(activatedDate.getTime())) {
+  if (isNaN(activatedDate.getTime())) {
     console.log("Tanggal gagal parse:", activated_at);
     return;
   }
