@@ -241,21 +241,21 @@ const image_url   = rowData.image_url || "";
       wrapper.innerHTML = `
   <div class="package-preview">
 
-    <h2 style="
-      font-family:'Cormorant Garamond', serif;
-      font-size:32px;
-      margin-bottom:25px;
-      text-align:center;
-    ">
-      Detail Pesanan
-    </h2>
-
     <img 
       src="${image_url || 'https://dummyimage.com/800x400/111827/ffffff&text=Package'}" 
       alt="${title}"
       onerror="this.src='https://dummyimage.com/800x400/111827/ffffff&text=Package';">
 
-    <h3>${title}</h3>
+    <h2 style="
+      font-family:'Cormorant Garamond', serif;
+      font-size:30px;
+      margin:20px 0 10px;
+      text-align:center;
+    ">
+      Detail Pesanan
+    </h2>
+
+    <h3 style="text-align:left;">${title}</h3>
     <p style="margin-bottom:25px;">${packageName}</p>
 
     <div style="display:grid; gap:14px; font-size:15px;">
