@@ -409,7 +409,10 @@ if (status.toLowerCase() !== "active") {
     return;
   }
 
-  const expiryDate = new Date(activatedDate);
+  // Reset ke awal hari
+activatedDate.setHours(0,0,0,0);
+
+const expiryDate = new Date(activatedDate);
 expiryDate.setDate(expiryDate.getDate() + durationDays);
 expiryDate.setSeconds(expiryDate.getSeconds() - 1);
 
