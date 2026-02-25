@@ -338,6 +338,25 @@ console.log("durationDays:", durationDays);
 </div>
 `;
 
+if (typeof activated_at === "string" && activated_at.startsWith("Date(")) {
+  const parts = activated_at
+    .replace("Date(", "")
+    .replace(")", "")
+    .split(",");
+
+  activatedDate = new Date(
+    parts[0],
+    parts[1],
+    parts[2],
+    parts[3] || 0,
+    parts[4] || 0,
+    parts[5] || 0
+  );
+}
+      
+console.log("activated_at raw:", activated_at);
+console.log("durationDays raw:", durationDays);
+ 
 if (activated_at && durationDays > 0) {
 
   let activatedDate;
@@ -349,10 +368,16 @@ if (activated_at && durationDays > 0) {
 
   // Kalau string Indonesia
   else if (typeof activated_at === "string" && activated_at.includes("/")) {
-    const [datePart, timePart] = activated_at.split(" ");
-    const [day, month, year] = datePart.split("/");
-    activatedDate = new Date(`${year}-${month}-${day}T${timePart}`);
-  }
+  const [datePart, timePart] = activated_at.split(" ");
+  const [day, month, year] = datePart.split("/");
+
+  const isoString = `${year}-${month.padStart(2,"0")}-${day.padStart(2,"0")}T${timePart}`;
+
+  activatedDate = new Date(isoString);
+
+    console.log("Activated Date Parsed:", activatedDate);
+    console.log("countdownTimer:", countdownTimer);
+}
 
   // Kalau ISO
   else {
