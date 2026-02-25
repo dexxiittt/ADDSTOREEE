@@ -409,41 +409,38 @@ if (status.toLowerCase() !== "active") {
     return;
   }
 
-  // Reset ke awal hari
-activatedDate.setHours(0,0,0,0);
+// Total detik = durationDays * 24 jam
+let totalSeconds = durationDays * 24 * 60 * 60 - 1;
 
-const expiryDate = new Date(activatedDate);
-expiryDate.setDate(expiryDate.getDate() + durationDays);
-expiryDate.setSeconds(expiryDate.getSeconds() - 1);
+function updateCountdown() {
 
-  function updateCountdown() {
-    const now = new Date();
-    const diff = expiryDate - now;
-
-    if (diff <= 0) {
-      countdownTimer.innerHTML = "Expired";
-      statusText.innerHTML = "expired";
-      statusText.style.color = "#ef4444";
-      return;
-    }
-
-    const days = Math.floor(diff / 86400000);
-    const hours = Math.floor((diff % 86400000) / 3600000);
-    const minutes = Math.floor((diff % 3600000) / 60000);
-    const seconds = Math.floor((diff % 60000) / 1000);
-
-    countdownTimer.innerHTML =
-      `${days} Hari ${hours.toString().padStart(2,"0")}:${minutes.toString().padStart(2,"0")}:${seconds.toString().padStart(2,"0")}`;
-
-    statusText.style.color =
-      days > 3 ? "#22c55e" :
-      days > 0 ? "#f97316" :
-      "#ef4444";
+  if (totalSeconds <= 0) {
+    countdownTimer.innerHTML = "Expired";
+    statusText.innerHTML = "expired";
+    statusText.style.color = "#ef4444";
+    return;
   }
 
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
+  const days = Math.floor(totalSeconds / 86400);
+  const hours = Math.floor((totalSeconds % 86400) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  countdownTimer.innerHTML =
+    `${days} Hari ${hours.toString().padStart(2,"0")}:
+    ${minutes.toString().padStart(2,"0")}:
+    ${seconds.toString().padStart(2,"0")}`;
+
+  statusText.style.color =
+    days > 3 ? "#22c55e" :
+    days > 0 ? "#f97316" :
+    "#ef4444";
+
+  totalSeconds--;
 }
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
       
     } else {
 
