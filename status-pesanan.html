@@ -337,42 +337,32 @@ console.log("durationDays:", durationDays);
   </div>
 </div>
 `;
-
-if (typeof activated_at === "string" && activated_at.startsWith("Date(")) {
-  const parts = activated_at
-    .replace("Date(", "")
-    .replace(")", "")
-    .split(",");
-
-  activatedDate = new Date(
-    parts[0],
-    parts[1],
-    parts[2],
-    parts[3] || 0,
-    parts[4] || 0,
-    parts[5] || 0
-  );
-}
       
 console.log("activated_at raw:", activated_at);
 console.log("durationDays raw:", durationDays);
  
 if (activated_at && durationDays > 0) {
 
-  let activatedDate = new Date(activated_at);
+  let activatedDate;
 
-  // Kalau gagal parse otomatis (format Indonesia)
+  // Parse otomatis dulu
+  activatedDate = new Date(activated_at);
+
+  // Kalau gagal (format Indonesia 26/02/2026 21:00:00)
   if (isNaN(activatedDate.getTime())) {
     const [datePart, timePart] = activated_at.split(" ");
     const [day, month, year] = datePart.split("/");
 
     activatedDate = new Date(
-      `${year}-${month.padStart(2,"0")}-${day.padStart(2,"0")}T${timePart}`
+      Number(year),
+      Number(month) - 1,
+      Number(day),
+      ...timePart.split(":").map(Number)
     );
   }
 
   if (isNaN(activatedDate.getTime())) {
-    console.log("Tanggal gagal parse:", activated_at);
+    console.log("Gagal parse tanggal:", activated_at);
     return;
   }
 
@@ -386,7 +376,7 @@ if (activated_at && durationDays > 0) {
   function updateCountdown() {
 
     const now = new Date();
-    const diff = expiryDate.getTime() - now.getTime();
+    const diff = expiryDate - now;
 
     if (diff <= 0) {
       countdownTimer.innerHTML = "Expired";
@@ -403,13 +393,10 @@ if (activated_at && durationDays > 0) {
     countdownTimer.innerHTML =
       `${days} Hari ${hours.toString().padStart(2,"0")}:${minutes.toString().padStart(2,"0")}:${seconds.toString().padStart(2,"0")}`;
 
-    if (days > 3) {
-      statusText.style.color = "#22c55e";
-    } else if (days > 0) {
-      statusText.style.color = "#f97316";
-    } else {
-      statusText.style.color = "#ef4444";
-    }
+    statusText.style.color =
+      days > 3 ? "#22c55e" :
+      days > 0 ? "#f97316" :
+      "#ef4444";
   }
 
   updateCountdown();
