@@ -52,20 +52,16 @@ html, body {
 /* Wrapper nanti untuk card */
 .status-wrapper {
   min-height: 60vh;
-  padding: 40px 16px 80px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 40px 0 80px;
+  width: 100%;
 }
 
 /* ===== PACKAGE PREVIEW CARD ===== */
 .package-preview {
-  max-width: 800px;
-  margin: 60px auto 24px;
-  padding: 18px;
+  width: 100%;
+  padding: 24px 20px 28px;
 
-  border-radius: 22px;
+  border-radius: 0;
 
   background: linear-gradient(
     180deg,
@@ -76,19 +72,17 @@ html, body {
   backdrop-filter: blur(18px);
 
   box-shadow:
-    0 30px 80px rgba(0,0,0,0.45);
+    0 20px 60px rgba(0,0,0,0.45);
 
   color: white;
-  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .package-preview img {
   width: 100%;
-  height: clamp(160px, 38vw, 240px);
-  max-height: 240px;
+  height: clamp(180px, 42vw, 300px);
   object-fit: cover;
-  border-radius: 18px;
-  margin-bottom: 12px;
+  border-radius: 16px;
+  margin-bottom: 16px;
 }
 
 .package-preview h3 {
@@ -204,6 +198,17 @@ html, body {
 
   text-shadow:
     0 4px 12px rgba(0,0,0,0.35);
+}
+
+
+
+
+
+@media (min-width: 1200px) {
+  .package-preview {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
 }
   
 </style>
