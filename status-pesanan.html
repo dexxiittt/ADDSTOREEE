@@ -279,8 +279,10 @@ const product_id  = rowData.product_id || "-";
 const title       = rowData.title || "-";
 const packageName = rowData.package || "-";
 const duration    = rowData.duration_days || "-";
-const status      = rowData.status || "-";
-const image_url   = rowData.image_url || "";
+const status        = rowData.status || "-";
+const image_url     = rowData.image_url || "";
+const activated_at  = rowData.activated_at || "";
+const durationDays  = parseInt(rowData.duration_days) || 0;
 
       wrapper.innerHTML = `
   <!-- CARD 1 -->
@@ -306,32 +308,77 @@ const image_url   = rowData.image_url || "";
   </div>
 
   <!-- CARD 2 (GLASS META) -->
-  <div class="status-meta-card">
-    <div class="status-meta-grid">
+<div class="status-meta-card">
+  <div class="status-meta-grid">
 
-      <div>
-        <span>Invoice</span>
-        <b>${invoice}</b>
-      </div>
-
-      <div>
-        <span>Durasi</span>
-        <b>${duration}</b>
-      </div>
-
-      <div>
-        <span>Status</span>
-        <b style="
-          color:${String(status).toLowerCase() === "active" ? "#22c55e" : "#ef4444"};
-        ">
-          ${status}
-        </b>
-      </div>
-
+    <div>
+      <span>Invoice</span>
+      <b>${invoice}</b>
     </div>
+
+    <div>
+      <span>Durasi</span>
+      <b>${duration}</b>
+    </div>
+
+    <div>
+      <span>Status</span>
+      <b id="statusText">
+        ${status}
+      </b>
+      <div id="countdownBox" style="margin-top:6px; font-size:13px; opacity:.8;">
+        Garansi Tersisa
+        <div id="countdownTimer" style="font-weight:600; margin-top:3px;"></div>
+      </div>
+    </div>
+
   </div>
+</div>
 `;
 
+if (activated_at && durationDays > 0) {
+
+  const activatedDate = new Date(activated_at);
+  const expiryDate = new Date(activatedDate.getTime() + durationDays * 24 * 60 * 60 * 1000);
+
+  const countdownTimer = document.getElementById("countdownTimer");
+  const statusText = document.getElementById("statusText");
+
+  if (!countdownTimer || !statusText) return;
+  
+  function updateCountdown() {
+    const now = new Date();
+    const diff = expiryDate - now;
+
+    if (diff <= 0) {
+      countdownTimer.innerHTML = "Expired";
+      statusText.innerHTML = "expired";
+      statusText.style.color = "#ef4444";
+      return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    countdownTimer.innerHTML =
+      `${days} Hari ${hours.toString().padStart(2,"0")}:${minutes.toString().padStart(2,"0")}:${seconds.toString().padStart(2,"0")}`;
+
+    // Behaviour warna
+    if (days > 3) {
+      statusText.style.color = "#22c55e"; // hijau
+    } else if (days <= 3 && days > 0) {
+      statusText.style.color = "#f97316"; // orange
+    } else {
+      statusText.style.color = "#ef4444"; // merah
+    }
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+}
+      
     } else {
 
   wrapper.innerHTML = `
