@@ -268,11 +268,11 @@ async function fetchWarrantyData() {
 
       wrapper.style.display = "block";
 
-    const headers = json.table.cols.map(col => col.label);
+    const headers = json.table.cols.map(col => col.label.trim());
 
 const rowData = {};
 headers.forEach((header, index) => {
-  rowData[header] = matchedData.c[index]?.v || "";
+  rowData[header.trim()] = matchedData.c[index]?.v ?? "";
 });
 
 const product_id  = rowData.product_id || "-";
@@ -283,6 +283,8 @@ const status        = rowData.status || "-";
 const image_url     = rowData.image_url || "";
 const activated_at  = rowData.activated_at || "";
 const durationDays  = parseInt(rowData.duration_days) || 0;
+console.log("activated_at:", activated_at);
+console.log("durationDays:", durationDays);
 
       wrapper.innerHTML = `
   <!-- CARD 1 -->
