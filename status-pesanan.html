@@ -127,6 +127,50 @@ html, body {
   text-shadow: 0 4px 12px rgba(0,0,0,0.35);
 }
 
+  /* GLASS META CARD */
+
+.status-meta-card {
+  width: 100%;
+  margin: 18px 0 0;
+  padding: 22px;
+
+  border-radius: 22px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.10),
+    rgba(255,255,255,0.04)
+  );
+
+  backdrop-filter: blur(18px);
+
+  box-shadow:
+    0 30px 80px rgba(0,0,0,0.45);
+
+  color: white;
+  font-family: 'Manrope', sans-serif;
+}
+
+.status-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  text-align: center;
+}
+
+.status-meta-grid span {
+  display: block;
+  font-size: 12px;
+  opacity: .6;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.status-meta-grid b {
+  font-size: 16px;
+  font-weight: 700;
+}
+
 
 @media (min-width: 1200px) {
   .package-preview {
@@ -239,6 +283,7 @@ const status      = rowData.status || "-";
 const image_url   = rowData.image_url || "";
 
       wrapper.innerHTML = `
+  <!-- CARD 1 -->
   <div class="package-preview">
 
     <img 
@@ -256,28 +301,34 @@ const image_url   = rowData.image_url || "";
     </h2>
 
     <h3>${title}</h3>
-    <p style="margin-bottom:25px;">${packageName}</p>
+    <p style="margin-bottom:20px;">${packageName}</p>
 
-    <div style="display:grid; gap:14px; font-size:15px;">
+  </div>
 
-      <div><strong>Invoice:</strong> ${invoice}</div>
-
-      <div><strong>Durasi:</strong> ${duration}</div>
+  <!-- CARD 2 (GLASS META) -->
+  <div class="status-meta-card">
+    <div class="status-meta-grid">
 
       <div>
-        <strong>Status:</strong>
-        <span style="
-          padding:6px 14px;
-          border-radius:20px;
-          background:${String(status).toLowerCase() === "active" ? "#16a34a" : "#dc2626"};
-          font-size:13px;
+        <span>Invoice</span>
+        <b>${invoice}</b>
+      </div>
+
+      <div>
+        <span>Durasi</span>
+        <b>${duration}</b>
+      </div>
+
+      <div>
+        <span>Status</span>
+        <b style="
+          color:${String(status).toLowerCase() === "active" ? "#22c55e" : "#ef4444"};
         ">
           ${status}
-        </span>
+        </b>
       </div>
 
     </div>
-
   </div>
 `;
 
