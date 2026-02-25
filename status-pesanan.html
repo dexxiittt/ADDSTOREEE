@@ -150,36 +150,36 @@ html, body {
 
 /* ===== PURPLE BACKGROUND SECTION FOR DETAIL ===== */
 .detail-section {
-  position: relative;
   margin-top: 40px;
-  padding: 80px 16px;
-}
-
-.detail-section::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 900px;
-  height: 100%;
-  border-radius: 40px;
-
-  background: radial-gradient(
-    circle at center,
-    rgba(109, 40, 217, 0.35),
-    rgba(109, 40, 217, 0.15),
-    transparent 70%
-  );
-
-  filter: blur(60px);
-  z-index: 0;
+  padding: 60px 16px 0;
 }
 
 .detail-section .detail-card {
   position: relative;
   z-index: 1;
+}
+
+.detail-header {
+  margin: -40px -40px 30px -40px;
+  padding: 40px 20px;
+  border-radius: 22px 22px 0 0;
+
+  background: linear-gradient(
+    135deg,
+    #493d84,
+    #6d28d9
+  );
+
+  text-align: center;
+}
+
+.detail-header h2 {
+  margin: 0;
+  font-size: 32px;
+  font-family: 'Cormorant Garamond', serif;
+  letter-spacing: 0.8px;
+  color: white;
+  text-shadow: 0 6px 18px rgba(0,0,0,0.25);
 }
   
 </style>
@@ -297,13 +297,9 @@ const image_url   = rowData.image_url || "";
 <div class="detail-section">
   <div class="detail-card">
 
-    <h2 style="
-      font-size:32px;
-      margin-bottom:30px;
-      text-align:center;
-    ">
-      Detail Pesanan
-    </h2>
+    <div class="detail-header">
+  <h2>Detail Pesanan</h2>
+</div>
 
     <div style="display:grid; gap:18px; font-size:15px;">
 
