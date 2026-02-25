@@ -343,7 +343,23 @@ console.log("durationDays:", durationDays);
 console.log("activated_at raw:", activated_at);
 console.log("durationDays raw:", durationDays);
  
-if (activated_at && durationDays > 0) {
+if (durationDays > 0) {
+
+  const countdownTimer = document.getElementById("countdownTimer");
+  const statusText = document.getElementById("statusText");
+
+  // ==========================
+  // JIKA BELUM ACTIVE
+  // ==========================
+  if (status.toLowerCase() !== "active") {
+    countdownTimer.innerHTML =
+      `${durationDays} Hari 00:00:00`;
+    return;
+  }
+
+  // ==========================
+  // JIKA SUDAH ACTIVE
+  // ==========================
 
   let activatedDate;
 
