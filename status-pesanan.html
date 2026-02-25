@@ -347,23 +347,47 @@ if (activated_at && durationDays > 0) {
 
   let activatedDate;
 
-  // Parse otomatis dulu
-  activatedDate = new Date(activated_at);
-
-  // Kalau gagal (format Indonesia 26/02/2026 21:00:00)
-  if (isNaN(activatedDate.getTime())) {
-    const [datePart, timePart] = activated_at.split(" ");
-    const [day, month, year] = datePart.split("/");
+  // 🔥 HANDLE FORMAT Date(2026,1,26,21,0,0)
+  if (typeof activated_at === "string" && activated_at.startsWith("Date(")) {
+    const parts = activated_at
+      .replace("Date(", "")
+      .replace(")", "")
+      .split(",")
+      .map(Number);
 
     activatedDate = new Date(
-      Number(year),
-      Number(month) - 1,
-      Number(day),
-      ...timePart.split(":").map(Number)
+      parts[0],
+      parts[1],
+      parts[2],
+      parts[3] || 0,
+      parts[4] || 0,
+      parts[5] || 0
     );
   }
 
-  if (isNaN(activatedDate.getTime())) {
+  // 🔥 HANDLE OBJECT DATE (gviz)
+  else if (typeof activated_at === "object") {
+    activatedDate = new Date(activated_at);
+  }
+
+  // 🔥 HANDLE STRING BIASA
+  else {
+    activatedDate = new Date(activated_at);
+
+    if (isNaN(activatedDate.getTime())) {
+      const [datePart, timePart] = activated_at.split(" ");
+      const [day, month, year] = datePart.split("/");
+
+      activatedDate = new Date(
+        Number(year),
+        Number(month) - 1,
+        Number(day),
+        ...timePart.split(":").map(Number)
+      );
+    }
+  }
+
+  if (!activatedDate || isNaN(activatedDate.getTime())) {
     console.log("Gagal parse tanggal:", activated_at);
     return;
   }
@@ -376,7 +400,6 @@ if (activated_at && durationDays > 0) {
   const statusText = document.getElementById("statusText");
 
   function updateCountdown() {
-
     const now = new Date();
     const diff = expiryDate - now;
 
