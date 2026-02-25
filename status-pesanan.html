@@ -281,7 +281,9 @@ const packageName = rowData.package || "-";
 const duration    = rowData.duration_days || "-";
 const status        = rowData.status || "-";
 const image_url     = rowData.image_url || "";
-const activated_at  = rowData.activated_at || "";
+const activated_at = rowData[headers.find(h =>
+  h.toLowerCase().includes("activated")
+)] || "";
 const durationDays  = parseInt(rowData.duration_days) || 0;
 console.log("activated_at:", activated_at);
 console.log("durationDays:", durationDays);
