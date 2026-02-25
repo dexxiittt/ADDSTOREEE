@@ -167,15 +167,51 @@ html, body {
   background: linear-gradient(
     135deg,
     #493d84,
-    #6d28d9
+    #6d28d9,
+    #7c3aed,
+    #493d84
   );
+
+  background-size: 300% 300%;
+  animation: gradientMove 12s ease infinite;
 
   position: relative;
   text-align: center;
 
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.15),
-    0 8px 30px rgba(109,40,217,0.35);
+    0 8px 25px rgba(109,40,217,0.25);
+}
+
+.detail-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.08),
+    transparent
+  );
+
+  transform: skewX(-20deg);
+  animation: shineMove 6s ease-in-out infinite;
+}
+
+@keyframes shineMove {
+  0% {
+    left: -100%;
+  }
+  60% {
+    left: 120%;
+  }
+  100% {
+    left: 120%;
+  }
 }
 
 .detail-header::after {
@@ -204,6 +240,18 @@ html, body {
 
   text-shadow:
     0 4px 12px rgba(0,0,0,0.35);
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
   
 </style>
