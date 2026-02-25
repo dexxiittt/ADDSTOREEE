@@ -338,7 +338,26 @@ const durationDays  = parseInt(rowData.duration_days) || 0;
 
 if (activated_at && durationDays > 0) {
 
-  const activatedDate = new Date(activated_at);
+  function parseDateCustom(dateString) {
+
+  if (!dateString) return null;
+
+  // Jika format: 26/02/2026 21:00:00
+  if (dateString.includes("/")) {
+
+    const [datePart, timePart] = dateString.split(" ");
+    const [day, month, year] = datePart.split("/");
+
+    return new Date(
+      `${year}-${month}-${day}T${timePart}`
+    );
+  }
+
+  // Jika format ISO sudah benar
+  return new Date(dateString);
+}
+
+const activatedDate = parseDateCustom(activated_at);
   const expiryDate = new Date(activatedDate.getTime() + durationDays * 24 * 60 * 60 * 1000);
 
   const countdownTimer = document.getElementById("countdownTimer");
