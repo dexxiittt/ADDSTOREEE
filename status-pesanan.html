@@ -392,9 +392,9 @@ if (activated_at && durationDays > 0) {
     return;
   }
 
-  const expiryDate = new Date(
-    activatedDate.getTime() + durationDays * 86400000
-  );
+  const expiryDate = new Date(activatedDate);
+expiryDate.setDate(expiryDate.getDate() + durationDays);
+expiryDate.setSeconds(expiryDate.getSeconds() - 1);
 
   const countdownTimer = document.getElementById("countdownTimer");
   const statusText = document.getElementById("statusText");
