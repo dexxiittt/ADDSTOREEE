@@ -161,7 +161,7 @@ html, body {
 
 .detail-header {
   margin: -40px -40px 30px -40px;
-  padding: 40px 20px;
+  padding: 42px 20px;
   border-radius: 22px 22px 0 0;
 
   background: linear-gradient(
@@ -170,16 +170,40 @@ html, body {
     #6d28d9
   );
 
+  position: relative;
   text-align: center;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.15),
+    0 8px 30px rgba(109,40,217,0.35);
+}
+
+.detail-header::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 1px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,0.5),
+    transparent
+  );
 }
 
 .detail-header h2 {
   margin: 0;
-  font-size: 32px;
+  font-size: 34px;
   font-family: 'Cormorant Garamond', serif;
-  letter-spacing: 0.8px;
+  letter-spacing: 1px;
   color: white;
-  text-shadow: 0 6px 18px rgba(0,0,0,0.25);
+
+  text-shadow:
+    0 4px 12px rgba(0,0,0,0.35);
 }
   
 </style>
