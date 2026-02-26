@@ -423,23 +423,22 @@ if (status.toLowerCase() !== "active") {
 // Total detik = durationDays * 24 jam
 async function startCountdown() {
 
-  const res = await fetch(
-    "https://script.google.com/macros/s/AKfycbzlPLumxLCHGnZLRWLdsjddbXhwo7BrLW8iKBupcpqS3q-ribxJa6gnGA7ofNJFtiLv/exec?invoice=" + invoice
-  );
+  const API_URL = "https://script.google.com/macros/s/AKfycbw7QYEmqPhFBH3OComEm1HtGnNui-JepaoTRKtNWOpAWSgFq1ZekzMfuAuJBCpJ_W7s/exec";
 
+  const res = await fetch(`${API_URL}?invoice=${invoice}`);
   const data = await res.json();
+
+  const countdownTimer = document.getElementById("countdownTimer");
+  const statusText = document.getElementById("statusText");
 
   if (!data || data.error) {
     countdownTimer.innerHTML = "Data Error";
     return;
   }
 
-  const countdownTimer = document.getElementById("countdownTimer");
-  const statusText = document.getElementById("statusText");
-
   let remaining = data.remaining_ms;
 
-  // 🔥 PENTING: Kalau belum active
+  // Jika belum active
   if (data.status.toLowerCase() !== "active") {
     countdownTimer.innerHTML =
       `${data.duration_days} Hari 00:00:00`;
