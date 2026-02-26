@@ -233,6 +233,79 @@ wrapper.innerHTML = `
   </div>
 `;
 
+  // =============================
+// SERVER API
+// =============================
+const API_URL = "https://script.google.com/macros/s/AKfycbw7QYEmqPhFBH3OComEm1HtGnNui-JepaoTRKtNWOpAWSgFq1ZekzMfuAuJBCpJ_W7s/exec";
+
+async function loadData() {
+
+  const res = await fetch(`${API_URL}?invoice=${invoice}`);
+  const data = await res.json();
+
+  if (!data || data.error) {
+    wrapper.innerHTML = "Data tidak ditemukan";
+    return;
+  }
+
+  const durationDays = data.duration_days;
+  const status = data.status;
+
+  wrapper.innerHTML = `
+    <div class="status-meta-card">
+      <div class="status-meta-grid">
+        <div>
+          <span>Durasi</span>
+          <b>${durationDays}</b>
+        </div>
+        <div>
+          <span>Status</span>
+          <b id="statusText">${status}</b>
+          <div id="countdownTimer"></div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const countdownTimer = document.getElementById("countdownTimer");
+  const statusText = document.getElementById("statusText");
+
+  let remaining = data.remaining_ms;
+
+  // BELUM ACTIVE
+  if (status.toLowerCase() !== "active") {
+    countdownTimer.innerHTML =
+      `${durationDays} Hari 00:00:00`;
+    statusText.style.color = "#9ca3af";
+    return;
+  }
+
+  function update() {
+
+    if (remaining <= 0) {
+      countdownTimer.innerHTML = "Expired";
+      statusText.innerHTML = "expired";
+      statusText.style.color = "#ef4444";
+      return;
+    }
+
+    const days = Math.floor(remaining / 86400000);
+    const hours = Math.floor((remaining % 86400000) / 3600000);
+    const minutes = Math.floor((remaining % 3600000) / 60000);
+    const seconds = Math.floor((remaining % 60000) / 1000);
+
+    countdownTimer.innerHTML =
+      `${days} Hari ${hours.toString().padStart(2,"0")}:${minutes.toString().padStart(2,"0")}:${seconds.toString().padStart(2,"0")}`;
+
+    remaining -= 1000;
+  }
+
+  update();
+  setInterval(update, 1000);
+}
+
+loadData();
+
     // =============================
     // KALAU DATA DITEMUKAN
     // =============================
