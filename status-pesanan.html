@@ -173,21 +173,71 @@ html, body {
   letter-spacing: 0.5px;
 }
 
-/* === Upgrade Size Invoice & Durasi === */
+/* ============================= */
+/* PREMIUM META STYLE CLEAN */
+/* ============================= */
 
-.status-meta-grid div:nth-child(1) b,
-.status-meta-grid div:nth-child(2) b {
-  font-size: 24px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  text-shadow: 0 4px 12px rgba(255,255,255,0.15);
+/* Label */
+.status-meta-grid span {
+  font-size: 10px;
+  letter-spacing: 2px;
+  opacity: 0.45;
+  font-weight: 500;
+  text-transform: uppercase;
 }
 
-.status-meta-grid div:nth-child(1) span,
-.status-meta-grid div:nth-child(2) span {
-  font-size: 11px;
-  opacity: 0.5;
-  letter-spacing: 1.5px;
+/* Base value style */
+.status-meta-grid b {
+  display: block;
+  margin-top: 4px;
+}
+
+/* Invoice */
+.status-meta-grid div:nth-child(1) b {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  font-family: 'Manrope', sans-serif;
+  text-shadow: 0 4px 20px rgba(255,255,255,0.15);
+}
+
+/* Durasi */
+.status-meta-grid div:nth-child(2) b {
+  font-size: 24px;
+  font-weight: 700;
+  font-family: 'Cormorant Garamond', serif;
+  letter-spacing: 1px;
+  text-shadow: 0 4px 20px rgba(255,255,255,0.12);
+}
+
+/* Spacing */
+.status-meta-grid div {
+  padding: 8px 0;
+}
+
+/* ============================= */
+/* FADE UP SYSTEM (Lightweight) */
+/* ============================= */
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  will-change: opacity, transform;
+}
+
+.fade-up.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Lebih halus di device cepat */
+@media (prefers-reduced-motion: reduce) {
+  .fade-up {
+    transition: none;
+    transform: none;
+    opacity: 1;
+  }
 }
 
 
@@ -341,7 +391,7 @@ console.log("durationDays:", durationDays);
 
       wrapper.innerHTML = `
   <!-- CARD 1 -->
-  <div class="package-preview">
+  <div class="package-preview fade-up">
 
     <img 
       src="${image_url || 'https://dummyimage.com/800x400/111827/ffffff&text=Package'}" 
@@ -363,7 +413,7 @@ console.log("durationDays:", durationDays);
   </div>
 
   <!-- CARD 2 (GLASS META) -->
-<div class="status-meta-card">
+<div class="status-meta-card fade-up">
   <div class="status-meta-grid">
 
     <div>
@@ -390,6 +440,7 @@ console.log("durationDays:", durationDays);
   </div>
 </div>
 `;
+initFadeUp();
       
 console.log("activated_at raw:", activated_at);
 console.log("durationDays raw:", durationDays);
@@ -560,6 +611,28 @@ startCountdown();
 }
 
 fetchWarrantyData();
+
+
+// =============================
+// GLOBAL FADE-UP OBSERVER
+// =============================
+
+const fadeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("show");
+      fadeObserver.unobserve(entry.target);
+    }
+  });
+}, {
+  threshold: 0.15
+});
+
+function initFadeUp() {
+  document.querySelectorAll(".fade-up").forEach(el => {
+    fadeObserver.observe(el);
+  });
+}
 </script>
 </body>
 </html>
