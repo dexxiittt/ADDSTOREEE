@@ -427,7 +427,7 @@ function updateCountdown() {
   const seconds = totalSeconds % 60;
 
   countdownTimer.innerHTML =
-    `${days} Hari ${hours.toString().padStart(2,"0")}:${minutes.toString().padStart(2,"0")}:${seconds.toString().padStart(2,"0")}`;
+  `${days} Hari ${hours.toString().padStart(2,"0")}:${minutes.toString().padStart(2,"0")}:${seconds.toString().padStart(2,"0")}`;
 
   statusText.style.color =
     days > 3 ? "#22c55e" :
