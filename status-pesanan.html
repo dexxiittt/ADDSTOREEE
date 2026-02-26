@@ -576,13 +576,12 @@ const diff = fullDurationMs - elapsed;
 if (days > 7) {
   statusText.style.color = "#22c55e"; // Hijau
 } 
-else if (days > 3) {
+else if (days >= 3) {
   statusText.style.color = "#f97316"; // Orange
 } 
-else if (days > 0) {
-  statusText.style.color = "#ef4444"; // Merah
+else {
+  statusText.style.color = "#ef4444"; // Merah (0–2 hari)
 }
-
   }
 
   updateCountdown();
