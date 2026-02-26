@@ -301,15 +301,16 @@ if (durationDays >= 30) {
   const remainingDays = durationDays % 30;
 
   if (remainingDays === 0) {
-    durationDisplay = `${months} Bulan (${durationDays} Hari)`;
+    durationDisplay = `${months} Bulan`;
   } else {
     durationDisplay = `${months} Bulan (${remainingDays} Hari)`;
   }
 
-} else {
-  durationDisplay = `${durationDays} Hari`;
-}
+} else if (durationDays > 0) {
 
+  durationDisplay = `${durationDays} Hari`;
+
+}
       
 const status        = rowData.status || "-";
 const image_url     = rowData.image_url || "";
