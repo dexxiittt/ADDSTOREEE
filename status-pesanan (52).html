@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Status Pesanan</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&
+  family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  
+<style>
+body {
+  overflow-x: hidden;
+  background: #0b0b0f;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* HERO UNGU SAMA PERSIS */
+.package-hero {
+  width: 100%;
+  min-height: 260px;
+  background: linear-gradient(
+    135deg,
+    #493d84,
+    #6d28d9
+  );
+  padding: 72px 20px 60px;
+  text-align: center;
+
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.package-hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(42px, 6vw, 96px);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 14px;
+  color: #ffffff;
+  text-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+
+.package-hero p {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  color: rgba(255,255,255,0.85);
+}
+
+/* Wrapper nanti untuk card */
+.status-wrapper {
+  width: 100%;
+  padding: 0 0 80px;
+}
+
+/* ===== PACKAGE PREVIEW CARD ===== */
+.package-preview {
+  width: 100%;
+  margin: 13px 0 0;   /* turun 10px + ada jarak kiri kanan */
+  padding: 28px 20px 32px;
+
+  position: relative;
+  z-index: 2;
+
+  border-radius: 22px;    /* aktifkan radius */
+
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.10),
+    rgba(255,255,255,0.04)
+  );
+
+  backdrop-filter: blur(18px);
+
+  box-shadow:
+    0 30px 80px rgba(0,0,0,0.55);
+
+  color: white;
+}
+
+.package-preview img {
+  width: 100%;
+  height: clamp(180px, 42vw, 300px);
+  object-fit: cover;
+  border-radius: 16px;
+  margin-bottom: 16px;
+}
+
+.package-preview h3 {
+  margin: 0 0 6px;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.package-preview p {
+  margin: 0;
+  opacity: 0.75;
+  font-size: 14px;
+}
+
+.package-preview {
+  font-family: 'Manrope', sans-serif;
+}
+
+.package-preview h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  letter-spacing: 0.6px;
+}
+
+.detail-card {
+  font-family: 'Manrope', sans-serif;
+}
+
+.detail-card h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 34px;
+  letter-spacing: 0.8px;
+}
+
+.package-preview h3,
+.detail-card h2 {
+  text-shadow: 0 4px 12px rgba(0,0,0,0.35);
+}
+
+  /* GLASS META CARD */
+
+.status-meta-card {
+  width: 100%;
+  margin: 18px 0 0;
+  padding: 22px;
+
+  border-radius: 22px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.10),
+    rgba(255,255,255,0.04)
+  );
+
+  backdrop-filter: blur(18px);
+
+  box-shadow:
+    0 30px 80px rgba(0,0,0,0.45);
+
+  color: white;
+  font-family: 'Manrope', sans-serif;
+}
+
+.status-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  text-align: center;
+}
+
+.status-meta-grid span {
+  display: block;
+  font-size: 12px;
+  opacity: .6;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.status-meta-grid b {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+
+@media (min-width: 1200px) {
+  .package-preview {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+}
+  
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<div class="package-hero">
+  <h1>Status Pesanan</h1>
+  <p>Status paket dan detail pesanan</p>
+</div>
+
+<section class="status-wrapper">
+  <!-- Nanti di sini kita bikin card warranty_data -->
+</section>
+
+<script>
+// =============================
+// AMBIL PARAMETER INVOICE
+// =============================
+const params = new URLSearchParams(window.location.search);
+const invoice = params.get("inv");
+
+if (!invoice) {
+  window.location.href = "invoice.html";
+}
+
+// =============================
+// TAMPILKAN LOADING CARD
+// =============================
+const wrapper = document.querySelector(".status-wrapper");
+
+wrapper.innerHTML = `
+  <div style="
+    width: 100%;
+    padding: 120px 20px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    border-radius: 24px;
+    background: rgba(18,18,28,0.75);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+    text-align:center;
+    color:white;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  ">
+    <h2 style="margin-bottom:15px;">Memuat Data...</h2>
+    <p style="opacity:0.7;">Invoice:</p>
+    <h3 style="margin-top:5px; color:#9f7aea;">${invoice}</h3>
+  </div>
+`;
+
+// =============================
+// SERVER TIME API
+// =============================
+const timeAPI = "https://script.google.com/macros/s/AKfycbzp-RLdB53dTp3wBUVXosYQRAXMrb7mEkO6G3b1gm8adwEC28rJt9tD8UcBMrIA923O/exec";
+
+async function getServerTime() {
+  const res = await fetch(timeAPI);
+  const data = await res.json();
+  return new Date(data.serverTime);
+}
+  
+// =============================
+// KONFIGURASI SHEET WARRANTY_DATA
+// =============================
+const sheetID = "1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08";
+const sheetName = "WARRANTY_DATA";
+const sheetURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
+
+// =============================
+// FETCH WARRANTY_DATA
+// =============================
+async function fetchWarrantyData() {
+  try {
+    const res = await fetch(sheetURL);
+    const text = await res.text();
+    const json = JSON.parse(text.substr(47).slice(0, -2));
+    const rows = json.table.rows;
+
+    let matchedData = null;
+
+    rows.forEach(row => {
+      if (!row.c) return;
+
+      const invoiceCell = row.c[0]?.v;
+      if (String(invoiceCell) === String(invoice)) {
+        matchedData = row;
+      }
+    });
+
+    // =============================
+    // KALAU DATA DITEMUKAN
+    // =============================
+    if (matchedData) {
+
+      wrapper.style.display = "block";
+
+    const headers = json.table.cols.map(col => col.label.trim());
+
+const rowData = {};
+headers.forEach((header, index) => {
+  rowData[header.trim()] = matchedData.c[index]?.v ?? "";
+});
+
+const product_id  = rowData.product_id || "-";
+const title       = rowData.title || "-";
+const packageName = rowData.package || "-";
+const duration    = rowData.duration_days || "-";
+const status        = rowData.status || "-";
+const image_url     = rowData.image_url || "";
+const activated_at = rowData[headers.find(h =>
+  h.toLowerCase().includes("activated")
+)] || "";
+const durationDays  = parseInt(rowData.duration_days) || 0;
+console.log("activated_at:", activated_at);
+console.log("durationDays:", durationDays);
+
+      wrapper.innerHTML = `
+  <!-- CARD 1 -->
+  <div class="package-preview">
+
+    <img 
+      src="${image_url || 'https://dummyimage.com/800x400/111827/ffffff&text=Package'}" 
+      alt="${title}"
+      onerror="this.src='https://dummyimage.com/800x400/111827/ffffff&text=Package';">
+
+    <h2 style="
+      font-family:'Cormorant Garamond', serif;
+      font-size:30px;
+      margin:20px 0 10px;
+      text-align:center;
+    ">
+      Detail Pesanan
+    </h2>
+
+    <h3>${title}</h3>
+    <p style="margin-bottom:20px;">${packageName}</p>
+
+  </div>
+
+  <!-- CARD 2 (GLASS META) -->
+<div class="status-meta-card">
+  <div class="status-meta-grid">
+
+    <div>
+      <span>Invoice</span>
+      <b>${invoice}</b>
+    </div>
+
+    <div>
+      <span>Durasi</span>
+      <b>${duration}</b>
+    </div>
+
+    <div>
+      <span>Status</span>
+      <b id="statusText">
+        ${status}
+      </b>
+      <div id="countdownBox" style="margin-top:6px; font-size:13px; opacity:.8;">
+        Garansi Tersisa
+        <div id="countdownTimer" style="font-weight:600; margin-top:3px;"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+`;
+      
+console.log("activated_at raw:", activated_at);
+console.log("durationDays raw:", durationDays);
+ 
+if (durationDays > 0) {
+
+  const countdownTimer = document.getElementById("countdownTimer");
+  const statusText = document.getElementById("statusText");
+
+  // ==========================
+  // JIKA BELUM ACTIVE
+  // ==========================
+if (status.toLowerCase() !== "active") {
+  statusText.style.color = "#9ca3af";
+    countdownTimer.innerHTML =
+      `${durationDays} Hari 00:00:00`;
+    return;
+}
+
+  // ==========================
+  // JIKA SUDAH ACTIVE
+  // ==========================
+
+  let activatedDate;
+
+  // HANDLE FORMAT Date(2026,1,26,21,0,0)
+  if (typeof activated_at === "string" && activated_at.startsWith("Date(")) {
+    const parts = activated_at
+      .replace("Date(", "")
+      .replace(")", "")
+      .split(",")
+      .map(Number);
+
+    activatedDate = new Date(
+      parts[0],
+      parts[1],
+      parts[2],
+      parts[3] || 0,
+      parts[4] || 0,
+      parts[5] || 0
+    );
+  }
+
+  // HANDLE OBJECT DATE (gviz)
+  else if (typeof activated_at === "object") {
+    activatedDate = new Date(activated_at);
+  }
+
+  // HANDLE STRING BIASA
+  else {
+    activatedDate = new Date(activated_at);
+
+    if (isNaN(activatedDate.getTime())) {
+      const [datePart, timePart] = activated_at.split(" ");
+      const [day, month, year] = datePart.split("/");
+
+      activatedDate = new Date(
+        Number(year),
+        Number(month) - 1,
+        Number(day),
+        ...timePart.split(":").map(Number)
+      );
+    }
+  }
+
+  if (!activatedDate || isNaN(activatedDate.getTime())) {
+    console.log("Gagal parse tanggal:", activated_at);
+    return;
+  }
+
+// Total detik = durationDays * 24 jam
+const expiryDate = new Date(activatedDate);
+expiryDate.setDate(expiryDate.getDate() + durationDays);
+
+async function startCountdown() {
+
+  const serverNow = await getServerTime();
+  const clientStartTime = Date.now();
+
+  function updateCountdown() {
+
+    const now = new Date(
+      serverNow.getTime() + (Date.now() - clientStartTime)
+    );
+
+    const diff = expiryDate - now;
+
+    if (diff <= 0) {
+      countdownTimer.innerHTML = "Expired";
+      statusText.innerHTML = "expired";
+      statusText.style.color = "#ef4444";
+      return;
+    }
+
+    const days = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const minutes = Math.floor((diff % 3600000) / 60000);
+    const seconds = Math.floor((diff % 60000) / 1000);
+
+    countdownTimer.innerHTML =
+      `${days} Hari ${hours.toString().padStart(2,"0")}:${minutes.toString().padStart(2,"0")}:${seconds.toString().padStart(2,"0")}`;
+
+    statusText.style.color =
+      days > 3 ? "#22c55e" :
+      days > 0 ? "#f97316" :
+      "#ef4444";
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+}
+
+startCountdown();
+
+}
+      
+    } else {
+
+  wrapper.innerHTML = `
+    <div style="
+      width: 85%;
+      max-width: 750px;
+      padding: 60px;
+      border-radius: 28px;
+      background: linear-gradient(145deg, rgba(18,18,28,0.9), rgba(10,10,18,0.85));
+      backdrop-filter: blur(25px);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 40px 120px rgba(0,0,0,0.7);
+      text-align:center;
+      color:white;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    ">
+
+      <h2 style="
+        font-family:'Playfair Display', serif;
+        font-size:30px;
+        margin-bottom:20px;
+      ">
+        Data Tidak Ditemukan
+      </h2>
+
+      <p style="opacity:0.75; margin-bottom:30px;">
+        Invoice <strong>${invoice}</strong> tidak ditemukan di sistem kami.
+      </p>
+
+      <button onclick="window.location.href='invoice.html'" style="
+        padding:12px 26px;
+        border-radius:20px;
+        border:none;
+        cursor:pointer;
+        font-weight:600;
+        background:linear-gradient(135deg,#9f7aea,#6d28d9);
+        box-shadow:0 12px 30px rgba(139,92,246,.5);
+        color:white;
+      ">
+        Kembali ke Cek Invoice
+      </button>
+
+    </div>
+  `;
+}
+
+  } catch (err) {
+    console.error("Error ambil warranty_data:", err);
+  }
+}
+
+fetchWarrantyData();
+</script>
+</body>
+</html>
