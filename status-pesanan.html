@@ -198,7 +198,20 @@ html, body {
   font-weight: 800;
   letter-spacing: 2px;
   font-family: 'Manrope', sans-serif;
-  text-shadow: 0 4px 20px rgba(255,255,255,0.15);
+
+  /* Subtle light gradient */
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.95),
+    rgba(255,255,255,0.7),
+    rgba(255,255,255,0.95)
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+  text-shadow: 0 4px 18px rgba(255,255,255,0.12);
 }
 
 /* Durasi */
