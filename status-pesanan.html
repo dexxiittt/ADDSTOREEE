@@ -238,15 +238,27 @@ html, body {
 
 .status-badge-expired {
   display: inline-block;
-  margin-top: 6px;
-  padding: 4px 10px;
-  font-size: 11px;
+  margin-top: 10px;
+  padding: 6px 18px; /* lebih lebar */
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: 1px;
-  border-radius: 20px;
-  background: rgba(239,68,68,0.15);
-  color: #ef4444;
-  border: 1px solid rgba(239,68,68,0.4);
+  letter-spacing: 2px;
+  border-radius: 999px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(239,68,68,0.18),
+    rgba(239,68,68,0.10)
+  );
+
+  color: #ff4d4f;
+
+  border: 1px solid rgba(239,68,68,0.5);
+
+  box-shadow:
+    0 6px 20px rgba(239,68,68,0.15);
+
+  text-transform: uppercase;
 }
 
 /* Lebih halus di device cepat */
