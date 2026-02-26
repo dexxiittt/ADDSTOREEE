@@ -421,51 +421,57 @@ if (status.toLowerCase() !== "active") {
   }
 
 // Total detik = durationDays * 24 jam
-const expiryDate = new Date(activatedDate);
-expiryDate.setDate(expiryDate.getDate() + durationDays);
-
 async function startCountdown() {
 
-  const serverNow = await getServerTime();
-  const clientStartTime = Date.now();
+  const res = await fetch(
+    "https://script.google.com/macros/s/AKfycbzlPLumxLCHGnZLRWLdsjddbXhwo7BrLW8iKBupcpqS3q-ribxJa6gnGA7ofNJFtiLv/exec?invoice=" + invoice
+  );
 
-  function updateCountdown() {
+  const data = await res.json();
 
-    const now = new Date(
-      serverNow.getTime() + (Date.now() - clientStartTime)
-    );
+  if (!data || data.error) {
+    countdownTimer.innerHTML = "Data Error";
+    return;
+  }
 
-    const fullDurationMs = durationDays * 24 * 60 * 60 * 1000;
-const elapsed = now - activatedDate;
-const diff = fullDurationMs - elapsed;
+  const countdownTimer = document.getElementById("countdownTimer");
+  const statusText = document.getElementById("statusText");
 
-    if (diff <= 0) {
+  let remaining = data.remaining_ms;
+
+  // 🔥 PENTING: Kalau belum active
+  if (data.status.toLowerCase() !== "active") {
+    countdownTimer.innerHTML =
+      `${data.duration_days} Hari 00:00:00`;
+    statusText.style.color = "#9ca3af";
+    return;
+  }
+
+  function update() {
+
+    if (remaining <= 0) {
       countdownTimer.innerHTML = "Expired";
       statusText.innerHTML = "expired";
       statusText.style.color = "#ef4444";
       return;
     }
 
-    const days = Math.floor(diff / 86400000);
-    const hours = Math.floor((diff % 86400000) / 3600000);
-    const minutes = Math.floor((diff % 3600000) / 60000);
-    const seconds = Math.floor((diff % 60000) / 1000);
+    const days = Math.floor(remaining / 86400000);
+    const hours = Math.floor((remaining % 86400000) / 3600000);
+    const minutes = Math.floor((remaining % 3600000) / 60000);
+    const seconds = Math.floor((remaining % 60000) / 1000);
 
     countdownTimer.innerHTML =
       `${days} Hari ${hours.toString().padStart(2,"0")}:${minutes.toString().padStart(2,"0")}:${seconds.toString().padStart(2,"0")}`;
 
-    statusText.style.color =
-      days > 3 ? "#22c55e" :
-      days > 0 ? "#f97316" :
-      "#ef4444";
+    remaining -= 1000;
   }
 
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
+  update();
+  setInterval(update, 1000);
 }
 
 startCountdown();
-
 }
       
     } else {
