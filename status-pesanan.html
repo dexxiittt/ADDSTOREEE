@@ -364,7 +364,7 @@ if (status.toLowerCase() !== "active") {
 
   let activatedDate;
 
-  // 🔥 HANDLE FORMAT Date(2026,1,26,21,0,0)
+  // HANDLE FORMAT Date(2026,1,26,21,0,0)
   if (typeof activated_at === "string" && activated_at.startsWith("Date(")) {
     const parts = activated_at
       .replace("Date(", "")
@@ -382,12 +382,12 @@ if (status.toLowerCase() !== "active") {
     );
   }
 
-  // 🔥 HANDLE OBJECT DATE (gviz)
+  // HANDLE OBJECT DATE (gviz)
   else if (typeof activated_at === "object") {
     activatedDate = new Date(activated_at);
   }
 
-  // 🔥 HANDLE STRING BIASA
+  // HANDLE STRING BIASA
   else {
     activatedDate = new Date(activated_at);
 
@@ -410,7 +410,8 @@ if (status.toLowerCase() !== "active") {
   }
 
 // Total detik = durationDays * 24 jam
-let totalSeconds = durationDays * 24 * 60 * 60 - 1;
+expiryDate = activatedDate + duration
+diff = expiryDate - now
 
 function updateCountdown() {
 
