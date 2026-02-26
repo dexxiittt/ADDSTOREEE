@@ -289,7 +289,28 @@ headers.forEach((header, index) => {
 const product_id  = rowData.product_id || "-";
 const title       = rowData.title || "-";
 const packageName = rowData.package || "-";
-const duration    = rowData.duration_days || "-";
+
+      
+const durationDays = parseInt(rowData.duration_days) || 0;
+
+let durationDisplay = "-";
+
+if (durationDays >= 30) {
+
+  const months = Math.floor(durationDays / 30);
+  const remainingDays = durationDays % 30;
+
+  if (remainingDays === 0) {
+    durationDisplay = `${months} Bulan (${durationDays} Hari)`;
+  } else {
+    durationDisplay = `${months} Bulan (${remainingDays} Hari)`;
+  }
+
+} else {
+  durationDisplay = `${durationDays} Hari`;
+}
+
+      
 const status        = rowData.status || "-";
 const image_url     = rowData.image_url || "";
 const activated_at = rowData[headers.find(h =>
@@ -333,7 +354,7 @@ console.log("durationDays:", durationDays);
 
     <div>
       <span>Durasi</span>
-      <b>${duration}</b>
+      <b>${durationDisplay}</b>
     </div>
 
     <div>
