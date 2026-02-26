@@ -410,8 +410,7 @@ if (status.toLowerCase() !== "active") {
   }
 
 // Total detik = durationDays * 24 jam
-expiryDate = activatedDate + duration
-diff = expiryDate - now
+let totalSeconds = durationDays * 24 * 60 * 60 - 1;
 
 function updateCountdown() {
 
