@@ -238,8 +238,8 @@ html, body {
 
 .status-badge-expired {
   display: inline-block;
-  margin-top: 10px;
-  padding: 6px 18px; /* lebih lebar */
+  margin-top: 12px;
+  padding: 8px 26px;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 2px;
@@ -247,18 +247,44 @@ html, body {
 
   background: linear-gradient(
     135deg,
-    rgba(239,68,68,0.18),
-    rgba(239,68,68,0.10)
+    rgba(255, 60, 60, 0.18),
+    rgba(255, 0, 0, 0.10)
   );
+
+  backdrop-filter: blur(12px);
 
   color: #ff4d4f;
 
-  border: 1px solid rgba(239,68,68,0.5);
+  border: 1px solid rgba(255, 80, 80, 0.5);
 
   box-shadow:
-    0 6px 20px rgba(239,68,68,0.15);
+    0 8px 25px rgba(255, 0, 0, 0.15);
 
   text-transform: uppercase;
+}
+
+/* ============================= */
+/* MICRO PULSE SYSTEM */
+/* ============================= */
+
+@keyframes microPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.015); }
+  100% { transform: scale(1); }
+}
+
+@keyframes microPulseStrong {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+.pulse-soft {
+  animation: microPulse 0.4s ease;
+}
+
+.pulse-strong {
+  animation: microPulseStrong 0.5s ease;
 }
 
 /* Lebih halus di device cepat */
@@ -580,7 +606,7 @@ const diff = fullDurationMs - elapsed;
     const hours = Math.floor((diff % 86400000) / 3600000);
     const minutes = Math.floor((diff % 3600000) / 60000);
     const seconds = Math.floor((diff % 60000) / 1000);
-
+    
     countdownTimer.innerHTML =
       `${days} Hari ${hours.toString().padStart(2,"0")}:${minutes.toString().padStart(2,"0")}:${seconds.toString().padStart(2,"0")}`;
 
@@ -593,6 +619,24 @@ else if (days >= 3) {
 } 
 else {
   statusText.style.color = "#ef4444"; // Merah (0–2 hari)
+}
+
+// ==========================
+// MICRO PULSE
+// ==========================
+
+countdownTimer.classList.remove("pulse-soft", "pulse-strong");
+
+if (seconds !== 0) {
+  countdownTimer.classList.add("pulse-soft");
+}
+
+if (seconds === 0) {
+  countdownTimer.classList.add("pulse-strong");
+}
+
+if (minutes === 0 && seconds === 0) {
+  countdownTimer.classList.add("pulse-strong");
 }
   }
 
