@@ -226,6 +226,7 @@ html, body {
   will-change: opacity, transform;
 }
 
+/* delay akan diisi otomatis via JS */
 .fade-up.show {
   opacity: 1;
   transform: translateY(0);
@@ -629,7 +630,10 @@ const fadeObserver = new IntersectionObserver((entries) => {
 });
 
 function initFadeUp() {
-  document.querySelectorAll(".fade-up").forEach(el => {
+  const elements = document.querySelectorAll(".fade-up");
+
+  elements.forEach((el, index) => {
+    el.style.transitionDelay = `${index * 120}ms`; // stagger 120ms
     fadeObserver.observe(el);
   });
 }
