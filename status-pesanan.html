@@ -233,45 +233,6 @@ wrapper.innerHTML = `
   </div>
 `;
 
-// =============================
-// SERVER TIME API
-// =============================
-const timeAPI = "https://script.google.com/macros/s/AKfycbzp-RLdB53dTp3wBUVXosYQRAXMrb7mEkO6G3b1gm8adwEC28rJt9tD8UcBMrIA923O/exec";
-
-async function getServerTime() {
-  const res = await fetch(timeAPI);
-  const data = await res.json();
-  return new Date(data.serverTime);
-}
-  
-// =============================
-// KONFIGURASI SHEET WARRANTY_DATA
-// =============================
-const sheetID = "1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08";
-const sheetName = "WARRANTY_DATA";
-const sheetURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
-
-// =============================
-// FETCH WARRANTY_DATA
-// =============================
-async function fetchWarrantyData() {
-  try {
-    const res = await fetch(sheetURL);
-    const text = await res.text();
-    const json = JSON.parse(text.substr(47).slice(0, -2));
-    const rows = json.table.rows;
-
-    let matchedData = null;
-
-    rows.forEach(row => {
-      if (!row.c) return;
-
-      const invoiceCell = row.c[0]?.v;
-      if (String(invoiceCell) === String(invoice)) {
-        matchedData = row;
-      }
-    });
-
     // =============================
     // KALAU DATA DITEMUKAN
     // =============================
