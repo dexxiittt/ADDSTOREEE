@@ -376,6 +376,38 @@ const sheetID = "1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08";
 const sheetName = "WARRANTY_DATA";
 const sheetURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
 
+
+// =============================
+// FETCH PACKAGE_DETAIL DARI SHEET
+// =============================
+async function fetchPackageDetail(productId, durationText) {
+  const url = `https://docs.google.com/spreadsheets/d/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/gviz/tq?tqx=out:json&sheet=PACKAGE_DETAIL`;
+  const res = await fetch(url);
+  const text = await res.text();
+  const json = JSON.parse(text.substr(47).slice(0, -2));
+
+  const headers = json.table.cols.map(col => col.label.trim());
+  const rows = json.table.rows;
+
+  let found = null;
+  rows.forEach(row => {
+    if (!row.c) return;
+    const obj = {};
+    headers.forEach((h, i) => {
+      obj[h] = row.c[i]?.v ?? "";
+    });
+
+    if (
+      String(obj.product_id) === String(productId) &&
+      String(obj.duration).toLowerCase() === String(durationText).toLowerCase()
+    ) {
+      found = obj;
+    }
+  });
+
+  return found;
+}
+  
 // =============================
 // FETCH WARRANTY_DATA
 // =============================
@@ -425,8 +457,37 @@ const activated_at = rowData[headers.find(h =>
   h.toLowerCase().includes("activated")
 )] || "";
 
-const harga = "Rp9.000";
+      
+      
+let harga = "-";
+let hargaCoret = "";
+let discountBadge = "";
 
+const pkg = await fetchPackageDetail(product_id, packageName);
+
+if (pkg) {
+  const priceNum = parseInt(String(pkg.price).replace(/\D/g,"")) || 0;
+  const discount = pkg.discount || "";
+
+  harga = `Rp${priceNum.toLocaleString("id-ID")}`;
+
+  if (discount) {
+    discountBadge = `
+      <span style="
+        font-size:11px;
+        padding:4px 10px;
+        border-radius:999px;
+        background:linear-gradient(135deg,#ff6b6b,#ef4444);
+        font-weight:700;
+      ">
+        ${discount}
+      </span>
+    `;
+  }
+}
+
+
+      
 const metodePembayaran = `
   Lynk ID Verified
   <div style="opacity:.6; font-size:12px; margin-top:4px;">
@@ -535,7 +596,10 @@ console.log("durationDays:", durationDays);
 
     <div>
       <span>Harga</span>
-      <b>${harga}</b>
+      <b style="display:flex; gap:8px; justify-content:center; align-items:center;">
+  ${harga}
+  ${discountBadge}
+</b>
     </div>
 
     <div>
