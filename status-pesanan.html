@@ -495,7 +495,34 @@ console.log("durationDays:", durationDays);
 
   </div>
 </div>
+
+<!-- CARD 3 (GLASS DETAIL TAMBAHAN) -->
+<div class="status-meta-card fade-up">
+  <div class="status-meta-grid">
+
+    <div>
+      <span>Berlaku Sampai</span>
+      <b>${berlakuSampai}</b>
+    </div>
+
+    <div>
+      <span>Harga</span>
+      <b>${harga}</b>
+    </div>
+
+    <div>
+      <span>Pembayaran</span>
+      <b style="font-size:16px; line-height:1.4;">
+        ${metodePembayaran}
+      </b>
+    </div>
+
+  </div>
+</div>
 `;
+
+
+      
 initFadeUp();
       
 console.log("activated_at raw:", activated_at);
@@ -570,6 +597,24 @@ if (status.toLowerCase() !== "active") {
 // Total detik = durationDays * 24 jam
 const expiryDate = new Date(activatedDate);
 expiryDate.setDate(expiryDate.getDate() + durationDays);
+
+
+ const berlakuSampai = expiryDate
+  ? expiryDate.toLocaleDateString("id-ID", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric"
+    })
+  : "-";
+
+const harga = "Rp9.000";
+const metodePembayaran = `
+  Lynk ID Verified
+  <div style="opacity:.6; font-size:12px; margin-top:4px;">
+    Checkout diproses oleh Lynk ID
+  </div>
+`;
+  
 
 async function startCountdown() {
 
