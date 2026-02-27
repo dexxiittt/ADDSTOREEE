@@ -516,14 +516,28 @@ const metodePembayaran = `
 let berlakuSampai = "-";
 
 if (durationDays > 0 && activated_at) {
-  const tempDate = new Date(activated_at);
-  if (!isNaN(tempDate.getTime())) {
-    const exp = new Date(tempDate);
+
+  let activatedDate;
+
+  // Handle format "27/02/2026 9:15:00"
+  const [datePart, timePart] = activated_at.split(" ");
+  const [day, month, year] = datePart.split("/");
+
+  activatedDate = new Date(
+    Number(year),
+    Number(month) - 1,
+    Number(day),
+    ...(timePart ? timePart.split(":").map(Number) : [0,0,0])
+  );
+
+  if (!isNaN(activatedDate.getTime())) {
+
+    const exp = new Date(activatedDate);
     exp.setDate(exp.getDate() + durationDays);
 
     berlakuSampai = exp.toLocaleDateString("id-ID", {
       day: "2-digit",
-      month: "short",
+      month: "long",
       year: "numeric"
     });
   }
