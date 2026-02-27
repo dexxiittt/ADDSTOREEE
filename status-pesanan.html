@@ -756,7 +756,7 @@ console.log("durationDays:", durationDays);
       ${informasiHTML}
     </ul>
 
-    <div id="infoClose" class="info-close">
+    <div id="infoClose" class="info-close" style="display:none;">
       Tutup
     </div>
   </div>
@@ -777,15 +777,31 @@ const infoClose = document.getElementById("infoClose");
 
 if (infoMore) {
   infoMore.addEventListener("click", () => {
+
     infoContent.classList.add("open");
     infoIcon.classList.add("active");
+
+    // Selengkapnya hilang
+    infoMore.style.display = "none";
+
+    // Tutup muncul
+    infoClose.style.display = "block";
+
   });
 }
 
 if (infoClose) {
   infoClose.addEventListener("click", () => {
+
     infoContent.classList.remove("open");
     infoIcon.classList.remove("active");
+
+    // Tutup hilang
+    infoClose.style.display = "none";
+
+    // Selengkapnya muncul lagi
+    infoMore.style.display = "block";
+
   });
 }
 
