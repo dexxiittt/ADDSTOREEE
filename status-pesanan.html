@@ -497,6 +497,50 @@ if (discount > 0) {
 
       
 const durationDays = parseInt(rowData.duration_days) || 0;
+
+// =============================
+// VALID UNTIL SYSTEM (PREMIUM VERSION)
+// =============================
+
+let berlakuSampai = "-";
+
+const validUntilRaw = rowData.valid_until;
+
+if (validUntilRaw) {
+
+  const serverNow = await getServerTime();
+
+  // Jika isinya angka (misal 30)
+  if (!isNaN(parseInt(validUntilRaw))) {
+
+    const daysToAdd = parseInt(validUntilRaw);
+    const expDate = new Date(serverNow);
+    expDate.setDate(expDate.getDate() + daysToAdd);
+
+    berlakuSampai = expDate.toLocaleDateString("id-ID", {
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    });
+
+  }
+
+  // Jika isinya tanggal langsung
+  else {
+
+    const parsedDate = new Date(validUntilRaw);
+
+    if (!isNaN(parsedDate.getTime())) {
+      berlakuSampai = parsedDate.toLocaleDateString("id-ID", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      });
+    }
+
+  }
+}
+      
 const status = rowData.status || "-";
 const image_url = rowData.image_url || "";
 
@@ -511,23 +555,6 @@ const metodePembayaran = `
   </div>
 `;
 
-
-      
-let berlakuSampai = "-";
-
-if (durationDays > 0 && activated_at) {
-  const tempDate = new Date(activated_at);
-  if (!isNaN(tempDate.getTime())) {
-    const exp = new Date(tempDate);
-    exp.setDate(exp.getDate() + durationDays);
-
-    berlakuSampai = exp.toLocaleDateString("id-ID", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric"
-    });
-  }
-}
 
 if (durationDays >= 30) {
 
