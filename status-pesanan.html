@@ -289,22 +289,41 @@ html, body {
 }
 
 /* ============================= */
-/* INFORMASI COLLAPSIBLE */
+/* INFORMASI PREMIUM COLLAPSIBLE */
 /* ============================= */
 
 .info-toggle {
   cursor: pointer;
   user-select: none;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 6px;
   font-weight: 600;
-  font-size: 14px;
-  transition: color 0.25s ease;
+  font-size: 15px;
 }
 
-.info-toggle.active {
-  color: #22c55e; /* hijau saat terbuka */
+.info-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.info-icon {
+  transition: color 0.25s ease;
+  color: #bfa6ff; /* ungu soft default */
+  font-size: 16px;
+}
+
+.info-icon.active {
+  color: #9f7aea; /* ungu premium saat aktif */
+}
+
+.info-more,
+.info-close {
+  color: #9f7aea;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
 }
 
 .info-content {
@@ -315,15 +334,14 @@ html, body {
 }
 
 .info-content.open {
-  max-height: 500px; /* cukup besar untuk list */
+  max-height: 600px;
 }
 
 .info-content ul {
-  margin: 12px 0 0;
+  margin: 12px 0 14px;
   padding-left: 18px;
-  font-size: 13px;
-  line-height: 1.6;
-  opacity: .8;
+  font-size: 14px;
+  line-height: 1.7;
 }
 
 /* Lebih halus di device cepat */
@@ -720,17 +738,27 @@ console.log("durationDays:", durationDays);
 <!-- CARD 4 (INFORMASI PENTING) -->
 <div class="status-meta-card fade-up">
 
-  <div id="infoToggle" class="info-toggle">
-    ⓘ Informasi Penting
-    <span id="infoText" style="opacity:.7; font-weight:500;">
-      — Selengkapnya...
-    </span>
+  <div class="info-toggle">
+
+    <div class="info-header">
+      <span id="infoIcon" class="info-icon">ⓘ</span>
+      <span>Informasi Penting</span>
+    </div>
+
+    <div id="infoMore" class="info-more">
+      Selengkapnya...
+    </div>
+
   </div>
 
   <div id="infoContent" class="info-content">
     <ul>
       ${informasiHTML}
     </ul>
+
+    <div id="infoClose" class="info-close">
+      Tutup
+    </div>
   </div>
 
 </div>
@@ -739,28 +767,25 @@ console.log("durationDays:", durationDays);
 
       
 // =============================
-// COLLAPSIBLE INFORMASI
+// PREMIUM COLLAPSIBLE SYSTEM
 // =============================
 
-const infoToggle = document.getElementById("infoToggle");
+const infoIcon = document.getElementById("infoIcon");
 const infoContent = document.getElementById("infoContent");
-const infoText = document.getElementById("infoText");
+const infoMore = document.getElementById("infoMore");
+const infoClose = document.getElementById("infoClose");
 
-if (infoToggle) {
-  infoToggle.addEventListener("click", () => {
+if (infoMore) {
+  infoMore.addEventListener("click", () => {
+    infoContent.classList.add("open");
+    infoIcon.classList.add("active");
+  });
+}
 
-    const isOpen = infoContent.classList.contains("open");
-
-    if (isOpen) {
-      infoContent.classList.remove("open");
-      infoToggle.classList.remove("active");
-      infoText.innerText = " — Selengkapnya...";
-    } else {
-      infoContent.classList.add("open");
-      infoToggle.classList.add("active");
-      infoText.innerText = " — Tutup";
-    }
-
+if (infoClose) {
+  infoClose.addEventListener("click", () => {
+    infoContent.classList.remove("open");
+    infoIcon.classList.remove("active");
   });
 }
 
