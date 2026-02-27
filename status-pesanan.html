@@ -911,11 +911,15 @@ if (durationDays > 0) {
   // ==========================
   // JIKA BELUM ACTIVE
   // ==========================
-if (status.toLowerCase() !== "active") {
+if (status.trim().toLowerCase() === "expired") {
+  statusText.style.color = "#ef4444";
+  countdownTimer.innerHTML = "";
+} 
+else if (status.trim().toLowerCase() !== "active") {
   statusText.style.color = "#9ca3af";
-    countdownTimer.innerHTML =
-      `${durationDays} Hari 00:00:00`;
-    return;
+  countdownTimer.innerHTML =
+    `${durationDays} Hari 00:00:00`;
+  return;
 }
 
   // ==========================
