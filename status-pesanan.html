@@ -444,9 +444,23 @@ wrapper.innerHTML = `
     color:white;
     font-family: 'Plus Jakarta Sans', sans-serif;
   ">
-    <h2 style="margin-bottom:15px;">Memuat Data...</h2>
-    <p style="opacity:0.7;">Invoice:</p>
-    <h3 style="margin-top:5px; color:#9f7aea;">${invoice}</h3>
+    <h2 style="margin-bottom:10px;">Memuat Data...</h2>
+
+<div id="loadingTimer" style="
+  font-size:22px;
+  font-weight:700;
+  margin-bottom:10px;
+  color:#9f7aea;
+">
+  10:00
+</div>
+
+<p style="opacity:0.8; margin-bottom:6px;">
+  Invoice sedang dibuat, mohon tunggu
+</p>
+
+<p style="opacity:0.6;">Invoice:</p>
+<h3 style="margin-top:5px; color:#9f7aea;">${invoice}</h3>
   </div>
 `;
 
@@ -1048,7 +1062,48 @@ startCountdown();
   }
 }
 
-fetchWarrantyData();
+// =============================
+// 10 MENIT WAIT SYSTEM (ANTI RESET)
+// =============================
+
+const WAIT_DURATION = 10 * 60 * 1000; // 10 menit
+const storageKey = "invoice_wait_" + invoice;
+
+let startTime = localStorage.getItem(storageKey);
+
+if (!startTime) {
+  startTime = Date.now();
+  localStorage.setItem(storageKey, startTime);
+} else {
+  startTime = parseInt(startTime);
+}
+
+const timerEl = document.getElementById("loadingTimer");
+
+function startWaitingTimer() {
+
+  function update() {
+    const elapsed = Date.now() - startTime;
+    const remaining = WAIT_DURATION - elapsed;
+
+    if (remaining <= 0) {
+      localStorage.removeItem(storageKey);
+      fetchWarrantyData();
+      return;
+    }
+
+    const minutes = Math.floor(remaining / 60000);
+    const seconds = Math.floor((remaining % 60000) / 1000);
+
+    timerEl.innerHTML =
+      `${minutes.toString().padStart(2,"0")}:${seconds.toString().padStart(2,"0")}`;
+  }
+
+  update();
+  setInterval(update, 1000);
+}
+
+startWaitingTimer();
 
 
 // =============================
