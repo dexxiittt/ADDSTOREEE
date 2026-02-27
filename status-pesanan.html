@@ -562,36 +562,6 @@ if (pkg) {
       String(pkg.discount).replace(",", ".").replace("%","")
     ) || 0;
   }
-
-  const finalPrice = Math.round(
-    priceNum - (priceNum * discountPercent / 100)
-  );
-
-  hargaCoret = `
-    <span style="text-decoration:line-through; opacity:.5; font-size:14px;">
-      Rp${priceNum.toLocaleString("id-ID")}
-    </span>
-  `;
-
-  hargaFinal = `
-    <span style="font-size:22px; font-weight:800;">
-      Rp${finalPrice.toLocaleString("id-ID")}
-    </span>
-  `;
-
-  if (discountPercent > 0) {
-    discountBadge = `
-      <span style="
-        font-size:11px;
-        padding:4px 10px;
-        border-radius:999px;
-        background:linear-gradient(135deg,#ff6b6b,#ef4444);
-        font-weight:700;
-      ">
-        ${pkg.discount}
-      </span>
-    `;
-  }
 }
 
 console.log("activated_at:", activated_at);
