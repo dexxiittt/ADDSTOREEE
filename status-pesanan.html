@@ -288,6 +288,44 @@ html, body {
   animation: microPulseStrong 0.5s ease;
 }
 
+/* ============================= */
+/* INFORMASI COLLAPSIBLE */
+/* ============================= */
+
+.info-toggle {
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: color 0.25s ease;
+}
+
+.info-toggle.active {
+  color: #22c55e; /* hijau saat terbuka */
+}
+
+.info-content {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.35s ease;
+  will-change: max-height;
+}
+
+.info-content.open {
+  max-height: 500px; /* cukup besar untuk list */
+}
+
+.info-content ul {
+  margin: 12px 0 0;
+  padding-left: 18px;
+  font-size: 13px;
+  line-height: 1.6;
+  opacity: .8;
+}
+
 /* Lebih halus di device cepat */
 @media (prefers-reduced-motion: reduce) {
   .fade-up {
@@ -681,33 +719,50 @@ console.log("durationDays:", durationDays);
 
 <!-- CARD 4 (INFORMASI PENTING) -->
 <div class="status-meta-card fade-up">
-  <div style="text-align:left;">
 
-    <div style="
-      display:flex;
-      align-items:center;
-      gap:8px;
-      margin-bottom:14px;
-      font-weight:700;
-      font-size:15px;
-      letter-spacing:1px;
-    ">
-      ⓘ Informasi Penting
-    </div>
+  <div id="infoToggle" class="info-toggle">
+    ⓘ Informasi Penting
+    <span id="infoText" style="opacity:.7; font-weight:500;">
+      — Selengkapnya...
+    </span>
+  </div>
 
-    <ul style="
-      margin:0;
-      padding-left:18px;
-      font-size:13px;
-      line-height:1.6;
-      opacity:.75;
-    ">
+  <div id="infoContent" class="info-content">
+    <ul>
       ${informasiHTML}
     </ul>
-
   </div>
+
 </div>
 `;
+
+
+      
+// =============================
+// COLLAPSIBLE INFORMASI
+// =============================
+
+const infoToggle = document.getElementById("infoToggle");
+const infoContent = document.getElementById("infoContent");
+const infoText = document.getElementById("infoText");
+
+if (infoToggle) {
+  infoToggle.addEventListener("click", () => {
+
+    const isOpen = infoContent.classList.contains("open");
+
+    if (isOpen) {
+      infoContent.classList.remove("open");
+      infoToggle.classList.remove("active");
+      infoText.innerText = " — Selengkapnya...";
+    } else {
+      infoContent.classList.add("open");
+      infoToggle.classList.add("active");
+      infoText.innerText = " — Tutup";
+    }
+
+  });
+}
 
 
       
