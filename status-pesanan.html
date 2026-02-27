@@ -738,17 +738,13 @@ console.log("durationDays:", durationDays);
 <!-- CARD 4 (INFORMASI PENTING) -->
 <div class="status-meta-card fade-up">
 
-  <div class="info-toggle">
+  <div class="info-header" style="margin-bottom:6px;">
+    <span id="infoIcon" class="info-icon">ⓘ</span>
+    <span>Informasi Penting</span>
+  </div>
 
-    <div class="info-header">
-      <span id="infoIcon" class="info-icon">ⓘ</span>
-      <span>Informasi Penting</span>
-    </div>
-
-    <div id="infoMore" class="info-more">
-      Selengkapnya...
-    </div>
-
+  <div id="infoMore" class="info-more">
+    Selengkapnya...
   </div>
 
   <div id="infoContent" class="info-content">
@@ -767,7 +763,7 @@ console.log("durationDays:", durationDays);
 
       
 // =============================
-// PREMIUM COLLAPSIBLE SYSTEM
+// CLEAN COLLAPSIBLE SYSTEM
 // =============================
 
 const infoIcon = document.getElementById("infoIcon");
@@ -781,10 +777,7 @@ if (infoMore) {
     infoContent.classList.add("open");
     infoIcon.classList.add("active");
 
-    // Selengkapnya hilang
     infoMore.style.display = "none";
-
-    // Tutup muncul
     infoClose.style.display = "block";
 
   });
@@ -796,15 +789,11 @@ if (infoClose) {
     infoContent.classList.remove("open");
     infoIcon.classList.remove("active");
 
-    // Tutup hilang
     infoClose.style.display = "none";
-
-    // Selengkapnya muncul lagi
     infoMore.style.display = "block";
 
   });
 }
-
 
       
 initFadeUp();
