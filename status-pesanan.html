@@ -1071,28 +1071,38 @@ startCountdown();
 const WAIT_DURATION = 10 * 60 * 1000; // 10 menit
 const storageKey = "invoice_wait_" + invoice;
 
-let startTime = localStorage.getItem(storageKey);
+let storedValue = localStorage.getItem(storageKey);
 
-if (!startTime) {
-  startTime = Date.now();
-  localStorage.setItem(storageKey, startTime);
-} else {
-  startTime = parseInt(startTime);
+if (storedValue === "DONE") {
+  fetchWarrantyData();
+} 
+else {
+
+  let startTime;
+
+  if (!storedValue) {
+    startTime = Date.now();
+    localStorage.setItem(storageKey, startTime);
+  } else {
+    startTime = parseInt(storedValue);
+  }
+
+  startWaitingTimer(startTime);
 }
 
 const timerEl = document.getElementById("loadingTimer");
 
-function startWaitingTimer() {
+function startWaitingTimer(startTime) {
 
   function update() {
     const elapsed = Date.now() - startTime;
     const remaining = WAIT_DURATION - elapsed;
 
     if (remaining <= 0) {
-      localStorage.removeItem(storageKey);
-      fetchWarrantyData();
-      return;
-    }
+  localStorage.setItem(storageKey, "DONE");
+  fetchWarrantyData();
+  return;
+}
 
     const minutes = Math.floor(remaining / 60000);
     const seconds = Math.floor((remaining % 60000) / 1000);
