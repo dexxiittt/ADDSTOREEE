@@ -459,22 +459,6 @@ const activated_at = rowData[headers.find(h =>
 )] || "";
 
       
-      
-let hargaFinal = "-";
-let hargaCoret = "";
-let discountBadge = "";
-
-
-if (pkg) {
-
-  const priceNum = parseInt(String(pkg.price).replace(/\D/g,"")) || 0;
-
-  let discountPercent = 0;
-  if (pkg.discount) {
-    discountPercent = parseFloat(
-      String(pkg.discount).replace(",", ".").replace("%","")
-    ) || 0;
-  }
 
   // Hitung harga setelah diskon
   const finalPrice = Math.round(
@@ -563,6 +547,52 @@ if (durationDays >= 30) {
 }
 
 const pkg = await fetchPackageDetail(product_id, durationDisplay);
+
+let hargaFinal = "-";
+let hargaCoret = "";
+let discountBadge = "";
+
+if (pkg) {
+
+  const priceNum = parseInt(String(pkg.price).replace(/\D/g,"")) || 0;
+
+  let discountPercent = 0;
+  if (pkg.discount) {
+    discountPercent = parseFloat(
+      String(pkg.discount).replace(",", ".").replace("%","")
+    ) || 0;
+  }
+
+  const finalPrice = Math.round(
+    priceNum - (priceNum * discountPercent / 100)
+  );
+
+  hargaCoret = `
+    <span style="text-decoration:line-through; opacity:.5; font-size:14px;">
+      Rp${priceNum.toLocaleString("id-ID")}
+    </span>
+  `;
+
+  hargaFinal = `
+    <span style="font-size:22px; font-weight:800;">
+      Rp${finalPrice.toLocaleString("id-ID")}
+    </span>
+  `;
+
+  if (discountPercent > 0) {
+    discountBadge = `
+      <span style="
+        font-size:11px;
+        padding:4px 10px;
+        border-radius:999px;
+        background:linear-gradient(135deg,#ff6b6b,#ef4444);
+        font-weight:700;
+      ">
+        ${pkg.discount}
+      </span>
+    `;
+  }
+}
 
 console.log("activated_at:", activated_at);
 console.log("durationDays:", durationDays);
