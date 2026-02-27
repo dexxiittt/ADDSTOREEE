@@ -659,6 +659,58 @@ if (validUntilRaw) {
 }
       
 const status = rowData.status || "-";
+
+let expiredCardHTML = "";
+
+if (String(status).toLowerCase() === "expired") {
+  expiredCardHTML = `
+  
+  <!-- CARD 5 (EXPIRED SUMMARY) -->
+  <div class="status-meta-card fade-up">
+
+    <div style="text-align:center; margin-bottom:20px;">
+      <span style="
+        font-size:11px;
+        letter-spacing:2px;
+        text-transform:uppercase;
+        opacity:.7;
+      ">
+        Status Garansi
+      </span>
+
+      <div style="
+        margin-top:6px;
+        font-size:20px;
+        font-weight:700;
+        color:#ef4444;
+      ">
+        🔴 Garansi Berakhir
+      </div>
+    </div>
+
+    <div class="status-meta-grid">
+
+      <div>
+        <span>Produk</span>
+        <b>${title}</b>
+      </div>
+
+      <div>
+        <span>Paket</span>
+        <b>${packageName}</b>
+      </div>
+
+      <div>
+        <span>Invoice</span>
+        <b>${invoice}</b>
+      </div>
+
+    </div>
+
+  </div>
+  `;
+}
+      
 const image_url = rowData.image_url || "";
 
 const activated_at = rowData[headers.find(h =>
@@ -793,6 +845,9 @@ console.log("durationDays:", durationDays);
   </div>
 
 </div>
+
+${expiredCardHTML}
+
 `;
 
 
