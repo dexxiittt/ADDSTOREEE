@@ -161,7 +161,7 @@ html, body {
 .status-meta-grid span {
   display: block;
   font-size: 11px;
-  opacity: .5;
+  opacity: 0.5;
   letter-spacing: 1px;
   margin-bottom: 4px;
   text-transform: uppercase;
@@ -181,7 +181,8 @@ html, body {
 .status-meta-grid span {
   font-size: 10px;
   letter-spacing: 2px;
-  opacity: 0.45;
+  opacity: 1;
+  color: #ffffff;
   font-weight: 500;
   text-transform: uppercase;
 }
@@ -421,12 +422,20 @@ const packageName = rowData.package || "-";
 
 function parseDiscount(val) {
   if (!val) return 0;
-  return Number(
-    String(val)
-      .replace('%', '')
-      .replace(',', '.')
-      .trim()
-  ) || 0;
+
+  // kalau sudah angka kecil (misal 0.2223)
+  if (typeof val === "number") {
+    return val < 1 ? val * 100 : val;
+  }
+
+  const clean = String(val)
+    .replace('%', '')
+    .replace(',', '.')
+    .trim();
+
+  const num = Number(clean) || 0;
+
+  return num < 1 ? num * 100 : num;
 }
 
 const price = Number(rowData.price) || 0;
@@ -440,39 +449,45 @@ let hargaHTML;
 
 if (discount > 0) {
   hargaHTML = `
-    <span style="
-      font-size:12px;
-      opacity:.6;
-      text-decoration:line-through;
-      margin-right:6px
-    ">
-      Rp${price.toLocaleString("id-ID")}
-    </span>
+    <div style="display:flex; align-items:center; justify-content:center; gap:8px;">
 
-    <span style="
-      font-weight:800;
-      font-size:18px;
-      margin-right:6px;
-    ">
-      Rp${finalPrice.toLocaleString("id-ID")}
-    </span>
+      <span style="
+        font-size:14px;
+        text-decoration:line-through;
+        color:#ffffff;
+        opacity:0.6;
+      ">
+        Rp${price.toLocaleString("id-ID")}
+      </span>
 
-    <span style="
-      padding:4px 8px;
-      font-size:11px;
-      font-weight:700;
-      border-radius:999px;
-      background:linear-gradient(135deg,#ff6b6b,#ef4444);
-      box-shadow:0 6px 18px rgba(239,68,68,.4);
-    ">
-      -${discount.toFixed(2).replace('.', ',')}%
-    </span>
+      <span style="
+        font-weight:900;
+        font-size:22px;
+        color:#ffffff;
+      ">
+        Rp${finalPrice.toLocaleString("id-ID")}
+      </span>
+
+      <span style="
+        padding:4px 10px;
+        font-size:12px;
+        font-weight:700;
+        border-radius:999px;
+        background:#22c55e;
+        color:#ffffff;
+        white-space:nowrap;
+      ">
+        -${discount.toFixed(2).replace('.', ',')}%
+      </span>
+
+    </div>
   `;
 } else {
   hargaHTML = `
     <span style="
-      font-weight:800;
-      font-size:18px;
+      font-weight:900;
+      font-size:22px;
+      color:#ffffff;
     ">
       Rp${price.toLocaleString("id-ID")}
     </span>
