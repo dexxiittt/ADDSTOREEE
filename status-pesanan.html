@@ -459,19 +459,51 @@ const activated_at = rowData[headers.find(h =>
 
       
       
-let harga = "-";
+let hargaFinal = "-";
 let hargaCoret = "";
 let discountBadge = "";
 
 const pkg = await fetchPackageDetail(product_id, packageName);
 
 if (pkg) {
+
   const priceNum = parseInt(String(pkg.price).replace(/\D/g,"")) || 0;
-  const discount = pkg.discount || "";
 
-  harga = `Rp${priceNum.toLocaleString("id-ID")}`;
+  let discountPercent = 0;
+  if (pkg.discount) {
+    discountPercent = parseFloat(
+      String(pkg.discount).replace(",", ".").replace("%","")
+    ) || 0;
+  }
 
-  if (discount) {
+  // Hitung harga setelah diskon
+  const finalPrice = Math.round(
+    priceNum - (priceNum * discountPercent / 100)
+  );
+
+  // Harga coret (asli)
+  hargaCoret = `
+    <span style="
+      text-decoration:line-through;
+      opacity:.5;
+      font-size:14px;
+    ">
+      Rp${priceNum.toLocaleString("id-ID")}
+    </span>
+  `;
+
+  // Harga final
+  hargaFinal = `
+    <span style="
+      font-size:22px;
+      font-weight:800;
+    ">
+      Rp${finalPrice.toLocaleString("id-ID")}
+    </span>
+  `;
+
+  // Badge diskon
+  if (discountPercent > 0) {
     discountBadge = `
       <span style="
         font-size:11px;
@@ -480,10 +512,11 @@ if (pkg) {
         background:linear-gradient(135deg,#ff6b6b,#ef4444);
         font-weight:700;
       ">
-        ${discount}
+        ${pkg.discount}
       </span>
     `;
   }
+
 }
 
 
@@ -596,8 +629,9 @@ console.log("durationDays:", durationDays);
 
     <div>
       <span>Harga</span>
-      <b style="display:flex; gap:8px; justify-content:center; align-items:center;">
-  ${harga}
+      <b style="display:flex; gap:8px; align-items:center; justify-content:center;">
+  ${hargaCoret}
+  ${hargaFinal}
   ${discountBadge}
 </b>
     </div>
