@@ -415,9 +415,27 @@ const product_id  = rowData.product_id || "-";
 const title       = rowData.title || "-";
 const packageName = rowData.package || "-";
 
+
       
 const durationDays = parseInt(rowData.duration_days) || 0;
+const status = rowData.status || "-";
+const image_url = rowData.image_url || "";
 
+const activated_at = rowData[headers.find(h =>
+  h.toLowerCase().includes("activated")
+)] || "";
+
+const harga = "Rp9.000";
+
+const metodePembayaran = `
+  Lynk ID Verified
+  <div style="opacity:.6; font-size:12px; margin-top:4px;">
+    Checkout diproses oleh Lynk ID
+  </div>
+`;
+
+
+      
 let durationDisplay = "-";
 
 if (durationDays >= 30) {
@@ -437,11 +455,7 @@ if (durationDays >= 30) {
 
 }
       
-const status        = rowData.status || "-";
-const image_url     = rowData.image_url || "";
-const activated_at = rowData[headers.find(h =>
-  h.toLowerCase().includes("activated")
-)] || "";
+
 console.log("activated_at:", activated_at);
 console.log("durationDays:", durationDays);
 
@@ -598,8 +612,7 @@ if (status.toLowerCase() !== "active") {
 const expiryDate = new Date(activatedDate);
 expiryDate.setDate(expiryDate.getDate() + durationDays);
 
-
- const berlakuSampai = expiryDate
+  const berlakuSampai = expiryDate
   ? expiryDate.toLocaleDateString("id-ID", {
       day: "2-digit",
       month: "short",
@@ -607,13 +620,6 @@ expiryDate.setDate(expiryDate.getDate() + durationDays);
     })
   : "-";
 
-const harga = "Rp9.000";
-const metodePembayaran = `
-  Lynk ID Verified
-  <div style="opacity:.6; font-size:12px; margin-top:4px;">
-    Checkout diproses oleh Lynk ID
-  </div>
-`;
   
 
 async function startCountdown() {
