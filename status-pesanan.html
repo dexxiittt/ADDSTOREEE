@@ -662,7 +662,7 @@ const status = rowData.status || "-";
 
 let expiredCardHTML = "";
 
-if (String(status).toLowerCase() === "expired") {
+if (String(status).trim().toLowerCase() === "expired") {
   expiredCardHTML = `
   
   <!-- CARD 5 (EXPIRED SUMMARY) -->
