@@ -496,7 +496,11 @@ if (discount > 0) {
 
 
       
-const durationDays = parseInt(rowData.duration_days) || 0;
+const durationDays = Number(rowData.duration_days);
+
+console.log("duration_days raw:", rowData.duration_days);
+console.log("durationDays parsed:", durationDays);
+      
 const status = rowData.status || "-";
 const image_url = rowData.image_url || "";
 
@@ -517,25 +521,31 @@ const metodePembayaran = `
       
 let berlakuSampai = "-";
 
-if (durationDays > 0 && activated_at) {
+if (Number(durationDays) > 0 && activated_at) {
 
   let activatedDate;
 
-  // Handle format "27/02/2026 9:15:00"
-  const [datePart, timePart] = activated_at.split(" ");
-  const [day, month, year] = datePart.split("/");
+  // langsung pakai constructor Date dulu
+  activatedDate = new Date(activated_at);
 
-  activatedDate = new Date(
-    Number(year),
-    Number(month) - 1,
-    Number(day),
-    ...(timePart ? timePart.split(":").map(Number) : [0,0,0])
-  );
+  // kalau gagal parse (format 27/02/2026 9:15:00)
+  if (isNaN(activatedDate.getTime())) {
+
+    const [datePart, timePart] = activated_at.split(" ");
+    const [day, month, year] = datePart.split("/");
+
+    activatedDate = new Date(
+      Number(year),
+      Number(month) - 1,
+      Number(day),
+      ...(timePart ? timePart.split(":").map(Number) : [0,0,0])
+    );
+  }
 
   if (!isNaN(activatedDate.getTime())) {
 
     const exp = new Date(activatedDate);
-    exp.setDate(exp.getDate() + durationDays);
+    exp.setDate(exp.getDate() + Number(durationDays));
 
     berlakuSampai = exp.toLocaleDateString("id-ID", {
       day: "2-digit",
