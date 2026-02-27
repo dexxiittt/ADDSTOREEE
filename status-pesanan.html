@@ -309,13 +309,16 @@ html, body {
 }
 
 .info-icon {
-  transition: color 0.25s ease;
-  color: #bfa6ff; /* ungu soft default */
+  transition: color 0.25s ease, text-shadow 0.25s ease;
+  color: #ffffff; /* default putih */
   font-size: 16px;
+  font-weight: 700; /* bold */
 }
 
 .info-icon.active {
-  color: #9f7aea; /* ungu premium saat aktif */
+  color: #9f7aea; /* ungu premium */
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(159,122,234,0.6);
 }
 
 .info-more,
