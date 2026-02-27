@@ -500,9 +500,11 @@ const durationDays = parseInt(rowData.duration_days) || 0;
 const status = rowData.status || "-";
 const image_url = rowData.image_url || "";
 
-const activated_at = rowData[headers.find(h =>
-  h.toLowerCase().includes("activated")
-)] || "";
+const activatedKey = headers.find(h =>
+  h && h.toLowerCase().trim() === "activated_at"
+);
+
+const activated_at = activatedKey ? rowData[activatedKey] : "";
 
 const metodePembayaran = `
   Lynk ID Verified
