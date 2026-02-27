@@ -436,7 +436,21 @@ const metodePembayaran = `
 
 
       
-let durationDisplay = "-";
+let berlakuSampai = "-";
+
+if (durationDays > 0 && activated_at) {
+  const tempDate = new Date(activated_at);
+  if (!isNaN(tempDate.getTime())) {
+    const exp = new Date(tempDate);
+    exp.setDate(exp.getDate() + durationDays);
+
+    berlakuSampai = exp.toLocaleDateString("id-ID", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric"
+    });
+  }
+}
 
 if (durationDays >= 30) {
 
@@ -611,14 +625,6 @@ if (status.toLowerCase() !== "active") {
 // Total detik = durationDays * 24 jam
 const expiryDate = new Date(activatedDate);
 expiryDate.setDate(expiryDate.getDate() + durationDays);
-
-  const berlakuSampai = expiryDate
-  ? expiryDate.toLocaleDateString("id-ID", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric"
-    })
-  : "-";
 
   
 
