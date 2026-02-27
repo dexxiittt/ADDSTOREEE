@@ -339,9 +339,26 @@ html, body {
 
 .info-content ul {
   margin: 12px 0 14px;
-  padding-left: 18px;
+  padding: 0;
+  list-style: none; /* matikan bullet default */
   font-size: 14px;
   line-height: 1.7;
+}
+
+.info-content ul li {
+  position: relative;
+  padding-left: 22px;
+  margin-bottom: 10px;
+}
+
+.info-content ul li::before {
+  content: "✦"; /* bisa ganti icon */
+  position: absolute;
+  left: 0;
+  top: 2px;
+  font-size: 12px;
+  color: #9f7aea; /* ungu premium */
+  opacity: 0.9;
 }
 
 /* Lebih halus di device cepat */
