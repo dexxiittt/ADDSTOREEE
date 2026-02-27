@@ -364,6 +364,21 @@ html, body {
   opacity: 0.9;
 }
 
+/* ============================= */
+/* NOTE STAGGER ANIMATION */
+/* ============================= */
+
+.info-content ul li {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.info-content.open ul li.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Lebih halus di device cepat */
 @media (prefers-reduced-motion: reduce) {
   .fade-up {
@@ -799,6 +814,18 @@ if (infoMore) {
 
     infoMore.style.display = "none";
     infoClose.style.display = "block";
+
+    // =============================
+    // STAGGER NOTE ANIMATION
+    // =============================
+    const notes = infoContent.querySelectorAll("li");
+
+    notes.forEach((note, index) => {
+      note.classList.remove("show");
+      setTimeout(() => {
+        note.classList.add("show");
+      }, index * 120); // delay ringan per item
+    });
 
   });
 }
