@@ -1068,15 +1068,17 @@ startCountdown();
 // 10 MENIT WAIT SYSTEM (ANTI RESET)
 // =============================
 
-const WAIT_DURATION = 10 * 60 * 1000; // 10 menit
+const WAIT_DURATION = 10 * 60 * 1000;
 const storageKey = "invoice_wait_" + invoice;
 
-let storedValue = localStorage.getItem(storageKey);
+const storedValue = localStorage.getItem(storageKey);
 
 if (storedValue === "DONE") {
+
+  // Sudah pernah selesai → langsung tampilkan status
   fetchWarrantyData();
-} 
-else {
+
+} else {
 
   let startTime;
 
@@ -1090,34 +1092,37 @@ else {
   startWaitingTimer(startTime);
 }
 
-const timerEl = document.getElementById("loadingTimer");
-
 function startWaitingTimer(startTime) {
 
+  const timerEl = document.getElementById("loadingTimer");
+  const waitText = timerEl?.nextElementSibling;
+
   function update() {
+
     const elapsed = Date.now() - startTime;
     const remaining = WAIT_DURATION - elapsed;
 
     if (remaining <= 0) {
 
-  localStorage.setItem(storageKey, "DONE");
+      // Tandai selesai permanen
+      localStorage.setItem(storageKey, "DONE");
 
-  // Sembunyikan timer dan pesan
-  const timerBox = document.getElementById("loadingTimer");
-  if (timerBox) timerBox.style.display = "none";
+      // Hilangkan timer & teks
+      if (timerEl) timerEl.style.display = "none";
+      if (waitText) waitText.style.display = "none";
 
-  const waitText = timerBox?.nextElementSibling;
-  if (waitText) waitText.style.display = "none";
-
-  fetchWarrantyData();
-  return;
-}
+      // Render status
+      fetchWarrantyData();
+      return;
+    }
 
     const minutes = Math.floor(remaining / 60000);
     const seconds = Math.floor((remaining % 60000) / 1000);
 
-    timerEl.innerHTML =
-      `${minutes.toString().padStart(2,"0")}:${seconds.toString().padStart(2,"0")}`;
+    if (timerEl) {
+      timerEl.innerHTML =
+        `${minutes.toString().padStart(2,"0")}:${seconds.toString().padStart(2,"0")}`;
+    }
   }
 
   update();
