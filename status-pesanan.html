@@ -1065,7 +1065,7 @@ startCountdown();
 }
 
 // =============================
-// 10 MENIT WAIT SYSTEM (ANTI RESET)
+// 10 MENIT WAIT SYSTEM (FINAL FIX)
 // =============================
 
 const WAIT_DURATION = 10 * 60 * 1000;
@@ -1075,7 +1075,7 @@ const storedValue = localStorage.getItem(storageKey);
 
 if (storedValue === "DONE") {
 
-  // Sudah pernah selesai → langsung tampilkan status
+  // Kalau sudah pernah selesai → langsung tampilkan status
   fetchWarrantyData();
 
 } else {
@@ -1107,11 +1107,11 @@ function startWaitingTimer(startTime) {
       // Tandai selesai permanen
       localStorage.setItem(storageKey, "DONE");
 
-      // Hilangkan timer & teks
+      // Sembunyikan timer & teks
       if (timerEl) timerEl.style.display = "none";
       if (waitText) waitText.style.display = "none";
 
-      // Render status
+      // Ambil status pesanan
       fetchWarrantyData();
       return;
     }
