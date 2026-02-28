@@ -725,6 +725,46 @@ const activated_at = rowData[headers.find(h =>
   h.toLowerCase().includes("activated")
 )] || "";
 
+
+let tanggalAktivasiDisplay = "-";
+
+if (activated_at) {
+
+  let activatedDateFormat;
+
+  // Handle format Date(2026,1,26,21,0,0)
+  if (typeof activated_at === "string" && activated_at.startsWith("Date(")) {
+    const parts = activated_at
+      .replace("Date(", "")
+      .replace(")", "")
+      .split(",")
+      .map(Number);
+
+    activatedDateFormat = new Date(
+      parts[0],
+      parts[1],
+      parts[2],
+      parts[3] || 0,
+      parts[4] || 0,
+      parts[5] || 0
+    );
+  }
+
+  // Handle format biasa
+  else {
+    activatedDateFormat = new Date(activated_at);
+  }
+
+  if (!isNaN(activatedDateFormat?.getTime())) {
+    tanggalAktivasiDisplay = activatedDateFormat.toLocaleDateString("id-ID", {
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    });
+  }
+}
+      
+
 const metodePembayaran = `
   Lynk ID Verified
   <div style="opacity:.6; font-size:12px; margin-top:4px;">
