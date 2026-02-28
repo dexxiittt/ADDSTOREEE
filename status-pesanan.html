@@ -1075,7 +1075,14 @@ const storedValue = localStorage.getItem(storageKey);
 
 if (storedValue === "DONE") {
 
-  // Kalau sudah pernah selesai → langsung tampilkan status
+  // Sembunyikan timer & teks loading
+  const timerEl = document.getElementById("loadingTimer");
+  const waitText = timerEl?.nextElementSibling;
+
+  if (timerEl) timerEl.style.display = "none";
+  if (waitText) waitText.style.display = "none";
+
+  // Langsung ambil status
   fetchWarrantyData();
 
 } else {
