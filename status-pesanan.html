@@ -444,7 +444,9 @@ wrapper.innerHTML = `
     color:white;
     font-family: 'Plus Jakarta Sans', sans-serif;
   ">
-    <h2 style="margin-bottom:10px;">Memuat Data...</h2>
+    <h2 id="loadingText" style="margin-bottom:10px;">
+  Memuat Data...
+</h2>
 
 <div id="loadingTimer" style="
   font-size:22px;
@@ -1106,6 +1108,27 @@ function startWaitingTimer() {
 startWaitingTimer();
 
 
+// =============================
+// LOADING DOT ANIMATION
+// =============================
+
+const loadingText = document.getElementById("loadingText");
+
+if (loadingText) {
+
+  let dotCount = 0;
+
+  setInterval(() => {
+    dotCount = (dotCount + 1) % 4; // 0–3
+
+    let dots = ".".repeat(dotCount);
+
+    loadingText.innerHTML = "Memuat Data" + dots;
+
+  }, 500);
+
+}
+         
 // =============================
 // GLOBAL FADE-UP OBSERVER
 // =============================
