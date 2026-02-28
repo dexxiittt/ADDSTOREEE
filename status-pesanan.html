@@ -1099,7 +1099,16 @@ function startWaitingTimer(startTime) {
     const remaining = WAIT_DURATION - elapsed;
 
     if (remaining <= 0) {
+
   localStorage.setItem(storageKey, "DONE");
+
+  // Sembunyikan timer dan pesan
+  const timerBox = document.getElementById("loadingTimer");
+  if (timerBox) timerBox.style.display = "none";
+
+  const waitText = timerBox?.nextElementSibling;
+  if (waitText) waitText.style.display = "none";
+
   fetchWarrantyData();
   return;
 }
