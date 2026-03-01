@@ -1,17 +1,355 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Page Title</title>
-  
-<style>
+<title>Cek transaksi</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
+<style>
+body {
+  overflow-x: hidden;
+  background: #0b0b0f;
+  );
+}
+   
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* HERO tetap ungu */
+.package-hero {
+  width: 100%;
+  min-height: 260px;
+   
+  background: linear-gradient(
+    135deg,
+    #493d84,
+    #6d28d9
+  );
+  padding: 72px 20px 44px;
+  text-align: center;
+}
+
+.package-hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(42px, 6vw, 96px);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 14px;
+  color: #ffffff;
+  text-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+
+.package-hero p {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  color: rgba(255,255,255,0.85);
+}
+
+/* ===== PREMIUM GLASS INVOICE ===== */
+
+.invoice-box {
+  width: 80%;
+  max-width: 900px;
+
+  margin: 50px auto 120px;
+  padding: 60px 70px;
+
+  border-radius: 28px;
+
+  position: relative;
+  overflow: hidden;
+
+  background: linear-gradient(
+    145deg,
+    rgba(18,18,28,0.75),
+    rgba(10,10,18,0.65)
+  );
+
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+
+  border: 1px solid rgba(255,255,255,0.08);
+
+  box-shadow:
+    0 40px 120px rgba(0,0,0,0.75),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+
+  text-align: center;
+  transition: all .45s cubic-bezier(.22,1,.36,1);
+}
+
+.invoice-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    120deg,
+    rgba(139,92,246,0.6),
+    transparent 40%,
+    transparent 60%,
+    rgba(139,92,246,0.4)
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+  
+.invoice-box:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 30px 80px rgba(0,0,0,0.55),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+.invoice-box h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+.invoice-box p {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 30px;
+}
+
+/* ===== INPUT GROUP ===== */
+
+.invoice-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  padding: 10px;
+  border-radius: 24px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(255,255,255,0.08),
+    rgba(255,255,255,0.02)
+  );
+
+  border: 1px solid rgba(255,255,255,0.08);
+
+  box-shadow:
+    inset 0 2px 4px rgba(255,255,255,0.06),
+    inset 0 -6px 12px rgba(0,0,0,0.35),
+    0 15px 35px rgba(0,0,0,0.55);
+
+  transition: all .35s ease;
+}
+
+.invoice-input-wrap::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 50%;
+
+  border-radius: 50%;
+
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255,255,255,0.25),
+    transparent 70%
+  );
+
+  opacity: 0.15;
+  pointer-events: none;
+}
+  
+.invoice-input-wrap input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+
+  padding: 16px 18px;
+  font-size: 15px;
+  color: #ffffff;
+
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.invoice-input-wrap:focus-within {
+  border: 1px solid rgba(139,92,246,0.6);
+  box-shadow:
+    inset 0 2px 6px rgba(255,255,255,0.08),
+    inset 0 -8px 16px rgba(0,0,0,0.45),
+    0 20px 45px rgba(139,92,246,0.25);
+}
+
+.invoice-input-wrap input::placeholder {
+  color: rgba(255,255,255,0.4);
+}
+
+.invoice-input-wrap button {
+  padding: 14px 22px;
+  border-radius: 18px;
+
+  font-weight: 600;
+
+  background: linear-gradient(
+    135deg,
+    #9f7aea,
+    #6d28d9
+  );
+
+  box-shadow:
+    0 12px 30px rgba(139,92,246,.55),
+    0 0 40px rgba(139,92,246,.35);
+
+  transition: all .35s ease;
+}
+
+.invoice-input-wrap button:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow:
+    0 18px 45px rgba(139,92,246,.75),
+    0 0 60px rgba(139,92,246,.45);
+}
+
+.invoice-wrapper {
+  min-height: 60vh; /* atur tinggi area */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.package-hero {
+  width: 100%;
+  padding: 72px 20px 60px;
+}
   
 </style>
-
 </head>
-<body>
+<div id="navbar-placeholder"></div>
 
+<script>
+fetch("navbar.html")
+  .then(res => res.text())
+  .then(data => {
+    document.getElementById("navbar-placeholder").innerHTML = data;
+
+    const navbar = document.querySelector(".main-navbar");
+    const toggle = document.getElementById("navToggle");
+    const dropdown = document.getElementById("navDropdown");
+
+    // TOGGLE
+    toggle.addEventListener("click", function (e) {
+  e.stopPropagation();
+  dropdown.classList.toggle("open");
+  toggle.classList.toggle("active"); // ← TAMBAHAN INI
+});
+
+    document.addEventListener("click", function (e) {
+  if (!dropdown.contains(e.target) && !toggle.contains(e.target)) {
+    dropdown.classList.remove("open");
+    toggle.classList.remove("active"); // ← TAMBAHAN INI
+  }
+});
+
+   // ===== ACTIVE LINK AUTO DETECT =====
+const currentPage = window.location.pathname.split("/").pop() || "index.html";
+
+document.querySelectorAll(".nav-dropdown a").forEach(link => {
+  const linkPage = link.getAttribute("href");
+
+  if (linkPage === currentPage) {
+    link.classList.add("active");
+  }
+});
+
+    // SCROLL EFFECT
+    window.addEventListener("scroll", function () {
+      navbar.classList.toggle("scrolled", window.scrollY > 30);
+    });
+  });
+</script>
+
+<body class="package-page">
+
+<section class="invoice-wrapper">
+<!-- HERO -->
+<div class="package-hero">
+  <h1>Cek Invoice</h1>
+  <p>Lacak status pembayaran dan detail pesanan</p>
+</div>
+
+<!-- GLASS CONTAINER -->
+<div class="invoice-box">
+
+  <h2>Masukan Invoice Anda</h2>
+  <p>Lacak status pembayaran dan detail pesanan</p>
+
+  <div class="invoice-input-wrap">
+    <input 
+      type="text" 
+      placeholder="Masukkan nomor invoice (contoh: INV20241201001)"
+    >
+    <button>
+      🔍 Cek
+    </button>
+  </div>
+  </div>
+
+</section>
+
+<script>
+const sheetID = "1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08";
+const sheetName = "invoice_id";
+const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
+
+const input = document.querySelector(".invoice-input-wrap input");
+const button = document.querySelector(".invoice-input-wrap button");
+
+button.addEventListener("click", checkInvoice);
+
+async function checkInvoice() {
+  const invoiceValue = input.value.trim();
+
+  if (!invoiceValue) {
+    alert("Masukkan nomor invoice dulu.");
+    return;
+  }
+
+  try {
+    const res = await fetch(url);
+    const text = await res.text();
+    const json = JSON.parse(text.substr(47).slice(0, -2));
+    const rows = json.table.rows;
+
+    const invoiceList = rows.map(row => String(row.c[0]?.v));
+
+if (invoiceList.includes(String(invoiceValue))) {
+      window.location.href = `status-pesanan.html?inv=${invoiceValue}`;
+    } else {
+      alert("Invoice tidak ditemukan ❌");
+    }
+
+  } catch (err) {
+    console.error(err);
+    alert("Terjadi kesalahan mengambil data.");
+  }
+}
   
+</script>
+
 </body>
 </html>
 
