@@ -288,19 +288,19 @@ document.querySelectorAll(".nav-dropdown a").forEach(link => {
 <!-- HERO -->
 <div class="package-hero">
   <h1>Cek Transaksi</h1>
-  <p>Lacak semua transaksi dan pembayaran dan detail pesanan</p>
+<p>Lihat semua riwayat pembelian Anda</p>
 </div>
 
 <!-- GLASS CONTAINER -->
 <div class="invoice-box">
 
-  <h2>Masukan Nomor Whatsapp Anda</h2>
-  <p>Lacak semua transaksi dan detail pesanan</p>
+  <h2>Masukan Nomor Anda</h2>
+<p>Lihat semua transaksi berdasarkan nomor pembelian</p>
 
   <div class="transaksi-input-wrap">
     <input 
       type="text" 
-      placeholder="Masukkan nomor transaksi (contoh: 085881500868)"
+      placeholder="Masukkan nomor HP (contoh: 8588xxxxxxx)"
     >
     <button>
       🔍 Cek
@@ -312,35 +312,59 @@ document.querySelectorAll(".nav-dropdown a").forEach(link => {
 
 <script>
 const sheetID = "1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08";
-const sheetName = "invoice_id";
-const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
+
+const buyerSheet = "buyer_id";
+const warrantySheet = "WARRANTY_DATA";
+
+const buyerURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${buyerSheet}`;
+const warrantyURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${warrantySheet}`;
 
 const input = document.querySelector(".invoice-input-wrap input");
 const button = document.querySelector(".invoice-input-wrap button");
 
-button.addEventListener("click", checkInvoice);
+button.addEventListener("click", checkTransaction);
 
-async function checkInvoice() {
-  const invoiceValue = input.value.trim();
+async function checkTransaction() {
+  const buyerInput = input.value.trim();
 
-  if (!invoiceValue) {
-    alert("Masukkan nomor invoice dulu.");
+  if (!buyerInput) {
+    alert("Masukkan nomor HP dulu.");
     return;
   }
 
   try {
-    const res = await fetch(url);
-    const text = await res.text();
-    const json = JSON.parse(text.substr(47).slice(0, -2));
-    const rows = json.table.rows;
 
-    const invoiceList = rows.map(row => String(row.c[0]?.v));
+    // 🔹 FETCH BUYER_ID
+    const resBuyer = await fetch(buyerURL);
+    const textBuyer = await resBuyer.text();
+    const jsonBuyer = JSON.parse(textBuyer.substr(47).slice(0, -2));
+    const rowsBuyer = jsonBuyer.table.rows;
 
-if (invoiceList.includes(String(invoiceValue))) {
-      window.location.href = `status-pesanan.html?inv=${invoiceValue}`;
-    } else {
-      alert("Invoice tidak ditemukan ❌");
+    const buyerList = rowsBuyer.map(row => String(row.c[0]?.v));
+
+    if (!buyerList.includes(buyerInput)) {
+      alert("Nomor tidak ditemukan ❌");
+      return;
     }
+
+    // 🔹 FETCH WARRANTY_DATA
+    const resWarranty = await fetch(warrantyURL);
+    const textWarranty = await resWarranty.text();
+    const jsonWarranty = JSON.parse(textWarranty.substr(47).slice(0, -2));
+    const rowsWarranty = jsonWarranty.table.rows;
+
+    // buyer_contact ada di kolom ke-8 (index 7)
+    const transactions = rowsWarranty.filter(row =>
+      String(row.c[7]?.v) === buyerInput
+    );
+
+    if (transactions.length === 0) {
+      alert("Belum ada transaksi untuk nomor ini.");
+      return;
+    }
+
+    // Redirect ke halaman transaksi
+    window.location.href = `semua-transaksi.html?buyer=${buyerInput}`;
 
   } catch (err) {
     console.error(err);
