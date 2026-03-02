@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+
+<style>
+body {
+  overflow-x: hidden;
+  background: #0b0b0f;
+  );
+}
+   
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* HERO tetap ungu */
+.package-hero {
+  width: 100%;
+  min-height: 260px;
+   
+  background: linear-gradient(
+    135deg,
+    #493d84,
+    #6d28d9
+  );
+  padding: 72px 20px 44px;
+  text-align: center;
+}
+
+.package-hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(42px, 6vw, 96px);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 14px;
+  color: #ffffff;
+  text-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+
+.package-hero p {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  color: rgba(255,255,255,0.85);
+}
+
+  
+</style>
+</head>
+<div id="navbar-placeholder"></div>
+
+<script>
+fetch("navbar.html")
+  .then(res => res.text())
+  .then(data => {
+    document.getElementById("navbar-placeholder").innerHTML = data;
+
+    const navbar = document.querySelector(".main-navbar");
+    const toggle = document.getElementById("navToggle");
+    const dropdown = document.getElementById("navDropdown");
+
+    // TOGGLE
+    toggle.addEventListener("click", function (e) {
+  e.stopPropagation();
+  dropdown.classList.toggle("open");
+  toggle.classList.toggle("active"); // ← TAMBAHAN INI
+});
+
+    document.addEventListener("click", function (e) {
+  if (!dropdown.contains(e.target) && !toggle.contains(e.target)) {
+    dropdown.classList.remove("open");
+    toggle.classList.remove("active"); // ← TAMBAHAN INI
+  }
+});
+
+   // ===== ACTIVE LINK AUTO DETECT =====
+const currentPage = window.location.pathname.split("/").pop() || "index.html";
+
+document.querySelectorAll(".nav-dropdown a").forEach(link => {
+  const linkPage = link.getAttribute("href");
+
+  if (linkPage === currentPage) {
+    link.classList.add("active");
+  }
+});
+
+    // SCROLL EFFECT
+    window.addEventListener("scroll", function () {
+      navbar.classList.toggle("scrolled", window.scrollY > 30);
+    });
+  });
+</script>
+<body>
+
+<section class="invoice-wrapper">
+<!-- HERO -->
+<div class="package-hero">
+  <h1>Semua Transaksi</h1>
+<p>Semua riwayat pembelian Anda</p>
+</div>
+
+
+</body>
+</html>
+
+
