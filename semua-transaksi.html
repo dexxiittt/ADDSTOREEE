@@ -226,8 +226,11 @@ wrapper.innerHTML="";
 data.forEach(item=>{
 
 const now=new Date();
-const endDate=new Date(item.valid_until);
-
+  
+const activatedDate = new Date(item.activated_at);
+const endDate = new Date(activatedDate);
+endDate.setDate(activatedDate.getDate() + Number(item.valid_until));
+  
 const isActive=endDate>now;
 
 const statusPaket=isActive?
