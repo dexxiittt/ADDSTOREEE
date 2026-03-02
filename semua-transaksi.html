@@ -254,6 +254,15 @@ result.push(rowData);
 render(result);
 });
 
+function parseIndoDate(dateStr){
+  if(!dateStr) return null;
+
+  const [datePart,timePart] = dateStr.split(" ");
+  const [day,month,year] = datePart.split("/");
+
+  return new Date(year, month-1, day);
+}
+  
 function render(data){
 
 const wrapper=document.getElementById("wrapper");
@@ -270,11 +279,16 @@ data.forEach(item=>{
 
 const now=new Date();
   
-const activatedDate = new Date(item.activated_at);
-const endDate = new Date(activatedDate);
-endDate.setDate(activatedDate.getDate() + Number(item.valid_until));
+const activatedDate = parseIndoDate(item.activated_at);
+
+let endDate = null;
+
+if(activatedDate){
+  endDate = new Date(activatedDate);
+  endDate.setDate(activatedDate.getDate() + Number(item.valid_until));
+}
   
-const isActive=endDate>now;
+const isActive = endDate && endDate > now;
 
 const statusPaket=isActive?
 `<span class="status-active">🟢 Paket Aktif</span>`:
@@ -284,7 +298,13 @@ const statusGaransi=isActive?
 `<span class="status-active">🟢 Garansi Aktif</span>`:
 `<span class="status-expired">🔴 Garansi Berakhir</span>`;
 
-const activated=new Date(item.activated_at).toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"});
+const activated = activatedDate
+? activatedDate.toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"})
+: "Invalid Date";
+
+const expired = endDate
+? endDate.toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"})
+: "Invalid Date";
 const expired=endDate.toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"});
 
 wrapper.innerHTML+=`
