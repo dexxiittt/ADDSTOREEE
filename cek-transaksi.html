@@ -371,6 +371,14 @@ async function checkTransaction() {
     alert("Terjadi kesalahan mengambil data.");
   }
 }
+
+button.addEventListener("click", checkTransaction);
+
+input.addEventListener("keypress", function(e){
+  if(e.key === "Enter"){
+    checkTransaction();
+  }
+});
   
 </script>
 
