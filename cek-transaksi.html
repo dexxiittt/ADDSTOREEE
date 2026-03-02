@@ -322,48 +322,48 @@ const warrantyURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?t
 const input = document.querySelector(".invoice-input-wrap input");
 const button = document.querySelector(".invoice-input-wrap button");
 
-button.addEventListener("click", checkTransaction);
+function normalizeNumber(num) {
+  num = num.replace(/\D/g, ""); // hapus selain angka
+
+  if (num.startsWith("62")) {
+    num = num.substring(2);
+  }
+
+  if (num.startsWith("0")) {
+    num = num.substring(1);
+  }
+
+  return num;
+}
 
 async function checkTransaction() {
-  const buyerInput = input.value.trim();
+  const buyerInputRaw = input.value.trim();
 
-  if (!buyerInput) {
+  if (!buyerInputRaw) {
     alert("Masukkan nomor HP dulu.");
     return;
   }
 
+  const buyerInput = normalizeNumber(buyerInputRaw);
+
   try {
 
-    // 🔹 FETCH BUYER_ID
-    const resBuyer = await fetch(buyerURL);
-    const textBuyer = await resBuyer.text();
-    const jsonBuyer = JSON.parse(textBuyer.substr(47).slice(0, -2));
-    const rowsBuyer = jsonBuyer.table.rows;
-
-    const buyerList = rowsBuyer.map(row => String(row.c[0]?.v));
-
-    if (!buyerList.includes(buyerInput)) {
-      alert("Nomor tidak ditemukan ❌");
-      return;
-    }
-
-    // 🔹 FETCH WARRANTY_DATA
+    // 🔹 FETCH WARRANTY_DATA SAJA (buyer_id gak perlu lagi)
     const resWarranty = await fetch(warrantyURL);
     const textWarranty = await resWarranty.text();
     const jsonWarranty = JSON.parse(textWarranty.substr(47).slice(0, -2));
     const rowsWarranty = jsonWarranty.table.rows;
 
-    // buyer_contact ada di kolom ke-8 (index 7)
-    const transactions = rowsWarranty.filter(row =>
-      String(row.c[7]?.v) === buyerInput
-    );
+    const transactions = rowsWarranty.filter(row => {
+      const sheetNumber = normalizeNumber(String(row.c[8]?.v || ""));
+      return sheetNumber === buyerInput;
+    });
 
     if (transactions.length === 0) {
       alert("Belum ada transaksi untuk nomor ini.");
       return;
     }
 
-    // Redirect ke halaman transaksi
     window.location.href = `semua-transaksi.html?buyer=${buyerInput}`;
 
   } catch (err) {
