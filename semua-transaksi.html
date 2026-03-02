@@ -255,12 +255,21 @@ render(result);
 });
 
 function parseIndoDate(dateStr){
-  if(!dateStr) return null;
+  if(!dateStr || typeof dateStr !== "string") return null;
 
-  const [datePart,timePart] = dateStr.split(" ");
-  const [day,month,year] = datePart.split("/");
+  const parts = dateStr.split(" ");
+  if(!parts[0]) return null;
 
-  return new Date(year, month-1, day);
+  const dateParts = parts[0].split("/");
+  if(dateParts.length !== 3) return null;
+
+  const day = parseInt(dateParts[0]);
+  const month = parseInt(dateParts[1]) - 1;
+  const year = parseInt(dateParts[2]);
+
+  if(isNaN(day) || isNaN(month) || isNaN(year)) return null;
+
+  return new Date(year, month, day);
 }
   
 function render(data){
@@ -283,12 +292,12 @@ const activatedDate = parseIndoDate(item.activated_at);
 
 let endDate = null;
 
-if(activatedDate){
+if(activatedDate && item.valid_until){
   endDate = new Date(activatedDate);
   endDate.setDate(activatedDate.getDate() + Number(item.valid_until));
 }
   
-const isActive = endDate && endDate > now;
+const isActive = endDate ? endDate > now : false;
 
 const statusPaket=isActive?
 `<span class="status-active">🟢 Paket Aktif</span>`:
