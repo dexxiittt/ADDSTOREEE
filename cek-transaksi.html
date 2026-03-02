@@ -355,7 +355,7 @@ async function checkTransaction() {
     const rowsWarranty = jsonWarranty.table.rows;
 
     const transactions = rowsWarranty.filter(row => {
-      const sheetNumber = normalizeNumber(String(row.c[9]?.v || ""));
+      const sheetNumber = normalizeNumber(String(row.c[8]?.v || ""));
       return sheetNumber === buyerInput;
     });
 
