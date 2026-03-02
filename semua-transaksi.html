@@ -227,7 +227,7 @@ fetch(sheetURL)
 .then(text=>{
 const json=JSON.parse(text.substr(47).slice(0,-2));
 const rows=json.table.rows;
-const headers=json.table.cols.map(c=>c.label);
+const headers=json.table.cols.map(c=>c.label || c.id);
 
 let result=[];
 
@@ -350,6 +350,11 @@ ${item.notes || "Masa garansi telah berakhir. Jika ingin melanjutkan layanan hub
 });
 }
 
+.catch(err=>{
+  console.error(err);
+  document.getElementById("wrapper").innerHTML =
+  "<p style='text-align:center;color:red;'>Terjadi error saat memuat data.</p>";
+});
 </script>
 
 </body>
