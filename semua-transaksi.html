@@ -271,10 +271,13 @@ data.forEach(item=>{
 const now=new Date();
   
 const activatedDate = new Date(item.activated_at);
-const endDate = new Date(activatedDate);
-endDate.setDate(activatedDate.getDate() + Number(item.valid_until));
-  
-const isActive=endDate>now;
+
+// valid_until = jumlah hari
+const durationDays = Number(item.valid_until) || 0;
+
+const endDate = new Date(activatedDate.getTime() + durationDays * 24 * 60 * 60 * 1000);
+
+const isActive = now <= endDate;
 
 const statusPaket=isActive?
 `<span class="status-active">🟢 Paket Aktif</span>`:
