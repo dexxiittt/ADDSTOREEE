@@ -974,15 +974,32 @@ if (status.toLowerCase() !== "active") {
     return;
   }
 
-// Total detik = durationDays * 24 jam
+// ===============================
+// HITUNG EXPIRY (AMAN & FIX)
+// ===============================
+
+let activatedDate = parseIndoDate(activated_at);
+
+if (!activatedDate || isNaN(activatedDate.getTime())) {
+  console.log("Gagal parse activated_at:", activated_at);
+  return;
+}
+
 let expiryDate;
 
 if (!isNaN(rowData.valid_until)) {
   const daysToAdd = Number(rowData.valid_until) || 0;
+
   expiryDate = new Date(activatedDate);
   expiryDate.setDate(expiryDate.getDate() + daysToAdd);
+
 } else {
   expiryDate = parseIndoDate(rowData.valid_until);
+}
+
+if (!expiryDate || isNaN(expiryDate.getTime())) {
+  console.log("Gagal parse expiryDate");
+  return;
 }
 
   
@@ -998,32 +1015,28 @@ async function startCountdown() {
       serverNow.getTime() + (Date.now() - clientStartTime)
     );
 
-const diff = expiryDate.getTime() - now.getTime();
+    const diff = expiryDate.getTime() - now.getTime();
 
     if (diff <= 0) {
-
-  countdownTimer.innerHTML = "";
-  statusText.innerHTML = "Expired";
-  statusText.style.color = "#ef4444";
-
-  if (!document.querySelector(".status-badge-expired")) {
-    const badge = document.createElement("div");
-    badge.className = "status-badge-expired";
-    badge.innerText = "EXPIRED";
-    statusText.parentNode.appendChild(badge);
-  }
-
-  return;
-}
+      countdownTimer.innerHTML = "";
+      statusText.innerHTML = "Expired";
+      statusText.style.color = "#ef4444";
+      return;
+    }
 
     const days = Math.floor(diff / 86400000);
     const hours = Math.floor((diff % 86400000) / 3600000);
     const minutes = Math.floor((diff % 3600000) / 60000);
     const seconds = Math.floor((diff % 60000) / 1000);
-    
-    countdownTimer.innerHTML =
-      `${days} Hari ${hours.toString().padStart(2,"0")}:${minutes.toString().padStart(2,"0")}:${seconds.toString().padStart(2,"0")}`;
 
+    countdownTimer.innerHTML =
+      `${days} Hari ${hours.toString().padStart(2,"0")}:${minutes
+        .toString().padStart(2,"0")}:${seconds
+        .toString().padStart(2,"0")}`;
+  }
+
+
+  
     // PREMIUM BEHAVIOUR COLOR SYSTEM
 if (days > 7) {
   statusText.style.color = "#22c55e"; // Hijau
