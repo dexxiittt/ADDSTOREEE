@@ -254,6 +254,27 @@ result.push(rowData);
 render(result);
 });
 
+
+const activatedDate = parseIndoDate(item.activated_at);
+  
+function parseIndoDate(dateString) {
+  if (!dateString) return null;
+
+  const [datePart, timePart] = dateString.split(" ");
+  const [day, month, year] = datePart.split("/");
+  const [hour="0", minute="0", second="0"] = (timePart || "").split(":");
+
+  return new Date(
+    Number(year),
+    Number(month) - 1,
+    Number(day),
+    Number(hour),
+    Number(minute),
+    Number(second)
+  );
+}
+
+  
 function render(data){
 
 const wrapper=document.getElementById("wrapper");
@@ -269,8 +290,6 @@ wrapper.innerHTML="";
 data.forEach(item=>{
 
 const now=new Date();
-  
-const activatedDate = new Date(item.activated_at);
 
 // valid_until = jumlah hari
 const durationDays = Number(item.valid_until) || 0;
