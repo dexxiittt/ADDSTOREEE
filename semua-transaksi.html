@@ -313,12 +313,19 @@ const activatedDate = parseIndoDate(item["activated_at"]);
 
 if(!activatedDate) return;
 
-// valid_until = jumlah hari
-const durationDays = Number(item.valid_until) || 0;
+let endDate;
 
-const endDate = new Date(
-  activatedDate.getTime() + durationDays * 24 * 60 * 60 * 1000
-);
+// Kalau valid_until adalah angka (durasi)
+if (!isNaN(item.valid_until)) {
+  const durationDays = Number(item.valid_until) || 0;
+  endDate = new Date(
+    activatedDate.getTime() + durationDays * 24 * 60 * 60 * 1000
+  );
+}
+// Kalau valid_until adalah tanggal
+else {
+  endDate = parseIndoDate(item.valid_until);
+}
 
 const isActive = now <= endDate;
 
