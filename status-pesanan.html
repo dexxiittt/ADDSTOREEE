@@ -975,8 +975,15 @@ if (status.toLowerCase() !== "active") {
   }
 
 // Total detik = durationDays * 24 jam
-const expiryDate = new Date(activatedDate);
-expiryDate.setDate(expiryDate.getDate() + durationDays);
+let expiryDate;
+
+if (!isNaN(rowData.valid_until)) {
+  const daysToAdd = Number(rowData.valid_until) || 0;
+  expiryDate = new Date(activatedDate);
+  expiryDate.setDate(expiryDate.getDate() + daysToAdd);
+} else {
+  expiryDate = parseIndoDate(rowData.valid_until);
+}
 
   
 
