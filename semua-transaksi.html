@@ -255,26 +255,6 @@ render(result);
 });
 
 
-const activatedDate = parseIndoDate(item.activated_at);
-  
-function parseIndoDate(dateString) {
-  if (!dateString) return null;
-
-  const [datePart, timePart] = dateString.split(" ");
-  const [day, month, year] = datePart.split("/");
-  const [hour="0", minute="0", second="0"] = (timePart || "").split(":");
-
-  return new Date(
-    Number(year),
-    Number(month) - 1,
-    Number(day),
-    Number(hour),
-    Number(minute),
-    Number(second)
-  );
-}
-
-  
 function render(data){
 
 const wrapper=document.getElementById("wrapper");
@@ -291,10 +271,17 @@ data.forEach(item=>{
 
 const now=new Date();
 
+// 🔥 TAMBAHKAN INI DI SINI
+const activatedDate = parseIndoDate(item.activated_at);
+
+if(!activatedDate) return;
+
 // valid_until = jumlah hari
 const durationDays = Number(item.valid_until) || 0;
 
-const endDate = new Date(activatedDate.getTime() + durationDays * 24 * 60 * 60 * 1000);
+const endDate = new Date(
+  activatedDate.getTime() + durationDays * 24 * 60 * 60 * 1000
+);
 
 const isActive = now <= endDate;
 
@@ -306,15 +293,12 @@ const statusGaransi=isActive?
 `<span class="status-active">🟢 Garansi Aktif</span>`:
 `<span class="status-expired">🔴 Garansi Berakhir</span>`;
 
-const activated=new Date(item.activated_at).toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"});
+const activated=activatedDate.toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"});
 const expired=endDate.toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"});
 
 wrapper.innerHTML+=`
-
 <div class="transaksi-card">
-
 <img src="${item.image_url}" alt="">
-
 <h3>${item.title}</h3>
 
 <div class="status-row">
