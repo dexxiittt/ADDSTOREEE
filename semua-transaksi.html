@@ -255,6 +255,24 @@ render(result);
 });
 
 
+// 🔥 TAMBAHKAN INI DI SINI
+function parseIndoDate(dateString) {
+  if (!dateString) return null;
+
+  const [datePart, timePart] = dateString.split(" ");
+  const [day, month, year] = datePart.split("/");
+  const [hour="0", minute="0", second="0"] = (timePart || "").split(":");
+
+  return new Date(
+    Number(year),
+    Number(month) - 1,
+    Number(day),
+    Number(hour),
+    Number(minute),
+    Number(second)
+  );
+}
+  
 function render(data){
 
 const wrapper=document.getElementById("wrapper");
@@ -272,7 +290,7 @@ data.forEach(item=>{
 const now=new Date();
 
 // 🔥 TAMBAHKAN INI DI SINI
-const activatedDate = parseIndoDate(item.activated_at);
+const activatedDate = parseIndoDate(item["activated_at"]);
 
 if(!activatedDate) return;
 
