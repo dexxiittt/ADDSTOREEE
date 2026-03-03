@@ -256,21 +256,40 @@ render(result);
 
 
 // 🔥 TAMBAHKAN INI DI SINI
-function parseIndoDate(dateString) {
-  if (!dateString) return null;
+function parseIndoDate(value) {
+  if (!value) return null;
 
-  const [datePart, timePart] = dateString.split(" ");
-  const [day, month, year] = datePart.split("/");
-  const [hour="0", minute="0", second="0"] = (timePart || "").split(":");
+  // Kalau format dari Google = Date(2026,1,28,14,43,0)
+  if (typeof value === "string" && value.startsWith("Date(")) {
+    const parts = value.match(/\d+/g);
+    return new Date(
+      Number(parts[0]),
+      Number(parts[1]),
+      Number(parts[2]),
+      Number(parts[3] || 0),
+      Number(parts[4] || 0),
+      Number(parts[5] || 0)
+    );
+  }
 
-  return new Date(
-    Number(year),
-    Number(month) - 1,
-    Number(day),
-    Number(hour),
-    Number(minute),
-    Number(second)
-  );
+  // Kalau format normal 28/02/2026 14:43:00
+  if (typeof value === "string" && value.includes("/")) {
+    const [datePart, timePart] = value.split(" ");
+    const [day, month, year] = datePart.split("/");
+    const [hour="0", minute="0", second="0"] = (timePart || "").split(":");
+
+    return new Date(
+      Number(year),
+      Number(month) - 1,
+      Number(day),
+      Number(hour),
+      Number(minute),
+      Number(second)
+    );
+  }
+
+  // fallback
+  return new Date(value);
 }
   
 function render(data){
