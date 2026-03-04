@@ -46,18 +46,55 @@ body{
   padding:0 20px;
 }
 
-/* CLEAN GLASS CARD */
+/* TRANSAKSI CARD */
+
 .transaksi-card{
-  background:linear-gradient(
-    180deg,
-    rgba(255,255,255,0.08),
-    rgba(255,255,255,0.04)
-  );
-  backdrop-filter:blur(18px);
-  border-radius:24px;
-  padding:26px;
-  margin-bottom:28px;
-  box-shadow:0 30px 80px rgba(0,0,0,.55);
+position:relative;
+overflow:hidden;
+
+border-radius:14px;
+
+background:rgba(255,255,255,0.03);
+border:1px solid rgba(255,255,255,0.06);
+
+box-shadow:
+0 8px 30px rgba(0,0,0,0.35),
+inset 0 1px 0 rgba(255,255,255,0.04);
+
+transition:
+transform .25s ease,
+box-shadow .25s ease,
+border .25s ease;
+}
+
+.transaksi-card:hover{
+
+transform:translateY(-6px);
+
+border:1px solid rgba(255,255,255,0.12);
+
+box-shadow:
+0 18px 45px rgba(0,0,0,0.45),
+0 0 0 1px rgba(255,255,255,0.04),
+inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+.transaksi-card:before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+right:0;
+height:1px;
+
+background:linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,0.35),
+transparent
+);
+
+opacity:.2;
 }
 
 /* IMAGE */
@@ -246,6 +283,10 @@ color:#7dffb2;
 
 .note-expired{
 color:#ff8a8a;
+}
+
+.transaksi-card:active{
+transform:scale(.98);
 }
   
 </style>
