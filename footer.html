@@ -177,18 +177,53 @@ pointer-events:none;
 
 .footer-menu a,
 .footer-service a{
-  display:block;
-  text-decoration:none;
-  color:#94a3b8;
-  margin:6px 0;
-  font-size:14px;
-  transition:.2s;
+
+display:inline-block;
+position:relative;
+
+text-decoration:none;
+color:#94a3b8;
+
+margin:6px 0;
+font-size:14px;
+
+transition:color .25s ease;
+
+}
+
+.footer-menu a::after,
+.footer-service a::after{
+
+content:"";
+position:absolute;
+
+left:0;
+bottom:-3px;
+
+width:0%;
+height:2px;
+
+background:linear-gradient(
+90deg,
+#7c3aed,
+#a855f7
+);
+
+transition:width .35s ease;
+
 }
 
 .footer-menu a:hover,
 .footer-service a:hover{
   color:#fff;
   transform:translateX(4px);
+}
+
+.footer-menu a:hover::after,
+.footer-service a:hover::after{
+
+width:100%;
+
 }
 
 .footer-social{
