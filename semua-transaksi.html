@@ -141,33 +141,73 @@ body{
   background:#15803d;
 }
 
-/* NOTE BOX */
+/* GLASS NOTE BOX */
 
 .note{
 margin-top:12px;
-padding:12px 14px;
-border-radius:10px;
+padding:14px 16px;
+border-radius:12px;
 font-size:13px;
-line-height:1.5;
-transition:all .3s ease;
+line-height:1.6;
+position:relative;
+
+/* glass effect */
+background:rgba(255,255,255,0.04);
+backdrop-filter:blur(8px);
+-webkit-backdrop-filter:blur(8px);
+
+/* border glass */
+border:1px solid rgba(255,255,255,0.08);
+
+/* smooth shadow */
+box-shadow:
+0 6px 20px rgba(0,0,0,0.35),
+inset 0 1px 0 rgba(255,255,255,0.05);
+
+transition:all .25s ease;
 }
 
+  
 /* ACTIVE */
 
 .note-active{
-background:linear-gradient(135deg,#0f2d1d,#0b1f14);
-border:1px solid rgba(0,255,140,.35);
-color:#8affc5;
-box-shadow:0 0 12px rgba(0,255,140,.15);
+border:1px solid rgba(0,255,150,0.25);
+color:#7dffb2;
+
+box-shadow:
+0 0 0 1px rgba(0,255,150,0.05),
+0 10px 25px rgba(0,255,150,0.08),
+inset 0 1px 0 rgba(255,255,255,0.05);
 }
 
 /* EXPIRED */
 
 .note-expired{
-background:linear-gradient(135deg,#2b0f0f,#1a0909);
-border:1px solid rgba(255,80,80,.35);
-color:#ff9c9c;
-box-shadow:0 0 12px rgba(255,80,80,.15);
+border:1px solid rgba(255,90,90,0.25);
+color:#ff9a9a;
+
+box-shadow:
+0 0 0 1px rgba(255,90,90,0.05),
+0 10px 25px rgba(255,90,90,0.08),
+inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+.note:before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+right:0;
+height:1px;
+
+background:linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,0.35),
+transparent
+);
+
+opacity:.25;
 }
 
 /* ICON NOTE */
