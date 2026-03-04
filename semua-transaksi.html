@@ -140,6 +140,35 @@ body{
 .btn-wa:hover{
   background:#15803d;
 }
+
+/* NOTE BOX */
+
+.note{
+margin-top:12px;
+padding:12px 14px;
+border-radius:10px;
+font-size:13px;
+line-height:1.5;
+transition:all .3s ease;
+}
+
+/* ACTIVE */
+
+.note-active{
+background:linear-gradient(135deg,#0f2d1d,#0b1f14);
+border:1px solid rgba(0,255,140,.35);
+color:#8affc5;
+box-shadow:0 0 12px rgba(0,255,140,.15);
+}
+
+/* EXPIRED */
+
+.note-expired{
+background:linear-gradient(135deg,#2b0f0f,#1a0909);
+border:1px solid rgba(255,80,80,.35);
+color:#ff9c9c;
+box-shadow:0 0 12px rgba(255,80,80,.15);
+}
   
 </style>
 </head>
@@ -337,6 +366,23 @@ const statusGaransi=isActive?
 `<span class="status-active">🟢 Garansi Aktif</span>`:
 `<span class="status-expired">🔴 Garansi Berakhir</span>`;
 
+let autoNote;
+let noteClass;
+
+if(isActive){
+  noteClass = "note-active";
+  autoNote = `
+  Paket dan Garansi telah aktif.<br>
+  Layanan dalam cakupan garansi.
+  `;
+}else{
+  noteClass = "note-expired";
+  autoNote = `
+  Paket dan Garansi telah berakhir.<br>
+  Layanan tidak lagi termasuk dalam cakupan garansi.
+  `;
+}
+
 const activated=activatedDate.toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"});
 const expired=endDate.toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"});
 
@@ -357,8 +403,8 @@ Aktivasi: ${activated}<br>
 Berakhir: ${expired}
 </div>
 
-<div class="note">
-${item.notes || "Masa garansi telah berakhir. Jika ingin melanjutkan layanan hubungi admin untuk pembelian ulang."}
+<div class="note ${noteClass}">
+${autoNote}
 </div>
 
 <div class="button-group">
