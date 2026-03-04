@@ -56,17 +56,23 @@ margin-bottom:28px;
 
 border-radius:24px;
 
+display:flex;
+flex-direction:column;
+gap:12px;
+
 background:rgba(255,255,255,0.03);
 border:1px solid rgba(255,255,255,0.06);
 
 box-shadow:
-0 8px 30px rgba(0,0,0,0.35),
-inset 0 1px 0 rgba(255,255,255,0.04);
+0 10px 30px rgba(0,0,0,0.35),
+inset 0 1px 0 rgba(255,255,255,0.05);
 
 transition:
 transform .25s ease,
 box-shadow .25s ease,
 border .25s ease;
+
+transition:all .25s ease;
 }
 
 .transaksi-card:hover{
@@ -111,8 +117,14 @@ opacity:.2;
 /* TITLE */
 .transaksi-card h3{
   font-family:'Playfair Display',serif;
-  font-size:26px;
-  margin:0 0 18px;
+  font-size:16px;
+  font-weight:600;
+
+  letter-spacing:.2px;
+
+  margin:2px 0 2px 0;
+
+  color:#ffffff;
 }
 
 /* STATUS */
@@ -129,10 +141,12 @@ opacity:.2;
 
 /* DETAIL TEXT */
 .meta{
-  font-size:14px;
+  font-size:13px;
   line-height:1.6;
   opacity:.85;
   margin-bottom:16px;
+
+  color:rgba(255,255,255,0.65);
 }
 
 .note{
@@ -147,37 +161,49 @@ opacity:.2;
 /* BUTTONS */
 .button-group{
   display:flex;
-  gap:12px;
+  gap:10px;
   flex-wrap:wrap;
+  margin-top:4px;
 }
 
 .btn{
   flex:1;
   min-width:160px;
   text-align:center;
-  padding:12px 18px;
-  border-radius:14px;
-  font-weight:600;
+  padding:9px 14px;
+  border-radius:8px;
+  font-size:13px;
+  font-weight:500;
   text-decoration:none;
-  transition:.25s;
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  
+  transition:all .2s ease;
+
+  border:1px solid rgba(255,255,255,0.08);
 }
 
 .btn-detail{
-  background:#6d28d9;
-  color:white;
+  background:rgba(255,255,255,0.05);
+color:#ffffff;
 }
 
 .btn-detail:hover{
-  background:#7c3aed;
+  background:rgba(255,255,255,0.08);
+transform:translateY(-1px);
 }
 
 .btn-wa{
-  background:#16a34a;
-  color:white;
+  background:#25D366;
+color:#fff;
+border:none;
 }
 
 .btn-wa:hover{
-  background:#15803d;
+  background:#1ebe5d;
+transform:translateY(-1px);
 }
 
 /* GLASS NOTE BOX */
