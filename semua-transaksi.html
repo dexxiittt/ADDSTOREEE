@@ -169,6 +169,26 @@ border:1px solid rgba(255,80,80,.35);
 color:#ff9c9c;
 box-shadow:0 0 12px rgba(255,80,80,.15);
 }
+
+/* ICON NOTE */
+
+.note-icon{
+display:inline-block;
+margin-right:6px;
+font-size:14px;
+font-weight:600;
+vertical-align:middle;
+}
+
+.note-active .note-icon{
+color:#3cff9c;
+}
+
+.note-expired .note-icon{
+color:#ff6b6b;
+}
+
+
   
 </style>
 </head>
@@ -372,15 +392,17 @@ let noteClass;
 if(isActive){
   noteClass = "note-active";
   autoNote = `
+  <span class="note-icon">✔</span>
   Paket dan Garansi telah aktif.<br>
   Layanan dalam cakupan garansi.
   `;
 }else{
   noteClass = "note-expired";
   autoNote = `
+  <span class="note-icon">⚠</span>
   Paket dan Garansi telah berakhir.<br>
   Layanan tidak lagi termasuk dalam cakupan garansi. <br>
-  Jika ingin melanjutkan layanan hubungi admin untuk pembelian ulang. 
+  Jika ingin melanjutkan layanan hubungi admin untuk pembelian ulang.
   `;
 }
 
