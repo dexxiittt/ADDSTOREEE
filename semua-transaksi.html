@@ -156,6 +156,37 @@ transparent
 opacity:.2;
 }
 
+/* CARD SHIMMER EFFECT */
+
+.transaksi-card::after{
+
+content:"";
+
+position:absolute;
+top:0;
+left:-120%;
+
+width:120%;
+height:100%;
+
+background:linear-gradient(
+120deg,
+transparent 20%,
+rgba(255,255,255,0.15),
+transparent 80%
+);
+
+transform:skewX(-20deg);
+
+transition:left .6s ease;
+}
+
+.transaksi-card:hover::after{
+
+left:130%;
+
+}
+
 /* IMAGE */
 .transaksi-card img{
   width:100%;
