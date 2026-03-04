@@ -287,6 +287,57 @@ color:#7dffb2;
 color:#ff8a8a;
 }
 
+/* STATUS ROW */
+
+.status-row{
+display:flex;
+gap:10px;
+margin-top:6px;
+margin-bottom:8px;
+flex-wrap:wrap;
+}
+
+/* STATUS TEXT */
+
+.status-active,
+.status-expired{
+display:inline-flex;
+align-items:center;
+gap:6px;
+font-size:13px;
+font-weight:500;
+}
+
+/* STATUS DOT */
+
+.status-dot{
+width:8px;
+height:8px;
+border-radius:50%;
+display:inline-block;
+position:relative;
+}
+
+/* ACTIVE DOT */
+
+.status-active .status-dot{
+background:#34ff9b;
+
+box-shadow:
+0 0 6px rgba(52,255,155,.8),
+0 0 12px rgba(52,255,155,.5);
+}
+
+/* EXPIRED DOT */
+
+.status-expired .status-dot{
+background:#ff5c5c;
+
+box-shadow:
+0 0 6px rgba(255,92,92,.8),
+0 0 12px rgba(255,92,92,.5);
+}
+
 .transaksi-card:active{
 transform:scale(.98);
 }
@@ -480,12 +531,12 @@ else {
 const isActive = now <= endDate;
 
 const statusPaket=isActive?
-`<span class="status-active">🟢 Paket Aktif</span>`:
-`<span class="status-expired">🔴 Paket Berakhir</span>`;
+`<span class="status-active"><span class="status-dot"></span>Paket Aktif</span>`:
+`<span class="status-expired"><span class="status-dot"></span>Paket Berakhir</span>`;
 
 const statusGaransi=isActive?
-`<span class="status-active">🟢 Garansi Aktif</span>`:
-`<span class="status-expired">🔴 Garansi Berakhir</span>`;
+`<span class="status-active"><span class="status-dot"></span>Garansi Aktif</span>`:
+`<span class="status-expired"><span class="status-dot"></span>Garansi Berakhir</span>`;
 
 let autoNote;
 let noteClass;
