@@ -191,6 +191,29 @@ transition:color .25s ease;
 
 }
 
+.footer-menu a::before{
+content:"✦";
+margin-right:8px;
+font-size:12px;
+color:#a855f7;
+opacity:.9;
+}
+
+.footer-service a::before{
+content:"➜";
+margin-right:8px;
+font-size:12px;
+color:#c084fc;
+opacity:.85;
+}
+
+.footer-menu a,
+.footer-service a{
+display:flex;
+align-items:center;
+gap:6px;
+}
+
 .footer-menu a::after,
 .footer-service a::after{
 
@@ -223,6 +246,7 @@ transition:width .35s ease;
 .footer-service a:hover::after{
 
 width:100%;
+color:#d8b4fe;
 
 }
 
