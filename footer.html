@@ -51,6 +51,51 @@
   animation:footerGradient 6s linear infinite;
 }
 
+.footer-premium::after{
+
+content:"";
+position:absolute;
+
+width:600px;
+height:600px;
+
+background:radial-gradient(
+circle,
+rgba(168,85,247,0.25),
+rgba(168,85,247,0.08),
+transparent
+);
+
+top:-250px;
+left:-200px;
+
+pointer-events:none;
+filter:blur(60px);
+
+}
+
+.footer-premium .glow-right{
+
+position:absolute;
+
+width:500px;
+height:500px;
+
+background:radial-gradient(
+circle,
+rgba(124,58,237,0.25),
+transparent
+);
+
+bottom:-250px;
+right:-150px;
+
+filter:blur(80px);
+
+pointer-events:none;
+
+}
+
 .footer-container{
   width:100%;
   max-width:1200px;
@@ -246,6 +291,7 @@ background-position:0% 50%;
   
 
 <footer class="footer-premium">
+  <div class="glow-right"></div>
   <div class="footer-container">
 
     <div class="footer-brand">
