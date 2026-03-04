@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Semua Transaksi</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+  margin:0;
+  background:#0b0b0f;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  color:white;
+}
+
+/* HERO */
+.package-hero{
+  width:100%;
+  min-height:260px;
+  background:linear-gradient(135deg,#493d84,#6d28d9);
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+
+  text-align:center;
+  padding:20px;
+}
+
+.package-hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(42px,6vw,80px);
+  margin:0 0 14px;
+}
+
+.package-hero p{
+  opacity:.85;
+}
+
+/* WRAPPER */
+.transaksi-wrapper{
+  max-width:880px;
+  margin:30px auto 80px;
+  padding:0 20px;
+}
+
+/* CLEAN GLASS CARD */
+.transaksi-card{
+  background:linear-gradient(
+    180deg,
+    rgba(255,255,255,0.08),
+    rgba(255,255,255,0.04)
+  );
+  backdrop-filter:blur(18px);
+  border-radius:24px;
+  padding:26px;
+  margin-bottom:28px;
+  box-shadow:0 30px 80px rgba(0,0,0,.55);
+}
+
+/* IMAGE */
+.transaksi-card img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  border-radius:16px;
+  margin-bottom:18px;
+}
+
+/* TITLE */
+.transaksi-card h3{
+  font-family:'Playfair Display',serif;
+  font-size:26px;
+  margin:0 0 18px;
+}
+
+/* STATUS */
+.status-row{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  margin-bottom:16px;
+  font-weight:600;
+}
+
+.status-active{ color:#22c55e; }
+.status-expired{ color:#ef4444; }
+
+/* DETAIL TEXT */
+.meta{
+  font-size:14px;
+  line-height:1.6;
+  opacity:.85;
+  margin-bottom:16px;
+}
+
+.note{
+  font-size:14px;
+  margin:14px 0 18px;
+  padding:14px;
+  border-radius:14px;
+  background:rgba(255,255,255,0.05);
+  opacity:.85;
+}
+
+/* BUTTONS */
+.button-group{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.btn{
+  flex:1;
+  min-width:160px;
+  text-align:center;
+  padding:12px 18px;
+  border-radius:14px;
+  font-weight:600;
+  text-decoration:none;
+  transition:.25s;
+}
+
+.btn-detail{
+  background:#6d28d9;
+  color:white;
+}
+
+.btn-detail:hover{
+  background:#7c3aed;
+}
+
+.btn-wa{
+  background:#16a34a;
+  color:white;
+}
+
+.btn-wa:hover{
+  background:#15803d;
+}
+
+/* GLASS NOTE BOX */
+
+.note{
+margin-top:12px;
+padding:14px 16px;
+border-radius:12px;
+font-size:13px;
+line-height:1.6;
+position:relative;
+
+/* glass effect */
+background:rgba(255,255,255,0.04);
+backdrop-filter:blur(8px);
+-webkit-backdrop-filter:blur(8px);
+
+/* border glass */
+border:1px solid rgba(255,255,255,0.08);
+
+/* smooth shadow */
+box-shadow:
+0 6px 20px rgba(0,0,0,0.35),
+inset 0 1px 0 rgba(255,255,255,0.05);
+
+transition:all .25s ease;
+}
+
+  
+/* ACTIVE */
+
+.note-active{
+border:1px solid rgba(0,255,150,0.25);
+color:#7dffb2;
+
+box-shadow:
+0 0 0 1px rgba(0,255,150,0.05),
+0 10px 25px rgba(0,255,150,0.08),
+inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+/* EXPIRED */
+
+.note-expired{
+border:1px solid rgba(255,90,90,0.25);
+color:#ff9a9a;
+
+box-shadow:
+0 0 0 1px rgba(255,90,90,0.05),
+0 10px 25px rgba(255,90,90,0.08),
+inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+.note:before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+right:0;
+height:1px;
+
+background:linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,0.35),
+transparent
+);
+
+opacity:.25;
+}
+
+/* ICON NOTE */
+
+.note-icon{
+display:inline-block;
+margin-right:6px;
+font-size:14px;
+font-weight:600;
+vertical-align:middle;
+}
+
+.note-active .note-icon{
+color:#3cff9c;
+}
+
+.note-expired .note-icon{
+color:#ff6b6b;
+}
+
+.note-icon{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+margin-right:6px;
+vertical-align:middle;
+}
+
+.note-icon svg{
+display:block;
+}
+
+.note-active{
+color:#7dffb2;
+}
+
+.note-expired{
+color:#ff8a8a;
+}
+  
+</style>
+</head>
+
+<body>
+
+<div id="navbar-placeholder"></div>
+ 
+<script>
+fetch("navbar.html")
+  .then(res => res.text())
+  .then(data => {
+    document.getElementById("navbar-placeholder").innerHTML = data;
+
+    const navbar = document.querySelector(".main-navbar");
+    const toggle = document.getElementById("navToggle");
+    const dropdown = document.getElementById("navDropdown");
+
+    // TOGGLE
+    toggle.addEventListener("click", function (e) {
+  e.stopPropagation();
+  dropdown.classList.toggle("open");
+  toggle.classList.toggle("active"); // ← TAMBAHAN INI
+});
+
+    document.addEventListener("click", function (e) {
+  if (!dropdown.contains(e.target) && !toggle.contains(e.target)) {
+    dropdown.classList.remove("open");
+    toggle.classList.remove("active"); // ← TAMBAHAN INI
+  }
+});
+
+   // ===== ACTIVE LINK AUTO DETECT =====
+const currentPage = window.location.pathname.split("/").pop() || "index.html";
+
+document.querySelectorAll(".nav-dropdown a").forEach(link => {
+  const linkPage = link.getAttribute("href");
+
+  if (linkPage === currentPage) {
+    link.classList.add("active");
+  }
+});
+
+    // SCROLL EFFECT
+    window.addEventListener("scroll", function () {
+      navbar.classList.toggle("scrolled", window.scrollY > 30);
+    });
+  });
+</script>
+
+
+<div class="package-hero">
+  <h1>Semua Transaksi</h1>
+  <p>Semua riwayat pembelian Anda</p>
+</div>
+
+<div class="transaksi-wrapper" id="wrapper">
+  <p style="text-align:center;opacity:.6;">Memuat data...</p>
+</div>
+
+<script>
+
+/* ============================= */
+/* CONFIG SHEET */
+/* ============================= */
+
+const sheetID="1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08";
+const sheetName="WARRANTY_DATA";
+const sheetURL=`https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
+
+const params=new URLSearchParams(window.location.search);
+const buyer=params.get("buyer");
+
+if(!buyer){
+  document.getElementById("wrapper").innerHTML=
+  `<p style="text-align:center;opacity:.6;">Nomor tidak ditemukan.</p>`;
+}
+
+/* ============================= */
+/* FETCH DATA */
+/* ============================= */
+
+fetch(sheetURL)
+.then(res=>res.text())
+.then(text=>{
+const json=JSON.parse(text.substr(47).slice(0,-2));
+const rows=json.table.rows;
+const headers=json.table.cols.map(c=>c.label);
+
+let result=[];
+
+rows.forEach(row=>{
+if(!row.c)return;
+
+let rowData={};
+headers.forEach((h,i)=>{
+rowData[h]=row.c[i]?.v ?? "";
+});
+
+function normalizeNumber(num) {
+  num = String(num).replace(/\D/g, "");
+  if (num.startsWith("62")) num = num.substring(2);
+  if (num.startsWith("0")) num = num.substring(1);
+  return num;
+}
+
+if(normalizeNumber(rowData.buyer_contact) === normalizeNumber(buyer)){
+result.push(rowData);
+}
+});
+
+render(result);
+});
+
+
+// 🔥 TAMBAHKAN INI DI SINI
+function parseIndoDate(value) {
+  if (!value) return null;
+
+  // Kalau format dari Google = Date(2026,1,28,14,43,0)
+  if (typeof value === "string" && value.startsWith("Date(")) {
+    const parts = value.match(/\d+/g);
+    return new Date(
+      Number(parts[0]),
+      Number(parts[1]),
+      Number(parts[2]),
+      Number(parts[3] || 0),
+      Number(parts[4] || 0),
+      Number(parts[5] || 0)
+    );
+  }
+
+  // Kalau format normal 28/02/2026 14:43:00
+  if (typeof value === "string" && value.includes("/")) {
+    const [datePart, timePart] = value.split(" ");
+    const [day, month, year] = datePart.split("/");
+    const [hour="0", minute="0", second="0"] = (timePart || "").split(":");
+
+    return new Date(
+      Number(year),
+      Number(month) - 1,
+      Number(day),
+      Number(hour),
+      Number(minute),
+      Number(second)
+    );
+  }
+
+  // fallback
+  return new Date(value);
+}
+  
+function render(data){
+
+const wrapper=document.getElementById("wrapper");
+
+if(data.length===0){
+wrapper.innerHTML=
+`<p style="text-align:center;opacity:.6;">Belum ada transaksi.</p>`;
+return;
+}
+
+wrapper.innerHTML="";
+
+data.forEach(item=>{
+
+const now=new Date();
+
+// 🔥 TAMBAHKAN INI DI SINI
+const activatedDate = parseIndoDate(item["activated_at"]);
+
+if(!activatedDate) return;
+
+let endDate;
+
+// Kalau valid_until adalah angka (durasi)
+if (!isNaN(item.valid_until)) {
+  const durationDays = Number(item.valid_until) || 0;
+  endDate = new Date(
+    activatedDate.getTime() + durationDays * 24 * 60 * 60 * 1000
+  );
+}
+// Kalau valid_until adalah tanggal
+else {
+  endDate = parseIndoDate(item.valid_until);
+}
+
+const isActive = now <= endDate;
+
+const statusPaket=isActive?
+`<span class="status-active">🟢 Paket Aktif</span>`:
+`<span class="status-expired">🔴 Paket Berakhir</span>`;
+
+const statusGaransi=isActive?
+`<span class="status-active">🟢 Garansi Aktif</span>`:
+`<span class="status-expired">🔴 Garansi Berakhir</span>`;
+
+let autoNote;
+let noteClass;
+
+if(isActive){
+  noteClass = "note-active";
+  autoNote = `
+  <span class="note-icon">
+  <svg viewBox="0 0 24 24" width="16" height="16">
+  <circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.15"/>
+  <path d="M7 12.5L10.2 15.5L17 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  </span>
+  Paket dan Garansi telah aktif.<br>
+  Layanan dalam cakupan garansi.
+  `;
+}else{
+  noteClass = "note-expired";
+  autoNote = `
+  <span class="note-icon">
+  <svg viewBox="0 0 24 24" width="16" height="16">
+  <circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.15"/>
+  <path d="M12 7v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="12" cy="17" r="1.5" fill="currentColor"/>
+  </svg>
+  </span>
+  Paket dan Garansi telah berakhir.<br>
+  Layanan tidak lagi termasuk dalam cakupan garansi. <br>
+  Jika ingin melanjutkan layanan hubungi admin untuk pembelian ulang.
+  `;
+}
+
+const activated=activatedDate.toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"});
+const expired=endDate.toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"});
+
+wrapper.innerHTML+=`
+<div class="transaksi-card">
+<img src="${item.image_url}" alt="">
+<h3>${item.title}</h3>
+
+<div class="status-row">
+${statusPaket}
+${statusGaransi}
+</div>
+
+<div class="meta">
+Produk: ${item.title}<br>
+Paket: ${item.package}<br>
+Aktivasi: ${activated}<br>
+Berakhir: ${expired}
+</div>
+
+<div class="note ${noteClass}">
+${autoNote}
+</div>
+
+<div class="button-group">
+<a href="status-pesanan.html?inv=${item.invoice}" class="btn btn-detail">Detail Paket</a>
+<a href="https://wa.me/6281234567890" class="btn btn-wa">Hubungi Admin</a>
+</div>
+
+</div>
+`;
+});
+}
+
+</script>
+
+</body>
+</html>
