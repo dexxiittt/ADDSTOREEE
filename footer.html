@@ -1,0 +1,145 @@
+
+<style>
+
+  .footer-premium{
+  margin-top:80px;
+  background:linear-gradient(145deg,#0f172a,#020617);
+  color:#cbd5f1;
+  padding:50px 20px 20px;
+}
+
+.footer-container{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:40px;
+}
+
+.footer-brand h3{
+  color:#fff;
+  margin-bottom:10px;
+}
+
+.footer-brand p{
+  font-size:14px;
+  line-height:1.6;
+  opacity:.8;
+}
+
+.brand-logo{
+  font-size:22px;
+  background:linear-gradient(135deg,#6366f1,#06b6d4);
+  width:36px;
+  height:36px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:8px;
+  margin-bottom:10px;
+}
+
+.footer-menu h4,
+.footer-service h4{
+  color:#fff;
+  margin-bottom:10px;
+}
+
+.footer-menu a,
+.footer-service a{
+  display:block;
+  text-decoration:none;
+  color:#94a3b8;
+  margin:6px 0;
+  font-size:14px;
+  transition:.2s;
+}
+
+.footer-menu a:hover,
+.footer-service a:hover{
+  color:#fff;
+  transform:translateX(4px);
+}
+
+.footer-social{
+  margin-top:15px;
+}
+
+.footer-social a{
+  margin-right:10px;
+  font-size:18px;
+  color:#94a3b8;
+}
+
+.footer-social a:hover{
+  color:#fff;
+}
+
+.footer-bottom{
+  border-top:1px solid rgba(255,255,255,.08);
+  margin-top:40px;
+  padding-top:15px;
+  text-align:center;
+  font-size:13px;
+  color:#94a3b8;
+}
+
+  
+  
+</style>
+  
+
+<footer class="footer-premium">
+  <div class="footer-container">
+
+    <div class="footer-brand">
+      <div class="brand-logo">✦</div>
+      <h3>Addstoreee</h3>
+      <p>
+        Platform penyedia layanan aplikasi premium dengan harga terjangkau,
+        proses cepat, dan garansi penuh untuk setiap transaksi.
+      </p>
+
+      <div class="footer-social">
+        <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="#"><i class="fa-brands fa-telegram"></i></a>
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+      </div>
+    </div>
+
+    <div class="footer-menu">
+      <h4>Menu</h4>
+      <a href="/">Home</a>
+      <a href="/apps.html">Semua Aplikasi</a>
+      <a href="/cek-transaksi.html">Cek Transaksi</a>
+      <a href="/testimoni.html">Testimoni</a>
+    </div>
+
+    <div class="footer-service">
+      <h4>Layanan</h4>
+      <a href="/invoice.html">Cek Invoice</a>
+      <a href="/garansi.html">Cek Garansi</a>
+      <a href="/bantuan.html">Bantuan</a>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2026 Addstoreee — All Rights Reserved
+  </div>
+</footer>
+
+
+
+<script>
+
+fetch("/components/footer.html")
+.then(res => res.text())
+.then(data => {
+  document.getElementById("footer-container").innerHTML = data;
+});
+  
+</script>
+
+
+
