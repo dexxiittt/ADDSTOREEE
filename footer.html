@@ -307,12 +307,30 @@ color:#d8b4fe;
 }
 
 .footer-bottom{
-  border-top:1px solid rgba(255,255,255,.08);
-  margin-top:40px;
-  padding-top:15px;
-  text-align:center;
-  font-size:13px;
-  color:#94a3b8;
+
+border-top:1px solid rgba(255,255,255,.08);
+
+margin-top:40px;
+padding-top:15px;
+
+text-align:center;
+font-size:13px;
+
+color:#94a3b8;
+
+opacity:.85;
+
+transition:all .35s ease;
+
+animation:copyrightGlow 6s ease-in-out infinite;
+
+}
+
+.footer-bottom:hover{
+
+opacity:1;
+color:#d8b4fe;
+
 }
 
 @keyframes footerGradient{
@@ -343,6 +361,22 @@ transform:translateY(-40px);
 
 100%{
 transform:translateY(0);
+}
+
+}
+
+@keyframes copyrightGlow{
+
+0%{
+opacity:.85;
+}
+
+50%{
+opacity:1;
+}
+
+100%{
+opacity:.85;
 }
 
 }
