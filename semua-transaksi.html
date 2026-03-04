@@ -188,7 +188,25 @@ color:#3cff9c;
 color:#ff6b6b;
 }
 
+.note-icon{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+margin-right:6px;
+vertical-align:middle;
+}
 
+.note-icon svg{
+display:block;
+}
+
+.note-active{
+color:#7dffb2;
+}
+
+.note-expired{
+color:#ff8a8a;
+}
   
 </style>
 </head>
@@ -392,17 +410,27 @@ let noteClass;
 if(isActive){
   noteClass = "note-active";
   autoNote = `
-  <span class="note-icon">✔</span>
+  <span class="note-icon">
+  <svg viewBox="0 0 24 24" width="16" height="16">
+  <circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.15"/>
+  <path d="M7 12.5L10.2 15.5L17 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  </span>
   Paket dan Garansi telah aktif.<br>
   Layanan dalam cakupan garansi.
   `;
 }else{
   noteClass = "note-expired";
   autoNote = `
-  <span class="note-icon">⚠</span>
+  <span class="note-icon">
+  <svg viewBox="0 0 24 24" width="16" height="16">
+  <circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.15"/>
+  <path d="M12 7v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="12" cy="17" r="1.5" fill="currentColor"/>
+  </svg>
+  </span>
   Paket dan Garansi telah berakhir.<br>
-  Layanan tidak lagi termasuk dalam cakupan garansi. <br>
-  Jika ingin melanjutkan layanan hubungi admin untuk pembelian ulang.
+  Layanan tidak lagi termasuk dalam cakupan garansi.
   `;
 }
 
