@@ -151,17 +151,20 @@ color:#fff;
 
 background:linear-gradient(
 90deg,
-#c084fc,
-#a855f7,
-#7c3aed
+#e9d5ff 0%,
+#c084fc 20%,
+#a855f7 40%,
+#7c3aed 60%,
+#a855f7 80%,
+#e9d5ff 100%
 );
 
-background-size:200% auto;
+background-size:300% 300%;
 
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 
-animation:brandGradient 6s linear infinite;
+animation:brandGradient 10s ease-in-out infinite;
 
 }
 
@@ -241,6 +244,18 @@ background:rgba(255,255,255,0.03);
 .cta-btn.secondary:hover{
 background:rgba(255,255,255,0.08);
 transform:translateY(-2px);
+}
+
+@keyframes brandGradient{
+0%{
+background-position:0% 50%;
+}
+50%{
+background-position:100% 50%;
+}
+100%{
+background-position:0% 50%;
+}
 }
 
 
