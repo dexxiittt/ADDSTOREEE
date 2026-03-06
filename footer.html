@@ -64,24 +64,25 @@ display:none;
 position:absolute;
 inset:0;
 
-/* particle lebih halus */
+/* particle halus tapi masih terlihat */
 
 background-image:
 
-radial-gradient(circle, rgba(168,85,247,0.08) 1px, transparent 1px),
-radial-gradient(circle, rgba(124,58,237,0.06) 1px, transparent 1px);
+radial-gradient(circle, rgba(168,85,247,0.12) 1.6px, transparent 1.6px),
+radial-gradient(circle, rgba(124,58,237,0.10) 1.6px, transparent 1.6px);
 
-background-size:420px 420px, 520px 520px;
-background-position:0 0, 200px 200px;
+background-size:340px 340px, 460px 460px;
+background-position:0 0, 180px 200px;
 
-/* gerakan lebih pelan dan ringan */
+/* animasi tetap ringan */
 
-animation:footerParticles 80s linear infinite;
+animation:footerParticles 70s linear infinite;
 
 pointer-events:none;
-opacity:.6;
+opacity:.7;
 
 }
+  
 .footer-container{
   width:100%;
   max-width:1200px;
