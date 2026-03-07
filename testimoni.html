@@ -19,13 +19,193 @@
   text-align:center;
   padding:20px;
 }
+
+.testimoni-input{
+padding:60px 20px;
+display:flex;
+justify-content:center;
+}
+
+.glass-card{
+
+width:100%;
+max-width:500px;
+
+padding:40px;
+
+border-radius:20px;
+
+background:rgba(20,20,25,0.7);
+
+backdrop-filter:blur(20px);
+
+border:1px solid rgba(255,255,255,0.08);
+
+box-shadow:
+0 10px 40px rgba(0,0,0,0.5),
+inset 0 1px 0 rgba(255,255,255,0.05);
+
+text-align:center;
+
+color:white;
+
+}
+
+.glass-card input,
+.glass-card textarea,
+.glass-card select{
+
+width:100%;
+padding:14px;
+margin-top:12px;
+
+border-radius:10px;
+border:none;
+
+background:rgba(255,255,255,0.05);
+
+color:white;
+
+}
+
+.glass-card textarea{
+min-height:120px;
+resize:none;
+}
+
+.glass-card button{
+
+margin-top:18px;
+width:100%;
+
+padding:14px;
+
+border:none;
+
+border-radius:10px;
+
+background:linear-gradient(135deg,#3b82f6,#6366f1);
+
+color:white;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:0.3s;
+
+}
+
+.glass-card button:hover{
+
+transform:translateY(-2px);
+box-shadow:0 10px 25px rgba(59,130,246,0.4);
+
+}
   
 </style>
   
 </head>
 <body>
 
+<section class="testimoni-input">
 
+<div class="glass-card">
+
+<div class="icon">
+<i class="fa-solid fa-star"></i>
+</div>
+
+<h2>Bagikan Pengalaman Anda</h2>
+<p>Berikan testimoni untuk pesanan yang sudah dibayar</p>
+
+<input type="text" id="nama" placeholder="Nama Anda">
+
+<select id="rating">
+<option value="">Rating layanan</option>
+<option value="5">⭐⭐⭐⭐⭐</option>
+<option value="4">⭐⭐⭐⭐</option>
+<option value="3">⭐⭐⭐</option>
+<option value="2">⭐⭐</option>
+<option value="1">⭐</option>
+</select>
+
+<textarea id="pesan" placeholder="Ceritakan pengalaman Anda..."></textarea>
+
+<button onclick="kirimTestimoni()">
+<i class="fa-solid fa-paper-plane"></i>
+Kirim Testimoni
+</button>
+
+</div>
+
+</section>
+
+<script>
+function kirimTestimoni(){
+
+let nama = document.getElementById("nama").value
+let rating = document.getElementById("rating").value
+let pesan = document.getElementById("pesan").value
+
+if(!nama || !rating || !pesan){
+alert("Lengkapi dulu ya")
+return
+}
+
+let data = {
+nama:nama,
+rating:rating,
+pesan:pesan,
+tanggal:new Date().toLocaleDateString()
+}
+
+let testimoni = JSON.parse(localStorage.getItem("testimoni")) || []
+
+testimoni.unshift(data)
+
+localStorage.setItem("testimoni",JSON.stringify(testimoni))
+
+tampilkanTestimoni()
+
+}
+
+</script>
+
+<script>
+
+function tampilkanTestimoni(){
+
+let container = document.getElementById("list-testimoni")
+
+let data = JSON.parse(localStorage.getItem("testimoni")) || []
+
+container.innerHTML=""
+
+data.forEach(t => {
+
+container.innerHTML += `
+<div class="card-testi">
+
+<div class="stars">
+${"⭐".repeat(t.rating)}
+</div>
+
+<p>"${t.pesan}"</p>
+
+<h4>${t.nama}</h4>
+<span>${t.tanggal}</span>
+
+</div>
+`
+
+})
+
+}
+
+tampilkanTestimoni()
+  
+</script>
   
 </body>
 </html>
