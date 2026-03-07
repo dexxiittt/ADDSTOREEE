@@ -31,26 +31,18 @@ html, body {
 
   font-family: 'Plus Jakarta Sans', sans-serif;
 
-  background: rgba(255,255,255,0.25);
-  backdrop-filter: blur(18px);
+  background: rgba(255,255,255,0.9);
 
   box-shadow: 
   0 12px 30px rgba(0,0,0,.08),
   0 4px 12px rgba(0,0,0,.05);
 
-  animation: card-float 6s ease-in-out infinite;
-
   opacity: 0;
   transform: translateY(24px);
-  transition:
-    opacity .7s cubic-bezier(.22,1,.36,1),
-    transform .7s cubic-bezier(.22,1,.36,1);
+   transition:
+    opacity .35s ease,
+    transform .35s ease;
   will-change: transform, opacity;
-}
-
-@keyframes card-float {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
 }
 
 .glass-card:hover {
@@ -908,6 +900,27 @@ body.is-scrolling * {
     grid-template-columns: 1fr;
     max-width: 520px;
   }
+}
+
+/* ===== ULTRA LOW DEVICE MODE ===== */
+@media (max-width:480px){
+
+.glass-card{
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+  animation:none !important;
+}
+
+.package-row::before,
+.package-row::after{
+  animation:none !important;
+  filter:none !important;
+}
+
+.product-image::after{
+  filter:none !important;
+}
+
 }
 
 </style>
