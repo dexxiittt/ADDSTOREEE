@@ -553,6 +553,35 @@ stars[i].classList.add("active")
 
 })
 
+window.toggleMenu = function(id){
+
+const menu = document.getElementById("menu-"+id)
+
+menu.style.display =
+menu.style.display === "block" ? "none" : "block"
+
+}
+
+window.hapusTestimoni = async function(id){
+
+if(!confirm("Hapus testimoni ini?")) return
+
+await deleteDoc(doc(db,"testimoni",id))
+
+}
+
+window.editTestimoni = async function(id,pesan){
+
+let pesanBaru = prompt("Edit testimoni:", pesan)
+
+if(!pesanBaru) return
+
+await updateDoc(doc(db,"testimoni",id),{
+pesan: pesanBaru
+})
+
+  }
+
 </script>
   
 </body>
