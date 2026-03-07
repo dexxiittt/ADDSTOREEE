@@ -112,30 +112,22 @@ resize:none;
 }
 
 .glass-card button{
-
 margin-top:18px;
 width:100%;
-
 padding:14px;
 
 border:none;
-
 border-radius:10px;
-
 background:linear-gradient(135deg,#3b82f6,#6366f1);
 
 color:white;
-
 font-weight:600;
 
 cursor:pointer;
-
 transition:0.3s;
-
 }
 
 .glass-card button:hover{
-
 transform:translateY(-2px);
 box-shadow:0 10px 25px rgba(59,130,246,0.4);
 }
@@ -160,12 +152,9 @@ gap:25px;
 }
 
 .testimoni-card{
-
 background:rgba(255,255,255,0.7);
 backdrop-filter:blur(20px);
-
 border-radius:18px;
-
 padding:25px;
 
 box-shadow:
@@ -180,10 +169,31 @@ box-shadow:
 0 30px 60px rgba(0,0,0,0.12);
 }
 
-.testimoni-avatar{
+.stars{
+color:#fbbf24;
+font-size:18px;
+margin-bottom:10px;
+}
 
-width:45px;
-height:45px;
+.testimoni-card p{
+color:#374151;
+font-size:14px;
+line-height:1.6;
+margin-bottom:12px;
+}
+
+.testimoni-user strong{
+font-size:14px;
+}
+
+.testimoni-user small{
+color:#6b7280;
+font-size:12px;
+}
+
+.testimoni-avatar{
+width:48px;
+height:48px;
 
 border-radius:50%;
 
@@ -191,12 +201,13 @@ display:flex;
 align-items:center;
 justify-content:center;
 
-background:linear-gradient(135deg,#6366f1,#4f46e5);
+background:linear-gradient(135deg,#6366f1,#8b5cf6);
 
 color:white;
-font-weight:600;
-
-margin-right:10px;
+font-weight:700;
+font-size:16px;
+box-shadow:0 6px 14px rgba(99,102,241,0.3);
+margin-right:12px;
 }
 
 .testimoni-user{
@@ -206,20 +217,70 @@ margin-top:15px;
 }
 
 .load-more-btn{
-
 margin:40px auto 0;
 display:block;
+background:linear-gradient(135deg,#6366f1,#8b5cf6);
 
-background:#6366f1;
 color:white;
-
 border:none;
-padding:12px 22px;
+padding:13px 24px;
+border-radius:12px;
 
-border-radius:10px;
+cursor:pointer;
+font-weight:600;
+transition:0.25s;
+
+}
+
+.load-more-btn:hover{
+transform:translateY(-2px);
+box-shadow:0 10px 25px rgba(99,102,241,0.35);
+}
+
+.skeleton{
+height:120px;
+background:linear-gradient(
+90deg,
+#f3f4f6 25%,
+#e5e7eb 37%,
+#f3f4f6 63%
+);
+background-size:400% 100%;
+
+animation:skeleton 1.4s ease infinite;
+border-radius:18px;
+}
+
+.rating-stars{
+display:flex;
+justify-content:center;
+gap:8px;
+
+margin-top:16px;
+margin-bottom:10px;
+
+font-size:28px;
 cursor:pointer;
 }
 
+.rating-stars span{
+color:#d1d5db;
+transition:0.2s;
+}
+
+.rating-stars span.active{
+color:#fbbf24;
+transform:scale(1.1);
+}
+
+.rating-stars span:hover{
+color:#fbbf24;
+}
+
+@keyframes skeleton{
+0%{background-position:100% 0}
+100%{background-position:-100% 0}
+}
 
 </style>
   
@@ -295,14 +356,17 @@ Dengar langsung dari pelanggan yang telah merasakan layanan premium kami
 <input type="text" id="invoice" placeholder="Nomor Invoice (contoh: INV20261001001)">
 <input type="text" id="nama" placeholder="Nama Anda">
 
-<select id="rating">
-<option value="">Rating layanan</option>
-<option value="5">⭐⭐⭐⭐⭐</option>
-<option value="4">⭐⭐⭐⭐</option>
-<option value="3">⭐⭐⭐</option>
-<option value="2">⭐⭐</option>
-<option value="1">⭐</option>
-</select>
+<div class="rating-stars" id="ratingStars">
+
+<span data-value="1">★</span>
+<span data-value="2">★</span>
+<span data-value="3">★</span>
+<span data-value="4">★</span>
+<span data-value="5">★</span>
+
+</div>
+
+<input type="hidden" id="rating">
 
 <textarea id="pesan" placeholder="Ceritakan pengalaman Anda..."></textarea>
 
@@ -315,21 +379,17 @@ Kirim Testimoni
 </section>
 
 <section class="testimoni-list-section">
-
 <h2 class="testimoni-title">Apa Kata Mereka</h2>
-
 <div id="testimoni-container" class="testimoni-grid"></div>
-
 <button id="loadMoreBtn" class="load-more-btn">
 Lihat Lebih Banyak
 </button>
-
 </section>
 
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, doc, getDoc, query, where, onSnapshot } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBzuIo_i_TAAJevZMNqYtWuZoFB8wfj_RE",
@@ -366,6 +426,15 @@ alert("Nomor invoice tidak valid")
 return
 }
 
+// cek apakah invoice sudah pernah memberi testimoni
+const q = query(collection(db,"testimoni"), where("invoice","==",invoice))
+const snapshot = await getDocs(q)
+
+if(!snapshot.empty){
+  alert("Invoice ini sudah pernah memberikan testimoni.")
+  return
+}
+
 // kirim testimoni
 await addDoc(collection(db,"testimoni"),{
 invoice:invoice,
@@ -385,20 +454,32 @@ window.kirimTestimoni = kirimTestimoni
 let semuaTestimoni = []
 let jumlahTampil = 6
 
-async function loadTestimoni(){
+function loadTestimoni(){
 
-const querySnapshot = await getDocs(collection(db,"testimoni"))
+let container = document.getElementById("testimoni-container")
+
+container.innerHTML = `
+<div class="skeleton"></div>
+<div class="skeleton"></div>
+<div class="skeleton"></div>
+`
+
+const q = query(collection(db,"testimoni"))
+
+onSnapshot(q,(snapshot)=>{
 
 semuaTestimoni = []
 
-querySnapshot.forEach(doc=>{
+snapshot.forEach(doc=>{
 semuaTestimoni.push(doc.data())
 })
 
 renderTestimoni()
 
-}
+})
 
+}
+  
 function renderTestimoni(){
 
 let container = document.getElementById("testimoni-container")
@@ -415,7 +496,7 @@ container.innerHTML += `
 <div class="testimoni-card">
 
 <div class="stars">
-${"⭐".repeat(t.rating)}
+${"⭐".repeat(parseInt(t.rating))}
 </div>
 
 <p>"${t.pesan}"</p>
@@ -449,6 +530,28 @@ renderTestimoni()
 
 alert("Testimoni berhasil dikirim!")
 loadTestimoni()
+
+const stars = document.querySelectorAll("#ratingStars span")
+let ratingValue = 0
+
+stars.forEach(star => {
+
+star.addEventListener("click", function(){
+
+ratingValue = parseInt(this.dataset.value)
+document.getElementById("rating").value = ratingValue
+
+document.getElementById("rating").value = ratingValue
+
+stars.forEach(s => s.classList.remove("active"))
+
+for(let i=0;i<ratingValue;i++){
+stars[i].classList.add("active")
+}
+
+})
+
+})
 
 </script>
   
