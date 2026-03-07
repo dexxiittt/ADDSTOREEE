@@ -138,9 +138,89 @@ transition:0.3s;
 
 transform:translateY(-2px);
 box-shadow:0 10px 25px rgba(59,130,246,0.4);
-
 }
-  
+
+.testimoni-list-section{
+padding:80px 20px;
+max-width:1100px;
+margin:auto;
+}
+
+.testimoni-title{
+text-align:center;
+font-size:28px;
+margin-bottom:40px;
+color:#111827;
+}
+
+.testimoni-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:25px;
+}
+
+.testimoni-card{
+
+background:rgba(255,255,255,0.7);
+backdrop-filter:blur(20px);
+
+border-radius:18px;
+
+padding:25px;
+
+box-shadow:
+0 20px 40px rgba(0,0,0,0.08);
+
+transition:0.25s;
+}
+
+.testimoni-card:hover{
+transform:translateY(-6px);
+box-shadow:
+0 30px 60px rgba(0,0,0,0.12);
+}
+
+.testimoni-avatar{
+
+width:45px;
+height:45px;
+
+border-radius:50%;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+background:linear-gradient(135deg,#6366f1,#4f46e5);
+
+color:white;
+font-weight:600;
+
+margin-right:10px;
+}
+
+.testimoni-user{
+display:flex;
+align-items:center;
+margin-top:15px;
+}
+
+.load-more-btn{
+
+margin:40px auto 0;
+display:block;
+
+background:#6366f1;
+color:white;
+
+border:none;
+padding:12px 22px;
+
+border-radius:10px;
+cursor:pointer;
+}
+
+
 </style>
   
 </head>
@@ -232,6 +312,17 @@ Kirim Testimoni
 </button>
 
 </div>
+</section>
+
+<section class="testimoni-list-section">
+
+<h2 class="testimoni-title">Apa Kata Mereka</h2>
+
+<div id="testimoni-container" class="testimoni-grid"></div>
+
+<button id="loadMoreBtn" class="load-more-btn">
+Lihat Lebih Banyak
+</button>
 
 </section>
 
@@ -281,7 +372,8 @@ invoice:invoice,
 nama:nama,
 rating:rating,
 pesan:pesan,
-tanggal:new Date().toLocaleDateString()
+tanggal:new Date().toLocaleDateString(),
+createdAt:new Date()
 })
 
 alert("Testimoni berhasil dikirim!")
@@ -289,6 +381,74 @@ alert("Testimoni berhasil dikirim!")
 }
 
 window.kirimTestimoni = kirimTestimoni
+
+let semuaTestimoni = []
+let jumlahTampil = 6
+
+async function loadTestimoni(){
+
+const querySnapshot = await getDocs(collection(db,"testimoni"))
+
+semuaTestimoni = []
+
+querySnapshot.forEach(doc=>{
+semuaTestimoni.push(doc.data())
+})
+
+renderTestimoni()
+
+}
+
+function renderTestimoni(){
+
+let container = document.getElementById("testimoni-container")
+
+container.innerHTML=""
+
+let tampil = semuaTestimoni.slice(0,jumlahTampil)
+
+tampil.forEach(t=>{
+
+let avatar = t.nama.charAt(0).toUpperCase()
+
+container.innerHTML += `
+<div class="testimoni-card">
+
+<div class="stars">
+${"⭐".repeat(t.rating)}
+</div>
+
+<p>"${t.pesan}"</p>
+
+<div class="testimoni-user">
+
+<div class="testimoni-avatar">
+${avatar}
+</div>
+
+<div>
+<strong>${t.nama}</strong><br>
+<small>${t.tanggal}</small>
+</div>
+
+</div>
+
+</div>
+`
+
+})
+
+}
+
+document.getElementById("loadMoreBtn").onclick=function(){
+
+jumlahTampil += 6
+renderTestimoni()
+
+}
+
+alert("Testimoni berhasil dikirim!")
+loadTestimoni()
 
 </script>
   
