@@ -5,19 +5,33 @@
 
 <style>
 
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+background:#f3f4f8;
+font-family:Inter,system-ui,-apple-system,sans-serif;
+}
+
 /* HERO UNGU SAMA PERSIS */
 .package-hero{
-  width:100%;
-  min-height:260px;
-  background:linear-gradient(135deg,#493d84,#6d28d9);
+width:100%;
+min-height:280px;
 
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
+background:linear-gradient(135deg,#4f46e5,#7c3aed);
 
-  text-align:center;
-  padding:20px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+
+text-align:center;
+
+padding:70px 20px;
+color:white;
 }
 
 .package-hero h1{
@@ -39,26 +53,29 @@ justify-content:center;
 .glass-card{
 
 width:100%;
-max-width:500px;
+max-width:620px;
+padding:45px;
 
-padding:40px;
-
-border-radius:20px;
-
-background:rgba(20,20,25,0.7);
-
-backdrop-filter:blur(20px);
-
-border:1px solid rgba(255,255,255,0.08);
+border-radius:24px;
+background:rgba(255,255,255,0.65);
+backdrop-filter:blur(25px);
+border:1px solid rgba(255,255,255,0.6);
 
 box-shadow:
-0 10px 40px rgba(0,0,0,0.5),
-inset 0 1px 0 rgba(255,255,255,0.05);
+0 40px 80px rgba(0,0,0,0.15),
+0 10px 30px rgba(0,0,0,0.1);
 
 text-align:center;
+color:#1f2937;
+transition:all .25s ease;
 
-color:white;
+}
 
+.glass-card:hover{
+transform:translateY(-4px);
+box-shadow:
+0 50px 100px rgba(0,0,0,0.18),
+0 15px 40px rgba(0,0,0,0.15);
 }
 
 .glass-card input,
@@ -66,15 +83,26 @@ color:white;
 .glass-card select{
 
 width:100%;
-padding:14px;
-margin-top:12px;
+padding:16px;
+margin-top:14px;
 
-border-radius:10px;
-border:none;
+border-radius:12px;
+border:1px solid rgba(0,0,0,0.06);
+background:rgba(255,255,255,0.8);
 
-background:rgba(255,255,255,0.05);
+color:#111827;
+font-size:14px;
+transition:all .2s ease;
 
-color:white;
+}
+
+.glass-card input:focus,
+.glass-card textarea:focus,
+.glass-card select:focus{
+
+outline:none;
+border-color:#6366f1;
+box-shadow:0 0 0 3px rgba(99,102,241,0.15);
 
 }
 
@@ -123,7 +151,7 @@ box-shadow:0 10px 25px rgba(59,130,246,0.4);
 Testimoni Pelanggan
 </h1>
 
-<p style="color:#e0e7ff;max-width:500px;">
+<p style="color:#e0e7ff;max-width:620px;">
 Dengar langsung dari pelanggan yang telah merasakan layanan premium kami
 </p>
 
