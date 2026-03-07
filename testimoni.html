@@ -119,6 +119,7 @@ box-shadow:0 10px 25px rgba(59,130,246,0.4);
 <h2>Bagikan Pengalaman Anda</h2>
 <p>Berikan testimoni untuk pesanan yang sudah dibayar</p>
 
+<input type="text" id="invoice" placeholder="Nomor Invoice (contoh: INV20261001001)">
 <input type="text" id="nama" placeholder="Nama Anda">
 
 <select id="rating">
@@ -141,70 +142,61 @@ Kirim Testimoni
 
 </section>
 
-<script>
-function kirimTestimoni(){
+<script type="module">
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBzuIo_i_TAAJevZMNqYtWuZoFB8wfj_RE",
+  authDomain: "addstoreapps.firebaseapp.com",
+  projectId: "addstoreapps",
+  storageBucket: "addstoreapps.firebasestorage.app",
+  messagingSenderId: "712672256555",
+  appId: "1:712672256555:web:9069f8ea4d7776d1f3806e",
+  measurementId: "G-92MPF6V96X"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+
+async function kirimTestimoni(){
+
+let invoice = document.getElementById("invoice").value
 let nama = document.getElementById("nama").value
 let rating = document.getElementById("rating").value
 let pesan = document.getElementById("pesan").value
 
-if(!nama || !rating || !pesan){
+if(!invoice || !nama || !rating || !pesan){
 alert("Lengkapi dulu ya")
 return
 }
 
-let data = {
+// cek invoice di database
+const invoiceRef = doc(db,"invoice",invoice)
+const invoiceSnap = await getDoc(invoiceRef)
+
+if(!invoiceSnap.exists()){
+alert("Nomor invoice tidak valid")
+return
+}
+
+// kirim testimoni
+await addDoc(collection(db,"testimoni"),{
+invoice:invoice,
 nama:nama,
 rating:rating,
 pesan:pesan,
 tanggal:new Date().toLocaleDateString()
-}
-
-let testimoni = JSON.parse(localStorage.getItem("testimoni")) || []
-
-testimoni.unshift(data)
-
-localStorage.setItem("testimoni",JSON.stringify(testimoni))
-
-tampilkanTestimoni()
-
-}
-
-</script>
-
-<script>
-
-function tampilkanTestimoni(){
-
-let container = document.getElementById("list-testimoni")
-
-let data = JSON.parse(localStorage.getItem("testimoni")) || []
-
-container.innerHTML=""
-
-data.forEach(t => {
-
-container.innerHTML += `
-<div class="card-testi">
-
-<div class="stars">
-${"⭐".repeat(t.rating)}
-</div>
-
-<p>"${t.pesan}"</p>
-
-<h4>${t.nama}</h4>
-<span>${t.tanggal}</span>
-
-</div>
-`
-
 })
 
+alert("Testimoni berhasil dikirim!")
+
 }
 
-tampilkanTestimoni()
-  
+window.kirimTestimoni = kirimTestimoni
+
 </script>
   
 </body>
