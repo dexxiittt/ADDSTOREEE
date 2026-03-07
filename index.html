@@ -1097,7 +1097,8 @@ body {
   background: rgba(245,245,245,0.9);
 
   box-shadow:
-    0 10px 26px rgba(0,0,0,0.08);
+  0 8px 20px rgba(0,0,0,0.08),
+  0 18px 40px rgba(0,0,0,0.06);
 
   text-align: center;
 
@@ -2896,7 +2897,7 @@ const ctx = canvas.getContext("2d");
 
 /* KONTROL BINTANG */
 const STAR_CONFIG = {
-  amount: window.innerWidth < 768 ? 120 : 320,
+  amount: window.innerWidth < 768 ? 70 : 120,
   minSize: 0.6,
   maxSize: 2.1,
   glow: 1.1,
