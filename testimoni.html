@@ -941,6 +941,14 @@ menu.style.display === "block" ? "none" : "block"
 }
 
 document.addEventListener("click",function(e){
+
+// jika klik tombol edit / textarea jangan batal
+if(
+e.target.closest("[onclick^='editTestimoni']") ||
+e.target.closest("textarea")
+){
+return
+}
 // tutup menu titik tiga
 document.querySelectorAll("[id^='menu-']").forEach(menu=>{
 if(!menu.contains(e.target)){
