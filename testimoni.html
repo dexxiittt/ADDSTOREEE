@@ -133,6 +133,14 @@ transition:all .2s ease;
 box-shadow:0 2px 6px rgba(0,0,0,0.06);
 }
 
+.form-error{
+font-size:12px;
+color:#ef4444;
+text-align:left;
+margin-top:6px;
+display:none;
+}
+
 .glass-card input:focus,
 .glass-card textarea:focus{
 
@@ -149,6 +157,11 @@ background:white;
 .glass-card textarea{
 min-height:120px;
 resize:none;
+}
+
+input:invalid,
+textarea:invalid{
+border-color:#ef4444;
 }
 
 .glass-card button{
@@ -564,7 +577,10 @@ Dengar langsung dari pelanggan yang telah merasakan layanan premium kami
 <p>Berikan testimoni untuk pesanan yang sudah dibayar</p>
 
 <input type="text" id="invoice" placeholder="Nomor Invoice (contoh: INV20261001001)">
+<div id="errorInvoice" class="form-error">Masukkan nomor invoice</div>
+  
 <input type="text" id="nama" placeholder="Nama Anda">
+<div id="errorNama" class="form-error">Masukkan nama Anda</div>
 
 <div class="rating-stars" id="ratingStars">
 
@@ -579,6 +595,7 @@ Dengar langsung dari pelanggan yang telah merasakan layanan premium kami
 <input type="hidden" id="rating">
 
 <textarea id="pesan" placeholder="Ceritakan pengalaman Anda..."></textarea>
+<div id="errorPesan" class="form-error">Tulis pengalaman Anda</div>
 
 <button onclick="kirimTestimoni()">
 <i class="fa-solid fa-paper-plane"></i>
@@ -624,10 +641,33 @@ let nama = document.getElementById("nama").value
 let rating = document.getElementById("rating").value
 let pesan = document.getElementById("pesan").value
 
-if(!invoice || !nama || !rating || !pesan){
-alert("Lengkapi dulu ya")
+let valid = true
+
+document.getElementById("errorInvoice").style.display="none"
+document.getElementById("errorNama").style.display="none"
+document.getElementById("errorPesan").style.display="none"
+
+if(!invoice){
+document.getElementById("errorInvoice").style.display="block"
+valid=false
+}
+
+if(!nama){
+document.getElementById("errorNama").style.display="block"
+valid=false
+}
+
+if(!pesan){
+document.getElementById("errorPesan").style.display="block"
+valid=false
+}
+
+if(!rating){
+showToast()
 return
 }
+
+if(!valid) return
 
 // cek invoice dari Google Sheets
 const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/WARRANTY_DATA")
