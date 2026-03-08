@@ -88,32 +88,43 @@ margin-bottom:6px;
 color:#111827;
 }
 
-.glass-card input,
-.glass-card textarea,
-.glass-card select{
+.glass-card p{
+font-family:Inter,system-ui,-apple-system,sans-serif;
+font-size:14px;
+font-weight:500;
+letter-spacing:0.2px;
+color:#4b5563;
+margin-bottom:10px;
+}
 
+.glass-card input,
+.glass-card textarea{
 width:100%;
 padding:16px;
 margin-top:14px;
 
 border-radius:12px;
-border:1px solid rgba(0,0,0,0.06);
-background:rgba(255,255,255,0.8);
+border:1px solid rgba(0,0,0,0.12);
+background:rgba(255,255,255,0.9);
 
 color:#111827;
 font-size:14px;
-transition:all .2s ease;
 
+transition:all .2s ease;
+box-shadow:0 2px 6px rgba(0,0,0,0.06);
 }
 
 .glass-card input:focus,
-.glass-card textarea:focus,
-.glass-card select:focus{
+.glass-card textarea:focus{
 
 outline:none;
-border-color:#6366f1;
-box-shadow:0 0 0 3px rgba(99,102,241,0.15);
+border-color:#111827;
 
+box-shadow:
+0 0 0 3px rgba(0,0,0,0.08),
+0 6px 18px rgba(0,0,0,0.12);
+
+background:white;
 }
 
 .glass-card textarea{
