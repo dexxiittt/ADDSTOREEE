@@ -808,7 +808,10 @@ let myInvoices =
 JSON.parse(localStorage.getItem("myTestimoni")) || []
 let tombolMenu = ""
 
-if(myInvoices.includes(t.invoice)){
+let currentInvoice =
+document.getElementById("invoice").value
+
+if(myInvoices.includes(t.invoice) || currentInvoice === t.invoice){
 tombolMenu = `
 <div style="position:absolute;top:12px;right:12px;cursor:pointer;font-size:18px;"
 onclick="toggleMenu('${t.id}')">⋮</div>
