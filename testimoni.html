@@ -51,10 +51,10 @@ justify-content:center;
 }
 
 .glass-card{
-
 width:100%;
 max-width:780px;
 padding:45px;
+overflow:hidden;
 
 border-radius:24px;
 background:rgba(255,255,255,0.65);
@@ -69,6 +69,25 @@ text-align:center;
 color:#1f2937;
 transition:all .25s ease;
 
+position:relative;
+}
+
+.glass-card::before{
+content:"";
+position:absolute;
+
+top:0;
+left:0;
+right:0;
+
+height:1px;
+
+background:linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,0.9),
+transparent
+);
 }
 
 .glass-card:hover{
