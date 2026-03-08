@@ -995,10 +995,10 @@ document.getElementById("text-"+id).style.display="none"
 document.getElementById("edit-"+id).style.display="block"
 document.getElementById("save-"+id).style.display="block"
 
-// AUTO FOCUS + CURSOR DI DEPAN
+// AUTO FOCUS + CURSOR DI AKHIR
 let textarea = document.getElementById("edit-"+id)
 textarea.focus()
-textarea.setSelectionRange(0,0)
+textarea.setSelectionRange(textarea.value.length, textarea.value.length)
 }
 
 function cancelEdit(id){
