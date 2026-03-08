@@ -192,6 +192,10 @@ color:#6b7280;
 font-size:12px;
 }
 
+.testimoni-card > div:first-child{
+font-weight:bold;
+}
+
 .testimoni-avatar{
 width:48px;
 height:48px;
@@ -451,6 +455,8 @@ tanggal:new Date().toLocaleDateString(),
 createdAt:new Date()
 })
 
+localStorage.setItem("userInvoice",invoice)
+
 alert("Testimoni berhasil dikirim!")
 
 }
@@ -500,7 +506,9 @@ tampil.forEach(t=>{
 
 let avatar = t.nama.charAt(0).toUpperCase()
 
-let invoiceInput = document.getElementById("invoice").value
+let invoiceInput =
+document.getElementById("invoice").value ||
+localStorage.getItem("userInvoice")
 let tombolMenu = ""
 
 if(invoiceInput && invoiceInput === t.invoice){
@@ -560,6 +568,13 @@ renderTestimoni()
 }
 
 alert("Testimoni berhasil dikirim!")
+
+const savedInvoice = localStorage.getItem("userInvoice")
+
+if(savedInvoice){
+document.getElementById("invoice").value = savedInvoice
+}
+
 loadTestimoni()
 
 const stars = document.querySelectorAll("#ratingStars span")
