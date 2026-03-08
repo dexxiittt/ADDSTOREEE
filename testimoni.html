@@ -659,7 +659,7 @@ Lihat Lebih Banyak
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
 import { 
-getFirestore, collection, addDoc, getDocs, doc, getDoc, query, where, onSnapshot, deleteDoc, updateDoc
+getFirestore, collection, addDoc, getDocs, doc, getDoc, query, where, onSnapshot, deleteDoc, updateDoc, orderBy
 } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -780,7 +780,10 @@ container.innerHTML = `
 <div class="skeleton"></div>
 `
 
-const q = query(collection(db,"testimoni"))
+const q = query(
+collection(db,"testimoni"),
+orderBy("createdAt","desc")
+)
 onSnapshot(q,(snapshot)=>{
 semuaTestimoni = []
 snapshot.forEach(d=>{
