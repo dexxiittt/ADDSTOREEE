@@ -325,6 +325,23 @@ width:fit-content;
 background:transparent;
 }
 
+[id^="editStars-"] span{
+user-select:none;
+-webkit-user-select:none;
+-webkit-tap-highlight-color:transparent;
+
+transition:transform .15s ease, filter .15s ease;
+}
+
+[id^="editStars-"] span:hover{
+transform:scale(1.2);
+}
+
+[id^="editStars-"] span:active{
+transform:scale(1.35);
+filter:drop-shadow(0 2px 6px rgba(251,191,36,.6));
+}
+
 .testimoni-card p{
 color:#374151;
 font-size:14px;
