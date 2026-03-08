@@ -994,6 +994,9 @@ activeEditId = id
 document.getElementById("text-"+id).style.display="none"
 document.getElementById("edit-"+id).style.display="block"
 document.getElementById("save-"+id).style.display="block"
+
+// AUTO FOCUS
+document.getElementById("edit-"+id).focus()
 }
 
 function cancelEdit(id){
