@@ -362,6 +362,89 @@ opacity:1;
 transform:translateX(-50%) translateY(0);
 }
 
+.delete-modal{
+position:fixed;
+inset:0;
+
+background:rgba(0,0,0,0.35);
+backdrop-filter:blur(6px);
+
+display:flex;
+align-items:flex-end;
+justify-content:center;
+
+opacity:0;
+pointer-events:none;
+
+transition:.3s ease;
+z-index:999;
+}
+
+.delete-modal.show{
+opacity:1;
+pointer-events:auto;
+}
+
+.delete-content{
+width:100%;
+max-width:420px;
+
+background:rgba(255,255,255,0.85);
+backdrop-filter:blur(20px);
+border-radius:20px 20px 0 0;
+padding:24px;
+
+box-shadow:0 -20px 50px rgba(0,0,0,0.25);
+
+transform:translateY(100%);
+transition:.35s ease;
+}
+
+.delete-modal.show .delete-content{
+transform:translateY(0);
+}
+
+.delete-content h3{
+font-size:18px;
+margin-bottom:6px;
+}
+
+.delete-content p{
+font-size:14px;
+color:#6b7280;
+}
+
+.delete-buttons{
+display:flex;
+gap:10px;
+margin-top:18px;
+}
+
+.btn-cancel{
+flex:1;
+border:none;
+
+background:#e5e7eb;
+padding:10px;
+border-radius:10px;
+
+cursor:pointer;
+}
+
+.btn-delete{
+flex:1;
+border:none;
+
+background:#ef4444;
+color:white;
+
+padding:10px;
+border-radius:10px;
+
+cursor:pointer;
+}
+
+
 @keyframes skeleton{
 0%{background-position:100% 0}
 100%{background-position:-100% 0}
@@ -418,6 +501,26 @@ document.querySelectorAll(".nav-dropdown a").forEach(link => {
 <div id="toastSuccess" class="toast-success">
 ✓ Testimoni berhasil dikirim
 </div>
+  
+<div id="deleteModal" class="delete-modal">
+<div class="delete-content">
+
+<h3>Hapus Testimoni</h3>
+<p>Testimoni yang dihapus tidak bisa dikembalikan.</p>
+
+<div class="delete-buttons">
+<button class="btn-cancel" onclick="tutupDelete()">
+Batal
+</button>
+
+<button class="btn-delete" onclick="konfirmasiDelete()">
+Hapus
+</button>
+</div>
+
+</div>
+</div>
+  
 <section class="package-hero">
 
 <h1 style="color:white;font-size:32px;margin-bottom:10px;">
@@ -509,9 +612,7 @@ return
 
 // cek invoice dari Google Sheets
 const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/WARRANTY_DATA")
-
 const data = await res.json()
-
 const invoiceValid = data.some(item => item.invoice === invoice)
 
 if(!invoiceValid){
@@ -541,28 +642,22 @@ createdAt:new Date()
 localStorage.setItem("userInvoice",invoice)
 
 showToast()
-
 }
 
 window.kirimTestimoni = kirimTestimoni
-
 function showToast(){
-
 const toast = document.getElementById("toastSuccess")
 
 toast.classList.add("show")
-
 setTimeout(()=>{
 toast.classList.remove("show")
 },2500)
-
 }
 
 let semuaTestimoni = []
 let jumlahTampil = 6
 
 function loadTestimoni(){
-
 let container = document.getElementById("testimoni-container")
 
 container.innerHTML = `
@@ -572,11 +667,8 @@ container.innerHTML = `
 `
 
 const q = query(collection(db,"testimoni"))
-
 onSnapshot(q,(snapshot)=>{
-
 semuaTestimoni = []
-
 snapshot.forEach(d=>{
 semuaTestimoni.push({
 id:d.id,
@@ -591,16 +683,13 @@ renderTestimoni()
 }
   
 function renderTestimoni(){
-
 let container = document.getElementById("testimoni-container")
 container.innerHTML=""
-
+  
 let tampil = semuaTestimoni.slice(0,jumlahTampil)
-
 tampil.forEach(t=>{
 
 let avatar = t.nama.charAt(0).toUpperCase()
-
 let invoiceInput =
 document.getElementById("invoice").value ||
 localStorage.getItem("userInvoice")
@@ -677,40 +766,32 @@ ${avatar}
 }
 
 document.getElementById("loadMoreBtn").onclick=function(){
-
 jumlahTampil += 6
 renderTestimoni()
-
 }
 
 const savedInvoice = localStorage.getItem("userInvoice")
-
 if(savedInvoice){
 document.getElementById("invoice").value = savedInvoice
 }
 
 loadTestimoni()
-
 const stars = document.querySelectorAll("#ratingStars span")
 let ratingValue = 0
 
 stars.forEach(star => {
-
 star.addEventListener("click", function(){
 
 ratingValue = parseInt(this.dataset.value)
 document.getElementById("rating").value = ratingValue
-
 document.getElementById("rating").value = ratingValue
 
 stars.forEach(s => s.classList.remove("active"))
-
+  
 for(let i=0;i<ratingValue;i++){
 stars[i].classList.add("active")
 }
-
 })
-
 })
 
 document.getElementById("invoice").addEventListener("input",function(){
@@ -718,38 +799,39 @@ renderTestimoni()
 })
 
 window.toggleMenu = function(id){
-
 const menu = document.getElementById("menu-"+id)
-
 menu.style.display =
 menu.style.display === "block" ? "none" : "block"
-
 }
 
-window.hapusTestimoni = async function(id){
-
-if(!window.confirmDelete){
-window.confirmDelete = confirm("Yakin hapus testimoni?")
+let deleteID = null
+window.hapusTestimoni = function(id){
+deleteID = id
+document
+.getElementById("deleteModal")
+.classList.add("show")
 }
 
-if(!window.confirmDelete) return
+window.tutupDelete = function(){
+document
+.getElementById("deleteModal")
+.classList.remove("show")
+}
 
-await deleteDoc(doc(db,"testimoni",id))
-
+window.konfirmasiDelete = async function(){
+if(!deleteID) return
+await deleteDoc(doc(db,"testimoni",deleteID))
+tutupDelete()
 }
 
 window.editTestimoni = function(id){
-
 document.getElementById("text-"+id).style.display="none"
 document.getElementById("edit-"+id).style.display="block"
 document.getElementById("save-"+id).style.display="block"
-
 }
 
 window.simpanEdit = async function(id){
-
 let pesanBaru = document.getElementById("edit-"+id).value
-
 await updateDoc(doc(db,"testimoni",id),{
 pesan: pesanBaru
 })
