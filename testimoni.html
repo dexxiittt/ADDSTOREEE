@@ -799,6 +799,7 @@ toast.classList.remove("show")
 let semuaTestimoni = []
 let jumlahTampil = 6
 let activeEditId = null
+let editRating = {}
 
 function loadTestimoni(){
 let container = document.getElementById("testimoni-container")
@@ -882,8 +883,22 @@ container.innerHTML += `
 
 ${tombolMenu}
 
-<div class="stars">
+<div class="stars" id="stars-${t.id}">
 ${"⭐".repeat(parseInt(t.rating))}
+</div>
+
+<div id="editStars-${t.id}" style="
+display:none;
+font-size:22px;
+margin-bottom:8px;
+cursor:pointer;
+color:#d1d5db;
+">
+<span data-value="1">★</span>
+<span data-value="2">★</span>
+<span data-value="3">★</span>
+<span data-value="4">★</span>
+<span data-value="5">★</span>
 </div>
 
 <p id="text-${t.id}">"${t.pesan}"</p>
@@ -1014,33 +1029,64 @@ tutupDelete()
 }
 
 window.editTestimoni = function(id){
-// tutup edit sebelumnya jika ada
+
 if(activeEditId && activeEditId !== id){
 cancelEdit(activeEditId)
 }
+
 activeEditId = id
+  
 document.getElementById("text-"+id).style.display="none"
 document.getElementById("edit-"+id).style.display="block"
 document.getElementById("save-"+id).style.display="block"
 
-// AUTO FOCUS + CURSOR DI AKHIR
+document.getElementById("stars-"+id).style.display="none"
+document.getElementById("editStars-"+id).style.display="block"
+
+let stars = document.querySelectorAll("#editStars-"+id+" span")
+
+stars.forEach(star=>{
+star.onclick = function(){
+
+let value = this.dataset.value
+editRating[id] = value
+
+stars.forEach(s=>s.style.color="#d1d5db")
+
+for(let i=0;i<value;i++){
+stars[i].style.color="#fbbf24"
+}
+
+}
+})
+
+// AUTO FOCUS
 let textarea = document.getElementById("edit-"+id)
 textarea.focus()
 textarea.setSelectionRange(textarea.value.length, textarea.value.length)
+
 }
 
 function cancelEdit(id){
 document.getElementById("text-"+id).style.display="block"
 document.getElementById("edit-"+id).style.display="none"
 document.getElementById("save-"+id).style.display="none"
+document.getElementById("stars-"+id).style.display="block"
+document.getElementById("editStars-"+id).style.display="none"
 activeEditId = null
 }
   
 window.simpanEdit = async function(id){
 let pesanBaru = document.getElementById("edit-"+id).value
-await updateDoc(doc(db,"testimoni",id),{
+let dataUpdate = {
 pesan: pesanBaru
-})
+}
+
+if(editRating[id]){
+dataUpdate.rating = editRating[id]
+}
+
+await updateDoc(doc(db,"testimoni",id), dataUpdate)
 }
 
 document.getElementById("invoice").addEventListener("input",function(){
