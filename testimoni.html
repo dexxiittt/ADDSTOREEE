@@ -156,6 +156,7 @@ background:rgba(255,255,255,0.7);
 backdrop-filter:blur(20px);
 border-radius:18px;
 padding:25px;
+position:relative;
 
 box-shadow:
 0 20px 40px rgba(0,0,0,0.08);
@@ -389,7 +390,9 @@ Lihat Lebih Banyak
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, doc, getDoc, query, where, onSnapshot } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+import { 
+getFirestore, collection, addDoc, getDocs, doc, getDoc, query, where, onSnapshot, deleteDoc, updateDoc
+} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBzuIo_i_TAAJevZMNqYtWuZoFB8wfj_RE",
@@ -483,7 +486,6 @@ renderTestimoni()
 function renderTestimoni(){
 
 let container = document.getElementById("testimoni-container")
-
 container.innerHTML=""
 
 let tampil = semuaTestimoni.slice(0,jumlahTampil)
@@ -493,7 +495,22 @@ tampil.forEach(t=>{
 let avatar = t.nama.charAt(0).toUpperCase()
 
 container.innerHTML += `
+
 <div class="testimoni-card">
+
+<div style="position:absolute;top:12px;right:12px;cursor:pointer;font-size:18px;"
+onclick="toggleMenu('${t.id}')">⋮</div>
+
+<div id="menu-${t.id}" 
+style="display:none;position:absolute;right:10px;top:35px;background:white;border-radius:10px;box-shadow:0 10px 25px rgba(0,0,0,0.1);padding:6px;z-index:10;">
+
+<div onclick="editTestimoni('${t.id}','${t.pesan}')" 
+style="padding:8px 12px;cursor:pointer;">Edit</div>
+
+<div onclick="hapusTestimoni('${t.id}')" 
+style="padding:8px 12px;color:red;cursor:pointer;">Hapus</div>
+
+</div>
 
 <div class="stars">
 ${"⭐".repeat(parseInt(t.rating))}
