@@ -420,11 +420,14 @@ alert("Lengkapi dulu ya")
 return
 }
 
-// cek invoice di database
-const invoiceRef = doc(db,"invoice",invoice)
-const invoiceSnap = await getDoc(invoiceRef)
+// cek invoice dari Google Sheets
+const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/WARRANTY_DATA")
 
-if(!invoiceSnap.exists()){
+const data = await res.json()
+
+const invoiceValid = data.some(item => item.invoice === invoice)
+
+if(!invoiceValid){
 alert("Nomor invoice tidak valid")
 return
 }
