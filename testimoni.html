@@ -332,6 +332,36 @@ transform:scale(1.15);
 color:#fbbf24;
 }
 
+.toast-success{
+position:fixed;
+bottom:25px;
+left:50%;
+transform:translateX(-50%) translateY(20px);
+
+background:#111827;
+color:white;
+
+padding:14px 20px;
+border-radius:12px;
+
+font-size:14px;
+font-weight:500;
+
+box-shadow:0 10px 30px rgba(0,0,0,0.25);
+
+opacity:0;
+pointer-events:none;
+
+transition:all .35s ease;
+
+z-index:999;
+}
+
+.toast-success.show{
+opacity:1;
+transform:translateX(-50%) translateY(0);
+}
+
 @keyframes skeleton{
 0%{background-position:100% 0}
 100%{background-position:-100% 0}
@@ -385,6 +415,9 @@ document.querySelectorAll(".nav-dropdown a").forEach(link => {
 </script>
 
 <body>
+<div id="toastSuccess" class="toast-success">
+✓ Testimoni berhasil dikirim
+</div>
 <section class="package-hero">
 
 <h1 style="color:white;font-size:32px;margin-bottom:10px;">
@@ -507,11 +540,23 @@ createdAt:new Date()
 
 localStorage.setItem("userInvoice",invoice)
 
-alert("Testimoni berhasil dikirim!")
+showToast()
 
 }
 
 window.kirimTestimoni = kirimTestimoni
+
+function showToast(){
+
+const toast = document.getElementById("toastSuccess")
+
+toast.classList.add("show")
+
+setTimeout(()=>{
+toast.classList.remove("show")
+},2500)
+
+}
 
 let semuaTestimoni = []
 let jumlahTampil = 6
@@ -616,8 +661,6 @@ jumlahTampil += 6
 renderTestimoni()
 
 }
-
-alert("Testimoni berhasil dikirim!")
 
 const savedInvoice = localStorage.getItem("userInvoice")
 
