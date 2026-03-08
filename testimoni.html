@@ -143,6 +143,16 @@ display:none;
 
 .input-error{
 border-color:#ef4444 !important;
+animation:shakeError .25s ease;
+}
+
+@keyframes shakeError{
+  
+0%{transform:translateX(0)}
+25%{transform:translateX(-3px)}
+50%{transform:translateX(3px)}
+75%{transform:translateX(-3px)}
+100%{transform:translateX(0)}
 }
 
 .glass-card input:focus,
