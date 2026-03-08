@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Testimoni</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+background:#f3f4f8;
+font-family:Inter,system-ui,-apple-system,sans-serif;
+}
+
+/* HERO UNGU SAMA PERSIS */
+.package-hero{
+width:100%;
+min-height:280px;
+
+background:linear-gradient(135deg,#493d84,#6d28d9);
+
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+
+text-align:center;
+
+padding:70px 20px;
+color:white;
+}
+
+.package-hero h1{
+font-size:34px;
+font-weight:700;
+margin-bottom:10px;
+}
+
+.package-hero p{
+opacity:0.9;
+}
+
+.testimoni-input{
+padding:60px 20px;
+display:flex;
+justify-content:center;
+}
+
+.glass-card{
+width:100%;
+max-width:780px;
+padding:45px;
+overflow:hidden;
+
+border-radius:24px;
+background:rgba(255,255,255,0.65);
+backdrop-filter:blur(25px);
+border:1px solid rgba(255,255,255,0.6);
+
+box-shadow:
+0 40px 80px rgba(0,0,0,0.15),
+0 10px 30px rgba(0,0,0,0.1);
+
+text-align:center;
+color:#1f2937;
+transition:all .25s ease;
+
+position:relative;
+}
+
+.glass-card::before{
+content:"";
+position:absolute;
+
+top:0;
+left:0;
+right:0;
+
+height:1px;
+
+background:linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,0.9),
+transparent
+);
+}
+
+.glass-card:hover{
+transform:translateY(-4px);
+box-shadow:
+0 50px 100px rgba(0,0,0,0.18),
+0 15px 40px rgba(0,0,0,0.15);
+}
+
+.glass-card h2{
+font-family:Inter,system-ui,-apple-system,sans-serif;
+font-weight:700;
+font-size:24px;
+letter-spacing:0.4px;
+margin-top:6px;
+margin-bottom:6px;
+color:#111827;
+}
+
+.glass-card p{
+font-family:Inter,system-ui,-apple-system,sans-serif;
+font-size:14px;
+font-weight:500;
+letter-spacing:0.2px;
+color:#4b5563;
+margin-bottom:10px;
+}
+
+.glass-card input,
+.glass-card textarea{
+width:100%;
+padding:16px;
+margin-top:14px;
+
+border-radius:12px;
+border:1px solid rgba(0,0,0,0.12);
+background:rgba(255,255,255,0.9);
+
+color:#111827;
+font-size:14px;
+
+transition:all .2s ease;
+box-shadow:0 2px 6px rgba(0,0,0,0.06);
+}
+
+.glass-card input:focus,
+.glass-card textarea:focus{
+
+outline:none;
+border-color:#111827;
+
+box-shadow:
+0 0 0 3px rgba(0,0,0,0.08),
+0 6px 18px rgba(0,0,0,0.12);
+
+background:white;
+}
+
+.glass-card textarea{
+min-height:120px;
+resize:none;
+}
+
+.glass-card button{
+margin-top:18px;
+width:100%;
+padding:14px;
+
+border:none;
+border-radius:10px;
+background:linear-gradient(135deg,#493d84,#6d28d9);
+
+color:white;
+font-weight:600;
+
+cursor:pointer;
+transition:0.3s;
+}
+
+.glass-card button:hover{
+transform:translateY(-2px);
+box-shadow:0 12px 30px rgba(109,40,217,0.45);
+}
+
+.testimoni-list-section{
+padding:80px 20px;
+max-width:1100px;
+margin:auto;
+}
+
+.testimoni-title{
+text-align:center;
+font-size:28px;
+margin-bottom:40px;
+color:#111827;
+}
+
+.testimoni-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:25px;
+}
+
+.testimoni-card{
+background:rgba(255,255,255,0.7);
+backdrop-filter:blur(20px);
+border-radius:18px;
+padding:25px;
+position:relative;
+
+box-shadow:
+0 20px 40px rgba(0,0,0,0.08);
+
+transition:0.25s;
+}
+
+.testimoni-card:hover{
+transform:translateY(-6px);
+box-shadow:
+0 30px 60px rgba(0,0,0,0.12);
+}
+
+.stars{
+color:#fbbf24;
+font-size:18px;
+margin-bottom:10px;
+}
+
+.testimoni-card p{
+color:#374151;
+font-size:14px;
+line-height:1.6;
+margin-bottom:12px;
+}
+
+.testimoni-user strong{
+font-size:14px;
+}
+
+.testimoni-user small{
+color:#6b7280;
+font-size:12px;
+}
+
+.testimoni-card > div:first-child{
+font-weight:bold;
+}
+
+.testimoni-avatar{
+width:48px;
+height:48px;
+
+border-radius:50%;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+background:linear-gradient(135deg,#6366f1,#8b5cf6);
+
+color:white;
+font-weight:700;
+font-size:16px;
+box-shadow:0 6px 14px rgba(99,102,241,0.3);
+margin-right:12px;
+}
+
+.testimoni-user{
+display:flex;
+align-items:center;
+margin-top:15px;
+}
+
+.load-more-btn{
+margin:40px auto 0;
+display:block;
+background:linear-gradient(135deg,#6366f1,#8b5cf6);
+
+color:white;
+border:none;
+padding:13px 24px;
+border-radius:12px;
+
+cursor:pointer;
+font-weight:600;
+transition:0.25s;
+
+}
+
+.load-more-btn:hover{
+transform:translateY(-2px);
+box-shadow:0 10px 25px rgba(99,102,241,0.35);
+}
+
+.skeleton{
+height:120px;
+background:linear-gradient(
+90deg,
+#f3f4f6 25%,
+#e5e7eb 37%,
+#f3f4f6 63%
+);
+background-size:400% 100%;
+
+animation:skeleton 1.4s ease infinite;
+border-radius:18px;
+}
+
+.rating-stars{
+display:inline-flex;
+gap:8px;
+
+margin-top:16px;
+margin-bottom:10px;
+
+font-size:28px;
+
+cursor:pointer;
+
+padding:6px 10px;
+border-radius:12px;
+}
+
+#ratingStars{
+width:fit-content;
+margin-left:auto;
+margin-right:auto;
+}
+
+.rating-stars span{
+user-select:none;
+color:#d1d5db;
+transition:transform .12s ease, color .12s ease;
+}
+
+.rating-stars span.active{
+color:#fbbf24;
+transform:scale(1.15);
+}
+
+.rating-stars span:hover{
+color:#fbbf24;
+}
+
+@keyframes skeleton{
+0%{background-position:100% 0}
+100%{background-position:-100% 0}
+}
+
+</style>
+  
+</head>
+<div id="navbar-placeholder"></div>
+
+<script>
+fetch("navbar.html")
+  .then(res => res.text())
+  .then(data => {
+    document.getElementById("navbar-placeholder").innerHTML = data;
+
+    const navbar = document.querySelector(".main-navbar");
+    const toggle = document.getElementById("navToggle");
+    const dropdown = document.getElementById("navDropdown");
+
+    // TOGGLE
+    toggle.addEventListener("click", function (e) {
+  e.stopPropagation();
+  dropdown.classList.toggle("open");
+  toggle.classList.toggle("active"); // ← TAMBAHAN INI
+});
+
+    document.addEventListener("click", function (e) {
+  if (!dropdown.contains(e.target) && !toggle.contains(e.target)) {
+    dropdown.classList.remove("open");
+    toggle.classList.remove("active"); // ← TAMBAHAN INI
+  }
+});
+
+   // ===== ACTIVE LINK AUTO DETECT =====
+const currentPage = window.location.pathname.split("/").pop() || "index.html";
+
+document.querySelectorAll(".nav-dropdown a").forEach(link => {
+  const linkPage = link.getAttribute("href");
+
+  if (linkPage === currentPage) {
+    link.classList.add("active");
+  }
+});
+
+    // SCROLL EFFECT
+    window.addEventListener("scroll", function () {
+      navbar.classList.toggle("scrolled", window.scrollY > 30);
+    });
+  });
+</script>
+
+<body>
+<section class="package-hero">
+
+<h1 style="color:white;font-size:32px;margin-bottom:10px;">
+Testimoni Pelanggan
+</h1>
+
+<p style="color:#e0e7ff;max-width:620px;">
+Dengar langsung dari pelanggan yang telah merasakan layanan premium kami
+</p>
+
+</section>
+
+<section class="testimoni-input">
+
+<div class="glass-card">
+
+<div class="icon">
+<i class="fa-solid fa-star"></i>
+</div>
+
+<h2>Bagikan Pengalaman Anda</h2>
+<p>Berikan testimoni untuk pesanan yang sudah dibayar</p>
+
+<input type="text" id="invoice" placeholder="Nomor Invoice (contoh: INV20261001001)">
+<input type="text" id="nama" placeholder="Nama Anda">
+
+<div class="rating-stars" id="ratingStars">
+
+<span data-value="1">★</span>
+<span data-value="2">★</span>
+<span data-value="3">★</span>
+<span data-value="4">★</span>
+<span data-value="5">★</span>
+
+</div>
+
+<input type="hidden" id="rating">
+
+<textarea id="pesan" placeholder="Ceritakan pengalaman Anda..."></textarea>
+
+<button onclick="kirimTestimoni()">
+<i class="fa-solid fa-paper-plane"></i>
+Kirim Testimoni
+</button>
+
+</div>
+</section>
+
+<section class="testimoni-list-section">
+<h2 class="testimoni-title">Apa Kata Mereka</h2>
+<div id="testimoni-container" class="testimoni-grid"></div>
+<button id="loadMoreBtn" class="load-more-btn">
+Lihat Lebih Banyak
+</button>
+</section>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+import { 
+getFirestore, collection, addDoc, getDocs, doc, getDoc, query, where, onSnapshot, deleteDoc, updateDoc
+} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBzuIo_i_TAAJevZMNqYtWuZoFB8wfj_RE",
+  authDomain: "addstoreapps.firebaseapp.com",
+  projectId: "addstoreapps",
+  storageBucket: "addstoreapps.firebasestorage.app",
+  messagingSenderId: "712672256555",
+  appId: "1:712672256555:web:9069f8ea4d7776d1f3806e",
+  measurementId: "G-92MPF6V96X"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+
+async function kirimTestimoni(){
+
+let invoice = document.getElementById("invoice").value
+let nama = document.getElementById("nama").value
+let rating = document.getElementById("rating").value
+let pesan = document.getElementById("pesan").value
+
+if(!invoice || !nama || !rating || !pesan){
+alert("Lengkapi dulu ya")
+return
+}
+
+// cek invoice dari Google Sheets
+const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/WARRANTY_DATA")
+
+const data = await res.json()
+
+const invoiceValid = data.some(item => item.invoice === invoice)
+
+if(!invoiceValid){
+alert("Nomor invoice tidak valid")
+return
+}
+
+// cek apakah invoice sudah pernah memberi testimoni
+const q = query(collection(db,"testimoni"), where("invoice","==",invoice))
+const snapshot = await getDocs(q)
+
+if(!snapshot.empty){
+  alert("Invoice ini sudah pernah memberikan testimoni.")
+  return
+}
+
+// kirim testimoni
+await addDoc(collection(db,"testimoni"),{
+invoice:invoice,
+nama:nama,
+rating:rating,
+pesan:pesan,
+tanggal:new Date().toLocaleDateString(),
+createdAt:new Date()
+})
+
+localStorage.setItem("userInvoice",invoice)
+
+alert("Testimoni berhasil dikirim!")
+
+}
+
+window.kirimTestimoni = kirimTestimoni
+
+let semuaTestimoni = []
+let jumlahTampil = 6
+
+function loadTestimoni(){
+
+let container = document.getElementById("testimoni-container")
+
+container.innerHTML = `
+<div class="skeleton"></div>
+<div class="skeleton"></div>
+<div class="skeleton"></div>
+`
+
+const q = query(collection(db,"testimoni"))
+
+onSnapshot(q,(snapshot)=>{
+
+semuaTestimoni = []
+
+snapshot.forEach(d=>{
+semuaTestimoni.push({
+id:d.id,
+...d.data()
+})
+})
+
+renderTestimoni()
+
+})
+
+}
+  
+function renderTestimoni(){
+
+let container = document.getElementById("testimoni-container")
+container.innerHTML=""
+
+let tampil = semuaTestimoni.slice(0,jumlahTampil)
+
+tampil.forEach(t=>{
+
+let avatar = t.nama.charAt(0).toUpperCase()
+
+let invoiceInput =
+document.getElementById("invoice").value ||
+localStorage.getItem("userInvoice")
+let tombolMenu = ""
+
+if(invoiceInput && invoiceInput === t.invoice){
+tombolMenu = `
+<div style="position:absolute;top:12px;right:12px;cursor:pointer;font-size:18px;"
+onclick="toggleMenu('${t.id}')">⋮</div>
+
+<div id="menu-${t.id}" 
+style="display:none;position:absolute;right:10px;top:35px;background:white;border-radius:10px;box-shadow:0 10px 25px rgba(0,0,0,0.1);padding:6px;z-index:10;">
+
+<div onclick="editTestimoni('${t.id}','${t.pesan}')" 
+style="padding:8px 12px;cursor:pointer;">Edit</div>
+
+<div onclick="hapusTestimoni('${t.id}')" 
+style="padding:8px 12px;color:red;cursor:pointer;">Hapus</div>
+
+</div>
+`
+}
+
+container.innerHTML += `
+
+<div class="testimoni-card">
+
+${tombolMenu}
+
+<div class="stars">
+${"⭐".repeat(parseInt(t.rating))}
+</div>
+
+<p>"${t.pesan}"</p>
+
+<div class="testimoni-user">
+
+<div class="testimoni-avatar">
+${avatar}
+</div>
+
+<div>
+<strong>${t.nama}</strong><br>
+<small>${t.tanggal}</small>
+</div>
+
+</div>
+
+</div>
+`
+})
+
+}
+
+document.getElementById("loadMoreBtn").onclick=function(){
+
+jumlahTampil += 6
+renderTestimoni()
+
+}
+
+alert("Testimoni berhasil dikirim!")
+
+const savedInvoice = localStorage.getItem("userInvoice")
+
+if(savedInvoice){
+document.getElementById("invoice").value = savedInvoice
+}
+
+loadTestimoni()
+
+const stars = document.querySelectorAll("#ratingStars span")
+let ratingValue = 0
+
+stars.forEach(star => {
+
+star.addEventListener("click", function(){
+
+ratingValue = parseInt(this.dataset.value)
+document.getElementById("rating").value = ratingValue
+
+document.getElementById("rating").value = ratingValue
+
+stars.forEach(s => s.classList.remove("active"))
+
+for(let i=0;i<ratingValue;i++){
+stars[i].classList.add("active")
+}
+
+})
+
+})
+
+document.getElementById("invoice").addEventListener("input",function(){
+renderTestimoni()
+})
+
+window.toggleMenu = function(id){
+
+const menu = document.getElementById("menu-"+id)
+
+menu.style.display =
+menu.style.display === "block" ? "none" : "block"
+
+}
+
+window.hapusTestimoni = async function(id){
+
+if(!confirm("Hapus testimoni ini?")) return
+
+await deleteDoc(doc(db,"testimoni",id))
+
+}
+
+window.editTestimoni = async function(id,pesan){
+
+let pesanBaru = prompt("Edit testimoni:", pesan)
+
+if(!pesanBaru) return
+
+await updateDoc(doc(db,"testimoni",id),{
+pesan: pesanBaru
+})
+
+  }
+
+</script>
+  
+</body>
+</html>
+
+
