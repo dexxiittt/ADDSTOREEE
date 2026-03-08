@@ -938,8 +938,22 @@ let pesanBaru = document.getElementById("edit-"+id).value
 await updateDoc(doc(db,"testimoni",id),{
 pesan: pesanBaru
 })
-
 }
+
+document.getElementById("invoice").addEventListener("input",function(){
+this.classList.remove("input-error")
+document.getElementById("errorInvoice").style.display="none"
+})
+
+document.getElementById("nama").addEventListener("input",function(){
+this.classList.remove("input-error")
+document.getElementById("errorNama").style.display="none"
+})
+
+document.getElementById("pesan").addEventListener("input",function(){
+this.classList.remove("input-error")
+document.getElementById("errorPesan").style.display="none"
+})
 
 </script>
   
