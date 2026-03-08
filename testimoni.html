@@ -494,10 +494,11 @@ tampil.forEach(t=>{
 
 let avatar = t.nama.charAt(0).toUpperCase()
 
-container.innerHTML += `
+let invoiceInput = document.getElementById("invoice").value
+let tombolMenu = ""
 
-<div class="testimoni-card">
-
+if(invoiceInput === t.invoice){
+tombolMenu = `
 <div style="position:absolute;top:12px;right:12px;cursor:pointer;font-size:18px;"
 onclick="toggleMenu('${t.id}')">⋮</div>
 
@@ -505,12 +506,20 @@ onclick="toggleMenu('${t.id}')">⋮</div>
 style="display:none;position:absolute;right:10px;top:35px;background:white;border-radius:10px;box-shadow:0 10px 25px rgba(0,0,0,0.1);padding:6px;z-index:10;">
 
 <div onclick="editTestimoni('${t.id}','${t.pesan}')" 
-style="padding:8px 12px;cursor:pointer;">Edit</div>
+style="padding:8px 12px;cursor:pointer;">✏️ Edit</div>
 
 <div onclick="hapusTestimoni('${t.id}')" 
-style="padding:8px 12px;color:red;cursor:pointer;">Hapus</div>
+style="padding:8px 12px;color:red;cursor:pointer;">🗑 Hapus</div>
 
 </div>
+`
+}
+
+container.innerHTML += `
+
+<div class="testimoni-card">
+
+${tombolMenu}
 
 <div class="stars">
 ${"⭐".repeat(parseInt(t.rating))}
@@ -533,7 +542,6 @@ ${avatar}
 
 </div>
 `
-
 })
 
 }
@@ -568,6 +576,10 @@ stars[i].classList.add("active")
 
 })
 
+})
+
+document.getElementById("invoice").addEventListener("input",function(){
+renderTestimoni()
 })
 
 window.toggleMenu = function(id){
