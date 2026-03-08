@@ -427,6 +427,14 @@ transform:scale(1.15);
 color:#fbbf24;
 }
 
+#testimoni-container [id^="editStars-"] span{
+transition:transform .15s ease;
+}
+
+#testimoni-container [id^="editStars-"] span:hover{
+transform:scale(1.2);
+}
+
 .toast-success{
 position:fixed;
 bottom:25px;
@@ -988,7 +996,8 @@ document.addEventListener("click",function(e){
 // jika klik tombol edit / textarea jangan batal
 if(
 e.target.closest("[onclick^='editTestimoni']") ||
-e.target.closest("textarea")
+e.target.closest("textarea") ||
+e.target.closest("[id^='editStars-']")
 ){
 return
 }
