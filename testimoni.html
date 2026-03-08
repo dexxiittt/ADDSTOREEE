@@ -770,6 +770,7 @@ toast.classList.remove("show")
 
 let semuaTestimoni = []
 let jumlahTampil = 6
+let activeEditId = null
 
 function loadTestimoni(){
 let container = document.getElementById("testimoni-container")
@@ -940,11 +941,20 @@ menu.style.display === "block" ? "none" : "block"
 }
 
 document.addEventListener("click",function(e){
+// tutup menu titik tiga
 document.querySelectorAll("[id^='menu-']").forEach(menu=>{
 if(!menu.contains(e.target)){
 menu.style.display="none"
 }
 })
+
+// jika sedang edit lalu klik area luar -> batal edit
+if(activeEditId){
+let editBox = document.getElementById("edit-"+activeEditId)
+if(editBox && !editBox.contains(e.target)){
+cancelEdit(activeEditId)
+}
+}
 })
 
 let deleteID = null
@@ -968,11 +978,23 @@ tutupDelete()
 }
 
 window.editTestimoni = function(id){
+// tutup edit sebelumnya jika ada
+if(activeEditId && activeEditId !== id){
+cancelEdit(activeEditId)
+}
+activeEditId = id
 document.getElementById("text-"+id).style.display="none"
 document.getElementById("edit-"+id).style.display="block"
 document.getElementById("save-"+id).style.display="block"
 }
 
+function cancelEdit(id){
+document.getElementById("text-"+id).style.display="block"
+document.getElementById("edit-"+id).style.display="none"
+document.getElementById("save-"+id).style.display="none"
+activeEditId = null
+}
+  
 window.simpanEdit = async function(id){
 let pesanBaru = document.getElementById("edit-"+id).value
 await updateDoc(doc(db,"testimoni",id),{
