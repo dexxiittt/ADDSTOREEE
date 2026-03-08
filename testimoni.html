@@ -476,8 +476,11 @@ onSnapshot(q,(snapshot)=>{
 
 semuaTestimoni = []
 
-snapshot.forEach(doc=>{
-semuaTestimoni.push(doc.data())
+snapshot.forEach(d=>{
+semuaTestimoni.push({
+id:d.id,
+...d.data()
+})
 })
 
 renderTestimoni()
@@ -500,7 +503,7 @@ let avatar = t.nama.charAt(0).toUpperCase()
 let invoiceInput = document.getElementById("invoice").value
 let tombolMenu = ""
 
-if(invoiceInput === t.invoice){
+if(invoiceInput && invoiceInput === t.invoice){
 tombolMenu = `
 <div style="position:absolute;top:12px;right:12px;cursor:pointer;font-size:18px;"
 onclick="toggleMenu('${t.id}')">⋮</div>
@@ -509,10 +512,10 @@ onclick="toggleMenu('${t.id}')">⋮</div>
 style="display:none;position:absolute;right:10px;top:35px;background:white;border-radius:10px;box-shadow:0 10px 25px rgba(0,0,0,0.1);padding:6px;z-index:10;">
 
 <div onclick="editTestimoni('${t.id}','${t.pesan}')" 
-style="padding:8px 12px;cursor:pointer;">✏️ Edit</div>
+style="padding:8px 12px;cursor:pointer;">Edit</div>
 
 <div onclick="hapusTestimoni('${t.id}')" 
-style="padding:8px 12px;color:red;cursor:pointer;">🗑 Hapus</div>
+style="padding:8px 12px;color:red;cursor:pointer;">Hapus</div>
 
 </div>
 `
