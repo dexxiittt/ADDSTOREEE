@@ -634,7 +634,28 @@ ${tombolMenu}
 ${"⭐".repeat(parseInt(t.rating))}
 </div>
 
-<p>"${t.pesan}"</p>
+<p id="text-${t.id}">"${t.pesan}"</p>
+
+<textarea id="edit-${t.id}" style="
+display:none;
+width:100%;
+margin-top:8px;
+padding:10px;
+border-radius:8px;
+border:1px solid #ddd;
+font-size:14px;
+">${t.pesan}</textarea>
+
+<div id="save-${t.id}" style="display:none;margin-top:8px;">
+<button onclick="simpanEdit('${t.id}')" style="
+padding:6px 12px;
+border:none;
+background:#6d28d9;
+color:white;
+border-radius:6px;
+cursor:pointer;
+">Simpan</button>
+</div>
 
 <div class="testimoni-user">
 
@@ -707,23 +728,33 @@ menu.style.display === "block" ? "none" : "block"
 
 window.hapusTestimoni = async function(id){
 
-if(!confirm("Hapus testimoni ini?")) return
+if(!window.confirmDelete){
+window.confirmDelete = confirm("Yakin hapus testimoni?")
+}
+
+if(!window.confirmDelete) return
 
 await deleteDoc(doc(db,"testimoni",id))
 
 }
 
-window.editTestimoni = async function(id,pesan){
+window.editTestimoni = function(id){
 
-let pesanBaru = prompt("Edit testimoni:", pesan)
+document.getElementById("text-"+id).style.display="none"
+document.getElementById("edit-"+id).style.display="block"
+document.getElementById("save-"+id).style.display="block"
 
-if(!pesanBaru) return
+}
+
+window.simpanEdit = async function(id){
+
+let pesanBaru = document.getElementById("edit-"+id).value
 
 await updateDoc(doc(db,"testimoni",id),{
 pesan: pesanBaru
 })
 
-  }
+}
 
 </script>
   
