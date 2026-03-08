@@ -5,6 +5,8 @@
 
 <style>
 
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
 *{
 margin:0;
 padding:0;
@@ -45,30 +47,33 @@ opacity:0.9;
 }
 
 .testimoni-input{
-padding:60px 20px;
+padding:70px 20px;
 display:flex;
 justify-content:center;
+max-width:1100px;
+margin:auto;
 }
 
 .glass-card{
-
 width:100%;
-max-width:620px;
-padding:45px;
+max-width:780px;
+padding:48px;
 
-border-radius:24px;
-background:rgba(255,255,255,0.65);
-backdrop-filter:blur(25px);
-border:1px solid rgba(255,255,255,0.6);
+border-radius:26px;
+
+background:rgba(255,255,255,0.55);
+backdrop-filter:blur(30px);
+
+border:1px solid rgba(255,255,255,0.7);
 
 box-shadow:
-0 40px 80px rgba(0,0,0,0.15),
-0 10px 30px rgba(0,0,0,0.1);
+0 30px 70px rgba(0,0,0,0.12),
+inset 0 1px 0 rgba(255,255,255,0.7);
 
 text-align:center;
 color:#1f2937;
-transition:all .25s ease;
 
+transition:all .25s ease;
 }
 
 .glass-card:hover{
@@ -78,32 +83,42 @@ box-shadow:
 0 15px 40px rgba(0,0,0,0.15);
 }
 
+.glass-card h2{
+font-family:'Playfair Display',serif;
+font-weight:600;
+font-size:26px;
+margin-top:6px;
+margin-bottom:6px;
+letter-spacing:0.3px;
+}
+
 .glass-card input,
-.glass-card textarea,
+.glass-card textarea
 .glass-card select{
-
 width:100%;
-padding:16px;
-margin-top:14px;
+padding:17px 18px;
+margin-top:16px;
 
-border-radius:12px;
-border:1px solid rgba(0,0,0,0.06);
-background:rgba(255,255,255,0.8);
+border-radius:14px;
+border:1px solid rgba(0,0,0,0.05);
+background:rgba(255,255,255,0.85);
 
-color:#111827;
+font-family:Inter;
 font-size:14px;
-transition:all .2s ease;
 
+transition:all .2s ease;
 }
 
 .glass-card input:focus,
 .glass-card textarea:focus,
 .glass-card select:focus{
-
 outline:none;
-border-color:#6366f1;
-box-shadow:0 0 0 3px rgba(99,102,241,0.15);
 
+border-color:#ef4444;
+box-shadow:
+0 0 0 3px rgba(239,68,68,0.15);
+
+background:white;
 }
 
 .glass-card textarea{
@@ -112,24 +127,29 @@ resize:none;
 }
 
 .glass-card button{
-margin-top:18px;
+margin-top:22px;
 width:100%;
-padding:14px;
+padding:16px;
 
 border:none;
-border-radius:10px;
-background:linear-gradient(135deg,#3b82f6,#6366f1);
+border-radius:14px;
+background:linear-gradient(135deg,#ef4444,#dc2626);
 
 color:white;
 font-weight:600;
+font-size:15px;
 
 cursor:pointer;
-transition:0.3s;
+transition:all .25s ease;
+
+box-shadow:
+0 10px 25px rgba(239,68,68,0.35);
 }
 
 .glass-card button:hover{
 transform:translateY(-2px);
-box-shadow:0 10px 25px rgba(59,130,246,0.4);
+box-shadow:
+0 16px 35px rgba(239,68,68,0.45);
 }
 
 .testimoni-list-section{
@@ -168,6 +188,12 @@ transition:0.25s;
 transform:translateY(-6px);
 box-shadow:
 0 30px 60px rgba(0,0,0,0.12);
+}
+
+.glass-card p{
+color:#6b7280;
+font-size:14px;
+margin-bottom:10px;
 }
 
 .stars{
