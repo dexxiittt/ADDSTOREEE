@@ -141,6 +141,10 @@ margin-top:6px;
 display:none;
 }
 
+.input-error{
+border-color:#ef4444 !important;
+}
+
 .glass-card input:focus,
 .glass-card textarea:focus{
 
@@ -646,19 +650,25 @@ let valid = true
 document.getElementById("errorInvoice").style.display="none"
 document.getElementById("errorNama").style.display="none"
 document.getElementById("errorPesan").style.display="none"
+document.getElementById("invoice").classList.remove("input-error")
+document.getElementById("nama").classList.remove("input-error")
+document.getElementById("pesan").classList.remove("input-error")
 
 if(!invoice){
 document.getElementById("errorInvoice").style.display="block"
+document.getElementById("invoice").classList.add("input-error")
 valid=false
 }
 
 if(!nama){
 document.getElementById("errorNama").style.display="block"
+document.getElementById("nama").classList.add("input-error")
 valid=false
 }
 
 if(!pesan){
 document.getElementById("errorPesan").style.display="block"
+document.getElementById("pesan").classList.add("input-error")
 valid=false
 }
 
