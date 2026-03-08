@@ -171,6 +171,17 @@ background:white;
 .glass-card textarea{
 min-height:120px;
 resize:none;
+
+font-family: "Inter", system-ui, -apple-system, sans-serif;
+font-size:15px;
+line-height:1.6;
+letter-spacing:0.2px;
+}
+
+.glass-card textarea::placeholder{
+color:#9ca3af;
+font-weight:500;
+letter-spacing:0.2px;
 }
 
 input:invalid,
@@ -228,7 +239,17 @@ position:relative;
 box-shadow:
 0 20px 40px rgba(0,0,0,0.08);
 
-transition:0.25s;
+/* TAMBAHAN */
+opacity:0;
+transform:translateY(15px);
+animation:cardReveal .5s ease forwards;
+}
+
+@keyframes cardReveal{
+to{
+opacity:1;
+transform:translateY(0);
+}
 }
 
 #testimoni-container textarea{
@@ -780,7 +801,7 @@ let container = document.getElementById("testimoni-container")
 container.innerHTML=""
   
 let tampil = semuaTestimoni.slice(0,jumlahTampil)
-tampil.forEach(t=>{
+tampil.forEach((t,i)=>{
 
 let avatar = t.nama.charAt(0).toUpperCase()
 let myInvoices =
@@ -822,7 +843,7 @@ style="padding:8px 12px;color:red;cursor:pointer;">Hapus</div>
 
 container.innerHTML += `
 
-<div class="testimoni-card">
+<div class="testimoni-card" style="animation-delay:${i*0.08}s">
 
 ${tombolMenu}
 
