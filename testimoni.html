@@ -718,7 +718,14 @@ tanggal:new Date().toLocaleDateString(),
 createdAt:new Date()
 })
 
-localStorage.setItem("userInvoice",invoice)
+let myInvoices =
+JSON.parse(localStorage.getItem("myTestimoni")) || []
+
+if(!myInvoices.includes(invoice)){
+myInvoices.push(invoice)
+}
+
+localStorage.setItem("myTestimoni",JSON.stringify(myInvoices))
 
 showToast()
 }
@@ -769,12 +776,11 @@ let tampil = semuaTestimoni.slice(0,jumlahTampil)
 tampil.forEach(t=>{
 
 let avatar = t.nama.charAt(0).toUpperCase()
-let invoiceInput =
-document.getElementById("invoice").value ||
-localStorage.getItem("userInvoice")
+let myInvoices =
+JSON.parse(localStorage.getItem("myTestimoni")) || []
 let tombolMenu = ""
 
-if(invoiceInput && invoiceInput === t.invoice){
+if(myInvoices.includes(t.invoice)){
 tombolMenu = `
 <div style="position:absolute;top:12px;right:12px;cursor:pointer;font-size:18px;"
 onclick="toggleMenu('${t.id}')">⋮</div>
