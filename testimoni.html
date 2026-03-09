@@ -1112,10 +1112,11 @@ document.getElementById("editNama-"+id).style.display="inline-block"
 let inputNama = document.getElementById("editNama-"+id)
   
 inputNama.addEventListener("input",function(){
-let huruf = this.value.trim().charAt(0).toUpperCase)
+let huruf = this.value.trim().charAt(0).toUpperCase()
 if(huruf){
 let avatar = document.getElementById("avatar-"+id)
 avatar.innerText = huruf
+}
 avatar.style.transform = "scale(1.18)"
 setTimeout(()=>{
 avatar.style.transform = "scale(1)"
