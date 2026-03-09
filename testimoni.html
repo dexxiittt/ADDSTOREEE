@@ -1141,24 +1141,12 @@ activeEditId = null
 }
   
 window.simpanEdit = async function(id){
-
+  
 let pesanBaru = document.getElementById("edit-"+id).value
 let namaBaru = document.getElementById("editNama-"+id).value
 let dataUpdate = {
 pesan: pesanBaru,
 nama: namaBaru
-}
-  
-if(editRating[id]){
-dataUpdate.rating = editRating[id]
-}
-
-await updateDoc(doc(db,"testimoni",id), dataUpdate)
-}
-  
-let pesanBaru = document.getElementById("edit-"+id).value
-let dataUpdate = {
-pesan: pesanBaru
 }
 
 if(editRating[id]){
