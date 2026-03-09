@@ -311,6 +311,34 @@ font-size:18px;
 margin-bottom:10px;
 }
 
+.star{
+font-size:38px;
+position:relative;
+display:inline-block;
+}
+
+.star.full{
+color:#fbbf24;
+}
+
+.star.empty{
+color:#e5e7eb;
+}
+
+.star.half{
+color:#e5e7eb;
+}
+
+.star.half::before{
+content:"★";
+position:absolute;
+left:0;
+top:0;
+width:50%;
+overflow:hidden;
+color:#fbbf24;
+}
+
 #testimoni-container [id^="editStars-"] span{
 transition:transform .15s ease;
 }
@@ -1074,16 +1102,18 @@ document.getElementById("ratingText").innerText =
 let fullStars = Math.floor(rataRata)
 let halfStar = rataRata % 1 >= 0.5
 let starHTML = ""
-  
+
 for(let i=1;i<=5;i++){
 if(i <= fullStars){
-starHTML += "★"
+starHTML += '<span class="star full">★</span>'
 }
+
 else if(i === fullStars+1 && halfStar){
-starHTML += "⯨"
+starHTML += '<span class="star half">★</span>'
 }
+
 else{
-starHTML += "☆"
+starHTML += '<span class="star empty">★</span>'
 }
 }
 
