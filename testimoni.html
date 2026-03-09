@@ -957,7 +957,7 @@ cursor:pointer;
 
 <div class="testimoni-user">
 
-<div class="testimoni-avatar">
+<div class="testimoni-avatar" id="avatar-${t.id}">
 ${avatar}
 </div>
 
@@ -1039,10 +1039,12 @@ document.addEventListener("click",function(e){
 if(
 e.target.closest("[onclick^='editTestimoni']") ||
 e.target.closest("textarea") ||
-e.target.closest("[id^='editStars-']")
+e.target.closest("[id^='editStars-']") ||
+e.target.closest("[id^='editNama-']")
 ){
 return
 }
+  
 // tutup menu titik tiga
 document.querySelectorAll("[id^='menu-']").forEach(menu=>{
 if(!menu.contains(e.target)){
@@ -1104,6 +1106,14 @@ document.getElementById("stars-"+id).style.display="none"
 document.getElementById("editStars-"+id).style.display="block"
 document.getElementById("nama-"+id).style.display="none"
 document.getElementById("editNama-"+id).style.display="inline-block"
+
+let inputNama = document.getElementById("editNama-"+id)
+inputNama.addEventListener("input",function(){
+let huruf = this.value.trim().charAt(0).toUpperCase()
+if(huruf){
+document.getElementById("avatar-"+id).innerText = huruf
+}
+})
 
 let stars = document.querySelectorAll("#editStars-"+id+" span")
 
