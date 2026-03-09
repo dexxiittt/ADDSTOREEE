@@ -1112,11 +1112,12 @@ let inputNama = document.getElementById("editNama-"+id)
   
 inputNama.addEventListener("input",function(){
 let huruf = this.value.trim().charAt(0).toUpperCase()
-if(huruf){
 let avatar = document.getElementById("avatar-"+id)
+
+if(huruf){
 avatar.innerText = huruf
-}
 avatar.style.transform = "scale(1.18)"
+
 setTimeout(()=>{
 avatar.style.transform = "scale(1)"
 },120)
