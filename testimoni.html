@@ -962,8 +962,27 @@ ${avatar}
 </div>
 
 <div>
-<strong>${t.nama}</strong><br>
+
+<strong id="nama-${t.id}">
+${t.nama}
+</strong>
+
+<input id="editNama-${t.id}" 
+style="
+display:none;
+margin-top:4px;
+padding:6px 8px;
+border-radius:8px;
+border:1px solid #ddd;
+font-size:14px;
+width:120px;
+"
+value="${t.nama}"
+>
+
+<br>
 <small>${t.tanggal}</small>
+
 </div>
 
 </div>
@@ -1081,9 +1100,10 @@ block:"center"
 document.getElementById("text-"+id).style.display="none"
 document.getElementById("edit-"+id).style.display="block"
 document.getElementById("save-"+id).style.display="block"
-
 document.getElementById("stars-"+id).style.display="none"
 document.getElementById("editStars-"+id).style.display="block"
+document.getElementById("nama-"+id).style.display="none"
+document.getElementById("editNama-"+id).style.display="inline-block"
 
 let stars = document.querySelectorAll("#editStars-"+id+" span")
 
@@ -1115,10 +1135,27 @@ document.getElementById("edit-"+id).style.display="none"
 document.getElementById("save-"+id).style.display="none"
 document.getElementById("stars-"+id).style.display="block"
 document.getElementById("editStars-"+id).style.display="none"
+document.getElementById("nama-"+id).style.display="inline"
+document.getElementById("editNama-"+id).style.display="none"
 activeEditId = null
 }
   
 window.simpanEdit = async function(id){
+
+let pesanBaru = document.getElementById("edit-"+id).value
+let namaBaru = document.getElementById("editNama-"+id).value
+let dataUpdate = {
+pesan: pesanBaru,
+nama: namaBaru
+}
+  
+if(editRating[id]){
+dataUpdate.rating = editRating[id]
+}
+
+await updateDoc(doc(db,"testimoni",id), dataUpdate)
+}
+  
 let pesanBaru = document.getElementById("edit-"+id).value
 let dataUpdate = {
 pesan: pesanBaru
