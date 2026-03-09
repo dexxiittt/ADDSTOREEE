@@ -989,7 +989,7 @@ container.innerHTML += `
 
 ${tombolMenu}
 
-<div class="stars">
+<div class="stars" id="stars-${t.id}">
 ${"⭐".repeat(parseInt(t.rating))}
 </div>
 
@@ -1294,7 +1294,7 @@ document.getElementById("editNama-"+id).style.display="inline-block"
 
 let inputNama = document.getElementById("editNama-"+id)
   
-inputNama.addEventListener("input",function(){
+inputNama.oninput = function(){
 let huruf = this.value.trim().charAt(0).toUpperCase()
 let avatar = document.getElementById("avatar-"+id)
 
@@ -1309,6 +1309,12 @@ avatar.style.transform = "scale(1)"
 })
 
 let stars = document.querySelectorAll("#editStars-"+id+" span")
+
+let currentRating = semuaTestimoni.find(t=>t.id===id)?.rating || 0
+
+for(let i=0;i<currentRating;i++){
+stars[i].style.color="#fbbf24"
+}
 
 stars.forEach(star=>{
 star.onclick = function(){
