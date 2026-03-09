@@ -709,14 +709,28 @@ Kirim Testimoni
 </section>
 
 <section class="testimoni-list-section">
-<div id="ratingSummary" style="
-text-align:center;
-margin-bottom:10px;
+<div id="ratingSummary" style="text-align:center;margin-bottom:30px;">
+
+<div id="ratingStarsVisual" style="
+font-size:26px;
+color:#fbbf24;
+margin-bottom:6px;">
+★★★★★
+</div>
+
+<div id="ratingText" style="
 font-size:18px;
 font-weight:600;
 color:#111827;
-">
-⭐ 0 dari 0 ulasan pelanggan
+margin-bottom:10px;">
+0.0 dari 0 ulasan
+</div>
+
+<div id="ratingBars" style="
+max-width:340px;
+margin:auto;">
+</div>
+
 </div>
 
 <h2 class="testimoni-title">Apa Kata Mereka</h2>
@@ -928,33 +942,8 @@ container.innerHTML += `
 
 ${tombolMenu}
 
-<div id="ratingSummary" style="
-text-align:center;
-margin-bottom:25px;
-">
-
-<div id="ratingStarsVisual" style="
-font-size:26px;
-color:#fbbf24;
-margin-bottom:6px;
-">
-★★★★★
-</div>
-
-<div id="ratingText" style="
-font-size:18px;
-font-weight:600;
-color:#111827;
-margin-bottom:12px;
-">
-0.0 dari 0 ulasan
-</div>
-
-<div id="ratingBars" style="
-max-width:340px;
-margin:auto;
-"></div>
-
+<div class="stars">
+${"⭐".repeat(parseInt(t.rating))}
 </div>
 
 <div id="editStars-${t.id}" style="
