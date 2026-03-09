@@ -283,6 +283,8 @@ padding:12px 14px;
 
 box-shadow:
 0 2px 8px rgba(0,0,0,0.05);
+
+animation:fadeEdit .25s ease;
 }
 
 @keyframes fadeEdit{
@@ -951,7 +953,7 @@ document.getElementById("invoice").value
 if(myInvoices.includes(t.invoice) || currentInvoice === t.invoice){
 tombolMenu = `
 <div style="position:absolute;top:12px;right:12px;cursor:pointer;font-size:18px;"
-onclick="toggleMenu('${t.id}')">⋮</div>
+onclick="toggleMenu('${t.id}',event)">⋮</div>
 
 <div id="menu-${t.id}" 
 style="
@@ -971,7 +973,7 @@ z-index:10;
 min-width:90px;
 ">
 
-<div onclick="editTestimoni('${t.id}','${t.pesan}')" 
+<div onclick="editTestimoni('${t.id}')"
 style="padding:8px 12px;cursor:pointer;">Edit</div>
 
 <div onclick="hapusTestimoni('${t.id}')" 
@@ -1209,8 +1211,8 @@ document.getElementById("invoice").addEventListener("input",function(){
 renderTestimoni()
 })
 
-window.toggleMenu = function(id){
-event.stopPropagation()
+window.toggleMenu = function(id,e){
+if(e) e.stopPropagation()
 const menu = document.getElementById("menu-"+id)
 menu.style.display =
 menu.style.display === "block" ? "none" : "block"
