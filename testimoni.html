@@ -709,7 +709,24 @@ Kirim Testimoni
 </section>
 
 <section class="testimoni-list-section">
-<div id="ratingSummary" style="text-align:center;margin-bottom:30px;">
+<div id="ratingSummary" style="
+text-align:center;
+margin-bottom:40px;
+padding:28px 24px;
+
+max-width:520px;
+margin-left:auto;
+margin-right:auto;
+
+background:rgba(255,255,255,0.65);
+backdrop-filter:blur(18px);
+
+border-radius:18px;
+
+box-shadow:
+0 15px 40px rgba(0,0,0,0.08),
+0 5px 15px rgba(0,0,0,0.06);
+">
 
 <div id="ratingStarsVisual" style="
 font-size:52px;
@@ -1054,11 +1071,20 @@ document.getElementById("ratingText").innerText =
 `${ratingFix} dari ${semuaTestimoni.length} ulasan`
 
 // ⭐ visual stars
-let fullStars = Math.round(rataRata)
+let fullStars = Math.floor(rataRata)
+let halfStar = rataRata % 1 >= 0.5
 let starHTML = ""
-
+  
 for(let i=1;i<=5;i++){
-starHTML += i <= fullStars ? "★" : "☆"
+if(i <= fullStars){
+starHTML += "★"
+}
+else if(i === fullStars+1 && halfStar){
+starHTML += "⯨"
+}
+else{
+starHTML += "☆"
+}
 }
 
 document.getElementById("ratingStarsVisual").innerText = starHTML
@@ -1091,7 +1117,8 @@ overflow:hidden;
 ">
 
 <div style="
-width:${percent}%;
+width:0%;
+transition:width .9s cubic-bezier(.4,0,.2,1);
 height:100%;
 background:#fbbf24;
 border-radius:6px;
@@ -1109,6 +1136,15 @@ ${count}
 
 document.getElementById("ratingBars").innerHTML = barsHTML
 
+setTimeout(()=>{
+document.querySelectorAll("#ratingBars div div").forEach((bar,i)=>{
+let star = 5 - i
+let count = starCount[star]
+let percent = (count / semuaTestimoni.length) * 100
+bar.style.width = percent + "%"
+
+})
+},80)
 }
 
 document.getElementById("loadMoreBtn").onclick=function(){
