@@ -928,8 +928,33 @@ container.innerHTML += `
 
 ${tombolMenu}
 
-<div class="stars" id="stars-${t.id}">
-${"⭐".repeat(parseInt(t.rating))}
+<div id="ratingSummary" style="
+text-align:center;
+margin-bottom:25px;
+">
+
+<div id="ratingStarsVisual" style="
+font-size:26px;
+color:#fbbf24;
+margin-bottom:6px;
+">
+★★★★★
+</div>
+
+<div id="ratingText" style="
+font-size:18px;
+font-weight:600;
+color:#111827;
+margin-bottom:12px;
+">
+0.0 dari 0 ulasan
+</div>
+
+<div id="ratingBars" style="
+max-width:340px;
+margin:auto;
+"></div>
+
 </div>
 
 <div id="editStars-${t.id}" style="
@@ -1009,20 +1034,92 @@ value="${t.nama}"
 function updateRatingSummary(){
 
 if(semuaTestimoni.length === 0){
-document.getElementById("ratingSummary").innerText =
-"⭐ 0 dari 0 ulasan pelanggan"
+document.getElementById("ratingText").innerText =
+"0.0 dari 0 ulasan"
+
+document.getElementById("ratingStarsVisual").innerText = "☆☆☆☆☆"
+document.getElementById("ratingBars").innerHTML = ""
 return
 }
 
 let totalRating = 0
+
+let starCount = {
+5:0,
+4:0,
+3:0,
+2:0,
+1:0
+}
+
 semuaTestimoni.forEach(t=>{
-totalRating += parseFloat(t.rating)
+let r = parseInt(t.rating)
+totalRating += r
+starCount[r]++
 })
 
 let rataRata = totalRating / semuaTestimoni.length
 let ratingFix = rataRata.toFixed(1)
-document.getElementById("ratingSummary").innerText =
-`⭐ ${ratingFix} dari ${semuaTestimoni.length} ulasan pelanggan`
+
+document.getElementById("ratingText").innerText =
+`${ratingFix} dari ${semuaTestimoni.length} ulasan`
+
+// ⭐ visual stars
+let fullStars = Math.round(rataRata)
+let starHTML = ""
+
+for(let i=1;i<=5;i++){
+starHTML += i <= fullStars ? "★" : "☆"
+}
+
+document.getElementById("ratingStarsVisual").innerText = starHTML
+
+// ⭐ rating bar
+let barsHTML = ""
+
+for(let i=5;i>=1;i--){
+
+let count = starCount[i]
+let percent = (count / semuaTestimoni.length) * 100
+
+barsHTML += `
+<div style="
+display:flex;
+align-items:center;
+gap:8px;
+margin:4px 0;
+font-size:13px;
+">
+
+<span style="width:18px;">${i}★</span>
+
+<div style="
+flex:1;
+height:6px;
+background:#e5e7eb;
+border-radius:6px;
+overflow:hidden;
+">
+
+<div style="
+width:${percent}%;
+height:100%;
+background:#fbbf24;
+border-radius:6px;
+"></div>
+
+</div>
+
+<span style="width:24px;text-align:right;">
+${count}
+</span>
+
+</div>
+`
+}
+
+document.getElementById("ratingBars").innerHTML = barsHTML
+
 }
 
 document.getElementById("loadMoreBtn").onclick=function(){
