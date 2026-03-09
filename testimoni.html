@@ -709,6 +709,16 @@ Kirim Testimoni
 </section>
 
 <section class="testimoni-list-section">
+<div id="ratingSummary" style="
+text-align:center;
+margin-bottom:10px;
+font-size:18px;
+font-weight:600;
+color:#111827;
+">
+⭐ 0 dari 0 ulasan pelanggan
+</div>
+
 <h2 class="testimoni-title">Apa Kata Mereka</h2>
 <div id="testimoni-container" class="testimoni-grid"></div>
 <button id="loadMoreBtn" class="load-more-btn">
@@ -865,6 +875,8 @@ renderTestimoni()
 function renderTestimoni(){
 let container = document.getElementById("testimoni-container")
 container.innerHTML=""
+
+updateRatingSummary()
   
 let tampil = semuaTestimoni.slice(0,jumlahTampil)
 tampil.forEach((t,i)=>{
@@ -992,7 +1004,25 @@ value="${t.nama}"
 </div>
 `
 })
+}
 
+function updateRatingSummary(){
+
+if(semuaTestimoni.length === 0){
+document.getElementById("ratingSummary").innerText =
+"⭐ 0 dari 0 ulasan pelanggan"
+return
+}
+
+let totalRating = 0
+semuaTestimoni.forEach(t=>{
+totalRating += parseFloat(t.rating)
+})
+
+let rataRata = totalRating / semuaTestimoni.length
+let ratingFix = rataRata.toFixed(1)
+document.getElementById("ratingSummary").innerText =
+`⭐ ${ratingFix} dari ${semuaTestimoni.length} ulasan pelanggan`
 }
 
 document.getElementById("loadMoreBtn").onclick=function(){
