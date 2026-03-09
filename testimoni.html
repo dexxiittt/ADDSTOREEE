@@ -1067,6 +1067,16 @@ cancelEdit(activeEditId)
 }
 
 activeEditId = id
+
+setTimeout(()=>{
+document
+.getElementById("edit-"+id)
+.closest(".testimoni-card")
+.scrollIntoView({
+behavior:"smooth",
+block:"center"
+})
+},150)
   
 document.getElementById("text-"+id).style.display="none"
 document.getElementById("edit-"+id).style.display="block"
