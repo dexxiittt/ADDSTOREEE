@@ -2735,14 +2735,11 @@ window.addEventListener('scroll', () => {
     document.body.classList.remove('is-scrolling');
   }, 120);
 
-  if (!phoneActive) return;
-
   latestScrollY = window.scrollY;
 
   if (!ticking) {
     requestAnimationFrame(() => {
       const parallaxValue = Math.min(latestScrollY * 0.015, 12);
-      premiumPhone.style.setProperty('--parallax-y', `${parallaxValue}px`);
 
       const stats = document.querySelector('.premium-stats');
       if (stats) {
@@ -2753,24 +2750,6 @@ window.addEventListener('scroll', () => {
     });
     ticking = true;
   }
-});
-</script>
-
-<script>
-document.querySelectorAll('.app-icon').forEach(icon => {
-  icon.addEventListener('pointerdown', e => {
-    const rect = icon.getBoundingClientRect();
-
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    icon.style.setProperty('--ripple-x', `${x}px`);
-    icon.style.setProperty('--ripple-y', `${y}px`);
-
-    icon.classList.remove('is-ripple'); // reset
-    void icon.offsetWidth;              // force reflow
-    icon.classList.add('is-ripple');
-  });
 });
 </script>
 
