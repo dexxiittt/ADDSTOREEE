@@ -1075,6 +1075,21 @@ document.getElementById("bar2").style.width = percent(count[2]) + "%"
 document.getElementById("bar1").style.width = percent(count[1]) + "%"
   
 container.innerHTML=""
+
+// SORT TESTIMONI (BEST RATING FIRST)
+semuaTestimoni.sort((a,b)=>{
+
+let ratingA = parseInt(a.rating || 0)
+let ratingB = parseInt(b.rating || 0)
+
+if(ratingB !== ratingA){
+return ratingB - ratingA
+}
+
+// jika rating sama -> terbaru dulu
+return new Date(b.createdAt) - new Date(a.createdAt)
+
+})
   
 let tampil = semuaTestimoni.slice(0,jumlahTampil)
 tampil.forEach((t,i)=>{
