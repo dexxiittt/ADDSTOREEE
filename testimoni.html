@@ -644,6 +644,39 @@ color:#6b7280;
 margin-top:6px;
 }
 
+/* DISTRIBUSI RATING */
+
+.rating-bars{
+margin-top:18px;
+max-width:260px;
+margin-left:auto;
+margin-right:auto;
+}
+
+.bar-row{
+display:flex;
+align-items:center;
+gap:8px;
+margin:6px 0;
+font-size:13px;
+color:#374151;
+}
+
+.bar{
+flex:1;
+height:8px;
+background:#e5e7eb;
+border-radius:20px;
+overflow:hidden;
+}
+
+.bar div{
+height:100%;
+background:linear-gradient(90deg,#fbbf24,#f59e0b);
+width:0%;
+transition:width .4s ease;
+}
+
 @keyframes skeleton{
 0%{background-position:100% 0}
 100%{background-position:-100% 0}
@@ -788,15 +821,44 @@ Kirim Testimoni
 <section class="testimoni-list-section">
 
 <div class="rating-summary">
+
 <div class="rating-big" id="avgRating">0.0</div>
 
-<div class="rating-stars-big" id="avgStars">
-★★★★★
-</div>
+<div class="rating-stars-big" id="avgStars">★★★★★</div>
 
 <div class="rating-count" id="totalReview">
 0 ulasan pelanggan
 </div>
+
+<div class="rating-bars">
+
+<div class="bar-row">
+<span>5⭐</span>
+<div class="bar"><div id="bar5"></div></div>
+</div>
+
+<div class="bar-row">
+<span>4⭐</span>
+<div class="bar"><div id="bar4"></div></div>
+</div>
+
+<div class="bar-row">
+<span>3⭐</span>
+<div class="bar"><div id="bar3"></div></div>
+</div>
+
+<div class="bar-row">
+<span>2⭐</span>
+<div class="bar"><div id="bar2"></div></div>
+</div>
+
+<div class="bar-row">
+<span>1⭐</span>
+<div class="bar"><div id="bar1"></div></div>
+</div>
+
+</div>
+
 </div>
 
 <h2 class="testimoni-title">Apa Kata Mereka</h2>
@@ -959,18 +1021,43 @@ let container = document.getElementById("testimoni-container")
 // HITUNG RATING RATA RATA
 let totalRating = 0
 
+let count = {
+1:0,
+2:0,
+3:0,
+4:0,
+5:0
+}
+
 semuaTestimoni.forEach(t=>{
-totalRating += parseInt(t.rating || 0)
+let r = parseInt(t.rating || 0)
+totalRating += r
+
+if(count[r] !== undefined){
+count[r]++
+}
 })
 
-let avg = semuaTestimoni.length
-? (totalRating / semuaTestimoni.length).toFixed(1)
+let total = semuaTestimoni.length
+
+let avg = total
+? (totalRating / total).toFixed(1)
 : "0.0"
 
 document.getElementById("avgRating").innerText = avg
+
 document.getElementById("totalReview").innerText =
-  
-semuaTestimoni.length + " ulasan pelanggan"
+total + " ulasan pelanggan"
+
+function percent(val){
+return total ? (val/total)*100 : 0
+}
+
+document.getElementById("bar5").style.width = percent(count[5]) + "%"
+document.getElementById("bar4").style.width = percent(count[4]) + "%"
+document.getElementById("bar3").style.width = percent(count[3]) + "%"
+document.getElementById("bar2").style.width = percent(count[2]) + "%"
+document.getElementById("bar1").style.width = percent(count[1]) + "%"
   
 container.innerHTML=""
   
