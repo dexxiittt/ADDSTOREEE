@@ -783,6 +783,21 @@ Hapus
 
 </div>
 </div>
+
+<div id="invoiceModal" class="delete-modal">
+<div class="delete-content">
+
+<h3>Invoice Sudah Digunakan</h3>
+<p>Invoice ini sudah pernah memberikan testimoni.</p>
+
+<div class="delete-buttons">
+<button class="btn-cancel" onclick="tutupInvoice()">
+Tutup
+</button>
+</div>
+
+</div>
+</div>
   
 <section class="package-hero">
 
@@ -973,7 +988,7 @@ const q = query(collection(db,"testimoni"), where("invoice","==",invoice))
 const snapshot = await getDocs(q)
 
 if(!snapshot.empty){
-  alert("Invoice ini sudah pernah memberikan testimoni.")
+  showInvoicePopup()
   return
 }
 
@@ -1311,6 +1326,18 @@ document
 window.tutupDelete = function(){
 document
 .getElementById("deleteModal")
+.classList.remove("show")
+}
+
+window.showInvoicePopup = function(){
+document
+.getElementById("invoiceModal")
+.classList.add("show")
+}
+
+window.tutupInvoice = function(){
+document
+.getElementById("invoiceModal")
 .classList.remove("show")
 }
 
