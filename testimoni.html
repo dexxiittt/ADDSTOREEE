@@ -618,6 +618,32 @@ color:#6b7280;
 margin-top:8px;
 }
 
+/* RATING SUMMARY */
+
+.rating-summary{
+text-align:center;
+margin-bottom:40px;
+}
+
+.rating-big{
+font-size:48px;
+font-weight:700;
+color:#111827;
+letter-spacing:1px;
+}
+
+.rating-stars-big{
+font-size:24px;
+color:#fbbf24;
+margin-top:4px;
+}
+
+.rating-count{
+font-size:14px;
+color:#6b7280;
+margin-top:6px;
+}
+
 @keyframes skeleton{
 0%{background-position:100% 0}
 100%{background-position:-100% 0}
@@ -760,7 +786,21 @@ Kirim Testimoni
 </section>
 
 <section class="testimoni-list-section">
+
+<div class="rating-summary">
+<div class="rating-big" id="avgRating">0.0</div>
+
+<div class="rating-stars-big" id="avgStars">
+★★★★★
+</div>
+
+<div class="rating-count" id="totalReview">
+0 ulasan pelanggan
+</div>
+</div>
+
 <h2 class="testimoni-title">Apa Kata Mereka</h2>
+  
 <div id="testimoni-container" class="testimoni-grid"></div>
 <button id="loadMoreBtn" class="load-more-btn">
 Lihat Lebih Banyak
@@ -915,6 +955,23 @@ renderTestimoni()
   
 function renderTestimoni(){
 let container = document.getElementById("testimoni-container")
+
+// HITUNG RATING RATA RATA
+let totalRating = 0
+
+semuaTestimoni.forEach(t=>{
+totalRating += parseInt(t.rating || 0)
+})
+
+let avg = semuaTestimoni.length
+? (totalRating / semuaTestimoni.length).toFixed(1)
+: "0.0"
+
+document.getElementById("avgRating").innerText = avg
+document.getElementById("totalReview").innerText =
+  
+semuaTestimoni.length + " ulasan pelanggan"
+  
 container.innerHTML=""
   
 let tampil = semuaTestimoni.slice(0,jumlahTampil)
