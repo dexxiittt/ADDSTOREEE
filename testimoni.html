@@ -1090,6 +1090,7 @@ tombolMenu = `
 onclick="toggleMenu('${t.id}')">⋮</div>
 
 <div id="menu-${t.id}" 
+class="menu-box"
 style="
 display:none;
 position:absolute;
@@ -1297,6 +1298,15 @@ cancelEdit(activeEditId)
 
 activeEditId = id
 
+// sembunyikan menu edit/hapus saat edit
+let menu = document.getElementById("menu-"+id)
+if(menu) menu.style.display = "none"
+
+let titik = document.querySelector(
+"[onclick=\"toggleMenu('"+id+"')\"]"
+)
+if(titik) titik.style.display = "none"
+
 setTimeout(()=>{
 document
 .getElementById("edit-"+id)
@@ -1363,6 +1373,11 @@ document.getElementById("stars-"+id).style.display="block"
 document.getElementById("editStars-"+id).style.display="none"
 document.getElementById("nama-"+id).style.display="inline"
 document.getElementById("editNama-"+id).style.display="none"
+
+let titik = document.querySelector(
+"[onclick=\"toggleMenu('"+id+"')\"]"
+)
+if(titik) titik.style.display = "block"
 activeEditId = null
 }
   
@@ -1380,6 +1395,8 @@ dataUpdate.rating = editRating[id]
 }
 
 await updateDoc(doc(db,"testimoni",id), dataUpdate)
+
+cancelEdit(id)
 }
 
 document.getElementById("invoice").addEventListener("input",function(){
