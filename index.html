@@ -2248,53 +2248,6 @@ document.querySelectorAll(".nav-dropdown a").forEach(link => {
   <div class="hero-bg">
 
   <canvas id="starfield"></canvas>
-
-    <div class="hero-logo"></div>
-
-    <div class="hero-title">ADDSTOREAPPS</div>
-
-    <div class="hero-tagline">
-      Jual Kebutuhan mu paling lengkap
-    </div>
-
-    <div class="hero-socials">
-      <a href="#"><i class="fa-brands fa-instagram"></i></a>
-      <a href="#"><i class="fa-brands fa-tiktok"></i></a>
-      <a href="#"><i class="fa-brands fa-youtube"></i></a>
-      <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
-      <a href="mailto:emailkamu@gmail.com"><i class="fa-solid fa-envelope"></i></a>
-      <a href="https://facebook.com/usernamekamu"><i class="fa-brands fa-facebook-f"></i></a>
-    </div>
-
-<!-- SECTION 2: HTML IPHONE MOCKUP -->
-<div id="snap-phone"></div>
-
-<div class="hero-premium-phone iphone">
-  <div class="iphone-frame">
-    <div class="iphone-notch"></div>
-
-    <div class="iphone-screen">
-    <div class="iphone-header">
-      <div class="iphone-title">Find Your Needed</div>
-      <div class="iphone-subtitle">Akses Cepat</div>
-      </div>
-
-      <div class="app-grid">
-        <div class="app-icon" style="--i:1"><i class="fa-solid fa-bag-shopping"></i></div>
-        <div class="app-icon" style="--i:2"><i class="fa-solid fa-box"></i></div>
-        <div class="app-icon" style="--i:3"><i class="fa-solid fa-truck"></i></div>
-
-        <div class="app-icon" style="--i:4"><i class="fa-solid fa-wallet"></i></div>
-        <div class="app-icon" style="--i:5"><i class="fa-solid fa-tags"></i></div>
-        <div class="app-icon" style="--i:6"><i class="fa-solid fa-headset"></i></div>
-
-        <div class="app-icon" style="--i:7"><i class="fa-solid fa-chart-line"></i></div>
-        <div class="app-icon" style="--i:8"><i class="fa-solid fa-star"></i></div>
-        <div class="app-icon" style="--i:9"><i class="fa-solid fa-gear"></i></div>
-      </div>
-      </div>
-     </div>
-</div>
     
     <div class="floating-icons">
   <div class="floating-icon left icon-green">
@@ -2770,24 +2723,6 @@ return `
   </div>
 
 <script>
-  const premiumPhone = document.querySelector('.hero-premium-phone');
-let phoneActive = false;
-
-const observer = new IntersectionObserver(
-  ([entry], observerInstance) => {
-    if (entry.isIntersecting) {
-  phoneActive = true;
-  premiumPhone.classList.add('is-idle');
-  observerInstance.unobserve(entry.target);
-}
-  },
-  { threshold: 0.2 }
-);
-
-observer.observe(premiumPhone);
-</script>
-
-<script>
 let latestScrollY = 0;
 let ticking = false;
 let scrollTimeout;
@@ -2836,58 +2771,6 @@ document.querySelectorAll('.app-icon').forEach(icon => {
     void icon.offsetWidth;              // force reflow
     icon.classList.add('is-ripple');
   });
-});
-</script>
-
-<script>
-
-let snapReady = false;
-setTimeout(() => snapReady = true, 600); 
-let snapLocked = false;
-let snapDone = false;
-let lastScrollY = window.scrollY;
-let lastTime = Date.now();
-
-window.addEventListener('scroll', () => {
-
-  if (!snapReady) return;
-  
-  if (document.body.classList.contains('is-scrolling')) return;
-  // GUARD PALING ATAS )
-  if (window.scrollY < window.innerHeight) return;
-
-  if (snapDone || snapLocked) return;
-
-  const now = Date.now();
-  const deltaY = Math.abs(window.scrollY - lastScrollY);
-  const deltaTime = now - lastTime;
-  if (!deltaTime) return;
-  const scrollSpeed = deltaY / deltaTime;
-
-  lastScrollY = window.scrollY;
-  lastTime = now;
-
-  if (scrollSpeed > 1.2) return;
-
-  const snapTarget = document.querySelector('.hero-premium-phone');
-  if (!snapTarget) return;
-  const rect = snapTarget.getBoundingClientRect();
-  const distanceToCenter =
-    rect.top + rect.height / 2 - window.innerHeight / 2;
-
-  if (Math.abs(distanceToCenter) < 80) {
-    snapLocked = true;
-
-    window.scrollTo({
-      top: window.scrollY + distanceToCenter,
-      behavior: 'smooth'
-    });
-
-    setTimeout(() => {
-      snapLocked = false;
-      snapDone = true;
-    }, 500);
-  }
 });
 </script>
 
