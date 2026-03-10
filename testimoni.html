@@ -798,6 +798,21 @@ Tutup
 
 </div>
 </div>
+
+<div id="invoiceInvalidModal" class="delete-modal">
+<div class="delete-content">
+
+<h3>Nomor Invoice Tidak Terdaftar</h3>
+<p>Nomor invoice yang Anda masukkan tidak ditemukan pada sistem kami.</p>
+
+<div class="delete-buttons">
+<button class="btn-cancel" onclick="tutupInvoiceInvalid()">
+Tutup
+</button>
+</div>
+
+</div>
+</div>
   
 <section class="package-hero">
 
@@ -979,7 +994,7 @@ const data = await res.json()
 const invoiceValid = data.some(item => item.invoice === invoice)
 
 if(!invoiceValid){
-alert("Nomor invoice tidak valid")
+showInvoiceInvalid()
 return
 }
 
@@ -1338,6 +1353,18 @@ document
 window.tutupInvoice = function(){
 document
 .getElementById("invoiceModal")
+.classList.remove("show")
+}
+
+window.showInvoiceInvalid = function(){
+document
+.getElementById("invoiceInvalidModal")
+.classList.add("show")
+}
+
+window.tutupInvoiceInvalid = function(){
+document
+.getElementById("invoiceInvalidModal")
 .classList.remove("show")
 }
 
