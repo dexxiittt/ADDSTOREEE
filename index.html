@@ -2152,14 +2152,15 @@ window.addEventListener('scroll', () => {
 
 <script>
 const canvas = document.getElementById("starfield");
-const ctx = canvas.getContext("2d", { alpha: false }); // Optimasi 1: Matikan alpha pada context jika background solid hitam
+const ctx = canvas.getContext("2d");
 
 const STAR_CONFIG = {
-    // Kurangi jumlah bintang sedikit lagi untuk mobile
-    amount: window.innerWidth < 768 ? 40 : 30,
+    // Kurangi jumlah sedikit untuk HP low-end agar CPU tidak kerja keras
+    amount: window.innerWidth < 768 ? 40 : 40,
     minSize: 0.6,
     maxSize: 2.1,
-    twinkleSpeed: 0.015,
+    glow: 1.1,
+    twinkleSpeed: 0.018,
     minSpeed: 0.05,
     maxSpeed: 0.35
 };
@@ -2168,16 +2169,19 @@ let stars = [];
 let w, h;
 let starRunning = true;
 
-// Pre-render bintang ke offscreen canvas (Optimasi 2: Hindari shadowBlur di main loop)
-const starCanvas = document.createElement('canvas');
-const sCtx = starCanvas.getContext('2d');
-starCanvas.width = 20;
-starCanvas.height = 20;
-sCtx.fillStyle = "white";
-sCtx.shadowBlur = 8;
-sCtx.shadowColor = "white";
-sCtx.arc(10, 10, 2, 0, Math.PI * 2);
-sCtx.fill();
+// --- OPTIMASI 1: Pre-render Bintang ke Canvas Terpisah (Buffer) ---
+const starCache = document.createElement('canvas');
+const cacheCtx = starCache.getContext('2d');
+starCache.width = 40; 
+starCache.height = 40;
+
+// Gambar satu bintang bercahaya di cache (dilakukan cuma sekali saat load)
+cacheCtx.fillStyle = "white";
+cacheCtx.shadowBlur = 12;
+cacheCtx.shadowColor = "rgba(255,255,255,0.8)";
+cacheCtx.beginPath();
+cacheCtx.arc(20, 20, 5, 0, Math.PI * 2);
+cacheCtx.fill();
 
 function resize() {
     w = canvas.width = window.innerWidth;
@@ -2193,7 +2197,7 @@ function createStars() {
             y: Math.random() * h,
             size: Math.random() * (STAR_CONFIG.maxSize - STAR_CONFIG.minSize) + STAR_CONFIG.minSize,
             alpha: Math.random(),
-            dir: Math.random() > 0.5 ? 0.01 : -0.01,
+            dir: Math.random() > 0.5 ? 1 : -1,
             speed: Math.random() * (STAR_CONFIG.maxSpeed - STAR_CONFIG.minSpeed) + STAR_CONFIG.minSpeed
         });
     }
@@ -2202,41 +2206,55 @@ function createStars() {
 function draw() {
     if (!starRunning) return;
 
-    // Optimasi 3: Gunakan fillRect hitam daripada clearRect jika memungkinkan
-    ctx.fillStyle = "#000"; 
-    ctx.fillRect(0, 0, w, h);
+    // Pakai clearRect agar background CSS kamu tetap terlihat (tidak jadi hitam)
+    ctx.clearRect(0, 0, w, h);
 
     for (let i = 0; i < stars.length; i++) {
         const s = stars[i];
-        
-        s.alpha += STAR_CONFIG.twinkleSpeed * (s.dir > 0 ? 1 : -1);
-        if (s.alpha <= 0.2 || s.alpha >= 1) s.dir *= -1;
 
+        // Update posisi & alpha
+        s.alpha += STAR_CONFIG.twinkleSpeed * s.dir;
+        if (s.alpha <= 0.1 || s.alpha >= 1) s.dir *= -1;
         s.y += s.speed;
-        if (s.y > h) {
-            s.y = -5;
+
+        if (s.y > h + 10) {
+            s.y = -10;
             s.x = Math.random() * w;
         }
 
-        // Optimasi 4: Gambar image (pre-rendered) daripada kalkulasi arc + shadow
-        ctx.globalAlpha = s.alpha;
-        ctx.drawImage(starCanvas, s.x, s.y, s.size * 4, s.size * 4);
+        // --- OPTIMASI 2: Gambar menggunakan drawImage (Jauh lebih ringan dari arc + shadow) ---
+        ctx.globalAlpha = s.alpha * STAR_CONFIG.glow;
+        // Kita gambar dari starCache, bukan kalkulasi matematis ulang
+        ctx.drawImage(starCache, s.x, s.y, s.size * 4, s.size * 4);
     }
+    
+    // Reset alpha agar tidak mengganggu elemen lain jika ada
     ctx.globalAlpha = 1;
 
     requestAnimationFrame(draw);
 }
 
-// Optimasi 5: Intersection Observer (Hanya jalan jika canvas terlihat di layar)
-const observer = new IntersectionObserver((entries) => {
-    starRunning = entries[0].isIntersecting;
+// --- OPTIMASI 3: Smart Pause (Hanya jalan jika tab aktif) ---
+document.addEventListener("visibilitychange", () => {
+    starRunning = !document.hidden;
     if (starRunning) requestAnimationFrame(draw);
-}, { threshold: 0.1 });
+});
 
-observer.observe(canvas);
+// Tetap gunakan resize listener
 window.addEventListener("resize", resize);
+
 resize();
-requestAnimationFrame(draw);
+draw();
+
+// Optimasi Scroll: Cukup pause saat scroll berat untuk menjaga FPS
+window.addEventListener("scroll", () => {
+    starRunning = false;
+    clearTimeout(window.__starResume);
+    window.__starResume = setTimeout(() => {
+        starRunning = true;
+        requestAnimationFrame(draw);
+    }, 100);
+}, { passive: true }); // Tambahkan passive: true untuk scroll lebih smooth
 </script>
 
 
