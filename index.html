@@ -895,6 +895,7 @@ body {
   background-repeat: repeat;
   opacity: 0;
 }
+    
 .package-row.featured-orange.glow-soft::after {
   opacity: 0.35;
   background-image:
@@ -1418,19 +1419,19 @@ body {
   animation: none; /* tanpa pulse */
 }
 
+/* ================= MOBILE PRODUCT ================= */
 @media (max-width: 640px) {
+
   #product-cards {
     grid-template-columns: 1fr;
     max-width: 420px;
   }
 
-  .package-row.featured::after {
-    opacity: 0.18;
-    filter: blur(0.6px);
-}
 }
 
+/* ================= SMALL MOBILE ================= */
 @media (max-width: 480px) {
+
   #product-cards {
     gap: 26px 18px;
   }
@@ -1443,54 +1444,51 @@ body {
     height: 120px;
   }
 
-   .discount-badge {
+  .discount-badge {
     font-size: 9px;
     padding: 1px 5px;
   }
 
-  .trust-grid{
-  grid-template-columns:1fr;
-  animation:none !important;
+  .trust-grid {
+    grid-template-columns: 1fr;
   }
+
 }
-    
-/* MOBILE */
-@media (max-width:768px) {
+
+/* ================= MOBILE GLOBAL ================= */
+@media (max-width: 768px) {
+
   .trust-title {
     font-size: 28px;
   }
+
   .trust-desc {
     font-size: 14px;
   }
-.trust-card p {
+
+  .trust-card p {
     font-size: 13.8px;
     line-height: 1.65;
   }
-}
 
-    /* RESPONSIVE MOBILE */
-@media (max-width: 768px) {
+  /* HERO */
 
-
-
-  /* HERO IMAGE */
   .hero-image {
     background-position: center top;
-}
-  /* LOGO */
+  }
+
   .hero-logo {
     width: 160px;
     height: 160px;
+    --move-y: 24px;
+  }
 
-    --move-y: 24px; /* lebih rapat di mobile */
-}
-  /* JUDUL TOKO */
   .hero-title {
     font-size: 34px;
     letter-spacing: 1px;
     top: calc(var(--hero-offset) + 150px);
-}
-  /* TAGLINE */
+  }
+
   .hero-tagline {
     font-size: 14px;
     line-height: 1.4;
@@ -1498,23 +1496,25 @@ body {
 
     top: calc(var(--hero-offset) + 190px);
     --move-y: 18px;
-}
-  /* SOSIAL MEDIA */
-.hero-socials {
+  }
+
+  .hero-socials {
     top: calc(var(--hero-offset) + 235px);
     --move-y: 20px;
-
     gap: 16px;
-}
-.hero-socials a {
-    font-size: 20px;
-}  
+  }
 
-.hero-description {
+  .hero-socials a {
+    font-size: 20px;
+  }
+
+  .hero-description {
     font-size: 13px;
     line-height: 1.55;
     max-width: 92%;
   }
+
+  /* FLOATING ICON */
 
   .floating-icons {
     width: 360px;
@@ -1527,60 +1527,73 @@ body {
     font-size: 16px;
   }
 
-  .floating-icon,
-  .app-icon {
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
-
-   .floating-icon.center {
+  .floating-icon.center {
     left: 50%;
     transform: translateX(120px);
- }
+  }
+
+  /* SECTION TITLE */
 
   .section-title {
     font-size: 34px;
     margin: 22px 0 36px;
   }
 
-.category-tabs .tab {
-  padding: 14px 22px;
-  font-size: 14px;
-}
+  /* CATEGORY TAB */
 
-.floating-icon,
-.app-icon,
-.glass-card,
-.trust-card {
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-}
-    
+  .category-tabs .tab {
+    padding: 14px 22px;
+    font-size: 14px;
+  }
+
+  /* PERFORMANCE MOBILE */
+
+  .floating-icon,
+  .app-icon,
+  .glass-card,
+  .trust-card {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
   .trust-card,
   .glass-card {
     animation: none !important;
   }
+
 }
 
-*{
-  backface-visibility:hidden;
+/* ================= GPU OPTIMIZATION ================= */
+
+* {
+  backface-visibility: hidden;
 }
 
 .glass-card,
-.trust-card{
+.trust-card {
   will-change: transform;
 }
-    
+
+/* ================= REDUCED MOTION ================= */
+
 @media (prefers-reduced-motion: reduce) {
+
   .package-detail {
     transition: none !important;
+  }
+
   .premium-stats .stat-item {
     animation: none;
+  }
+
   .premium-trust {
     animation: none;
   }
+
 }
-    /* ===== PERFORMANCE MODE SAAT SCROLL ===== */
+
+/* ================= SCROLL PERFORMANCE ================= */
+
 body.is-scrolling .premium-stats .stat-item,
 body.is-scrolling .premium-trust,
 body.is-scrolling .package-row::before,
