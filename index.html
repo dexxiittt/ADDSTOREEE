@@ -60,7 +60,7 @@ body {
   min-height: 780px; /* kontrol tinggi hero */
 }
     .hero-end {
-  height: 44vh;
+  height: 32vh;
 }
     
 /* STARFIELD LAYER */
@@ -460,9 +460,9 @@ body {
 .section-trust {
   position: relative;
   background: #ffffff;
+  margin-top:-24px;
   width: 100%;
   z-index: 10;
-  isolation: isolate;
 }
 
 .trust-container {
@@ -2298,7 +2298,7 @@ document.addEventListener("click", e => {
   detail.classList.toggle("open", !isOpen);
   btn.textContent = isOpen ? "Selengkapnya…" : "Tutup";
 
-  if (!isOpen && !document.body.classList.contains("is-scrolling")) {
+  if (!isOpen && window.scrollY > 100) {
   detail.scrollIntoView({
     behavior: "smooth",
     block: "nearest"
