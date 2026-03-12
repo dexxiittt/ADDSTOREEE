@@ -729,7 +729,7 @@ body {
   font-weight: 600;
 
   color: #2563eb;
-  cursor: qpointer;
+  cursor: pointer;
 
   transition: opacity .25s ease, transform .25s ease;
 }
@@ -1591,9 +1591,13 @@ body {
   }
 }
     /* ===== PERFORMANCE MODE SAAT SCROLL ===== */
-body.is-scrolling * {
+body.is-scrolling .premium-stats .stat-item,
+body.is-scrolling .premium-trust,
+body.is-scrolling .package-row::before,
+body.is-scrolling .package-row::after {
   animation-play-state: paused !important;
 }
+    
   </style>
 </head>
 
@@ -2185,7 +2189,7 @@ cacheCtx.fill();
 
 function resize() {
     w = canvas.width = window.innerWidth;
-    h = canvas.height = document.querySelector('.hero-bg')?.scrollHeight || window.innerHeight;
+    h = canvas.height = window.innerHeight;
     createStars();
 }
 
@@ -2279,12 +2283,12 @@ document.addEventListener("click", e => {
   detail.classList.toggle("open", !isOpen);
   btn.textContent = isOpen ? "Selengkapnya…" : "Tutup";
 
-  if (!isOpen) {
-    detail.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest"
-    });
-  }
+  if (!isOpen && !document.body.classList.contains("is-scrolling")) {
+  detail.scrollIntoView({
+    behavior: "smooth",
+    block: "nearest"
+  });
+}
 });
 </script>
 
