@@ -94,7 +94,6 @@ body.package-page::after {
     rgba(255,255,255,0.04)
   );
   
-  backdrop-filter: blur(18px);
   border-radius: 22px;
   padding: 22px;
   margin: 18px auto;
@@ -313,7 +312,6 @@ body.package-page::after {
     rgba(255,255,255,0.22),
     transparent
   );
-  animation: skeleton-shimmer 1.4s infinite;
 }
 
 @keyframes skeleton-shimmer {
@@ -355,10 +353,7 @@ body.package-page::after {
   background: rgba(255,255,255,0.14);
   color: #ffffff;
 
-  opacity: 0;
-  animation: 
-    trust-in .6s cubic-bezier(.22,1,.36,1) forwards, 
-    trust-glow 4.5s ease-in-out infinite;
+  opacity:1;
 
   animation-delay:
     calc(var(--i) * 0.07s),
@@ -416,8 +411,6 @@ body.package-page::after {
   text-shadow:
     0 0 12px var(--title-glow),
     0 0 28px var(--title-glow);
-
- animation: luxury-breathe-strong 4.5s ease-in-out infinite;
 }
 
  #pkg-title {
@@ -454,8 +447,6 @@ body.package-page::after {
   0 0 10px var(--subtitle-glow),
   0 0 22px var(--subtitle-glow),
   0 0 38px var(--subtitle-glow);
-
-  animation: luxury-breathe-soft 5.5s ease-in-out infinite;
 }
 
 /* HANYA LABEL META (Durasi / Harga / Garansi) */
@@ -536,8 +527,6 @@ body.package-page::after {
     0 0 30px rgba(139,92,246,0.18),
     0 12px 32px rgba(139,92,246,0.20),
     inset 0 1px 0 rgba(255,255,255,0.15);
-
-  animation: productNoteGlow 5s ease-in-out infinite;
 }
 
 /* PREMIUM HIGHLIGHT MODE */
@@ -937,7 +926,6 @@ body.package-page::after {
 /* CTA – SUBTLE BREATHING GLOW (IDLE) */
 .pay-button {
   position: relative;
-  animation: cta-breathe 3.2s ease-in-out infinite;
 }
 
 /* HENTIKAN SAAT INTERAKSI */
@@ -967,22 +955,6 @@ body.package-page::after {
 
 #sticky-cta .pay-button {
   animation: cta-breathe 4s ease-in-out infinite;
-}
-
-.pay-button::after {
-  content: "";
-  position: absolute;
-  inset: -6px;
-  border-radius: inherit;
-  background: radial-gradient(
-    circle at center,
-    rgba(139,92,246,0.35),
-    transparent 65%
-  );
-  opacity: .25;
-  filter: blur(12px);
-  z-index: -1;
-  animation: halo-breathe 3.2s ease-in-out infinite;
 }
 
 @keyframes halo-breathe {
@@ -1187,7 +1159,15 @@ body.package-page::after {
     max-width: 960px;
   }
 }
-  
+
+/* PERFORMANCE MODE - HP KENTANG */
+*,
+*::before,
+*::after{
+  animation: none !important;
+  transition: none !important;
+}
+ 
 </style>
 </head>
 <body class="package-page">
