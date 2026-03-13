@@ -235,77 +235,6 @@ html, body {
     inset 0 0 14px rgba(59,130,246,0.4);
 }
 
-.package-row.featured::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-repeat: repeat;
-  opacity: 0;
-}
-
-.package-row.featured-orange.glow-soft::after {
-  opacity: 0.35;
-  background-image:
-    radial-gradient(circle at 18% 28%, rgba(245,158,11,.8) 1px, transparent 2px),
-    radial-gradient(circle at 62% 22%, rgba(245,158,11,.6) 1.2px, transparent 2.4px),
-    radial-gradient(circle at 44% 74%, rgba(245,158,11,.7) 0.9px, transparent 2px);
-}
-.package-row.featured-orange.glow-glow::after {
-  opacity: 0.55;
-  background-image:
-    radial-gradient(circle at 14% 22%, rgba(245,158,11,1) 1.2px, transparent 2.4px),
-    radial-gradient(circle at 36% 62%, rgba(245,158,11,.8) 1.6px, transparent 2.8px),
-    radial-gradient(circle at 68% 18%, rgba(245,158,11,.7) 1px, transparent 2.2px),
-    radial-gradient(circle at 82% 74%, rgba(245,158,11,.9) 1.4px, transparent 2.6px);
-  animation: star-twinkle 4.8s ease-in-out infinite;
-}
-.package-row.featured-purple.glow-glow::after {
-  opacity: 0.6;
-  background-image:
-    radial-gradient(circle at 16% 18%, rgba(139,92,246,1) 1.3px, transparent 2.6px),
-    radial-gradient(circle at 42% 64%, rgba(139,92,246,.85) 1.8px, transparent 3px),
-    radial-gradient(circle at 66% 24%, rgba(139,92,246,.7) 1.1px, transparent 2.4px),
-    radial-gradient(circle at 84% 72%, rgba(139,92,246,.9) 1.5px, transparent 2.8px);
-  animation: star-twinkle 4.2s ease-in-out infinite;
-}
-.package-row.featured-purple.glow-strong::after {
-  opacity: 0.85;
-  background-image:
-    radial-gradient(circle at 10% 16%, rgba(139,92,246,1) 1.8px, transparent 3px),
-    radial-gradient(circle at 26% 58%, rgba(139,92,246,.95) 1.4px, transparent 2.6px),
-    radial-gradient(circle at 48% 34%, rgba(139,92,246,.85) 2px, transparent 3.4px),
-    radial-gradient(circle at 66% 72%, rgba(139,92,246,.8) 1.6px, transparent 2.8px),
-    radial-gradient(circle at 86% 42%, rgba(139,92,246,1) 2.2px, transparent 3.6px);
-  animation: star-twinkle 3.2s ease-in-out infinite;
-}
-
-    /* STAR LAYER BASE */
-.package-row.featured::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-
-  background-image: var(--star-bg);
-  background-repeat: no-repeat;
-  
-  opacity: var(--star-opacity, 0.25);
-  filter: blur(0.4px);
-
-  animation: star-twinkle var(--twinkle-speed, 6s) ease-in-out infinite;
-}
-
-.package-row.featured::after {
-  opacity: 0;
-  animation-play-state: paused;
-}
-
-.package-row.featured:hover::after {
-  opacity: var(--star-opacity, 0.5);
-  animation-play-state: running;
-}
-
 @keyframes glow-breathe {
   0%,100% { transform: scale(1); opacity: 0.75; }
   50%     { transform: scale(1.02); opacity: 1; }
@@ -316,10 +245,6 @@ html, body {
   50%     { transform: scale(1.06); opacity: 1; }
 }
 
-@keyframes star-twinkle {
-  0%,100% { opacity: 0.25; }
-  50%     { opacity: 0.65; }
-}
     /* NO GAR */
 .package-row.nogar {
   animation: none !important;
@@ -950,49 +875,7 @@ body.is-scrolling * {
   
 <!-- PRODUCT CARD – FETCH GOOGLE SHEET -->
 <script>
-const FEATURED_STAR_CONFIG = {
-  "orange:soft":   { amount: 24, minSize: 0.18, maxSize: 0.35, opacity: 0.18, twinkle: 10 },
-  "orange:glow":   { amount: 32, minSize: 0.2,  maxSize: 0.45, opacity: 0.25, twinkle: 8 },
-  "orange:strong": { amount: 44, minSize: 0.25, maxSize: 0.6,  opacity: 0.35, twinkle: 6 },
-
-  "purple:soft":   { amount: 24, minSize: 0.18, maxSize: 0.35, opacity: 0.18, twinkle: 10 },
-  "purple:glow":   { amount: 32, minSize: 0.2,  maxSize: 0.45, opacity: 0.25, twinkle: 8 },
-  "purple:strong": { amount: 44, minSize: 0.25, maxSize: 0.6,  opacity: 0.35, twinkle: 6 }
-};
-
-  function generateStars(color, cfg) {
-  const layers = [];
-
-  for (let i = 0; i < cfg.amount; i++) {
-    const x = Math.random() * 100;
-    const y = Math.random() * 100;
-
-    const baseSize =
-      Math.random() * (cfg.maxSize - cfg.minSize) + cfg.minSize;
-
-    const jitter = () => (Math.random() - 0.5) * 1.8;
-
-    // core glow (sangat kecil)
-    layers.push(
-      `radial-gradient(circle at ${x}% ${y}%, rgba(${color},0.9) ${baseSize}px, transparent ${baseSize * 2}px)`
-    );
-
-    // soft halo
-    layers.push(
-      `radial-gradient(circle at ${x + jitter()}% ${y + jitter()}%, rgba(${color},0.25) ${baseSize * 1.6}px, transparent ${baseSize * 4}px)`
-    );
-
-    // white dust sparkle
-    if (Math.random() < 0.55) {
-      layers.push(
-        `radial-gradient(circle at ${x + jitter()}% ${y + jitter()}%, rgba(255,255,255,0.35) ${baseSize * 0.8}px, transparent ${baseSize * 2.8}px)`
-      );
-    }
-  }
-
-  return layers.join(",");
-}
-
+  
   function garBadge(i) {
   if (i.no_gar === "yes") {
     return `<em class="badge-nogar">NoGar</em>`;
@@ -1087,7 +970,6 @@ ${renderBadges(primaryItem.badge)}
   <!-- PACKAGE UTAMA (yang langsung terlihat) -->
   ${mainItems.map(i => {
   let cls = "package-row";
-  let starStyle = "";
 
 const price = Number(
   String(i.price).replace(/[^\d]/g, "")
@@ -1137,12 +1019,6 @@ if (discount !== null) {
   const rgb =
     key.startsWith("orange") ? "245,158,11" : "139,92,246";
 
-  starStyle = `
-    --star-bg: ${generateStars(rgb, adaptiveCfg)};
-    --star-opacity: ${adaptiveCfg.opacity};
-    --twinkle-speed: ${adaptiveCfg.twinkle}s;
-  `;
-
   const phase = -(Math.random() * 6).toFixed(2);
   starStyle += `animation-delay:${phase}s;`;
 }
@@ -1156,7 +1032,6 @@ if (isNoGar(i)) {
 return `
   <a href="package.html?package_id=${i.package_id}"
      class="${cls}"
-     style="${starStyle}">
 
     <span>
       ${i.package} ${i.duration}
