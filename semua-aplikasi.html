@@ -1287,6 +1287,7 @@ cards.forEach(card => observer.observe(card));
   
 <script>
 document.addEventListener("click", function(e) {
+
   const btn = e.target.closest(".toggle-detail");
   if (!btn) return;
 
@@ -1295,11 +1296,29 @@ document.addEventListener("click", function(e) {
 
   if (!detail) return;
 
-  detail.classList.toggle("open");
+  const isOpen = detail.classList.contains("open");
 
-  btn.textContent = detail.classList.contains("open")
-    ? "Tutup"
-    : "Selengkapnya...";
+  /* TUTUP SEMUA CARD LAIN */
+  document.querySelectorAll(".package-detail.open").forEach(d => {
+    d.classList.remove("open");
+  });
+
+  document.querySelectorAll(".toggle-detail").forEach(b => {
+    b.textContent = "Selengkapnya...";
+  });
+
+  /* JIKA TADI BELUM TERBUKA → BUKA */
+  if (!isOpen) {
+    detail.classList.add("open");
+
+    card.scrollIntoView({
+  behavior: "smooth",
+  block: "center"
+});
+    
+    btn.textContent = "Tutup";
+  }
+
 });
 </script>
 
