@@ -94,7 +94,6 @@ body.package-page::after {
     rgba(255,255,255,0.04)
   );
   
-  backdrop-filter: blur(18px);
   border-radius: 22px;
   padding: 22px;
   margin: 18px auto;
@@ -192,7 +191,6 @@ body.package-page::after {
 
   filter: saturate(1.2) brightness(1.05);
 
-  animation: nogar-breathe 3.2s ease-in-out infinite;
 }
 
 @keyframes nogar-breathe {
@@ -313,7 +311,6 @@ body.package-page::after {
     rgba(255,255,255,0.22),
     transparent
   );
-  animation: skeleton-shimmer 1.4s infinite;
 }
 
 @keyframes skeleton-shimmer {
@@ -356,9 +353,7 @@ body.package-page::after {
   color: #ffffff;
 
   opacity: 0;
-  animation: 
-    trust-in .6s cubic-bezier(.22,1,.36,1) forwards, 
-    trust-glow 4.5s ease-in-out infinite;
+    
 
   animation-delay:
     calc(var(--i) * 0.07s),
@@ -417,7 +412,6 @@ body.package-page::after {
     0 0 12px var(--title-glow),
     0 0 28px var(--title-glow);
 
- animation: luxury-breathe-strong 4.5s ease-in-out infinite;
 }
 
  #pkg-title {
@@ -436,10 +430,6 @@ body.package-page::after {
     drop-shadow(0 0 10px var(--badge-glow))
     drop-shadow(0 0 22px var(--badge-glow));
 
-  animation:
-    luxury-jiggle 8s cubic-bezier(.22,1,.36,1) infinite,
-    badge-breathe 5s ease-in-out infinite;
-
   will-change: transform;
 }
  
@@ -455,7 +445,6 @@ body.package-page::after {
   0 0 22px var(--subtitle-glow),
   0 0 38px var(--subtitle-glow);
 
-  animation: luxury-breathe-soft 5.5s ease-in-out infinite;
 }
 
 /* HANYA LABEL META (Durasi / Harga / Garansi) */
@@ -528,16 +517,12 @@ body.package-page::after {
     rgba(139,92,246,0.05)
   );
 
-  border: 1px solid rgba(139,92,246,0.25);
-
-  backdrop-filter: blur(14px);
+  border: 1px solid rgba(139,92,246,0.25); 
 
   box-shadow:
     0 0 30px rgba(139,92,246,0.18),
     0 12px 32px rgba(139,92,246,0.20),
     inset 0 1px 0 rgba(255,255,255,0.15);
-
-  animation: productNoteGlow 5s ease-in-out infinite;
 }
 
 /* PREMIUM HIGHLIGHT MODE */
@@ -555,8 +540,6 @@ body.package-page::after {
     0 0 40px rgba(168,85,247,0.35),
     0 16px 50px rgba(168,85,247,0.30),
     inset 0 1px 0 rgba(255,255,255,0.25);
-
-  animation: premiumPulse 4s ease-in-out infinite;
 }
 
 /* SOFT MODE */
@@ -695,9 +678,6 @@ body.package-page::after {
   cursor: pointer;
 
   opacity: 0;
-  animation: toggle-fade-in .45s ease forwards;
-  animation-delay: .12s;
-
   text-shadow:
     0 0 8px var(--blue-accent-soft);
 
@@ -982,7 +962,7 @@ body.package-page::after {
   opacity: .25;
   filter: blur(12px);
   z-index: -1;
-  animation: halo-breathe 3.2s ease-in-out infinite;
+  
 }
 
 @keyframes halo-breathe {
@@ -1035,7 +1015,6 @@ body.package-page::after {
 .fade-flow {
   opacity: 0;
   transform: translateY(14px);
-  animation: fade-flow 0.9s cubic-bezier(.22,1,.36,1) forwards;
 }
 
 .fade-delay-1 { animation-delay: .15s }
@@ -1054,7 +1033,6 @@ body.package-page::after {
 .package-meta > div {
   opacity: 0;
   transform: translateY(10px);
-  animation: meta-in .6s cubic-bezier(.22,1,.36,1) forwards;
 }
 
 .package-meta > div:nth-child(1) { animation-delay: .45s }
