@@ -9,7 +9,6 @@
 body {
   overflow-x: hidden;
   background: #0b0b0f;
-  );
 }
    
 html, body {
@@ -129,6 +128,58 @@ html, body {
 
 .invoice-input-wrap button:hover {
   background:#6d28d9;
+}
+
+/* ============================= */
+/* MOBILE OPTIMIZATION */
+/* ============================= */
+
+@media (max-width: 768px){
+
+.invoice-box{
+  width:92%;
+  padding:36px 22px;
+  margin:40px auto 100px;
+}
+
+.package-hero{
+  padding:60px 20px 50px;
+}
+
+.package-hero h1{
+  font-size:34px;
+}
+
+.package-hero p{
+  font-size:14px;
+}
+
+.invoice-input-wrap{
+  flex-direction:column;
+  gap:10px;
+  padding:12px;
+}
+
+.invoice-input-wrap button{
+  width:100%;
+}
+
+}
+
+/* ============================= */
+/* LARGE SCREEN OPTIMIZATION */
+/* ============================= */
+
+@media (min-width:1200px){
+
+.invoice-box{
+  max-width:950px;
+}
+}
+
+*{
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
   
 </style>
