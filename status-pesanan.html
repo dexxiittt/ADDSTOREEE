@@ -255,6 +255,7 @@ html, body {
   color:#9f7aea;
 }
 
+
 /* ============================= */
 /* MOBILE */
 /* ============================= */
@@ -265,7 +266,27 @@ html, body {
   grid-template-columns:1fr;
   gap:14px;
 }
+}
+  
+/* Lebih halus di device cepat */
+@media (prefers-reduced-motion: reduce) {
+  .fade-up {
+    transition: none;
+    transform: none;
+    opacity: 1;
+  }
+}
 
+@media (min-width: 1200px) {
+  .package-preview {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+}
+
+*{
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 </style>
