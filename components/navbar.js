@@ -9,28 +9,29 @@ fetch("navbar.html")
 
     // TOGGLE
     toggle.addEventListener("click", function (e) {
-  e.stopPropagation();
-  dropdown.classList.toggle("open");
-  toggle.classList.toggle("active"); // ← TAMBAHAN INI
-});
+      e.stopPropagation();
+      dropdown.classList.toggle("open");
+      toggle.classList.toggle("active");
+    });
 
     document.addEventListener("click", function (e) {
-  if (!dropdown.contains(e.target) && !toggle.contains(e.target)) {
-    dropdown.classList.remove("open");
-    toggle.classList.remove("active"); // ← TAMBAHAN INI
-  }
-});
+      if (!dropdown.contains(e.target) && !toggle.contains(e.target)) {
+        dropdown.classList.remove("open");
+        toggle.classList.remove("active");
+      }
+    });
 
-   // ===== ACTIVE LINK AUTO DETECT =====
-const currentPage = window.location.pathname.split("/").pop() || "index.html";
+    // ACTIVE LINK
+    const currentPage =
+      window.location.pathname.split("/").pop() || "index.html";
 
-document.querySelectorAll(".nav-dropdown a").forEach(link => {
-  const linkPage = link.getAttribute("href");
+    document.querySelectorAll(".nav-dropdown a").forEach(link => {
+      const linkPage = link.getAttribute("href");
 
-  if (linkPage === currentPage) {
-    link.classList.add("active");
-  }
-});
+      if (linkPage === currentPage) {
+        link.classList.add("active");
+      }
+    });
 
     // SCROLL EFFECT
     window.addEventListener("scroll", function () {
