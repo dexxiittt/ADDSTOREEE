@@ -999,29 +999,6 @@ if (discount !== null) {
     if (i.group === "main" && glow === "strong") {
       cls = cls.replace("glow-strong", "glow-glow");
     }
-
-    const key = i.is_featured;
-    const cfg = FEATURED_STAR_CONFIG[key];
-
-    const price = Number(i.price) || 0;
-
-// multiplier halus (aman)
-    let densityBoost = 1;
-    if (price >= 50000) densityBoost = 1.6;
-    else if (price >= 20000) densityBoost = 1.3;
-    else if (price >= 10000) densityBoost = 1.15;
-
-// clone config supaya tidak rusak global
-    const adaptiveCfg = cfg
-     ? { ...cfg, amount: Math.round(cfg.amount * densityBoost) }: null;
-    
-    if (adaptiveCfg) {
-  const rgb =
-    key.startsWith("orange") ? "245,158,11" : "139,92,246";
-
-  const phase = -(Math.random() * 6).toFixed(2);
-  starStyle += `animation-delay:${phase}s;`;
-}
   }
 
   // NoGar → MATIKAN STAR & GLOW
@@ -1031,7 +1008,7 @@ if (isNoGar(i)) {
 
 return `
   <a href="package.html?package_id=${i.package_id}"
-     class="${cls}"
+     class="${cls}">
 
     <span>
       ${i.package} ${i.duration}
