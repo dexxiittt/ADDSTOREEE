@@ -6,194 +6,203 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
-body {
-  overflow-x: hidden;
-  background: #0b0b0f;
-}
-   
-html, body {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+
+/* RESET */
+
+*{
+box-sizing:border-box;
+backface-visibility:hidden;
 }
 
-/* HERO tetap ungu */
+html,body{
+margin:0;
+padding:0;
+}
+
+body{
+background:#0b0b0f;
+font-family:'Plus Jakarta Sans',sans-serif;
+overflow-x:hidden;
+
+display:flex;
+flex-direction:column;
+min-height:100vh;
+}
+
+/* HERO */
+
 .package-hero{
-  width:100%;
-  min-height:260px;
-  background:linear-gradient(135deg,#493d84,#6d28d9);
+width:100%;
+min-height:260px;
 
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
+background:linear-gradient(135deg,#493d84,#6d28d9);
 
-  text-align:center;
-  padding:20px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+
+text-align:center;
+padding:40px 20px;
 }
 
-.package-hero h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(42px, 6vw, 96px);
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  margin-bottom: 14px;
-  color: #ffffff;
-  text-shadow: 0 6px 18px rgba(0,0,0,0.25);
+.package-hero h1{
+font-family:'Playfair Display',serif;
+font-size:clamp(42px,6vw,96px);
+font-weight:700;
+
+margin-bottom:14px;
+color:#fff;
 }
 
-.package-hero p {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  letter-spacing: 0.3px;
-  color: rgba(255,255,255,0.85);
+.package-hero p{
+font-size:16px;
+color:rgba(255,255,255,.85);
 }
 
-.invoice-box p {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 14px;
-  letter-spacing: 0.3px;
-  color: rgba(255,255,255,0.65);
-  margin-bottom: 30px;
+/* ============================= */
+/* WRAPPER */
+/* ============================= */
+
+.invoice-wrapper{
+
+flex:1;
+
+width:100%;
+
+display:flex;
+justify-content:center;
+align-items:flex-start;
+
+padding:40px 20px 100px;
 }
 
-/* ===== LIGHTWEIGHT INVOICE CARD ===== */
+/* ============================= */
+/* INVOICE CARD */
+/* ============================= */
 
-.invoice-box {
-  width: 100%;
-  max-width: 900px;
+.invoice-box{
 
-  margin: 50px auto 120px;
-  padding: 40px 24px;
-
-  border-radius: 20px;
-
-  background: #16161f;
-  border: 1px solid rgba(255,255,255,0.06);
-
-  text-align: center;
+width:100%;
+max-width:880px;
+padding:40px 28px;
+border-radius:18px;
+background:#16161f;
+border:1px solid rgba(255,255,255,.06);
+text-align:center;
 }
 
 /* TITLE */
 
-.invoice-box h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 26px;
-  font-weight: 600;
-  margin-bottom: 10px;
-  color: #ffffff;
+.invoice-box h2{
+font-family:'Playfair Display',serif;
+font-size:26px;
+font-weight:600;
+margin-bottom:10px;
+color:#fff;
 }
 
-.invoice-box p {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 14px;
-  color: rgba(255,255,255,0.65);
-  margin-bottom: 30px;
+.invoice-box p{
+font-size:14px;
+color:rgba(255,255,255,.65);
+margin-bottom:28px;
 }
 
-/* ===== INPUT GROUP (LIGHTWEIGHT) ===== */
+/* ============================= */
+/* INPUT AREA */
+/* ============================= */
 
-.invoice-wrapper{
-  width:100%;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
+.invoice-input-wrap{
+
+display:flex;
+align-items:center;
+gap:10px;
+padding:8px;
+border-radius:14px;
+background:#0f0f15;
+border:1px solid rgba(255,255,255,.06);
 }
 
-.invoice-input-wrap {
-  display:flex;
-  align-items:center;
-  padding:8px;
-  border-radius:16px;
-  background:#0f0f15;
-  border:1px solid rgba(255,255,255,0.06);
+/* INPUT */
+
+.invoice-input-wrap input{
+flex:1;
+background:transparent;
+border:none;
+outline:none;
+padding:14px 16px;
+font-size:15px;
+color:white;
+font-family:'Plus Jakarta Sans',sans-serif;
 }
 
-.invoice-input-wrap input {
-  flex:1;
-  background:transparent;
-  border:none;
-  outline:none;
-  padding:14px 16px;
-  font-size:15px;
-  color:white;
-  font-family:'Plus Jakarta Sans',sans-serif;
-}
-
-.invoice-input-wrap input::placeholder {
-  color: rgba(255,255,255,0.4);
+.invoice-input-wrap input::placeholder{
+color:rgba(255,255,255,.4);
 }
 
 /* BUTTON */
 
-.invoice-input-wrap button {
-  padding:12px 20px;
-  border-radius:14px;
-  border:none;
-  font-weight:600;
-  background:#7c3aed;
-  color:white;
-  cursor:pointer;
-}
-
-.invoice-input-wrap button:hover {
-  background:#6d28d9;
+.invoice-input-wrap button{
+padding:12px 20px;
+border-radius:12px;
+border:none;
+font-weight:600;
+background:#7c3aed;
+color:white;
+cursor:pointer;
 }
 
 /* ============================= */
-/* MOBILE OPTIMIZATION */
+/* MOBILE */
 /* ============================= */
 
-@media (max-width: 768px){
-
-.invoice-box{
-  width:92%;
-  padding:36px 22px;
-  margin:40px auto 100px;
-}
+@media (max-width:768px){
 
 .package-hero{
-  padding:60px 20px 50px;
+padding:60px 20px 50px;
 }
 
 .package-hero h1{
-  font-size:34px;
+font-size:34px;
 }
 
 .package-hero p{
-  font-size:14px;
+font-size:14px;
+}
+
+.invoice-wrapper{
+padding:30px 16px 80px;
+}
+
+.invoice-box{
+padding:34px 20px;
 }
 
 .invoice-input-wrap{
-  flex-direction:column;
-  gap:10px;
-  padding:12px;
+flex-direction:column;
+padding:12px;
 }
 
 .invoice-input-wrap button{
-  width:100%;
+width:100%;
 }
 
 }
 
 /* ============================= */
-/* LARGE SCREEN OPTIMIZATION */
+/* LARGE SCREEN */
 /* ============================= */
 
 @media (min-width:1200px){
 
 .invoice-box{
-  max-width:950px;
-}
+max-width:900px;
 }
 
-*{
-  backface-visibility: hidden;
-  transform: translateZ(0);
 }
-  
+
 </style>
+  
 </head>
 
 <body class="package-page">
