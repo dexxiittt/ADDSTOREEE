@@ -873,7 +873,51 @@ Kirim Testimoni
 
 </div>
 
+<div style="display:flex;align-items:center;justify-content:center;position:relative;">
+
 <h2 class="testimoni-title">Apa Kata Mereka</h2>
+
+<div onclick="toggleFilterMenu()" 
+style="
+position:absolute;
+right:0;
+top:0;
+font-size:20px;
+cursor:pointer;
+background:white;
+border-radius:10px;
+padding:6px 10px;
+box-shadow:0 6px 18px rgba(0,0,0,0.15);
+">
+☰
+</div>
+
+<div id="filterMenu"
+style="
+display:none;
+position:absolute;
+right:0;
+top:40px;
+background:white;
+border-radius:12px;
+box-shadow:0 12px 30px rgba(0,0,0,0.15);
+padding:10px;
+font-size:16px;
+z-index:20;
+">
+
+<div onclick="filterRating(5)">⭐⭐⭐⭐⭐</div>
+<div onclick="filterRating(4)">⭐⭐⭐⭐</div>
+<div onclick="filterRating(3)">⭐⭐⭐</div>
+<div onclick="filterRating(2)">⭐⭐</div>
+<div onclick="filterRating(1)">⭐</div>
+<div onclick="resetFilter()" style="margin-top:6px;color:#6d28d9;">
+Semua
+</div>
+
+</div>
+
+</div>
 
 <p class="testimoni-sub">
 Kata kata mu, sekecil apapun, mendorong AddstoreApps kami terus berkembang
@@ -1000,6 +1044,7 @@ toast.classList.remove("show")
 
 let semuaTestimoni = []
 let jumlahTampil = 6
+let filterBintang = null
 let activeEditId = null
 let editRating = {}
 
@@ -1078,7 +1123,13 @@ document.getElementById("bar1").style.width = percent(count[1]) + "%"
 container.innerHTML=""
 
 // SORT TESTIMONI (BEST RATING FIRST)
-semuaTestimoni.sort((a,b)=>{
+let dataTampil = semuaTestimoni
+
+if(filterBintang){
+dataTampil = semuaTestimoni.filter(t => parseInt(t.rating) === filterBintang)
+}
+
+dataTampil.sort((a,b)=>{
 
 let ratingA = parseInt(a.rating || 0)
 let ratingB = parseInt(b.rating || 0)
@@ -1092,7 +1143,7 @@ return new Date(b.createdAt) - new Date(a.createdAt)
 
 })
   
-let tampil = semuaTestimoni.slice(0,jumlahTampil)
+let tampil = dataTampil.slice(0,jumlahTampil)
 tampil.forEach((t,i)=>{
 
 let avatar = t.nama.charAt(0).toUpperCase()
@@ -1473,6 +1524,28 @@ document.getElementById("pesan").addEventListener("input",function(){
 this.classList.remove("input-error")
 document.getElementById("errorPesan").style.display="none"
 })
+
+window.toggleFilterMenu = function(){
+let menu = document.getElementById("filterMenu")
+menu.style.display =
+menu.style.display === "block" ? "none" : "block"
+}
+  
+window.filterRating = function(star){
+filterBintang = star
+jumlahTampil = 6
+  
+renderTestimoni()
+document.getElementById("filterMenu").style.display="none"
+}
+
+window.resetFilter = function(){
+filterBintang = null
+jumlahTampil = 6
+
+renderTestimoni()
+document.getElementById("filterMenu").style.display="none"
+}
 
 </script>
 
