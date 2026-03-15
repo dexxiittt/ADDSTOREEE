@@ -1348,6 +1348,19 @@ menu.style.display="none"
 }
 })
 
+document.addEventListener("click",function(e){
+let menu = document.getElementById("filterMenu")
+let icon = e.target.closest("[onclick='toggleFilterMenu()']")
+
+// jika klik icon filter -> biarkan
+if(icon) return
+
+// jika klik di luar menu -> tutup
+if(menu && !menu.contains(e.target)){
+menu.style.display = "none"
+}
+})
+
 // jika sedang edit lalu klik area luar -> batal edit
 if(activeEditId){
 let editBox = document.getElementById("edit-"+activeEditId)
