@@ -1220,11 +1220,28 @@ value="${t.nama}"
 `
 })
 
+// KONTROL TOMBOL LOAD MORE
+let btn = document.getElementById("loadMoreBtn")
+if(jumlahTampil >= semuaTestimoni.length){
+btn.innerText = "Lihat Lebih Sedikit"
+}else{
+btn.innerText = "Lihat Lebih Banyak"
+
+}
+  
 }
 
 document.getElementById("loadMoreBtn").onclick=function(){
+if(jumlahTampil >= semuaTestimoni.length){
+// reset ke awal
+jumlahTampil = 6
+}else{
+// tambah 6
 jumlahTampil += 6
+}
+
 renderTestimoni()
+
 }
 
 const savedInvoice = localStorage.getItem("userInvoice")
