@@ -389,11 +389,12 @@ const gmailInput = document.getElementById("gmail")
 const payBtn = document.getElementById("payBtn")
 
 function cekForm(){
-
+const email = gmailInput.value.trim()
 if(
 namaInput.value.trim() !== "" &&
 telInput.value.trim() !== "" &&
-gmailInput.value.trim() !== ""
+email !== "" &&
+email.endsWith("@gmail.com")
 ){
 payBtn.disabled = false
 }else{
@@ -404,6 +405,39 @@ payBtn.disabled = true
 namaInput.addEventListener("input",cekForm)
 telInput.addEventListener("input",cekForm)
 gmailInput.addEventListener("input",cekForm)
+
+
+
+/* ==============================
+AUTO FORMAT NOMOR HP
+08 → +628
+============================== */
+
+telInput.addEventListener("blur",()=>{
+let val = telInput.value.trim()
+if(val.startsWith("08")){
+telInput.value = "+628" + val.substring(2)
+}
+})
+
+
+
+/* ==============================
+VALIDASI EMAIL GMAIL
+============================== */
+
+function validEmail(){
+const email = gmailInput.value.trim()
+if(email !== "" && !email.endsWith("@gmail.com")){
+gmailInput.style.border = "1px solid #ef4444"
+payBtn.disabled = true
+}else{
+gmailInput.style.border = ""
+cekForm()
+}
+}
+
+gmailInput.addEventListener("input",validEmail)
   
 </script>
 
