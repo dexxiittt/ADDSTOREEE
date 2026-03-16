@@ -213,6 +213,23 @@ font-weight:600;
 cursor:pointer;
 }
 
+.cta-btn:disabled{
+opacity:.5;
+cursor:not-allowed;
+}
+
+.loading-dots::after{
+content:'...';
+animation:dots 1s infinite steps(3);
+}
+
+@keyframes dots{
+0%{content:'';}
+33%{content:'.';}
+66%{content:'..';}
+100%{content:'...';}
+}
+
 </style>
 </head>
 
@@ -269,7 +286,7 @@ cursor:pointer;
 </div>
 </div>
 
-<button class="cta-btn" onclick="bayarQris()">
+<button class="cta-btn" id="payBtn" onclick="bayarQris()" disabled>
 Lanjut ke Pembayaran
 </button>
 
@@ -329,16 +346,20 @@ QRIS
 ============================== */
 
 function bayarQris(){
-
 const row = paymentData.find(p => p.paket == paket)
-
 if(!row){
 alert("Data paket tidak ditemukan")
 return
 }
 
-window.location.href = row.qris_url
+const btn = document.getElementById("payBtn")
+btn.innerText = "Memproses"
+btn.classList.add("loading-dots")
+btn.disabled = true
 
+setTimeout(()=>{
+window.location.href = row.qris_url
+},700)
 }
 
 
@@ -348,18 +369,42 @@ LYNK ID
 ============================== */
 
 function bayarLynk(){
-
 const row = paymentData.find(p => p.paket == paket)
-
 if(!row){
 alert("Data paket tidak ditemukan")
 return
 }
-
 window.location.href = row.lynk_id
-
 }
 
+
+
+/* ==============================
+VALIDASI FORM
+============================== */
+
+const namaInput = document.getElementById("nama")
+const telInput = document.getElementById("telepon")
+const gmailInput = document.getElementById("gmail")
+const payBtn = document.getElementById("payBtn")
+
+function cekForm(){
+
+if(
+namaInput.value.trim() !== "" &&
+telInput.value.trim() !== "" &&
+gmailInput.value.trim() !== ""
+){
+payBtn.disabled = false
+}else{
+payBtn.disabled = true
+}
+}
+
+namaInput.addEventListener("input",cekForm)
+telInput.addEventListener("input",cekForm)
+gmailInput.addEventListener("input",cekForm)
+  
 </script>
 
 </body>
