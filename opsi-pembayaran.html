@@ -381,33 +381,6 @@ document.getElementById("paket-total").innerText =
 harga ? "Rp " + Number(harga).toLocaleString("id-ID") : "-"
 
 
-/* ==============================
-GANTI GAMBAR PAKET
-============================== */
-
-const paketImg = document.getElementById("paket-img")
-if(paket){
-const p = paket.toLowerCase()
-if(p.includes("canva")){
-paketImg.src = "img/canva.jpg"
-}
-
-else if(p.includes("netflix")){
-paketImg.src = "img/netflix.jpg"
-}
-
-else if(p.includes("spotify")){
-paketImg.src = "img/spotify.jpg"
-}
-
-else if(p.includes("youtube")){
-paketImg.src = "img/youtube.jpg"
-}
-
-else{
-paketImg.src = "img/default.jpg"
-}
-}
 
 
 /* ==============================
@@ -422,7 +395,16 @@ let paymentData = []
 fetch(sheetURL)
 .then(res => res.json())
 .then(data => {
+
 paymentData = data
+const row = data.find(p => p.paket == paket)
+const paketImg = document.getElementById("paket-img")
+if(row && row.image_url){
+paketImg.src = row.image_url
+}else{
+paketImg.src = "https://via.placeholder.com/800x200"
+}
+
 })
 
 
