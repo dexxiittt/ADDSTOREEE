@@ -154,6 +154,19 @@ border-radius:8px;
 display:inline-flex;
 gap:6px;
 }
+
+.icon-label{
+display:flex;
+align-items:center;
+gap:6px;
+font-size:13px;
+font-weight:600;
+color:#374151;
+}
+
+.icon-label::first-letter{
+font-size:15px;
+}
   
 .payment-container label{
 display:block;
@@ -250,13 +263,13 @@ animation:dots 1s infinite steps(3);
 
 <h3>Format Aplikasi Premium</h3>
 
-<label>*Nama Lengkap</label>
+<label class="icon-label">👤 Nama Lengkap</label>
 <input type="text" placeholder="Masukan Nama Lengkap Kamu" id="nama">
 
-<label>#Nomor Telepon</label>
+<label class="icon-label">📱 Nomor WhatsApp</label>
 <input type="text" placeholder="Contoh: 0858*******8" id="telepon">
 
-<label>@Gmail</label>
+<label class="icon-label">✉️ Email Gmail</label>
 <input type="email" placeholder="Contoh: arifabcdefg@gmail.com" id="gmail">
 
 <label>Order Summary</label>
