@@ -45,6 +45,20 @@ box-shadow:0 6px 18px rgba(0,0,0,0.15);
 transition:box-shadow .2s ease;
 }
 
+.paket-banner{
+width:100%;
+margin-bottom:18px;
+border-radius:10px;
+overflow:hidden;
+}
+
+.paket-banner img{
+width:100%;
+height:160px;
+object-fit:cover;
+display:block;
+}
+
 .payment-container:hover{
 box-shadow:0 8px 22px rgba(0,0,0,0.2);
 }
@@ -278,6 +292,9 @@ animation:dots 1s infinite steps(3);
 
 <div class="payment-container">
 
+<div class="paket-banner">
+<img id="paket-img" src="" alt="paket">
+</div>
 <h3>Format Aplikasi Premium</h3>
 
 <label class="icon-label">Nama Lengkap</label>
@@ -362,6 +379,35 @@ document.getElementById("paket-harga").innerText =
 harga ? "Rp " + Number(harga).toLocaleString("id-ID") : "-"
 document.getElementById("paket-total").innerText =
 harga ? "Rp " + Number(harga).toLocaleString("id-ID") : "-"
+
+
+/* ==============================
+GANTI GAMBAR PAKET
+============================== */
+
+const paketImg = document.getElementById("paket-img")
+if(paket){
+const p = paket.toLowerCase()
+if(p.includes("canva")){
+paketImg.src = "img/canva.jpg"
+}
+
+else if(p.includes("netflix")){
+paketImg.src = "img/netflix.jpg"
+}
+
+else if(p.includes("spotify")){
+paketImg.src = "img/spotify.jpg"
+}
+
+else if(p.includes("youtube")){
+paketImg.src = "img/youtube.jpg"
+}
+
+else{
+paketImg.src = "img/default.jpg"
+}
+}
 
 
 /* ==============================
