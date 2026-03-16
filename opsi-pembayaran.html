@@ -63,6 +63,15 @@ font-size:14px;
 transition:border .2s ease;
 }
 
+.payment-container label{
+display:block;
+font-size:13px;
+font-weight:600;
+margin-top:8px;
+margin-bottom:4px;
+color:#374151;
+}
+  
 .payment-container input:focus{
 outline:none;
 border:1px solid #8b5cf6;
@@ -132,13 +141,22 @@ cursor:pointer;
 
 <h3>Format Aplikasi Premium</h3>
 
-<input type="text" placeholder="Nama" id="nama">
-<input type="text" placeholder="Nomor Telepon" id="telepon">
-<input type="email" placeholder="Gmail" id="gmail">
+<label>*Nama</label>
+<input type="text" placeholder="Contoh: Arif" id="nama">
 
-<input type="text" id="paket" placeholder="Paket" readonly>
-<input type="text" id="durasi" placeholder="Durasi" readonly>
+<label>#Nomor Telepon</label>
+<input type="text" placeholder="Contoh: 0858*******8" id="telepon">
 
+<label>@Gmail</label>
+<input type="email" placeholder="Contoh: arifabcdefg@gmail.com" id="gmail">
+
+<label>*Informasi Paket</label>
+<input type="text" id="paket" readonly>
+
+<label>*Informasi Durasi</label>
+<input type="text" id="durasi" readonly>
+
+<label>*Jenis Payment</label>
 <input type="text" value="QRIS Payment" readonly>
 
 <button class="cta-btn" onclick="bayarQris()">
