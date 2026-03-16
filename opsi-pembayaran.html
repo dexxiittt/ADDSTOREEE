@@ -3,7 +3,7 @@
 <head>
 <title>Opsi Pembayaran</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 
@@ -15,30 +15,32 @@ color:white;
 }
 
 /* HERO */
+
 .package-hero{
 background:linear-gradient(135deg,#7b2ff7,#5f0a87);
-padding:60px 20px;
+padding:50px 20px;
 text-align:center;
 }
 
 .package-hero h1{
-font-size:28px;
-margin-bottom:10px;
+font-size:26px;
+margin-bottom:6px;
 }
 
 .package-hero p{
 opacity:.8;
+font-size:14px;
 }
 
 /* CONTAINER */
 
 .payment-container{
-max-width:500px;
-margin:40px auto;
-background:rgba(255,255,255,0.05);
-border-radius:16px;
-padding:25px;
-backdrop-filter:blur(10px);
+max-width:420px;
+margin:35px auto;
+background:#0f172a;
+border-radius:14px;
+padding:22px;
+box-shadow:0 10px 30px rgba(0,0,0,0.4);
 }
 
 /* INPUT */
@@ -46,15 +48,16 @@ backdrop-filter:blur(10px);
 .payment-container input{
 width:100%;
 padding:12px;
-margin-bottom:12px;
+margin-bottom:10px;
 border-radius:8px;
 border:none;
-background:#0f172a;
+background:#020617;
 color:white;
+font-size:14px;
 }
 
 .payment-container input::placeholder{
-color:#aaa;
+color:#94a3b8;
 }
 
 /* BUTTON */
@@ -77,8 +80,8 @@ opacity:.9;
 /* LYNK BUTTON */
 
 .lynk-btn{
-margin-top:20px;
 text-align:center;
+margin-top:25px;
 }
 
 .lynk-btn button{
@@ -98,38 +101,39 @@ cursor:pointer;
 
 
 <!-- HERO -->
+
 <div class="package-hero">
 <h1>Opsi Pembayaran</h1>
 <p>Pilih pembayaran yang ingin dilakukan</p>
 </div>
 
 
-<!-- FORM QRIS -->
+<!-- FORM -->
 
 <div class="payment-container">
+
 <h3>Format Aplikasi Premium</h3>
+
 <input type="text" placeholder="Nama" id="nama">
 <input type="text" placeholder="Nomor Telepon" id="telepon">
 <input type="email" placeholder="Gmail" id="gmail">
-<input type="text" id="paket" readonly>
-<input type="text" id="durasi" readonly>
+
+<input type="text" id="paket" placeholder="Paket" readonly>
+<input type="text" id="durasi" placeholder="Durasi" readonly>
+
 <input type="text" value="QRIS Payment" readonly>
+
 <button class="cta-btn" onclick="bayarQris()">
-
 Lanjut ke Pembayaran
-
 </button>
+
 </div>
 
-
-<!-- BUTTON LYNK -->
 
 <div class="lynk-btn">
 <button onclick="bayarLynk()">
 Lanjut Pembayaran Lynk ID
-
 </button>
-
 </div>
 
 
@@ -140,8 +144,13 @@ AMBIL DATA PACKAGE DARI URL
 ============================== */
 
 const params = new URLSearchParams(window.location.search)
-document.getElementById("paket").value = params.get("paket")
-document.getElementById("durasi").value = params.get("durasi")
+
+const paket = params.get("paket")
+const durasi = params.get("durasi")
+
+document.getElementById("paket").value = paket || "Paket tidak ditemukan"
+document.getElementById("durasi").value = durasi || "Durasi tidak ditemukan"
+
 
 
 /* ==============================
@@ -150,12 +159,13 @@ FETCH SPREADSHEET
 
 const sheetURL =
 "https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PACKAGE_DETAIL"
+
 let paymentData = []
+
 fetch(sheetURL)
 .then(res => res.json())
 .then(data => {
 paymentData = data
-
 })
 
 
@@ -164,12 +174,12 @@ QRIS
 ============================== */
 
 function bayarQris(){
-const paket = params.get("paket")
-const row = paymentData.find(p => p.paket == paket)
-if(!row){
-alert("Data tidak ditemukan")
-return
 
+const row = paymentData.find(p => p.paket == paket)
+
+if(!row){
+alert("Data paket tidak ditemukan")
+return
 }
 
 window.location.href = row.qris_url
@@ -177,17 +187,18 @@ window.location.href = row.qris_url
 }
 
 
+
 /* ==============================
 LYNK ID
 ============================== */
 
 function bayarLynk(){
-const paket = params.get("paket")
-const row = paymentData.find(p => p.paket == paket)
-if(!row){
-alert("Data tidak ditemukan")
-return
 
+const row = paymentData.find(p => p.paket == paket)
+
+if(!row){
+alert("Data paket tidak ditemukan")
+return
 }
 
 window.location.href = row.lynk_id
