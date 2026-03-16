@@ -63,6 +63,26 @@ font-size:14px;
 transition:border .2s ease;
 }
 
+.paket-info{
+background:#f9fafb;
+border:1px solid #e5e7eb;
+border-radius:10px;
+padding:12px 14px;
+margin-bottom:14px;
+}
+
+.paket-title{
+font-size:15px;
+font-weight:600;
+color:#111827;
+margin-bottom:3px;
+}
+
+.paket-sub{
+font-size:13px;
+color:#6b7280;
+}
+
 .payment-container label{
 display:block;
 font-size:13px;
@@ -151,10 +171,11 @@ cursor:pointer;
 <input type="email" placeholder="Contoh: arifabcdefg@gmail.com" id="gmail">
 
 <label>*Informasi Paket</label>
-<input type="text" id="paket" readonly>
 
-<label>*Informasi Durasi</label>
-<input type="text" id="durasi" readonly>
+<div class="paket-info">
+<div class="paket-title" id="paket"></div>
+<div class="paket-sub" id="paket-detail"></div>
+</div>
 
 <label>*Jenis Payment</label>
 <input type="text" value="QRIS Payment" readonly>
@@ -184,8 +205,10 @@ const params = new URLSearchParams(window.location.search)
 const paket = params.get("paket")
 const durasi = params.get("durasi")
 
-document.getElementById("paket").value = paket || "Paket tidak ditemukan"
-document.getElementById("durasi").value = durasi || "Durasi tidak ditemukan"
+document.getElementById("paket").innerText = paket || "Paket tidak ditemukan"
+
+document.getElementById("paket-detail").innerText =
+"Invite Member • " + (durasi || "Durasi tidak ditemukan")
 
 
 
