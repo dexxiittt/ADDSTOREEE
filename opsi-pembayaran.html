@@ -103,6 +103,34 @@ font-weight:700;
 color:#111827;
 }
 
+.summary-title{
+font-size:14px;
+font-weight:600;
+color:#374151;
+margin-bottom:10px;
+}
+
+.summary-item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:12px;
+}
+
+.summary-row{
+display:flex;
+justify-content:space-between;
+padding:6px 0;
+font-size:14px;
+color:#374151;
+border-top:1px dashed #e5e7eb;
+}
+
+.summary-row span:last-child{
+font-weight:600;
+color:#111827;
+}
+
 .payment-container label{
 display:block;
 font-size:13px;
@@ -190,19 +218,27 @@ cursor:pointer;
 <label>@Gmail</label>
 <input type="email" placeholder="Contoh: arifabcdefg@gmail.com" id="gmail">
 
-<label>*Informasi Paket</label>
+<label>Order Summary</label>
 
 <div class="paket-info">
+<div class="summary-title">Order Summary</div>
+<div class="summary-item">
+<div>
 <div class="paket-title" id="paket"></div>
 <div class="paket-sub" id="paket-detail"></div>
-<div class="paket-price-wrap">
-<span class="paket-price-label">Harga</span>
-<span class="paket-price" id="paket-harga"></span>
+</div>
+</div>
+  
+<div class="summary-row">
+<span>Harga</span>
+<span id="paket-harga"></span>
 </div>
 
+<div class="summary-row">
+<span>Metode</span>
+<span>QRIS</span>
 </div>
-<label>*Jenis Payment</label>
-<input type="text" value="QRIS Payment" readonly>
+</div>
 
 <button class="cta-btn" onclick="bayarQris()">
 Lanjut ke Pembayaran
