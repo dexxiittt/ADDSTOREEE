@@ -397,8 +397,11 @@ fetch(sheetURL)
 .then(data => {
 
 paymentData = data
-const row = data.find(p => p.paket == paket)
+
+const row = data.find(p => p.title == paket)
+
 const paketImg = document.getElementById("paket-img")
+
 if(row && row.image_url){
 paketImg.src = row.image_url
 }else{
@@ -413,7 +416,7 @@ QRIS
 ============================== */
 
 function bayarQris(){
-const row = paymentData.find(p => p.paket == paket)
+const row = paymentData.find(p => p.title == paket)
 if(!row){
 alert("Data paket tidak ditemukan")
 return
@@ -436,7 +439,7 @@ LYNK ID
 ============================== */
 
 function bayarLynk(){
-const row = paymentData.find(p => p.paket == paket)
+const row = paymentData.find(p => p.title == paket)
 if(!row){
 alert("Data paket tidak ditemukan")
 return
