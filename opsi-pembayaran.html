@@ -53,8 +53,6 @@ box-shadow:0 8px 22px rgba(0,0,0,0.2);
 
 .payment-container input{
 width:100%;
-padding:6px;
-margin-bottom:12px;
 border-radius:8px;
 border:1px solid #e5e7eb;
 background:#f9fafb;
@@ -164,6 +162,30 @@ font-weight:600;
 color:#374151;
 }
 
+.input-icon{
+position:relative;
+margin-bottom:12px;
+}
+
+.input-icon span{
+position:absolute;
+left:10px;
+top:50%;
+transform:translateY(-50%);
+font-size:15px;
+opacity:.6;
+}
+
+.input-icon input{
+width:100%;
+padding:8px 10px 8px 34px;
+border-radius:8px;
+border:1px solid #e5e7eb;
+background:#f9fafb;
+color:#111827;
+font-size:14px;
+}
+  
 .icon-label::first-letter{
 font-size:15px;
 }
@@ -263,14 +285,23 @@ animation:dots 1s infinite steps(3);
 
 <h3>Format Aplikasi Premium</h3>
 
-<label class="icon-label">👤 Nama Lengkap</label>
+<label class="icon-label">Nama Lengkap</label>
+<div class="input-icon">
+<span>👤</span>
 <input type="text" placeholder="Masukan Nama Lengkap Kamu" id="nama">
+</div>
 
-<label class="icon-label">📱 Nomor WhatsApp</label>
+<label class="icon-label">Nomor WhatsApp</label>
+<div class="input-icon">
+<span>📱</span>
 <input type="text" placeholder="Contoh: 0858*******8" id="telepon">
+</div>
 
-<label class="icon-label">✉️ Email Gmail</label>
+<label class="icon-label">Email Gmail</label>
+<div class="input-icon">
+<span>✉️</span>
 <input type="email" placeholder="Contoh: arifabcdefg@gmail.com" id="gmail">
+</div>
 
 <label>Order Summary</label>
 
