@@ -1272,6 +1272,8 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PAC
   const data = rows.find(
   i => i.package_id === packageId
 );
+  const paket = data.title
+  const durasi = data.duration
   if(!data) return;
   sk?.remove();
 
@@ -1339,7 +1341,8 @@ if (data.color_title_subtitle) {
 
   const stickyPay = document.getElementById("sticky-pay");
   if (stickyPay) {
-  stickyPay.href = data.lynk_id;
+  stickyPay.href =
+`opsi-pembayaran.html?paket=${encodeURIComponent(paket)}&durasi=${encodeURIComponent(durasi)}`
 }
   
   document.getElementById("pay-btn")?.classList.remove("is-loading");
@@ -1547,7 +1550,8 @@ noteEl.innerHTML = `
 } else {
   noteEl.remove();
 }
-  document.getElementById("pay-btn").href = data.lynk_id;
+  document.getElementById("pay-btn").href =
+`opsi-pembayaran.html?paket=${encodeURIComponent(paket)}&durasi=${encodeURIComponent(durasi)}`
 });
 
 const mainCTA = document.getElementById("pay-btn");
