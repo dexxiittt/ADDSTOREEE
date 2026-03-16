@@ -1,36 +1,200 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Page Title</title>
+<title>Opsi Pembayaran</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
-/* HERO UNGU SAMA PERSIS */
-.package-hero{
-width:100%;
-min-height:280px;
 
-background:linear-gradient(135deg,#493d84,#6d28d9);
-
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-
-text-align:center;
-
-padding:70px 20px;
+body{
+font-family:Poppins;
+background:#050816;
+margin:0;
 color:white;
 }
-  
+
+/* HERO */
+.package-hero{
+background:linear-gradient(135deg,#7b2ff7,#5f0a87);
+padding:60px 20px;
+text-align:center;
+}
+
+.package-hero h1{
+font-size:28px;
+margin-bottom:10px;
+}
+
+.package-hero p{
+opacity:.8;
+}
+
+/* CONTAINER */
+
+.payment-container{
+max-width:500px;
+margin:40px auto;
+background:rgba(255,255,255,0.05);
+border-radius:16px;
+padding:25px;
+backdrop-filter:blur(10px);
+}
+
+/* INPUT */
+
+.payment-container input{
+width:100%;
+padding:12px;
+margin-bottom:12px;
+border-radius:8px;
+border:none;
+background:#0f172a;
+color:white;
+}
+
+.payment-container input::placeholder{
+color:#aaa;
+}
+
+/* BUTTON */
+
+.cta-btn{
+width:100%;
+padding:14px;
+border:none;
+border-radius:30px;
+background:linear-gradient(135deg,#8b5cf6,#6366f1);
+color:white;
+font-weight:600;
+cursor:pointer;
+}
+
+.cta-btn:hover{
+opacity:.9;
+}
+
+/* LYNK BUTTON */
+
+.lynk-btn{
+margin-top:20px;
+text-align:center;
+}
+
+.lynk-btn button{
+padding:14px 30px;
+border:none;
+border-radius:30px;
+background:#10b981;
+color:white;
+font-weight:600;
+cursor:pointer;
+}
+
 </style>
-  
 </head>
+
 <body>
+
+
+<!-- HERO -->
+<div class="package-hero">
+<h1>Opsi Pembayaran</h1>
+<p>Pilih pembayaran yang ingin dilakukan</p>
+</div>
+
+
+<!-- FORM QRIS -->
+
+<div class="payment-container">
+<h3>Format Aplikasi Premium</h3>
+<input type="text" placeholder="Nama" id="nama">
+<input type="text" placeholder="Nomor Telepon" id="telepon">
+<input type="email" placeholder="Gmail" id="gmail">
+<input type="text" id="paket" readonly>
+<input type="text" id="durasi" readonly>
+<input type="text" value="QRIS Payment" readonly>
+<button class="cta-btn" onclick="bayarQris()">
+
+Lanjut ke Pembayaran
+
+</button>
+</div>
+
+
+<!-- BUTTON LYNK -->
+
+<div class="lynk-btn">
+<button onclick="bayarLynk()">
+Lanjut Pembayaran Lynk ID
+
+</button>
+
+</div>
 
 
 <script>
 
-  
+/* ==============================
+AMBIL DATA PACKAGE DARI URL
+============================== */
+
+const params = new URLSearchParams(window.location.search)
+document.getElementById("paket").value = params.get("paket")
+document.getElementById("durasi").value = params.get("durasi")
+
+
+/* ==============================
+FETCH SPREADSHEET
+============================== */
+
+const sheetURL =
+"https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PACKAGE_DETAIL"
+let paymentData = []
+fetch(sheetURL)
+.then(res => res.json())
+.then(data => {
+paymentData = data
+
+})
+
+
+/* ==============================
+QRIS
+============================== */
+
+function bayarQris(){
+const paket = params.get("paket")
+const row = paymentData.find(p => p.paket == paket)
+if(!row){
+alert("Data tidak ditemukan")
+return
+
+}
+
+window.location.href = row.qris_url
+
+}
+
+
+/* ==============================
+LYNK ID
+============================== */
+
+function bayarLynk(){
+const paket = params.get("paket")
+const row = paymentData.find(p => p.paket == paket)
+if(!row){
+alert("Data tidak ditemukan")
+return
+
+}
+
+window.location.href = row.lynk_id
+
+}
+
 </script>
+
 </body>
 </html>
