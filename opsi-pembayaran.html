@@ -131,6 +131,17 @@ font-weight:600;
 color:#111827;
 }
 
+.summary-total{
+display:flex;
+justify-content:space-between;
+padding-top:10px;
+margin-top:8px;
+border-top:2px solid #e5e7eb;
+font-size:16px;
+font-weight:700;
+color:#111827;
+}
+
 .payment-container label{
 display:block;
 font-size:13px;
@@ -230,13 +241,18 @@ cursor:pointer;
 </div>
   
 <div class="summary-row">
-<span>Harga</span>
+<span>Subtotal</span>
 <span id="paket-harga"></span>
 </div>
 
 <div class="summary-row">
-<span>Metode</span>
+<span>Payment</span>
 <span>QRIS</span>
+</div>
+
+<div class="summary-total">
+<span>Total</span>
+<span id="paket-total"></span>
 </div>
 </div>
 
@@ -270,6 +286,8 @@ document.getElementById("paket").innerText = paket || "Paket tidak ditemukan"
 document.getElementById("paket-detail").innerText =
 "Invite Member • " + (durasi || "Durasi tidak ditemukan")
 document.getElementById("paket-harga").innerText =
+harga ? "Rp " + Number(harga).toLocaleString("id-ID") : "-"
+document.getElementById("paket-total").innerText =
 harga ? "Rp " + Number(harga).toLocaleString("id-ID") : "-"
 
 
