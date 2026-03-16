@@ -35,12 +35,18 @@ font-size:14px;
 /* CONTAINER */
 
 .payment-container{
-max-width:420px;
+max-width:560px;
+width:90%;
 margin:35px auto;
-background:#0f172a;
+background:#ffffff;
 border-radius:14px;
-padding:22px;
-box-shadow:0 10px 30px rgba(0,0,0,0.4);
+padding:26px;
+box-shadow:0 6px 18px rgba(0,0,0,0.15);
+transition:box-shadow .2s ease;
+}
+
+.payment-container:hover{
+box-shadow:0 8px 22px rgba(0,0,0,0.2);
 }
 
 /* INPUT */
@@ -48,12 +54,24 @@ box-shadow:0 10px 30px rgba(0,0,0,0.4);
 .payment-container input{
 width:100%;
 padding:12px;
-margin-bottom:10px;
+margin-bottom:12px;
 border-radius:8px;
-border:none;
-background:#020617;
-color:white;
+border:1px solid #e5e7eb;
+background:#f9fafb;
+color:#111827;
 font-size:14px;
+transition:border .2s ease;
+}
+
+.payment-container input:focus{
+outline:none;
+border:1px solid #8b5cf6;
+background:#ffffff;
+}
+
+.payment-container h3{
+color:#111827;
+margin-bottom:15px;
 }
 
 .payment-container input::placeholder{
