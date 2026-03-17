@@ -420,7 +420,61 @@ Transaksi aman & terenkripsi
 
 </div>
 
+<!-- LYNK ID CONTAINER -->
+<div class="payment-container">
 
+<div class="paket-banner">
+<img id="lynk-img" src="" alt="paket">
+</div>
+<h3>Pembayaran Lynk ID</h3>
+<label>Order Summary</label>
+<div class="paket-info">
+<div class="summary-title">Order Summary</div>
+<div class="summary-item">
+<div>
+  
+<div class="paket-title" id="lynk-paket"></div>
+<div class="paket-sub" id="lynk-detail"></div>
+</div>
+</div>
+  
+<div class="summary-row">
+<span>Subtotal</span>
+<div id="lynk-harga" class="price-box"></div>
+</div>
+
+<div class="summary-row">
+<span>Diskon</span>
+<span id="lynk-diskon"></span>
+</div>
+
+<div class="summary-row">
+<span>Hemat</span>
+<span id="lynk-hemat"></span>
+</div>
+
+<div class="summary-row">
+<span>Payment</span>
+<span>Lynk ID</span>
+</div>
+
+<div class="summary-total">
+<span>Total</span>
+<span id="lynk-total"></span>
+</div>
+
+</div>
+
+<button class="cta-btn" onclick="bayarLynk()">
+Lanjut ke Pembayaran
+</button>
+
+<div class="secure-info">
+Transaksi aman & terenkripsi
+</div>
+
+</div>
+  
 <div class="lynk-btn">
 <button onclick="bayarLynk()">
 Lanjut Pembayaran Lynk ID
@@ -531,7 +585,52 @@ paketImg.src = row.image_url
 paketImg.src = "https://via.placeholder.com/800x200"
 }
 
-})
+
+  
+// ======================= LYNK RENDER ========================
+document.getElementById("lynk-paket").innerText = row.title
+document.getElementById("lynk-detail").innerText =
+"Invite Member • " + row.duration
+
+if(discount > 0){
+
+const hemat = price - final
+
+document.getElementById("lynk-harga").innerHTML = `
+<span class="price-old">
+Rp ${price.toLocaleString("id-ID")}
+</span>
+
+<span class="price-final">
+Rp ${final.toLocaleString("id-ID")}
+</span>`
+
+document.getElementById("lynk-diskon").innerText = `-${discount}%`
+document.getElementById("lynk-hemat").innerText =
+`Rp ${hemat.toLocaleString("id-ID")}`
+
+}else{
+
+document.getElementById("lynk-harga").innerHTML = `
+<span class="price-final">
+Rp ${final.toLocaleString("id-ID")}
+</span>`
+
+document.getElementById("lynk-diskon").innerText = "-"
+document.getElementById("lynk-hemat").innerText = "-"
+}
+
+document.getElementById("lynk-total").innerText =
+"Rp " + final.toLocaleString("id-ID")
+
+// IMAGE
+const lynkImg = document.getElementById("lynk-img")
+
+if(row.image_url){
+lynkImg.src = row.image_url
+}else{
+lynkImg.src = "https://via.placeholder.com/800x200"
+}
 
 /* ==============================
 QRIS
