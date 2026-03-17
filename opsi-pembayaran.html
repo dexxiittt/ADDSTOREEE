@@ -483,7 +483,7 @@ AMBIL DATA PACKAGE DARI URL
 
 const params = new URLSearchParams(window.location.search)
 
-const packageId = params.get("package_id")
+const packageId = params.get("package_id") || "1"
 
 
 function parseDiscount(val){
@@ -619,12 +619,8 @@ document.getElementById("lynk-total").innerText =
 // IMAGE
 const lynkImg = document.getElementById("lynk-img")
 
-if(row.image_url){
-lynkImg.src = row.image_url
-}else{
-lynkImg.src = "https://via.placeholder.com/800x200"
-}
-
+lynkImg.src = row.image_url || "https://via.placeholder.com/800x200"
+  
 /* ==============================
 QRIS
 ============================== */
