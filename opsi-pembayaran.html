@@ -368,18 +368,7 @@ AMBIL DATA PACKAGE DARI URL
 
 const params = new URLSearchParams(window.location.search)
 
-const paket = params.get("paket")
-const durasi = params.get("durasi")
-const harga = params.get("harga")
-
-document.getElementById("paket").innerText = paket || "Paket tidak ditemukan"
-document.getElementById("paket-detail").innerText =
-"Invite Member • " + (durasi || "Durasi tidak ditemukan")
-document.getElementById("paket-harga").innerText =
-harga ? "Rp " + Number(harga).toLocaleString("id-ID") : "-"
-document.getElementById("paket-total").innerText =
-harga ? "Rp " + Number(harga).toLocaleString("id-ID") : "-"
-
+const packageId = params.get("package_id")
 
 
 
@@ -398,11 +387,28 @@ fetch(sheetURL)
 
 paymentData = data
 
-const row = data.find(p => p.title == paket)
+const row = data.find(p => p.package_id == packageId)
 
+if(!row){
+alert("Paket tidak ditemukan")
+return
+}
+
+// ✅ SET TEXT
+document.getElementById("paket").innerText = row.title
+document.getElementById("paket-detail").innerText =
+"Invite Member • " + row.duration
+
+document.getElementById("paket-harga").innerText =
+"Rp " + Number(row.price).toLocaleString("id-ID")
+
+document.getElementById("paket-total").innerText =
+"Rp " + Number(row.price).toLocaleString("id-ID")
+
+// ✅ SET IMAGE
 const paketImg = document.getElementById("paket-img")
 
-if(row && row.image_url){
+if(row.image_url){
 paketImg.src = row.image_url
 }else{
 paketImg.src = "https://via.placeholder.com/800x200"
@@ -410,13 +416,12 @@ paketImg.src = "https://via.placeholder.com/800x200"
 
 })
 
-
 /* ==============================
 QRIS
 ============================== */
 
 function bayarQris(){
-const row = paymentData.find(p => p.title == paket)
+const row = paymentData.find(p => p.package_id == packageId)
 if(!row){
 alert("Data paket tidak ditemukan")
 return
@@ -439,7 +444,7 @@ LYNK ID
 ============================== */
 
 function bayarLynk(){
-const row = paymentData.find(p => p.title == paket)
+const row = paymentData.find(p => p.package_id == packageId)
 if(!row){
 alert("Data paket tidak ditemukan")
 return
