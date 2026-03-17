@@ -663,10 +663,14 @@ window.location.href = row.lynk_id
 VALIDASI FORM
 ============================== */
 
+document.addEventListener("DOMContentLoaded", () => {
+
 const namaInput = document.getElementById("nama")
 const telInput = document.getElementById("telepon")
 const gmailInput = document.getElementById("gmail")
 const payBtn = document.getElementById("payBtn")
+
+if(!namaInput || !telInput || !gmailInput || !payBtn) return
 
 function cekForm(){
 const email = gmailInput.value.trim()
@@ -685,6 +689,26 @@ payBtn.disabled = true
 namaInput.addEventListener("input",cekForm)
 telInput.addEventListener("input",cekForm)
 gmailInput.addEventListener("input",cekForm)
+
+telInput.addEventListener("blur",()=>{
+let val = telInput.value.trim()
+if(val.startsWith("08")){
+telInput.value = "+628" + val.substring(2)
+}
+})
+
+gmailInput.addEventListener("input",()=>{
+const email = gmailInput.value.trim()
+if(email !== "" && !email.endsWith("@gmail.com")){
+gmailInput.style.border = "1px solid #ef4444"
+payBtn.disabled = true
+}else{
+gmailInput.style.border = ""
+cekForm()
+}
+})
+
+})
 
 
 
