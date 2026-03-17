@@ -503,6 +503,7 @@ const final = discount > 0
   : price
 
 const discountInfo = document.getElementById("discount-info")
+if(discountInfo){
 if(discount > 0){
 const hemat = price - final
 discountInfo.innerHTML = `
@@ -510,6 +511,7 @@ discountInfo.innerHTML = `
 `
 }else{
 discountInfo.innerHTML = ""
+}
 }
 
 const diskonEl = document.getElementById("paket-diskon")
