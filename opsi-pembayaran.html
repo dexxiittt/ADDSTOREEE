@@ -116,6 +116,14 @@ font-weight:700;
 color:#111827;
 }
 
+.price-box{
+text-align:right;
+display:flex;
+flex-direction:column;
+align-items:flex-end;
+gap:2px;
+}
+
 /* ===== PRICE STYLE PREMIUM ===== */
 
 .price-old{
@@ -134,7 +142,7 @@ letter-spacing:-0.3px;
 
 .discount-badge{
 display:inline-block;
-margin-top:4px;
+margin-top:2px;
 padding:3px 8px;
 font-size:11px;
 font-weight:700;
@@ -167,6 +175,16 @@ align-items:center;
 background:rgba(34,197,94,.1);
 padding:3px 8px;
 border-radius:999px;
+}
+
+#paket-diskon{
+color:#ef4444;
+font-weight:600;
+}
+
+#paket-hemat{
+color:#16a34a;
+font-weight:600;
 }
 
 @keyframes badgePulse{
@@ -386,8 +404,17 @@ animation:dots 1s infinite steps(3);
   
 <div class="summary-row">
 <span>Subtotal</span>
-<span id="paket-harga"></span>
-<div id="discount-info" class="discount-info"></div>
+<div id="paket-harga" class="price-box"></div>
+</div>
+
+<div class="summary-row">
+<span>Diskon</span>
+<span id="paket-diskon"></span>
+</div>
+
+<div class="summary-row">
+<span>Hemat</span>
+<span id="paket-hemat"></span>
 </div>
 
 <div class="summary-row">
@@ -485,7 +512,14 @@ discountInfo.innerHTML = `
 discountInfo.innerHTML = ""
 }
 
+const diskonEl = document.getElementById("paket-diskon")
+const hematEl = document.getElementById("paket-hemat")
+
 if(discount > 0){
+
+const hemat = price - final
+
+// SUBTOTAL (KANAN FULL)
 document.getElementById("paket-harga").innerHTML = `
 <span class="price-old">
 Rp ${price.toLocaleString("id-ID")}
@@ -499,14 +533,25 @@ Rp ${final.toLocaleString("id-ID")}
 -${discount}%
 </span>
 `
+
+// DISKON ROW
+diskonEl.innerText = `-${discount}%`
+
+// HEMAT ROW
+hematEl.innerText = `Rp ${hemat.toLocaleString("id-ID")}`
+
 }else{
+
 document.getElementById("paket-harga").innerHTML = `
 <span class="price-final">
 Rp ${final.toLocaleString("id-ID")}
 </span>
 `
-}
 
+diskonEl.innerText = "-"
+hematEl.innerText = "-"
+}
+  
 document.getElementById("paket-total").innerText =
 "Rp " + final.toLocaleString("id-ID")
   
