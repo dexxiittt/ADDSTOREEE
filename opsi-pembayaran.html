@@ -502,18 +502,6 @@ const final = discount > 0
   ? Math.round(price - (price * discount / 100))
   : price
 
-const discountInfo = document.getElementById("discount-info")
-if(discountInfo){
-if(discount > 0){
-const hemat = price - final
-discountInfo.innerHTML = `
-<span>Hemat Rp ${hemat.toLocaleString("id-ID")}</span>
-`
-}else{
-discountInfo.innerHTML = ""
-}
-}
-
 const diskonEl = document.getElementById("paket-diskon")
 const hematEl = document.getElementById("paket-hemat")
 
