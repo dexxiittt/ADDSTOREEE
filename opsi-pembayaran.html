@@ -371,7 +371,17 @@ const params = new URLSearchParams(window.location.search)
 const packageId = params.get("package_id")
 
 
+function parseDiscount(val){
+  if(!val) return 0
 
+  return Number(
+    String(val)
+      .replace('%','')
+      .replace(',', '.')
+      .trim()
+  ) || 0
+}
+  
 /* ==============================
 FETCH SPREADSHEET
 ============================== */
@@ -399,12 +409,31 @@ document.getElementById("paket").innerText = row.title
 document.getElementById("paket-detail").innerText =
 "Invite Member • " + row.duration
 
+const price = Number(row.price) || 0
+const discount = parseDiscount(row.discount)
+
+const final = discount > 0
+  ? Math.round(price - (price * discount / 100))
+  : price
+
+if(discount > 0){
+document.getElementById("paket-harga").innerHTML = `
+<span style="text-decoration:line-through; opacity:.6">
+Rp ${price.toLocaleString("id-ID")}
+</span>
+<br>
+<span style="font-weight:700">
+Rp ${final.toLocaleString("id-ID")}
+</span>
+`
+}else{
 document.getElementById("paket-harga").innerText =
-"Rp " + Number(row.price).toLocaleString("id-ID")
+"Rp " + final.toLocaleString("id-ID")
+}
 
 document.getElementById("paket-total").innerText =
-"Rp " + Number(row.price).toLocaleString("id-ID")
-
+"Rp " + final.toLocaleString("id-ID")
+  
 // ✅ SET IMAGE
 const paketImg = document.getElementById("paket-img")
 
