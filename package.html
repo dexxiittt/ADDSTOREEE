@@ -1247,6 +1247,12 @@ const sk = document.getElementById("skeleton-wrap");
 const q = new URLSearchParams(location.search);
 const packageId = q.get("package_id");
 
+if(!packageId){
+  console.error("package_id tidak ada di URL");
+  alert("Link tidak valid");
+  window.location.href = "index.html"; // halaman produk
+}
+
 function parseDiscount(val) {
   if (!val) return 0;
 
