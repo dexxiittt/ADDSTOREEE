@@ -1436,7 +1436,7 @@ const harga = final;
 const stickyPay = document.getElementById("sticky-pay");
 if (stickyPay) {
   stickyPay.href =
-`opsi-pembayaran.html?paket=${encodeURIComponent(paket)}&durasi=${encodeURIComponent(durasi)}&harga=${encodeURIComponent(harga)}`
+`opsi-pembayaran.html?package_id=${data.package_id}`
 }
 
 if (discount > 0) {
@@ -1560,7 +1560,7 @@ noteEl.innerHTML = `
   noteEl.remove();
 }
   document.getElementById("pay-btn").href =
-`opsi-pembayaran.html?paket=${encodeURIComponent(paket)}&durasi=${encodeURIComponent(durasi)}&harga=${encodeURIComponent(harga)}`
+`opsi-pembayaran.html?package_id=${data.package_id}`
 });
 
 const mainCTA = document.getElementById("pay-btn");
