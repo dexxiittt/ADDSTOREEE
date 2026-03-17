@@ -512,11 +512,11 @@ fetch(sheetURL)
 
 paymentData = data
 
-const row = data.find(p => p.package_id == packageId)
+let row = data.find(p => String(p.package_id) === String(packageId))
 
 if(!row){
-alert("Paket tidak ditemukan")
-return
+console.warn("Paket tidak ditemukan, pakai data pertama")
+row = data[0]
 }
 
 // ✅ SET TEXT
