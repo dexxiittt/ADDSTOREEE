@@ -612,17 +612,23 @@ VALIDASI FORM
 ============================== */
 
 const namaInput = document.getElementById("nama")
+
 // ==============================
 // AUTO CAPITALIZE NAMA
 // ==============================
 
-namaInput.addEventListener("input", () => {
-let val = namaInput.value
-// kapital tiap kata
-val = val
-  .toLowerCase()
-  .replace(/[^a-zA-Z\s]/g, "") // hapus simbol
-  .replace(/\b\w/g, c => c.toUpperCase())
+if(namaInput){
+  namaInput.addEventListener("input", () => {
+    let val = namaInput.value
+
+    val = val
+      .toLowerCase()
+      .replace(/[^a-zA-Z\s]/g, "")
+      .replace(/\b\w/g, c => c.toUpperCase())
+
+    namaInput.value = val
+  })
+}
 
   
 const telInput = document.getElementById("telepon")
