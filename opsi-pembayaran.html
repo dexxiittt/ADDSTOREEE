@@ -345,7 +345,14 @@ animation:dots 1s infinite steps(3);
 <p>Pilih pembayaran yang ingin dilakukan</p>
 </div>
 
-
+<div class="payment-switch">
+  <button class="switch-btn active" id="btnQris" onclick="setPayment('qris')">
+    QRIS
+  </button>
+  <button class="switch-btn" id="btnLynk" onclick="setPayment('lynk')">
+    Lynk ID
+  </button>
+</div>
 <!-- FORM -->
 
 <div class="payment-container">
