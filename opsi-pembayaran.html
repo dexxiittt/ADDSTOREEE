@@ -335,16 +335,33 @@ background:#e5e7eb;
 color:#374151;
 font-weight:600;
 cursor:pointer;
-transition:.2s;
+transition:all .2s ease;
+transform:scale(1);
 }
 
-.switch-btn.active{
-background:linear-gradient(135deg,#8b5cf6,#6366f1);
-color:white;
+.switch-btn:active{
+transform:scale(0.96);
 }
 
 #form-input{
-transition:all .3s ease;
+transition:opacity .25s ease, transform .25s ease;
+transform:translateY(0);
+opacity:1;
+will-change:opacity, transform;
+}
+
+#form-input.hide{
+opacity:0;
+transform:translateY(-10px);
+pointer-events:none;
+}
+
+.payment-container{
+transition:transform .2s ease;
+}
+
+.payment-container:active{
+transform:scale(0.995);
 }
 
 </style>
@@ -673,10 +690,10 @@ btnQris.classList.add("active")
 label.innerText = "QRIS"
 payBtn.innerText = "Lanjut Pembayaran QRIS"
 
-// ✅ TAMPILKAN FORM
+// tampilkan dengan animasi
+form.classList.remove("hide")
 form.style.display = "block"
 
-// aktifkan validasi lagi
 cekForm()
 
 }else{
@@ -684,10 +701,14 @@ btnLynk.classList.add("active")
 label.innerText = "Lynk ID"
 payBtn.innerText = "Lanjut Pembayaran Lynk ID"
 
-// ❌ SEMBUNYIKAN FORM
-form.style.display = "none"
+// animasi hide dulu
+form.classList.add("hide")
 
-// langsung aktif tombol
+// setelah animasi baru hilang
+setTimeout(()=>{
+form.style.display = "none"
+},200)
+
 payBtn.disabled = false
 }
 }
