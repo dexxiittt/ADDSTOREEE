@@ -428,8 +428,8 @@ color:white;
 </div>
 </div>
 
-<button class="cta-btn" id="payBtn" onclick="bayarQris()" disabled>
-Lanjut ke Pembayaran
+<button class="cta-btn" id="payBtn" onclick="handlePayment()" disabled>
+Lanjut Pembayaran QRIS
 </button>
 
 <div class="secure-info">
@@ -639,9 +639,46 @@ gmailInput.style.border = ""
 cekForm()
 }
 }
-
 gmailInput.addEventListener("input",validEmail)
-  
+
+
+/* ==============================
+SWITCH BUTTON
+============================== */
+
+let selectedPayment = "qris"
+
+function setPayment(method){
+selectedPayment = method
+
+const btnQris = document.getElementById("btnQris")
+const btnLynk = document.getElementById("btnLynk")
+const label = document.getElementById("payment-method")
+const payBtn = document.getElementById("payBtn")
+
+// reset active
+btnQris.classList.remove("active")
+btnLynk.classList.remove("active")
+
+if(method === "qris"){
+btnQris.classList.add("active")
+label.innerText = "QRIS"
+payBtn.innerText = "Lanjut Pembayaran QRIS"
+}else{
+btnLynk.classList.add("active")
+label.innerText = "Lynk ID"
+payBtn.innerText = "Lanjut Pembayaran Lynk ID"
+}
+}
+
+function handlePayment(){
+if(selectedPayment === "qris"){
+bayarQris()
+}else{
+bayarLynk()
+}
+}
+   
 </script>
 
 </body>
