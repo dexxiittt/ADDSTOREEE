@@ -294,6 +294,10 @@ font-weight:600;
 cursor:pointer;
 }
 
+.cta-btn.lynk{
+background:linear-gradient(135deg,#10b981,#059669);
+}
+  
 .cta-btn:hover{
 opacity:.9;
 }
@@ -709,7 +713,9 @@ btnQris.classList.add("active")
 label.innerText = "QRIS"
 payBtn.innerText = "Lanjut Pembayaran QRIS"
 
-// tampilkan dengan animasi
+// warna default
+payBtn.classList.remove("lynk")
+
 form.classList.remove("hide")
 form.style.display = "block"
 
@@ -720,10 +726,11 @@ btnLynk.classList.add("active")
 label.innerText = "Lynk ID"
 payBtn.innerText = "Lanjut Pembayaran Lynk ID"
 
-// animasi hide dulu
+// 🔥 WARNA HIJAU
+payBtn.classList.add("lynk")
+
 form.classList.add("hide")
 
-// setelah animasi baru hilang
 setTimeout(()=>{
 form.style.display = "none"
 },200)
