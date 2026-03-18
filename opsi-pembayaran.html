@@ -343,6 +343,10 @@ background:linear-gradient(135deg,#8b5cf6,#6366f1);
 color:white;
 }
 
+#form-input{
+transition:all .3s ease;
+}
+
 </style>
 </head>
 
@@ -371,6 +375,8 @@ color:white;
 <div class="paket-banner">
 <img id="paket-img" src="" alt="paket">
 </div>
+  
+<div id="form-input">
 <h3>Format Aplikasi Premium</h3>
 
 <label class="icon-label">Nama Lengkap</label>
@@ -389,6 +395,8 @@ color:white;
 <div class="input-icon">
 <span>✉️</span>
 <input type="email" placeholder="Contoh: arifabcdefg@gmail.com" id="gmail">
+</div>
+
 </div>
 
 <label>Order Summary</label>
@@ -655,6 +663,7 @@ const btnQris = document.getElementById("btnQris")
 const btnLynk = document.getElementById("btnLynk")
 const label = document.getElementById("payment-method")
 const payBtn = document.getElementById("payBtn")
+const form = document.getElementById("form-input")
 
 // reset active
 btnQris.classList.remove("active")
