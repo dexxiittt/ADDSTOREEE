@@ -665,7 +665,6 @@ const label = document.getElementById("payment-method")
 const payBtn = document.getElementById("payBtn")
 const form = document.getElementById("form-input")
 
-// reset active
 btnQris.classList.remove("active")
 btnLynk.classList.remove("active")
 
@@ -673,18 +672,23 @@ if(method === "qris"){
 btnQris.classList.add("active")
 label.innerText = "QRIS"
 payBtn.innerText = "Lanjut Pembayaran QRIS"
+
+// ✅ TAMPILKAN FORM
+form.style.display = "block"
+
+// aktifkan validasi lagi
+cekForm()
+
 }else{
 btnLynk.classList.add("active")
 label.innerText = "Lynk ID"
 payBtn.innerText = "Lanjut Pembayaran Lynk ID"
-}
-}
 
-function handlePayment(){
-if(selectedPayment === "qris"){
-bayarQris()
-}else{
-bayarLynk()
+// ❌ SEMBUNYIKAN FORM
+form.style.display = "none"
+
+// langsung aktif tombol
+payBtn.disabled = false
 }
 }
    
