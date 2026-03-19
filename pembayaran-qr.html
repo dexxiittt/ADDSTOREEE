@@ -268,6 +268,44 @@ color:#16a34a;
 font-weight:600;
 }
 
+.info-box{
+background:#f9fafb;
+border:1px solid #e5e7eb;
+border-radius:12px;
+padding:16px 18px;
+
+/* shadow halus */
+box-shadow:0 2px 6px rgba(0,0,0,0.05);
+
+/* animasi ringan */
+animation:fadeUp .4s ease;
+}
+
+.info-title{
+font-size:14px;
+font-weight:600;
+color:#374151;
+margin-bottom:10px;
+display:flex;
+align-items:center;
+gap:6px;
+}
+
+.info-list p{
+font-size:14px;
+color:#4b5563;
+margin:6px 0;
+line-height:1.5;
+}
+
+/* hover subtle */
+.info-box:hover{
+transform:translateY(-2px);
+box-shadow:0 6px 14px rgba(0,0,0,0.08);
+transition:all .2s ease;
+}
+
+
 </style>
 </head>
 
@@ -338,11 +376,28 @@ font-weight:600;
 <span>Total Bayar</span>
 <span id="total"></span>
 </div>
+</div>
+</div>
 
+<!-- CONTAINER CARA PEMBAYARAN -->
+<div class="container">
+
+<h3>Cara Pembayaran</h3>
+
+<div class="info-box">
+
+<div class="info-title">ⓘ Cara Pembayaran</div>
+
+<div class="info-list">
+<p>1. Silahkan scan QR Code yang ada di bawah ini</p>
+<p>2. Bayar sesuai nominal yang tertera</p>
+<p>3. Admin akan mengirim akun melalui Whatsapp</p>
 </div>
 
 </div>
 
+</div>
+  
 <script>
 
 /* ==============================
