@@ -738,6 +738,27 @@ form.style.display = "none"
 payBtn.disabled = false
 }
 }
+
+function handlePayment(){
+
+const data = {
+  nama: namaInput.value,
+  telepon: telInput.value,
+  email: gmailInput.value,
+  paket: document.getElementById("paket").innerText,
+  paketDetail: document.getElementById("paket-detail").innerText,
+  total: document.getElementById("paket-total").innerText
+}
+
+localStorage.setItem("paymentData", JSON.stringify(data))
+
+if(selectedPayment === "qris"){
+  window.location.href = "pembayaran-qr.html"
+}else{
+  bayarLynk()
+}
+
+}
    
 </script>
 
