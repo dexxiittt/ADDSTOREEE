@@ -320,7 +320,63 @@ box-shadow:0 6px 14px rgba(0,0,0,0.08);
 transition:all .2s ease;
 }
 
+.qr-sub{
+text-align:center;
+font-size:14px;
+color:#6b7280;
+margin-top:-10px;
+margin-bottom:18px;
+}
 
+.qr-box{
+background:#f9fafb;
+border:1px solid #e5e7eb;
+border-radius:12px;
+padding:16px;
+display:flex;
+justify-content:center;
+align-items:center;
+margin-bottom:16px;
+
+/* animasi ringan */
+animation:fadeUp .4s ease;
+}
+
+.qr-box img{
+width:220px;
+max-width:100%;
+border-radius:8px;
+}
+
+/* BUTTON */
+.btn-primary{
+width:100%;
+padding:14px;
+border:none;
+border-radius:30px;
+background:linear-gradient(135deg,#8b5cf6,#6366f1);
+color:white;
+font-weight:600;
+margin-bottom:10px;
+cursor:pointer;
+}
+
+.btn-secondary{
+width:100%;
+padding:14px;
+border:none;
+border-radius:30px;
+background:#e5e7eb;
+color:#374151;
+font-weight:600;
+cursor:pointer;
+}
+
+.btn-primary:hover,
+.btn-secondary:hover{
+opacity:.9;
+}
+  
 </style>
 </head>
 
@@ -411,9 +467,29 @@ transition:all .2s ease;
 <p>2. Bayar sesuai nominal yang tertera</p>
 <p>3. Admin akan mengirim akun melalui Whatsapp</p>
 </div>
-
+</div>
 </div>
 
+
+<!-- CONTAINER QR -->
+<div class="container">
+
+<h3>Scan QR Code</h3>
+<p class="qr-sub">
+Gunakan dompet digital (E-Wallet), mobile banking anda
+</p>
+
+<div class="qr-box">
+  <img id="qr-img" src="" alt="QR Code">
+</div>
+
+<button class="btn-primary" onclick="cekStatus()">
+Cek Status Pembayaran
+</button>
+
+<button class="btn-secondary" onclick="kembaliProduk()">
+Kembali ke Produk
+</button>
 </div>
   
 <script>
@@ -443,6 +519,39 @@ document.getElementById("paket-diskon").innerText = data.diskon
 document.getElementById("paket-hemat").innerText = data.hemat
 
 document.getElementById("paket-img").src = data.image
+
+
+const qrSheet =
+"https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/qr_id"
+
+fetch(qrSheet)
+.then(res => res.json())
+.then(data => {
+
+// ambil baris pertama
+const qr = data[0]?.qr_code
+
+if(qr){
+document.getElementById("qr-img").src = qr
+}else{
+document.getElementById("qr-img").src =
+"https://via.placeholder.com/220?text=QR+Not+Found"
+}
+
+})
+.catch(()=>{
+document.getElementById("qr-img").src =
+"https://via.placeholder.com/220?text=Error"
+})
+
+function cekStatus(){
+alert("Fitur cek status akan segera tersedia 🚀")
+}
+
+function kembaliProduk(){
+window.location.href = "index.html"
+}
+  
 </script>
 
 </body>
