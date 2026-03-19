@@ -747,7 +747,10 @@ const data = {
   email: gmailInput.value,
   paket: document.getElementById("paket").innerText,
   paketDetail: document.getElementById("paket-detail").innerText,
-  total: document.getElementById("paket-total").innerText
+  total: document.getElementById("paket-total").innerText, 
+  paketHarga: document.getElementById("paket-harga").innerHTML,
+  diskon: document.getElementById("paket-diskon").innerText,
+  hemat: document.getElementById("paket-hemat").innerText
 }
 
 localStorage.setItem("paymentData", JSON.stringify(data))
