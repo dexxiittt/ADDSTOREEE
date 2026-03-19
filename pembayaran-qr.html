@@ -382,6 +382,54 @@ cursor:pointer;
 .btn-secondary:hover{
 opacity:.9;
 }
+
+.qr-modal{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.85);
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+opacity:0;
+pointer-events:none;
+transition:opacity .25s ease;
+z-index:999;
+}
+
+.qr-modal::after{
+content:"Tap untuk menutup";
+position:absolute;
+bottom:30px;
+color:#fff;
+font-size:13px;
+opacity:.7;
+}
+
+/* aktif */
+.qr-modal.active{
+opacity:1;
+pointer-events:auto;
+}
+
+/* gambar zoom */
+.qr-modal img{
+max-width:90%;
+max-height:90%;
+border-radius:12px;
+
+/* animasi zoom */
+transform:scale(0.8);
+transition:transform .25s ease;
+}
+
+.qr-modal.active img{
+transform:scale(1);
+}
   
 </style>
 </head>
@@ -486,7 +534,7 @@ Gunakan dompet digital (E-Wallet), mobile banking anda
 </p>
 
 <div class="qr-box">
-  <img id="qr-img" src="" alt="QR Code">
+  <img id="qr-img" src="" alt="QR Code" onclick="openQR(this)">
 </div>
 
 <button class="btn-primary" onclick="cekStatus()">
@@ -557,8 +605,24 @@ alert("Fitur cek status akan segera tersedia 🚀")
 function kembaliProduk(){
 window.location.href = "index.html"
 }
-  
+
+function openQR(el){
+const modal = document.getElementById("qrModal")
+const img = document.getElementById("qrModalImg")
+
+img.src = el.src
+modal.classList.add("active")
+}
+
+function closeQR(){
+document.getElementById("qrModal").classList.remove("active")
+}
 </script>
 
+<!-- QR MODAL -->
+<div id="qrModal" class="qr-modal" onclick="closeQR()">
+  <img id="qrModalImg" src="">
+</div>
+  
 </body>
 </html>
