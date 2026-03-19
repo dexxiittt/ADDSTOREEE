@@ -61,6 +61,60 @@ padding:14px;
 margin-bottom:20px;
 }
 
+.detail-grid{
+display:grid;
+grid-template-columns:1fr;
+gap:12px;
+margin-bottom:20px;
+}
+
+.detail-card{
+background:#f9fafb;
+border:1px solid #e5e7eb;
+border-radius:12px;
+padding:14px 16px;
+
+/* subtle shadow */
+box-shadow:0 2px 6px rgba(0,0,0,0.05);
+
+/* animasi ringan */
+transition:all .2s ease;
+}
+
+.detail-card::before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:2px;
+background:linear-gradient(
+  to right,
+  #8b5cf6,
+  #6366f1
+);
+opacity:.6;
+}
+
+/* hover halus */
+.detail-card:hover{
+transform:translateY(-2px);
+box-shadow:0 6px 14px rgba(0,0,0,0.08);
+}
+
+.detail-label{
+font-size:11px;
+color:#9ca3af;
+margin-bottom:4px;
+letter-spacing:.3px;
+}
+
+.detail-value{
+font-size:15px;
+font-weight:600;
+color:#111827;
+}
+
 .detail-item{
 margin-bottom:14px;
 }
@@ -248,22 +302,22 @@ font-weight:600;
   <img id="paket-img" src="" alt="paket">
 </div>
 
-<div class="detail-box">
+<div class="detail-grid">
 
-<div class="detail-item">
-<div class="detail-label">Nama</div>
-<div class="detail-value" id="nama"></div>
-</div>
+  <div class="detail-card">
+    <div class="detail-label">Nama</div>
+    <div class="detail-value" id="nama"></div>
+  </div>
 
-<div class="detail-item">
-<div class="detail-label">Nomor WhatsApp</div>
-<div class="detail-value" id="telepon"></div>
-</div>
+  <div class="detail-card">
+    <div class="detail-label">Nomor WhatsApp</div>
+    <div class="detail-value" id="telepon"></div>
+  </div>
 
-<div class="detail-item">
-<div class="detail-label">Email</div>
-<div class="detail-value" id="email"></div>
-</div>
+  <div class="detail-card">
+    <div class="detail-label">Email</div>
+    <div class="detail-value" id="email"></div>
+  </div>
 
 </div>
 
