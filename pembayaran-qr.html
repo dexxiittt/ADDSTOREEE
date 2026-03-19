@@ -541,6 +541,10 @@ Gunakan dompet digital atau mobile banking anda
 Cek Status Pembayaran
 </button>
 
+<button class="btn-primary" onclick="kirimWhatsApp()">
+Saya sudah bayar
+</button>
+
 <button class="btn-secondary" onclick="kembaliProduk()">
 Kembali ke Produk
 </button>
@@ -617,6 +621,41 @@ modal.classList.add("active")
 function closeQR(){
 document.getElementById("qrModal").classList.remove("active")
 }
+
+function kirimWhatsApp(){
+
+const data = JSON.parse(localStorage.getItem("paymentData"))
+
+if(!data){
+alert("Data tidak ditemukan")
+return
+}
+
+// format nomor admin (hapus 0 → pakai 62)
+const admin = "6285882500868"
+
+// format pesan
+const text = 
+`Halo Admin, saya sudah melakukan pembayaran QRIS.
+
+📌 Detail Pembayaran:
+Nama: ${data.nama}
+No WA: ${data.telepon}
+Email: ${data.email}
+
+📦 Paket: ${data.paket}
+📝 Detail: ${data.paketDetail}
+💰 Total: ${data.total}
+
+Mohon dicek ya 🙏`
+
+// encode biar aman di URL
+const url = "https://wa.me/" + admin + "?text=" + encodeURIComponent(text)
+
+// redirect ke WhatsApp
+window.open(url, "_blank")
+}
+  
 </script>
 
 <!-- QR MODAL -->
