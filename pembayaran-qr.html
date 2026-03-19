@@ -291,6 +291,21 @@ align-items:center;
 gap:6px;
 }
 
+.info-icon{
+color:#6b7280;
+transition:color .2s ease, transform .2s ease;
+}
+
+/* saat hover / tap */
+.info-box:hover .info-icon{
+color:#8b5cf6; /* ungu */
+transform:scale(1.1);
+}
+
+.info-box:active .info-icon{
+color:#8b5cf6;
+}
+
 .info-list p{
 font-size:14px;
 color:#4b5563;
@@ -386,7 +401,10 @@ transition:all .2s ease;
 
 <div class="info-box">
 
-<div class="info-title">ⓘ Cara Pembayaran</div>
+<div class="info-title">
+  <span class="info-icon">ⓘ</span>
+  Cara Pembayaran
+</div>
 
 <div class="info-list">
 <p>1. Silahkan scan QR Code yang ada di bawah ini</p>
