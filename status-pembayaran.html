@@ -352,7 +352,7 @@ Sudah bayar tapi status masih pending? Hubungi admin.
 <script>
 
 /* AMBIL DATA */
-const data = JSON.parse(localStorage.getItem("paymentData"))
+const data = JSON.parse(localStorage.getItem("paymentData")) || {}
 
 if(!data){
 alert("Data tidak ditemukan")
@@ -363,36 +363,28 @@ window.location.href = "index.html"
 let invoice = localStorage.getItem("invoice")
 
 if(!invoice){
-  // generate angka unik
   const unique = Math.floor(1000000 + Math.random() * 9000000)
-  
-  // format: 2026xxxxxxx
   invoice = "2026" + unique
-
-  // simpan biar gak berubah saat refresh
   localStorage.setItem("invoice", invoice)
 }
-
+  
 /* WAKTU */
 const now = new Date()
 const waktu = now.toLocaleString("id-ID")
 
 /* SET DATA */
-document.getElementById("invoice").innerText = invoice
-document.getElementById("time").innerText = waktu
+document.getElementById("paket").innerText = data.paket || "-"
+document.getElementById("paketDetail").innerText = data.paketDetail || "-"
+document.getElementById("nama").innerText = data.nama || "-"
+document.getElementById("wa").innerText = data.telepon || "-"
+document.getElementById("email").innerText = data.email || "-"
 
-document.getElementById("paket").innerText = data.paket
-document.getElementById("paketDetail").innerText = data.paketDetail
-document.getElementById("nama").innerText = data.nama
-document.getElementById("wa").innerText = data.telepon
-document.getElementById("email").innerText = data.email
-
-document.getElementById("harga").innerText = data.total
-document.getElementById("diskon").innerText = data.diskon
-document.getElementById("hemat").innerText = data.hemat
-document.getElementById("total").innerText = data.total
-document.getElementById("total2").innerText = data.total
-document.getElementById("total3").innerText = data.total
+document.getElementById("harga").innerText = data.total || "-"
+document.getElementById("diskon").innerText = data.diskon || "-"
+document.getElementById("hemat").innerText = data.hemat || "-"
+document.getElementById("total").innerText = data.total || "-"
+document.getElementById("total2").innerText = data.total || "-"
+document.getElementById("total3").innerText = data.total || "-"
 
 /* WA LINK */
 function generatePesanWA(){
