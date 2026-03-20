@@ -218,6 +218,16 @@ font-size:13px;
 color:#6b7280;
 }
 
+#diskon{
+color:#ef4444;
+font-weight:600;
+}
+
+#hemat{
+color:#16a34a;
+font-weight:600;
+}
+
 </style>
 </head>
 
@@ -256,8 +266,13 @@ color:#6b7280;
 </div>
 
 <div class="summary-row">
-<span>Kode Unik</span>
-<span id="kode"></span>
+<span>Diskon</span>
+<span id="diskon"></span>
+</div>
+
+<div class="summary-row">
+<span>Hemat</span>
+<span id="hemat"></span>
 </div>
 
 <div class="summary-total">
@@ -336,7 +351,8 @@ document.getElementById("wa").innerText = data.telepon
 document.getElementById("email").innerText = data.email
 
 document.getElementById("harga").innerText = data.total
-document.getElementById("kode").innerText = "Rp 45" // bisa random nanti
+document.getElementById("diskon").innerText = data.diskon
+document.getElementById("hemat").innerText = data.hemat
 document.getElementById("total").innerText = data.total
 document.getElementById("total2").innerText = data.total
 document.getElementById("total3").innerText = data.total
