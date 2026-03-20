@@ -32,6 +32,48 @@ font-size:16px;
 color:white;
 }
 
+.invoice-check-box{
+  background:#16161f;
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:16px;
+  padding:20px;
+  margin-bottom:20px;
+  text-align:center;
+}
+
+.invoice-check-box h2{
+  color:#fff;
+  font-size:18px;
+  margin-bottom:6px;
+}
+
+.invoice-check-box p{
+  font-size:13px;
+  color:rgba(255,255,255,0.6);
+  margin-bottom:16px;
+}
+
+.invoice-input-wrap{
+  display:flex;
+  gap:8px;
+}
+
+.invoice-input-wrap input{
+  flex:1;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid #ddd;
+}
+
+.invoice-input-wrap button{
+  padding:10px 14px;
+  border:none;
+  border-radius:10px;
+  background:#7c3aed;
+  color:#fff;
+  font-weight:600;
+}
+
 /* CONTAINER */
 .container{
 max-width:850px;
@@ -254,6 +296,26 @@ font-weight:600;
 <p>Cek pembayaran pesanan kamu</p>
 </div>
 
+
+<div class="invoice-check-box">
+
+  <h2>Masukan Invoice Anda</h2>
+  <p>Lacak status pembayaran dan detail pesanan</p>
+
+  <div class="invoice-input-wrap">
+    <input 
+      type="text" 
+      id="inputInvoice"
+      placeholder="Masukkan nomor invoice (contoh: 2026xxxxxxx)"
+    >
+    <button onclick="cekInvoice()">
+      🔍 Cek
+    </button>
+  </div>
+
+</div>
+
+  
 <div class="container">
 
 <!-- INVOICE -->
@@ -382,6 +444,46 @@ Total: ${data.total}`
 
 document.getElementById("waLink").href =
 "https://wa.me/6285881500868?text=" + encodeURIComponent(pesan)
+
+document.querySelector(".summary-box").style.display = "none"
+document.querySelector(".detail-box").style.display = "none"
+document.querySelector(".status-box").style.display = "none"
+
+async function cekInvoice(){
+
+const input = document.getElementById("inputInvoice").value
+
+if(!input){
+alert("Masukkan invoice dulu")
+return
+}
+
+const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/payment_id")
+const sheet = await res.json()
+
+const found = sheet.find(row => row.invoice == input)
+
+if(!found){
+alert("Invoice tidak ditemukan")
+return
+}
+
+/* TAMPILKAN */
+document.querySelector(".summary-box").style.display = "block"
+document.querySelector(".detail-box").style.display = "block"
+document.querySelector(".status-box").style.display = "block"
+
+/* STATUS */
+if(found.status == "success"){
+document.getElementById("statusTitle").innerText = "✅ Pembayaran Berhasil"
+
+const box = document.querySelector(".status-box")
+box.style.background = "#dcfce7"
+box.style.borderColor = "#86efac"
+}else{
+document.getElementById("statusTitle").innerText = "⚠ Menunggu Pembayaran"
+}
+}
 
 </script>
 
