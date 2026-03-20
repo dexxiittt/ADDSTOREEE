@@ -359,8 +359,19 @@ alert("Data tidak ditemukan")
 window.location.href = "index.html"
 }
 
-/* GENERATE INVOICE */
-const invoice = "INV" + Date.now()
+// ambil invoice kalau sudah ada
+let invoice = localStorage.getItem("invoice")
+
+if(!invoice){
+  // generate angka unik
+  const unique = Math.floor(1000000 + Math.random() * 9000000)
+  
+  // format: 2026xxxxxxx
+  invoice = "2026" + unique
+
+  // simpan biar gak berubah saat refresh
+  localStorage.setItem("invoice", invoice)
+}
 
 /* WAKTU */
 const now = new Date()
@@ -384,34 +395,50 @@ document.getElementById("total2").innerText = data.total
 document.getElementById("total3").innerText = data.total
 
 /* WA LINK */
-const pesan = `Halo admin, saya ingin konfirmasi pembayaran:
+function generatePesanWA(){
+return `Halo Admin, saya sudah melakukan pembayaran QRIS.
 
-Invoice: ${invoice}
+📌 Detail Pembayaran:
+Nomor Invoice: ${invoice}
 Nama: ${data.nama}
-Produk: ${data.paket}
-Total: ${data.total}`
+No WA: ${data.telepon}
+Email: ${data.email}
+
+📦 ${data.paket}
+📝 Detail: ${data.paketDetail}
+💰 Total: ${data.total}
+
+Mohon dicek ya 🙏`
+}
 
 document.getElementById("waLink").href =
-"https://wa.me/6285881500868?text=" + encodeURIComponent(pesan)
+"https://wa.me/6285881500868?text=" + encodeURIComponent(generatePesanWA())
 
 
 // simulasi pembayaran berhasil (10 detik)
 setTimeout(()=>{
 
-// ubah status atas
+setTimeout(()=>{
+
+// ubah status
 document.getElementById("statusText").innerText = "Pembayaran Berhasil"
 document.getElementById("statusText").classList.add("success-text")
 
-// ubah box kuning jadi hijau
 const statusBox = document.querySelector(".status-box")
 statusBox.classList.add("success")
 
-// ubah title
 document.getElementById("statusTitle").innerText = "✅ Pembayaran Berhasil"
 
-// ubah deskripsi
 document.querySelector(".status-text").innerHTML =
-"Pembayaran telah diterima. Admin akan segera memproses pesanan kamu "
+"Pembayaran telah diterima. Admin akan segera memproses pesanan kamu"
+
+// AUTO OPEN WA (delay dikit biar smooth)
+setTimeout(()=>{
+  window.open(
+    "https://wa.me/6285881500868?text=" + encodeURIComponent(generatePesanWA()),
+    "_blank"
+  )
+}, 1500)
 
 }, 10000)
 </script>
