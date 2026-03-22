@@ -493,7 +493,7 @@ const year = new Date().getFullYear()
 const random = Math.floor(1000000 + Math.random() * 9000000)
 
 // gabungkan
-const invoice = "INV" + year + random
+const invoice = year + random
 
 // simpan biar fix
 localStorage.setItem("invoiceID", invoice)
@@ -585,11 +585,11 @@ document.getElementById("email").innerText = info[2] || "-"
 // AMBIL DATA PACKAGE
 // ==========================
 
-const res2 = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/package_id")
+const res2 = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/product_id")
 const packages = await res2.json()
 
 const pkg = packages.find(p => 
-String(p.package_id).trim() === found.package_id
+String(p.package_id).trim() === String(found.package_id).trim()
 )
 
 if(pkg){
@@ -602,6 +602,8 @@ document.getElementById("total").innerText = "Rp " + pkg.price
 document.getElementById("total2").innerText = "Rp " + pkg.price
 document.getElementById("total3").innerText = "Rp " + pkg.price
 
+}else{
+console.log("Package tidak ditemukan")
 }
 
 // ==========================
