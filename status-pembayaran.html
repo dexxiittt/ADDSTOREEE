@@ -474,27 +474,29 @@ window.location.href = "index.html"
 /* GENERATE INVOICE */
 function generateInvoice(){
 
+// cek apakah sudah ada invoice sebelumnya
 let savedInvoice = localStorage.getItem("invoiceID")
-if(savedInvoice) return savedInvoice
 
+if(savedInvoice){
+return savedInvoice // pakai yang lama (biar gak berubah)
+}
+
+// ambil tahun sekarang
 const year = new Date().getFullYear()
 
-// ambil counter terakhir
-let counter = localStorage.getItem("invoiceCounter") || 1001000
-
-counter = parseInt(counter) + 1
-
-// simpan counter terbaru
-localStorage.setItem("invoiceCounter", counter)
+// bikin 7 digit random
+const random = Math.floor(1000000 + Math.random() * 9000000)
 
 // gabungkan
-const invoice = "INV" + year + counter
+const invoice = "INV" + year + random
 
+// simpan biar fix
 localStorage.setItem("invoiceID", invoice)
 
 return invoice
 }
 
+// pakai ini
 const invoice = generateInvoice()
   
 /* WAKTU */
