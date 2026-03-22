@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Status Pembayaran</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+font-family:Poppins;
+background:#f3f4f8;
+margin:0;
+}
+
+/* HERO */
+.package-hero{
+background:linear-gradient(135deg,#7b2ff7,#5f0a87);
+padding:50px 20px;
+text-align:center;
+}
+
+.package-hero h1{
+font-size:34px;
+margin-bottom:6px;
+color:white;
+}
+
+.package-hero p{
+opacity:.8;
+font-size:16px;
+color:white;
+}
+
+/* CEK INVOICE BOX */
+.invoice-check-box{
+background:#f9fafb;
+max-width: 800px;
+margin:20px auto; 
+border:1px solid #e5e7eb;
+border-radius:12px;
+padding:50px;
+margin-bottom:20px;
+animation:fadeUp .4s ease;
+  
+/* ✨ SHADOW SUPER RINGAN + ELEGAN */
+box-shadow: 
+0 1px 2px rgba(0,0,0,0.04),
+0 4px 10px rgba(0,0,0,0.06);
+
+transition:.2s ease;
+}
+
+.invoice-check-header{
+text-align:center;
+margin-bottom:20px;
+}
+
+.invoice-check-header h2{
+font-size:24px;
+font-weight:700;
+color:#111827;
+margin-bottom:6px;
+letter-spacing:.3px;
+}
+
+.invoice-check-header p{
+font-size:14px;
+opacity:.8;
+color:#6b7280;
+}
+
+.invoice-check-box:hover{
+transform:translateY(-2px);
+box-shadow: 
+0 4px 12px rgba(0,0,0,0.06),
+0 8px 20px rgba(0,0,0,0.08);
+}
+
+.invoice-check-title{
+font-weight:600;
+margin-bottom:10px;
+color:#111827;
+}
+
+.invoice-input-wrap{
+display:flex;
+gap:10px;
+padding:6px;
+border-radius:12px;
+background:#ffffff;
+
+/* SHADOW LUAR (floating ringan) */
+box-shadow:
+0 2px 6px rgba(0,0,0,0.05),
+0 6px 14px rgba(0,0,0,0.06);
+
+transition:.2s ease;
+}
+
+.invoice-input-wrap:focus-within{
+transform:translateY(-1px);
+box-shadow:
+0 4px 10px rgba(0,0,0,0.06),
+0 10px 20px rgba(0,0,0,0.08);
+}
+
+.invoice-input-wrap input{
+flex:1;
+padding:12px 14px;
+border:none;
+outline:none;
+font-size:14px;
+border-radius:8px;
+background:transparent;
+}
+  
+.invoice-input-wrap button{
+background:#7c3aed;
+color:white;
+border:none;
+padding:12px 16px;
+border-radius:8px;
+font-weight:600;
+cursor:pointer;
+
+box-shadow:
+0 2px 6px rgba(124,58,237,0.25);
+
+transition:.2s;
+}
+
+.invoice-input-wrap button:hover{
+transform:translateY(-1px);
+box-shadow:
+0 4px 10px rgba(124,58,237,0.35);
+}
+  
+/* CONTAINER */
+.container{
+max-width:850px;
+margin:20px auto;
+background:#fff;
+border-radius:14px;
+padding:20px;
+box-shadow:0 6px 18px rgba(0,0,0,0.1);
+}
+
+/* INVOICE */
+.invoice-box{
+background:#fef9c3;
+border-radius:12px;
+padding:16px;
+margin-bottom:20px;
+}
+
+.invoice-id{
+font-weight:700;
+font-size:16px;
+}
+
+.invoice-status{
+color:#d97706;
+font-size:14px;
+margin-top:4px;
+}
+
+.invoice-price{
+font-size:28px;
+font-weight:700;
+margin-top:10px;
+color:#1f2937;
+}
+
+.invoice-time{
+font-size:13px;
+color:#6b7280;
+margin-top:6px;
+}
+
+/* DETAIL BOX */
+.detail-box{
+background:#f9fafb;
+border:1px solid #e5e7eb;
+border-radius:10px;
+padding:14px;
+margin-bottom:20px;
+}
+
+.detail-title{
+font-weight:600;
+margin-bottom:12px;
+color:#111827;
+}
+
+.section-title{
+font-size:20px;
+font-weight:700;
+color:#111827;
+margin-bottom:10px;
+margin-top:10px;
+}
+
+.detail-row{
+display:flex;
+justify-content:space-between;
+margin-bottom:8px;
+font-size:14px;
+}
+
+.total{
+font-weight:700;
+color:#2563eb;
+}
+
+/* STATUS */
+.status-box{
+background:#fef3c7;
+border:1px solid #fde68a;
+border-radius:12px;
+padding:16px;
+margin-bottom:20px;
+}
+
+.status-title{
+font-weight:600;
+margin-bottom:6px;
+}
+
+.status-text{
+font-size:14px;
+}
+
+/* WA BOX */
+.wa-box{
+background:#ecfeff;
+border:1px solid #a5f3fc;
+border-radius:12px;
+padding:16px;
+}
+
+.wa-btn{
+margin-top:10px;
+display:inline-block;
+background:#22c55e;
+color:white;
+padding:10px 16px;
+border-radius:8px;
+text-decoration:none;
+font-weight:600;
+}
+
+/* SUMMARY STYLE (copy dari QR page) */
+.summary-box{
+background:#f9fafb;
+border:1px solid #e5e7eb;
+border-radius:10px;
+padding:14px;
+animation:fadeUp .4s ease;
+}
+
+@keyframes fadeUp{
+from{
+opacity:0;
+transform:translateY(6px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+.summary-box{
+margin-bottom:24px;
+}
+
+.detail-box{
+margin-bottom:24px;
+}
+
+.summary-row{
+display:flex;
+justify-content:space-between;
+padding:10px 0;
+font-size:14px;
+color:#374151;
+position:relative;
+}
+
+.summary-row::after{
+content:"";
+position:absolute;
+left:0;
+bottom:0;
+width:100%;
+height:1px;
+background:linear-gradient(
+  to right,
+  transparent,
+  #e5e7eb,
+  transparent
+);
+}
+
+.summary-total{
+display:flex;
+justify-content:space-between;
+margin-top:10px;
+padding-top:10px;
+border-top:2px solid #e5e7eb;
+font-weight:700;
+font-size:16px;
+color:#111827;
+}
+
+.summary-title{
+font-size:14px;
+font-weight:600;
+color:#374151;
+margin-bottom:10px;
+}
+
+.summary-item{
+display:flex;
+justify-content:space-between;
+margin-bottom:12px;
+}
+
+.paket-title{
+font-size:15px;
+font-weight:600;
+color:#111827;
+margin-bottom:3px;
+}
+
+.paket-sub{
+font-size:13px;
+color:#6b7280;
+}
+
+#diskon{
+color:#ef4444;
+font-weight:600;
+}
+
+#hemat{
+color:#16a34a;
+font-weight:600;
+}
+
+
+
+</style>
+</head>
+
+<body>
+
+<div class="package-hero">
+<h1>Status Pembayaran</h1>
+<p>Cek pembayaran pesanan kamu</p>
+</div>
+
+<!-- CEK INVOICE (NEW) -->
+<div class="invoice-check-box">
+  <div class="invoice-check-header">
+  <h2>Masukan Invoice Anda</h2>
+  <p>Lacak status pembayaran dan detail pesanan</p>
+</div>
+
+  <div class="invoice-input-wrap">
+    <input 
+      type="text" 
+      id="inputInvoice"
+      placeholder="Masukkan nomor invoice (contoh: INV123...)"
+    >
+    <button onclick="cekInvoice()">Cek</button>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- INVOICE -->
+<div class="invoice-box">
+<div class="invoice-id" id="invoice"></div>
+<div class="invoice-status">Menunggu Pembayaran</div>
+<div class="invoice-price" id="total"></div>
+<div class="invoice-time" id="time"></div>
+</div>
+
+  
+<!-- DETAIL PESANAN -->
+<h3 class="section-title">Detail Pesanan</h3>
+<div class="summary-box">
+<div class="summary-item">
+<div>
+<div class="paket-title" id="paket"></div>
+<div class="paket-sub" id="paketDetail"></div>
+</div>
+</div>
+
+<div class="summary-row">
+<span>Subtotal</span>
+<span id="harga"></span>
+</div>
+
+<div class="summary-row">
+<span>Diskon</span>
+<span id="diskon"></span>
+</div>
+
+<div class="summary-row">
+<span>Hemat</span>
+<span id="hemat"></span>
+</div>
+
+<div class="summary-total">
+<span>Total Bayar</span>
+<span id="total2"></span>
+</div>
+
+</div>
+
+<!-- CUSTOMER -->
+<h3 class="section-title">Informasi Customer</h3>
+<div class="detail-box">
+
+<div class="detail-row">
+<span>Nama</span>
+<span id="nama"></span>
+</div>
+
+<div class="detail-row">
+<span>WhatsApp</span>
+<span id="wa"></span>
+</div>
+
+<div class="detail-row">
+<span>Email</span>
+<span id="email"></span>
+</div>
+
+</div>
+
+<!-- STATUS -->
+<div class="status-box">
+<div class="status-title">⚠ Menunggu Pembayaran</div>
+<div class="status-text">
+Silakan lakukan pembayaran sesuai nominal <b id="total3"></b>
+</div>
+</div>
+
+<!-- WA -->
+<div class="wa-box">
+<div><b>Butuh Bantuan?</b></div>
+<div style="font-size:14px;margin-top:6px;">
+Sudah bayar tapi status masih pending? Hubungi admin.
+</div>
+
+<a id="waLink" class="wa-btn">Chat Admin</a>
+</div>
+
+</div>
+
+<script>
+
+/* AMBIL DATA */
+const data = JSON.parse(localStorage.getItem("paymentData"))
+
+if(!data){
+alert("Data tidak ditemukan")
+window.location.href = "index.html"
+}
+
+/* GENERATE INVOICE */
+const invoice = "INV" + Date.now()
+
+/* WAKTU */
+const now = new Date()
+const waktu = now.toLocaleString("id-ID")
+
+/* SET DATA */
+document.getElementById("invoice").innerText = invoice
+document.getElementById("time").innerText = waktu
+
+document.getElementById("paket").innerText = data.paket
+document.getElementById("paketDetail").innerText = data.paketDetail
+document.getElementById("nama").innerText = data.nama
+document.getElementById("wa").innerText = data.telepon
+document.getElementById("email").innerText = data.email
+
+document.getElementById("harga").innerText = data.total
+document.getElementById("diskon").innerText = data.diskon
+document.getElementById("hemat").innerText = data.hemat
+document.getElementById("total").innerText = data.total
+document.getElementById("total2").innerText = data.total
+document.getElementById("total3").innerText = data.total
+
+/* WA LINK */
+const pesan = `Halo admin, saya ingin konfirmasi pembayaran:
+
+Invoice: ${invoice}
+Nama: ${data.nama}
+Produk: ${data.paket}
+Total: ${data.total}`
+
+document.getElementById("waLink").href =
+"https://wa.me/6285881500868?text=" + encodeURIComponent(pesan)
+
+
+async function cekInvoice(){
+
+const input = document.getElementById("inputInvoice").value.trim()
+
+if(!input){
+alert("Masukkan invoice dulu")
+return
+}
+
+try{
+
+const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/invoice_id")
+const sheet = await res.json()
+
+const found = sheet.find(item => 
+String(item.invoice).trim() === input
+)
+
+if(found){
+window.location.href = "status-pesanan.html?inv=" + input
+}else{
+alert("Invoice tidak ditemukan ❌")
+}
+
+}catch(err){
+console.error(err)
+alert("Gagal ambil data")
+}
+
+}
+</script>
+
+</body>
+</html>
