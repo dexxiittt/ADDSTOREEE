@@ -588,12 +588,12 @@ document.getElementById("wa").innerText = info[1]
 document.getElementById("email").innerText = info[2]
 
 // status
-const statusText = (found.status || "").toLowerCase().trim()
+const statusValue = (found.status || "").toLowerCase().trim()
 
 const statusEl = document.querySelector(".invoice-status")
 const box = document.getElementById("invoiceBox")
 
-if(statusText === "success"){
+if(statusValue === "success"){
   statusEl.innerText = "Pembayaran Berhasil"
   
   box.classList.remove("invoice-pending")
@@ -608,27 +608,24 @@ if(statusText === "success"){
 
 const statusBox = document.getElementById("statusBox")
 const statusTitle = document.getElementById("statusTitle")
-const statusText = document.getElementById("statusText")
+const statusTextEl = document.getElementById("statusText")
 
-if(statusText === "success"){
+if(statusValue === "success"){
   
-  // ubah box jadi hijau
   statusBox.classList.remove("status-pending")
   statusBox.classList.add("status-success")
 
-  // ubah isi
   statusTitle.innerText = "✅ Pembayaran Berhasil"
-  statusText.innerHTML = 
+  statusTextEl.innerHTML = 
     `Nominal yang dibayar <b>${rupiah(hargaFinal)}</b>`
 
 }else{
 
-  // tetap kuning
   statusBox.classList.remove("status-success")
   statusBox.classList.add("status-pending")
 
   statusTitle.innerText = "⚠ Menunggu Pembayaran"
-  statusText.innerHTML = 
+  statusTextEl.innerHTML = 
     `Silakan lakukan pembayaran sesuai nominal <b>${rupiah(hargaFinal)}</b>`
 }
 
