@@ -471,6 +471,11 @@ alert("Data tidak ditemukan")
 window.location.href = "index.html"
 }
 
+function getInvoiceFromURL(){
+const params = new URLSearchParams(window.location.search)
+return params.get("inv")
+}
+
 /* GENERATE INVOICE */
 function generateInvoice(){
 
@@ -521,12 +526,21 @@ document.getElementById("total2").innerText = data.total
 document.getElementById("total3").innerText = data.total
 
 /* WA LINK */
-const pesan = `Halo admin, saya ingin konfirmasi pembayaran:
+const pesan = `Halo Admin, saya sudah melakukan pembayaran QRIS.
 
+📌 Detail Pembayaran:
 Invoice: ${invoice}
 Nama: ${data.nama}
-Produk: ${data.paket}
-Total: ${data.total}`
+No WA: ${data.telepon}
+Email: ${data.email}
+
+📦 Paket: ${data.paket}
+📝 Detail: ${data.paketDetail}
+💰 Total: ${data.total}
+
+📸 Bukti pembayaran: (saya lampirkan screenshot)
+
+Mohon dicek ya 🙏`
 
 document.getElementById("waLink").href =
 "https://wa.me/6285881500868?text=" + encodeURIComponent(pesan)
@@ -560,8 +574,58 @@ alert("Invoice tidak ditemukan ❌")
 console.error(err)
 alert("Gagal ambil data")
 }
+}
+
+async function loadStatus(){
+
+const urlInvoice = getInvoiceFromURL()
+
+// kalau ada invoice dari URL → pakai itu
+const currentInvoice = urlInvoice || invoice
+
+try{
+
+const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/payment_id")
+const sheet = await res.json()
+
+const found = sheet.find(item => 
+String(item.invoice).trim() === currentInvoice
+)
+
+if(found){
+
+// update invoice di UI
+document.getElementById("invoice").innerText = currentInvoice
+
+// CEK STATUS
+if(found.status === "active"){
+
+// 🟢 SUCCESS
+document.querySelector(".invoice-status").innerText = "Pembayaran Sukses"
+document.querySelector(".invoice-box").style.background = "#dcfce7"
+
+document.querySelector(".status-box").style.background = "#dcfce7"
+document.querySelector(".status-title").innerText = "✅ Pembayaran Berhasil"
+
+}else{
+
+// 🟡 PENDING
+document.querySelector(".invoice-status").innerText = "Menunggu Pembayaran"
 
 }
+
+}else{
+console.log("Invoice belum ada di database")
+}
+
+}catch(err){
+console.error(err)
+}
+
+}
+
+// jalankan
+loadStatus()
 </script>
 
 </body>
