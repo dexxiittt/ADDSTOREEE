@@ -463,42 +463,6 @@ Sudah bayar tapi status masih pending? Hubungi admin.
 
 <script>
 
-/* GENERATE INVOICE */
-const invoice = "INV" + Date.now()
-
-/* WAKTU */
-const now = new Date()
-const waktu = now.toLocaleString("id-ID")
-
-/* SET DATA */
-document.getElementById("invoice").innerText = invoice
-document.getElementById("time").innerText = waktu
-
-document.getElementById("paket").innerText = data.paket
-document.getElementById("paketDetail").innerText = data.paketDetail
-document.getElementById("nama").innerText = data.nama
-document.getElementById("wa").innerText = data.telepon
-document.getElementById("email").innerText = data.email
-
-document.getElementById("harga").innerText = data.total
-document.getElementById("diskon").innerText = data.diskon
-document.getElementById("hemat").innerText = data.hemat
-document.getElementById("total").innerText = data.total
-document.getElementById("total2").innerText = data.total
-document.getElementById("total3").innerText = data.total
-
-/* WA LINK */
-const pesan = `Halo admin, saya ingin konfirmasi pembayaran:
-
-Invoice: ${invoice}
-Nama: ${data.nama}
-Produk: ${data.paket}
-Total: ${data.total}`
-
-document.getElementById("waLink").href =
-"https://wa.me/6285881500868?text=" + encodeURIComponent(pesan)
-
-
 async function cekInvoice(){
 
 const input = document.getElementById("inputInvoice").value.trim()
@@ -510,39 +474,42 @@ return
 
 try{
 
-const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/invoice_id")
+const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/payment_id")
 const sheet = await res.json()
 
 const found = sheet.find(item => 
-String(item.invoice).trim() === input
+String(item.invoice).trim() === String(input).trim()
 )
 
 if(found){
 
+// tampilkan container
 document.getElementById("resultBox").style.display = "block"
 
-// isi data dari spreadsheet
+// invoice
 document.getElementById("invoice").innerText = found.invoice
-document.getElementById("total").innerText = found.total
-document.getElementById("total2").innerText = found.total
-document.getElementById("total3").innerText = found.total
-document.getElementById("time").innerText = found.waktu
 
-// contoh split data customer (kalau pakai format |)
+// waktu (opsional kalau belum ada di sheet)
+document.getElementById("time").innerText = new Date().toLocaleString("id-ID")
+
+// split data customer
 const info = found.informasi_pelanggan.split("|")
 
 document.getElementById("nama").innerText = info[0]
 document.getElementById("wa").innerText = info[1]
 document.getElementById("email").innerText = info[2]
 
-// paket
-document.getElementById("paket").innerText = found.paket
-document.getElementById("paketDetail").innerText = found.paket_detail
+// status
+document.querySelector(".invoice-status").innerText = found.status
 
-// harga
-document.getElementById("harga").innerText = found.harga
-document.getElementById("diskon").innerText = found.diskon
-document.getElementById("hemat").innerText = found.hemat
+// WA link dinamis
+const pesan = `Halo admin, saya ingin konfirmasi pembayaran:
+
+Invoice: ${found.invoice}
+Nama: ${info[0]}`
+
+document.getElementById("waLink").href =
+"https://wa.me/6285881500868?text=" + encodeURIComponent(pesan)
 
 }else{
 alert("Invoice tidak ditemukan ❌")
