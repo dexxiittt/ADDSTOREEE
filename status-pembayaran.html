@@ -171,6 +171,16 @@ background:#fef9c3;
 border:1px solid #fde68a;
 }
 
+.status-success{
+background:#dcfce7;
+border:1px solid #86efac;
+}
+
+.status-success .status-title{
+color:#16a34a;
+font-weight:600;
+}
+
 .invoice-id{
 font-weight:700;
 font-size:16px;
@@ -459,9 +469,9 @@ font-weight:600;
 </div>
 
 <!-- STATUS -->
-<div class="status-box">
-<div class="status-title">⚠ Menunggu Pembayaran</div>
-<div class="status-text">
+<div class="status-box" id="statusBox">
+<div class="status-title" id="statusTitle">⚠ Menunggu Pembayaran</div>
+<div class="status-text" id="statusText">
 Silakan lakukan pembayaran sesuai nominal <b id="total3"></b>
 </div>
 </div>
@@ -574,20 +584,40 @@ document.getElementById("email").innerText = info[2]
 // status
 const statusText = (found.status || "").toLowerCase().trim()
 
-const statusEl = document.querySelector(".invoice-status")
-const box = document.getElementById("invoiceBox")
+const statusBox = document.getElementById("statusBox")
+const statusTitle = document.getElementById("statusTitle")
+const statusTextEl = document.getElementById("statusText")
 
 if(statusText === "success"){
-  statusEl.innerText = "Pembayaran Berhasil"
   
+  // === BOX ATAS ===
+  statusEl.innerText = "Pembayaran Berhasil"
   box.classList.remove("invoice-pending")
   box.classList.add("invoice-success")
 
+  // === BOX BAWAH (YANG KUNING) ===
+  statusBox.classList.remove("status-pending")
+  statusBox.classList.add("status-success")
+
+  statusTitle.innerText = "✅ Sudah Dibayarkan"
+  statusTextEl.innerHTML = `
+  Pembayaran telah diterima sebesar <b>${rupiah(hargaFinal)}</b>
+  `
+
 }else{
+
+  // === BOX ATAS ===
   statusEl.innerText = "Menunggu Pembayaran"
-  
   box.classList.remove("invoice-success")
   box.classList.add("invoice-pending")
+
+  // === BOX BAWAH ===
+  statusBox.classList.remove("status-success")
+
+  statusTitle.innerText = "⚠ Menunggu Pembayaran"
+  statusTextEl.innerHTML = `
+  Silakan lakukan pembayaran sesuai nominal <b>${rupiah(hargaFinal)}</b>
+  `
 }
 
 // WA link dinamis
