@@ -471,9 +471,14 @@ alert("Data tidak ditemukan")
 window.location.href = "index.html"
 }
 
-function getInvoiceFromURL(){
-const params = new URLSearchParams(window.location.search)
-return params.get("inv")
+window.onload = () => {
+
+const inv = getInvoiceFromURL()
+
+if(inv){
+document.getElementById("inputInvoice").value = inv
+cekInvoice() // auto jalan
+}
 }
 
 /* GENERATE INVOICE */
