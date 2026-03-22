@@ -181,6 +181,16 @@ color:#16a34a;
 font-weight:600;
 }
 
+.status-box.success{
+background:#dcfce7;
+border:1px solid #86efac;
+}
+
+.status-box.success .status-title{
+color:#16a34a;
+font-weight:600;
+}
+
 .invoice-id{
 font-weight:700;
 font-size:16px;
@@ -593,13 +603,12 @@ const statusTextEl = document.getElementById("statusText")
 
 if(statusText === "success"){
   
-  // BOX ATAS
   statusEl.innerText = "Pembayaran Berhasil"
   box.classList.remove("invoice-pending")
   box.classList.add("invoice-success")
 
-  // BOX BAWAH
-  statusBox.classList.add("status-success")
+  // ✅ INI YANG UBAH WARNA
+  statusBox.classList.add("success")
 
   statusTitle.innerText = "✅ Sudah Dibayarkan"
   statusTextEl.innerHTML = `
@@ -608,13 +617,12 @@ if(statusText === "success"){
 
 }else{
 
-  // BOX ATAS
   statusEl.innerText = "Menunggu Pembayaran"
   box.classList.remove("invoice-success")
   box.classList.add("invoice-pending")
 
-  // BOX BAWAH
-  statusBox.classList.remove("status-success")
+  // BALIK KE KUNING
+  statusBox.classList.remove("success")
 
   statusTitle.innerText = "⚠ Menunggu Pembayaran"
   statusTextEl.innerHTML = `
