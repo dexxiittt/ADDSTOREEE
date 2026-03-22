@@ -377,7 +377,7 @@ font-weight:600;
   </div>
 </div>
 
-<div class="container">
+<div class="container" id="resultBox" style="display:none;">
 
 <!-- INVOICE -->
 <div class="invoice-box">
@@ -463,14 +463,6 @@ Sudah bayar tapi status masih pending? Hubungi admin.
 
 <script>
 
-/* AMBIL DATA */
-const data = JSON.parse(localStorage.getItem("paymentData"))
-
-if(!data){
-alert("Data tidak ditemukan")
-window.location.href = "index.html"
-}
-
 /* GENERATE INVOICE */
 const invoice = "INV" + Date.now()
 
@@ -526,7 +518,32 @@ String(item.invoice).trim() === input
 )
 
 if(found){
-window.location.href = "status-pesanan.html?inv=" + input
+
+document.getElementById("resultBox").style.display = "block"
+
+// isi data dari spreadsheet
+document.getElementById("invoice").innerText = found.invoice
+document.getElementById("total").innerText = found.total
+document.getElementById("total2").innerText = found.total
+document.getElementById("total3").innerText = found.total
+document.getElementById("time").innerText = found.waktu
+
+// contoh split data customer (kalau pakai format |)
+const info = found.informasi_pelanggan.split("|")
+
+document.getElementById("nama").innerText = info[0]
+document.getElementById("wa").innerText = info[1]
+document.getElementById("email").innerText = info[2]
+
+// paket
+document.getElementById("paket").innerText = found.paket
+document.getElementById("paketDetail").innerText = found.paket_detail
+
+// harga
+document.getElementById("harga").innerText = found.harga
+document.getElementById("diskon").innerText = found.diskon
+document.getElementById("hemat").innerText = found.hemat
+
 }else{
 alert("Invoice tidak ditemukan ❌")
 }
