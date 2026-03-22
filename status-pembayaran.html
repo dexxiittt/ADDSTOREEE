@@ -608,7 +608,7 @@ document.getElementById("total3").innerText = "Rp " + pkg.price
 // STATUS
 // ==========================
 
-if(found.status === "active"){
+if(String(found.status).trim().toLowerCase() === "active"){
 
 document.querySelector(".invoice-status").innerText = "Pembayaran Sukses"
 document.querySelector(".invoice-box").style.background = "#dcfce7"
