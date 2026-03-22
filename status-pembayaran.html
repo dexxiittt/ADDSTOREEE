@@ -491,8 +491,10 @@ const resProduk = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy
 const produk = await resProduk.json()
 
 // cari berdasarkan package_id
-const detailProduk = produk.find(p => p.package_id === found.package_id)
-
+const detailProduk = produk.find(p => 
+String(p.package_id).trim().toLowerCase() === 
+String(found.package_id).trim().toLowerCase()
+)
 // isi paket
 document.getElementById("paket").innerText = detailProduk.title
 document.getElementById("paketDetail").innerText = detailProduk.duration
