@@ -472,8 +472,31 @@ window.location.href = "index.html"
 }
 
 /* GENERATE INVOICE */
-const invoice = "INV" + Date.now()
+function generateInvoice(){
 
+let savedInvoice = localStorage.getItem("invoiceID")
+if(savedInvoice) return savedInvoice
+
+const year = new Date().getFullYear()
+
+// ambil counter terakhir
+let counter = localStorage.getItem("invoiceCounter") || 1001000
+
+counter = parseInt(counter) + 1
+
+// simpan counter terbaru
+localStorage.setItem("invoiceCounter", counter)
+
+// gabungkan
+const invoice = "INV" + year + counter
+
+localStorage.setItem("invoiceID", invoice)
+
+return invoice
+}
+
+const invoice = generateInvoice()
+  
 /* WAKTU */
 const now = new Date()
 const waktu = now.toLocaleString("id-ID")
