@@ -42,6 +42,51 @@ padding:20px;
 box-shadow:0 6px 18px rgba(0,0,0,0.1);
 }
 
+/* CEK INVOICE BOX */
+.invoice-check-box{
+background:#f9fafb;
+border:1px solid #e5e7eb;
+border-radius:12px;
+padding:16px;
+margin-bottom:20px;
+animation:fadeUp .4s ease;
+}
+
+.invoice-check-title{
+font-weight:600;
+margin-bottom:10px;
+color:#111827;
+}
+
+.invoice-input-wrap{
+display:flex;
+gap:10px;
+}
+
+.invoice-input-wrap input{
+flex:1;
+padding:10px 12px;
+border-radius:8px;
+border:1px solid #d1d5db;
+outline:none;
+font-size:14px;
+}
+
+.invoice-input-wrap button{
+background:#7c3aed;
+color:white;
+border:none;
+padding:10px 16px;
+border-radius:8px;
+font-weight:600;
+cursor:pointer;
+}
+
+.invoice-input-wrap button:hover{
+background:#6d28d9;
+}
+
+
 /* INVOICE */
 .invoice-box{
 background:#fef9c3;
@@ -244,6 +289,8 @@ color:#16a34a;
 font-weight:600;
 }
 
+
+
 </style>
 </head>
 
@@ -252,6 +299,20 @@ font-weight:600;
 <div class="package-hero">
 <h1>Status Pembayaran</h1>
 <p>Cek pembayaran pesanan kamu</p>
+</div>
+
+<!-- CEK INVOICE (NEW) -->
+<div class="invoice-check-box">
+  <div class="invoice-check-title">Cek Invoice</div>
+
+  <div class="invoice-input-wrap">
+    <input 
+      type="text" 
+      id="inputInvoice"
+      placeholder="Masukkan nomor invoice (contoh: INV123...)"
+    >
+    <button onclick="cekInvoice()">Cek</button>
+  </div>
 </div>
 
 <div class="container">
@@ -383,6 +444,37 @@ Total: ${data.total}`
 document.getElementById("waLink").href =
 "https://wa.me/6285881500868?text=" + encodeURIComponent(pesan)
 
+
+async function cekInvoice(){
+
+const input = document.getElementById("inputInvoice").value.trim()
+
+if(!input){
+alert("Masukkan invoice dulu")
+return
+}
+
+try{
+
+const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/invoice_id")
+const sheet = await res.json()
+
+const found = sheet.find(item => 
+String(item.invoice).trim() === input
+)
+
+if(found){
+window.location.href = "status-pesanan.html?inv=" + input
+}else{
+alert("Invoice tidak ditemukan ❌")
+}
+
+}catch(err){
+console.error(err)
+alert("Gagal ambil data")
+}
+
+}
 </script>
 
 </body>
