@@ -486,6 +486,27 @@ if(found){
 // tampilkan container
 document.getElementById("resultBox").style.display = "block"
 
+// ambil data produk
+const resProduk = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/product_id")
+const produk = await resProduk.json()
+
+// cari berdasarkan package_id
+const detailProduk = produk.find(p => p.package_id === found.package_id)
+
+// isi paket
+document.getElementById("paket").innerText = detailProduk.title
+document.getElementById("paketDetail").innerText = detailProduk.duration
+
+// harga
+document.getElementById("harga").innerText = "Rp " + detailProduk.price
+document.getElementById("total").innerText = "Rp " + detailProduk.price
+document.getElementById("total2").innerText = "Rp " + detailProduk.price
+document.getElementById("total3").innerText = "Rp " + detailProduk.price
+
+// optional (kalau belum ada di sheet)
+document.getElementById("diskon").innerText = "-"
+document.getElementById("hemat").innerText = "-"
+
 // invoice
 document.getElementById("invoice").innerText = found.invoice
 
