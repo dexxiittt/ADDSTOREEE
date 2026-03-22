@@ -581,12 +581,11 @@ document.getElementById("invoice").innerText = found.invoice
 document.getElementById("time").innerText = new Date().toLocaleString("id-ID")
 
 // split data customer
-const info = found.informasi_pelanggan.split("|")
+const info = (found.informasi_pelanggan || "").split("|")
 
-document.getElementById("nama").innerText = info[0]
-document.getElementById("wa").innerText = info[1]
-document.getElementById("email").innerText = info[2]
-
+document.getElementById("nama").innerText = info[0] || "-"
+document.getElementById("wa").innerText = info[1] || "-"
+document.getElementById("email").innerText = info[2] || "-"
 // status
 const statusValue = (found.status || "").toLowerCase().trim()
 
