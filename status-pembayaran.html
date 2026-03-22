@@ -584,19 +584,21 @@ document.getElementById("email").innerText = info[2]
 // status
 const statusText = (found.status || "").toLowerCase().trim()
 
+const statusEl = document.querySelector(".invoice-status")
+const box = document.getElementById("invoiceBox")
+
 const statusBox = document.getElementById("statusBox")
 const statusTitle = document.getElementById("statusTitle")
 const statusTextEl = document.getElementById("statusText")
 
 if(statusText === "success"){
   
-  // === BOX ATAS ===
+  // BOX ATAS
   statusEl.innerText = "Pembayaran Berhasil"
   box.classList.remove("invoice-pending")
   box.classList.add("invoice-success")
 
-  // === BOX BAWAH (YANG KUNING) ===
-  statusBox.classList.remove("status-pending")
+  // BOX BAWAH
   statusBox.classList.add("status-success")
 
   statusTitle.innerText = "✅ Sudah Dibayarkan"
@@ -606,12 +608,12 @@ if(statusText === "success"){
 
 }else{
 
-  // === BOX ATAS ===
+  // BOX ATAS
   statusEl.innerText = "Menunggu Pembayaran"
   box.classList.remove("invoice-success")
   box.classList.add("invoice-pending")
 
-  // === BOX BAWAH ===
+  // BOX BAWAH
   statusBox.classList.remove("status-success")
 
   statusTitle.innerText = "⚠ Menunggu Pembayaran"
