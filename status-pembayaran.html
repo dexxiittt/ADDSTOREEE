@@ -495,19 +495,51 @@ const detailProduk = produk.find(p =>
 String(p.package_id).trim().toLowerCase() === 
 String(found.package_id).trim().toLowerCase()
 )
+
+if(!detailProduk){
+  alert("Produk tidak ditemukan")
+  return
+}
+  
 // isi paket
 document.getElementById("paket").innerText = detailProduk.title
-document.getElementById("paketDetail").innerText = detailProduk.duration
+document.getElementById("paketDetail").innerText =
+  detailProduk.subtitle + " • " + detailProduk.duration
 
 // harga
-document.getElementById("harga").innerText = "Rp " + detailProduk.price
-document.getElementById("total").innerText = "Rp " + detailProduk.price
-document.getElementById("total2").innerText = "Rp " + detailProduk.price
-document.getElementById("total3").innerText = "Rp " + detailProduk.price
+// ambil harga asli
+const hargaAsli = parseInt(detailProduk.price)
 
-// optional (kalau belum ada di sheet)
-document.getElementById("diskon").innerText = "-"
-document.getElementById("hemat").innerText = "-"
+// ambil persen diskon (hapus % dan ganti koma jadi titik)
+const persenDiskon = parseFloat(
+  detailProduk.discount.replace("%","").replace(",",".")
+)
+
+// hitung diskon & harga akhir
+const potongan = Math.round(hargaAsli * persenDiskon / 100)
+const hargaFinal = hargaAsli - potongan
+
+// format rupiah
+function rupiah(angka){
+  return "Rp " + angka.toLocaleString("id-ID")
+}
+
+// tampilkan subtotal (coret)
+document.getElementById("harga").innerHTML =
+  `<s>${rupiah(hargaAsli)}</s>`
+
+// diskon %
+document.getElementById("diskon").innerText =
+  "-" + persenDiskon + "%"
+
+// hemat
+document.getElementById("hemat").innerText =
+  rupiah(potongan)
+
+// total
+document.getElementById("total").innerText = rupiah(hargaFinal)
+document.getElementById("total2").innerText = rupiah(hargaFinal)
+document.getElementById("total3").innerText = rupiah(hargaFinal)
 
 // invoice
 document.getElementById("invoice").innerText = found.invoice
