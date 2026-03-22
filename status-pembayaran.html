@@ -629,8 +629,50 @@ document.querySelector(".invoice-status").innerText = "Menunggu Pembayaran"
 
 }
 
+if(found){
+
+// ===== DATA DARI SHEET =====
+document.getElementById("resultBox").style.display = "block"
+document.getElementById("invoice").innerText = input
+
+const info = found.informasi_pelanggan.split("|")
+
+document.getElementById("nama").innerText = info[0] || "-"
+document.getElementById("wa").innerText = info[1] || "-"
+document.getElementById("email").innerText = info[2] || "-"
+
+// lanjut seperti biasa...
+
+}else{
+
+// ===== FALLBACK KE LOCAL STORAGE =====
+const localData = JSON.parse(localStorage.getItem("paymentData"))
+const localInvoice = localStorage.getItem("invoiceID")
+
+if(localInvoice === input && localData){
+
+document.getElementById("resultBox").style.display = "block"
+
+document.getElementById("invoice").innerText = localInvoice
+
+document.getElementById("nama").innerText = localData.nama
+document.getElementById("wa").innerText = localData.telepon
+document.getElementById("email").innerText = localData.email
+
+document.getElementById("paket").innerText = localData.paket
+document.getElementById("paketDetail").innerText = localData.paketDetail
+
+document.getElementById("harga").innerText = localData.total
+document.getElementById("total").innerText = localData.total
+document.getElementById("total2").innerText = localData.total
+document.getElementById("total3").innerText = localData.total
+
+// status default
+document.querySelector(".invoice-status").innerText = "Menunggu Pembayaran"
+
 }else{
 alert("Invoice tidak ditemukan ❌")
+}
 }
 
 }catch(err){
