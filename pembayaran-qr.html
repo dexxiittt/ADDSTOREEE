@@ -599,7 +599,15 @@ document.getElementById("qr-img").src =
 })
 
 function cekStatus(){
+
+const invoice = localStorage.getItem("invoiceID")
+
+if(invoice){
+window.location.href = "status-pembayaran.html?inv=" + invoice
+}else{
 window.location.href = "status-pembayaran.html"
+}
+
 }
 
 function kembaliProduk(){
