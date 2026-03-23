@@ -640,8 +640,10 @@ const pesan = `Halo admin, saya ingin konfirmasi pembayaran:
 Invoice: ${found.invoice}
 Nama: ${info[0]}`
 
-document.getElementById("waLink").href =
-"https://wa.me/6285881500868?text=" + encodeURIComponent(pesan)
+const waBtn = document.getElementById("waLink")
+if(waBtn){
+  waBtn.href = "https://wa.me/6285881500868?text=" + encodeURIComponent(pesan)
+}
 
 }else{
 alert("Invoice tidak ditemukan ❌")
