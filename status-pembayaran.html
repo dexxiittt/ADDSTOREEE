@@ -758,15 +758,15 @@ doc.setDrawColor(230)
 doc.setFillColor(255,255,255)
 
 // box QR
-doc.roundedRect(135, 135, 55, 65, 4, 4, "FD")
+doc.roundedRect(135, 155, 55, 65, 4, 4, "FD")
 
 // QR (lebih kecil & center)
-doc.addImage(qrBase64, "PNG", 142, 142, 40, 40)
+doc.addImage(qrBase64, "PNG", 142, 162, 40, 40)
 
 // text bawah QR (center)
 doc.setFontSize(9)
 doc.setTextColor(100)
-doc.text("Scan untuk verifikasi", 162, 188, { align: "center" })
+doc.text("Scan untuk verifikasi", 162, 208, { align: "center" })
 
 // reset warna
 doc.setTextColor(0,0,0)
