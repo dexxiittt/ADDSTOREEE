@@ -630,8 +630,7 @@ function rupiah(angka){
 }
 
 // tampilkan subtotal (coret)
-document.getElementById("harga").innerHTML =
-  `<s>${rupiah(hargaAsli)}</s>`
+const harga = document.getElementById("harga").innerText.replace("Rp ", "Rp")
 
 // diskon %
 document.getElementById("diskon").innerText =
@@ -745,7 +744,10 @@ const email = document.getElementById("email").innerText
 const paket = document.getElementById("paket").innerText
 const total = document.getElementById("total2").innerText
 const waktu = document.getElementById("time").innerText
-
+const harga = document.getElementById("harga").innerText
+const diskon = document.getElementById("diskon").innerText
+const hemat = document.getElementById("hemat").innerText
+  
 // convert gambar
 const logoBase64 = await loadImageBase64(window.logoURL)
 const qrBase64 = await loadImageBase64(window.qrURL)
@@ -784,6 +786,7 @@ doc.text("WhatsApp: " + wa, 20, 79)
 doc.text("Email: " + email, 20, 86)
 
 // ================= DETAIL BOX =================
+  
 doc.setDrawColor(230)
 doc.setFillColor(249, 250, 251)
 
@@ -816,24 +819,19 @@ y += 10
 // Reset warna
 doc.setTextColor(0)
 
-// ===== Subtotal =====
+// ===== Subtotal ======
 doc.setFontSize(11)
 doc.text("Subtotal", 25, y)
-doc.text("Rp42.005", 160, y, { align: "right" })
+doc.text(harga, 160, y, { align: "right" })
 
-// coret subtotal
-doc.setDrawColor(150)
-const text = "Rp42.005"
-const textWidth = doc.getTextWidth(text)
-
+// coret otomatis
+const textWidth = doc.getTextWidth(harga)
 const xRight = 160
 const xStart = xRight - textWidth
 
 doc.setDrawColor(150)
 doc.setLineWidth(0.6)
-
 doc.line(xStart, y - 1, xRight, y - 1)
-
 y += 6
 
 // garis
@@ -844,8 +842,8 @@ y += 8
 
 // ===== Diskon =====
 doc.text("Diskon", 25, y)
-doc.setTextColor(220, 38, 38) // merah
-doc.text("-19.06%", 160, y, { align: "right" })
+doc.setTextColor(220, 38, 38)
+doc.text(diskon, 160, y, { align: "right" })
 
 y += 6
 doc.setDrawColor(220)
@@ -856,8 +854,8 @@ y += 8
 // ===== Hemat =====
 doc.setTextColor(0)
 doc.text("Hemat", 25, y)
-doc.setTextColor(22, 163, 74) // hijau
-doc.text("Rp8.006", 160, y, { align: "right" })
+doc.setTextColor(22, 163, 74)
+doc.text(hemat, 160, y, { align: "right" })
 
 y += 6
 doc.setDrawColor(220)
