@@ -708,8 +708,8 @@ const qrBase64 = await loadImageBase64(window.qrURL)
 doc.setFillColor(124, 58, 237) // ungu
 doc.rect(0, 0, 210, 30, "F")
 
-// LOGO
-doc.addImage(logoBase64, "PNG", 160, 5, 30, 20)
+// LOGO (rapihin & proporsional)
+doc.addImage(logoBase64, "PNG", 150, 6, 40, 18)
 
 // TITLE
 doc.setTextColor(255,255,255)
@@ -754,10 +754,22 @@ doc.setFontSize(12)
 doc.text("Total Bayar: " + total, 25, 128)
 
 // ================= QR =================
-doc.addImage(qrBase64, "PNG", 140, 120, 50, 50)
+doc.setDrawColor(230)
+doc.setFillColor(255,255,255)
 
+// box QR
+doc.roundedRect(135, 115, 55, 65, 4, 4, "FD")
+
+// QR (lebih kecil & center)
+doc.addImage(qrBase64, "PNG", 142, 122, 40, 40)
+
+// text bawah QR (center)
 doc.setFontSize(9)
-doc.text("Scan untuk verifikasi", 140, 175)
+doc.setTextColor(100)
+doc.text("Scan untuk verifikasi", 162, 168, { align: "center" })
+
+// reset warna
+doc.setTextColor(0,0,0)
 
 // ================= STATUS BADGE =================
 doc.setFillColor(220, 252, 231)
