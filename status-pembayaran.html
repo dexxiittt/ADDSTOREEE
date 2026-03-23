@@ -741,17 +741,80 @@ doc.text("Email: " + email, 20, 86)
 doc.setDrawColor(230)
 doc.setFillColor(249, 250, 251)
 
-// box
-doc.roundedRect(20, 95, 170, 40, 3, 3, "FD")
+// box (dibesarin biar muat semua)
+doc.roundedRect(20, 95, 170, 75, 3, 3, "FD")
 
+let y = 105
+
+// Judul
 doc.setFontSize(12)
-doc.text("Detail Pesanan", 25, 105)
+doc.setFont(undefined, "bold")
+doc.text("Detail Pesanan", 25, y)
 
+y += 10
+
+// Nama Produk
+doc.setFontSize(12)
+doc.setFont(undefined, "normal")
+doc.text(paket, 25, y)
+
+y += 6
+
+// Sub info
+doc.setFontSize(10)
+doc.setTextColor(120)
+doc.text("Private • 1 Bulan", 25, y)
+
+y += 10
+
+// Reset warna
+doc.setTextColor(0)
+
+// ===== Subtotal =====
 doc.setFontSize(11)
-doc.text("Produk: " + paket, 25, 115)
+doc.text("Subtotal", 25, y)
+doc.text("Rp42.005", 160, y, { align: "right" })
 
-doc.setFontSize(12)
-doc.text("Total Bayar: " + total, 25, 128)
+// coret subtotal
+doc.setDrawColor(150)
+doc.line(135, y - 2, 165, y - 2)
+
+y += 6
+
+// garis
+doc.setDrawColor(220)
+doc.line(25, y, 185, y)
+
+y += 8
+
+// ===== Diskon =====
+doc.text("Diskon", 25, y)
+doc.setTextColor(220, 38, 38) // merah
+doc.text("-19.06%", 160, y, { align: "right" })
+
+y += 6
+doc.setDrawColor(220)
+doc.line(25, y, 185, y)
+
+y += 8
+
+// ===== Hemat =====
+doc.setTextColor(0)
+doc.text("Hemat", 25, y)
+doc.setTextColor(22, 163, 74) // hijau
+doc.text("Rp8.006", 160, y, { align: "right" })
+
+y += 6
+doc.setDrawColor(220)
+doc.line(25, y, 185, y)
+
+y += 10
+
+// ===== Total =====
+doc.setTextColor(0)
+doc.setFont(undefined, "bold")
+doc.text("Total Bayar", 25, y)
+doc.text(total, 160, y, { align: "right" })
 
 // ================= QR =================
 doc.setDrawColor(230)
