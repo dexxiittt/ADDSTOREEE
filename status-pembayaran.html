@@ -777,7 +777,16 @@ doc.text("Rp42.005", 160, y, { align: "right" })
 
 // coret subtotal
 doc.setDrawColor(150)
-doc.line(135, y - 2, 165, y - 2)
+const text = "Rp42.005"
+const textWidth = doc.getTextWidth(text)
+
+const xRight = 160
+const xStart = xRight - textWidth
+
+doc.setDrawColor(150)
+doc.setLineWidth(0.6)
+
+doc.line(xStart, y - 2, xRight, y - 2)
 
 y += 6
 
