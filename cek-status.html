@@ -630,8 +630,8 @@ function rupiah(angka){
 }
 
 // tampilkan subtotal (coret)
-const harga = document.getElementById("harga").innerText.replace("Rp ", "Rp")
-
+document.getElementById("harga").innerHTML =
+  `<s>${rupiah(hargaAsli)}</s>`
 // diskon %
 document.getElementById("diskon").innerText =
   "-" + persenDiskon + "%"
