@@ -502,6 +502,23 @@ Download
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 
+function loadImageBase64(url){
+  return new Promise((resolve, reject)=>{
+    const img = new Image()
+    img.crossOrigin = "Anonymous"
+    img.onload = function(){
+      const canvas = document.createElement("canvas")
+      canvas.width = img.width
+      canvas.height = img.height
+      const ctx = canvas.getContext("2d")
+      ctx.drawImage(img, 0, 0)
+      resolve(canvas.toDataURL("image/png"))
+    }
+    img.onerror = reject
+    img.src = url
+  })
+}
+
 async function cekInvoice(){
 const input = document.getElementById("inputInvoice").value.trim()
 
@@ -527,6 +544,20 @@ document.getElementById("resultBox").style.display = "block"
 // ambil data produk
 const resProduk = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PACKAGE_DETAIL")
 const produk = await resProduk.json()
+
+// ===== AMBIL LOGO =====
+const resLogo = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/logo_id")
+const dataLogo = await resLogo.json()
+const logoURL = dataLogo[0].logo_brand
+
+// ===== AMBIL QR =====
+const resQR = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/qr_id")
+const dataQR = await resQR.json()
+const qrURL = dataQR[0].qr_code
+
+// simpan global biar bisa dipakai di PDF
+window.logoURL = logoURL
+window.qrURL = qrURL
 
 // cari berdasarkan package_id
 const detailProduk = produk.find(p => 
@@ -669,10 +700,18 @@ const paket = document.getElementById("paket").innerText
 const total = document.getElementById("total2").innerText
 const waktu = document.getElementById("time").innerText
 
+// convert gambar
+const logoBase64 = await loadImageBase64(window.logoURL)
+const qrBase64 = await loadImageBase64(window.qrURL)
+
 // ================= HEADER =================
 doc.setFillColor(124, 58, 237) // ungu
 doc.rect(0, 0, 210, 30, "F")
 
+// LOGO
+doc.addImage(logoBase64, "PNG", 160, 5, 30, 20)
+
+// TITLE
 doc.setTextColor(255,255,255)
 doc.setFontSize(16)
 doc.text("INVOICE PEMBAYARAN", 20, 18)
@@ -713,6 +752,12 @@ doc.text("Produk: " + paket, 25, 115)
 
 doc.setFontSize(12)
 doc.text("Total Bayar: " + total, 25, 128)
+
+// ================= QR =================
+doc.addImage(qrBase64, "PNG", 140, 120, 50, 50)
+
+doc.setFontSize(9)
+doc.text("Scan untuk verifikasi", 140, 175)
 
 // ================= STATUS BADGE =================
 doc.setFillColor(220, 252, 231)
