@@ -660,7 +660,7 @@ function downloadPDF(){
 const { jsPDF } = window.jspdf
 const doc = new jsPDF()
 
-// ambil data dari halaman
+// ambil data
 const invoice = document.getElementById("invoice").innerText
 const nama = document.getElementById("nama").innerText
 const wa = document.getElementById("wa").innerText
@@ -669,30 +669,69 @@ const paket = document.getElementById("paket").innerText
 const total = document.getElementById("total2").innerText
 const waktu = document.getElementById("time").innerText
 
-// HEADER
-doc.setFontSize(18)
-doc.text("INVOICE PEMBAYARAN", 20, 20)
+// ================= HEADER =================
+doc.setFillColor(124, 58, 237) // ungu
+doc.rect(0, 0, 210, 30, "F")
+
+doc.setTextColor(255,255,255)
+doc.setFontSize(16)
+doc.text("INVOICE PEMBAYARAN", 20, 18)
+
+// reset warna
+doc.setTextColor(0,0,0)
+
+// ================= INFO INVOICE =================
+doc.setFontSize(11)
+doc.text("Invoice: " + invoice, 20, 40)
+doc.text("Tanggal: " + waktu, 20, 47)
+
+// garis
+doc.setDrawColor(220)
+doc.line(20, 52, 190, 52)
+
+// ================= CUSTOMER =================
+doc.setFontSize(12)
+doc.text("Customer", 20, 65)
+
+doc.setFontSize(11)
+doc.text("Nama: " + nama, 20, 72)
+doc.text("WhatsApp: " + wa, 20, 79)
+doc.text("Email: " + email, 20, 86)
+
+// ================= DETAIL BOX =================
+doc.setDrawColor(230)
+doc.setFillColor(249, 250, 251)
+
+// box
+doc.roundedRect(20, 95, 170, 40, 3, 3, "FD")
 
 doc.setFontSize(12)
-doc.text("Invoice: " + invoice, 20, 35)
-doc.text("Tanggal: " + waktu, 20, 42)
+doc.text("Detail Pesanan", 25, 105)
 
-// CUSTOMER
-doc.text("Customer:", 20, 55)
-doc.text("Nama: " + nama, 20, 62)
-doc.text("WhatsApp: " + wa, 20, 69)
-doc.text("Email: " + email, 20, 76)
+doc.setFontSize(11)
+doc.text("Produk: " + paket, 25, 115)
 
-// DETAIL
-doc.text("Detail Pesanan:", 20, 90)
-doc.text("Produk: " + paket, 20, 97)
-doc.text("Total Bayar: " + total, 20, 104)
+doc.setFontSize(12)
+doc.text("Total Bayar: " + total, 25, 128)
 
-// STATUS
-doc.setFontSize(14)
-doc.text("STATUS: LUNAS", 20, 120)
+// ================= STATUS BADGE =================
+doc.setFillColor(220, 252, 231)
+doc.roundedRect(20, 145, 80, 12, 3, 3, "F")
 
-// SAVE
+doc.setTextColor(22, 163, 74)
+doc.setFontSize(11)
+doc.text("LUNAS", 25, 153)
+
+// reset warna
+doc.setTextColor(0,0,0)
+
+// ================= FOOTER =================
+doc.setFontSize(10)
+doc.setTextColor(120)
+doc.text("Terima kasih telah melakukan pembayaran", 20, 170)
+doc.text("Invoice ini sah dan tidak memerlukan tanda tangan", 20, 176)
+
+// ================= SAVE =================
 doc.save("Invoice_" + invoice + ".pdf")
 }
 </script>
