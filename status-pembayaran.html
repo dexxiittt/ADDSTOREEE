@@ -709,7 +709,7 @@ doc.setFillColor(124, 58, 237) // ungu
 doc.rect(0, 0, 210, 30, "F")
 
 // LOGO (rapihin & proporsional)
-doc.addImage(logoBase64, "PNG", 200, 6, 20, 20)
+doc.addImage(logoBase64, "PNG", 180, 6, 20, 20)
 
 // TITLE
 doc.setTextColor(255,255,255)
@@ -758,15 +758,15 @@ doc.setDrawColor(230)
 doc.setFillColor(255,255,255)
 
 // box QR
-doc.roundedRect(135, 125, 55, 65, 4, 4, "FD")
+doc.roundedRect(135, 135, 55, 65, 4, 4, "FD")
 
 // QR (lebih kecil & center)
-doc.addImage(qrBase64, "PNG", 142, 132, 40, 40)
+doc.addImage(qrBase64, "PNG", 142, 142, 40, 40)
 
 // text bawah QR (center)
 doc.setFontSize(9)
 doc.setTextColor(100)
-doc.text("Scan untuk verifikasi", 162, 178, { align: "center" })
+doc.text("Scan untuk verifikasi", 162, 188, { align: "center" })
 
 // reset warna
 doc.setTextColor(0,0,0)
