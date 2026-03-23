@@ -821,15 +821,15 @@ doc.setDrawColor(230)
 doc.setFillColor(255,255,255)
 
 // box QR
-doc.roundedRect(135, 155, 55, 65, 4, 4, "FD")
+doc.roundedRect(135, 175, 55, 65, 4, 4, "FD")
 
 // QR (lebih kecil & center)
-doc.addImage(qrBase64, "PNG", 142, 162, 40, 40)
+doc.addImage(qrBase64, "PNG", 142, 182, 40, 40)
 
 // text bawah QR (center)
 doc.setFontSize(9)
 doc.setTextColor(100)
-doc.text("Scan untuk verifikasi", 162, 208, { align: "center" })
+doc.text("Scan untuk verifikasi", 162, 228, { align: "center" })
 
 // reset warna
 doc.setTextColor(0,0,0)
@@ -838,9 +838,9 @@ doc.setTextColor(0,0,0)
 doc.setFillColor(220, 252, 231)
 doc.roundedRect(20, 145, 80, 12, 3, 3, "F")
 
-doc.setTextColor(22, 163, 74)
+doc.setTextColor(22, 193, 74)
 doc.setFontSize(11)
-doc.text("LUNAS", 25, 153)
+doc.text("LUNAS", 25, 183)
 
 // reset warna
 doc.setTextColor(0,0,0)
@@ -848,8 +848,8 @@ doc.setTextColor(0,0,0)
 // ================= FOOTER =================
 doc.setFontSize(10)
 doc.setTextColor(120)
-doc.text("Terima kasih telah melakukan pembayaran", 20, 170)
-doc.text("Invoice ini sah dan tidak memerlukan tanda tangan", 20, 176)
+doc.text("Terima kasih telah melakukan pembayaran", 20, 200)
+doc.text("Invoice ini sah dan tidak memerlukan tanda tangan", 20, 206)
 
 // ================= SAVE =================
 doc.save("Invoice_" + invoice + ".pdf")
