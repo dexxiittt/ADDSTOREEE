@@ -786,7 +786,7 @@ const xStart = xRight - textWidth
 doc.setDrawColor(150)
 doc.setLineWidth(0.6)
 
-doc.line(xStart, y - 2, xRight, y - 2)
+doc.line(xStart, y - 1, xRight, y - 2)
 
 y += 6
 
@@ -838,7 +838,7 @@ doc.addImage(qrBase64, "PNG", 142, 202, 40, 40)
 // text bawah QR (center)
 doc.setFontSize(9)
 doc.setTextColor(100)
-doc.text("Scan untuk verifikasi", 162, 228, { align: "center" })
+doc.text("Scan untuk verifikasi", 162, 288, { align: "center" })
 
 // reset warna
 doc.setTextColor(0,0,0)
