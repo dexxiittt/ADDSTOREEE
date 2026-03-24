@@ -547,7 +547,22 @@ Kembali ke Produk
 </div>
   
 <script>
-
+function generateInvoice(){
+const year = new Date().getFullYear()
+let counter = localStorage.getItem("invoiceCounter")
+if(!counter){
+counter = 1
+}else{
+counter = parseInt(counter) + 1
+}
+localStorage.setItem("invoiceCounter", counter)
+// 3 digit urutan
+const urut = String(counter).padStart(3, "0")
+// 4 digit random
+const random = Math.floor(1000 + Math.random() * 9000)
+return `INV${year}${random}${urut}`
+}
+  
 /* ==============================
 AMBIL DATA DARI HALAMAN SEBELUMNYA
 ============================== */
@@ -600,13 +615,15 @@ document.getElementById("qr-img").src =
 
 function cekStatus(){
 
-const invoice = localStorage.getItem("invoiceID")
+// 🔥 generate invoice SAAT tombol diklik
+const invoice = generateInvoice()
 
-if(invoice){
+// simpan ke localStorage
+localStorage.setItem("invoiceID", invoice)
+
+// redirect bawa invoice
 window.location.href = "status-pembayaran.html?invoice=" + invoice
-}else{
-window.location.href = "status-pembayaran.html"
-}
+
 }
   
 function kembaliProduk(){
