@@ -149,6 +149,25 @@ padding:14px;
 margin-bottom:20px;
 }
 
+.price-box{
+display:flex;
+flex-direction:column;
+align-items:flex-end;
+gap:2px;
+}
+
+.price-old{
+font-size:12px;
+color:#9ca3af;
+text-decoration:line-through;
+}
+
+.price-final{
+font-size:16px;
+font-weight:700;
+color:#111827;
+}
+
 .detail-row{
 display:flex;
 justify-content:space-between;
@@ -225,7 +244,7 @@ Pembayaran Berhasil
 <!-- SUBTOTAL -->
 <div class="summary-row">
   <span>Subtotal</span>
-  <span id="harga"></span>
+<div id="harga" class="price-box"></div>
 </div>
 
 <!-- DISKON -->
@@ -294,7 +313,10 @@ document.getElementById("paket").innerText = localData.paket
 document.getElementById("paketDetail").innerText = localData.paketDetail
 
 // HARGA
-document.getElementById("harga").innerHTML = localData.paketHarga
+document.getElementById("harga").innerHTML = `
+<div class="price-old">${localData.paketHarga.replace(/<[^>]*>/g, '')}</div>
+<div class="price-final">${localData.total}</div>
+`
 document.getElementById("diskon").innerText = localData.diskon
 document.getElementById("hemat").innerText = localData.hemat
 
