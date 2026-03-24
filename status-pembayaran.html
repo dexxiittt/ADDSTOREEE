@@ -275,20 +275,53 @@ Pembayaran Berhasil
 
 <script>
 
-// 🔥 AUTO LOAD DATA DARI URL
-// contoh: status.html?invoice=20261001001
-
 window.onload = async function(){
 
+// =============================
+// 🔥 PRIORITAS: AMBIL DARI LOCAL STORAGE
+// =============================
+const localData = JSON.parse(localStorage.getItem("paymentData"))
+
+if(localData){
+
+// CUSTOMER
+document.getElementById("nama").innerText = localData.nama
+document.getElementById("wa").innerText = localData.telepon
+document.getElementById("email").innerText = localData.email
+
+// PRODUK
+document.getElementById("paket").innerText = localData.paket
+document.getElementById("paketDetail").innerText = localData.paketDetail
+
+// HARGA
+document.getElementById("harga").innerHTML = localData.paketHarga
+document.getElementById("diskon").innerText = localData.diskon
+document.getElementById("hemat").innerText = localData.hemat
+
+document.getElementById("total").innerText = localData.total
+document.getElementById("total2").innerText = localData.total
+document.getElementById("total3").innerText = localData.total
+
+// INVOICE & TIME
+const invoice = localStorage.getItem("invoiceID") || "INV-" + Date.now()
+
+document.getElementById("invoice").innerText = invoice
+document.getElementById("time").innerText = new Date().toLocaleString("id-ID")
+
+return // ⛔ STOP di sini (gak lanjut ke fetch)
+}
+
+// =============================
+// 🔥 FALLBACK: AMBIL DARI SHEET
+// =============================
 const params = new URLSearchParams(window.location.search)
 const invoiceID = params.get("invoice")
 
 if(!invoiceID){
-alert("Invoice tidak ditemukan di URL ❌")
+alert("Invoice tidak ditemukan ❌")
 return
 }
 
-// fetch data
 const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/payment_id")
 const data = await res.json()
 
@@ -309,13 +342,11 @@ document.getElementById("email").innerText = info[2]
 
 document.getElementById("time").innerText = new Date().toLocaleString("id-ID")
 
-// ambil produk
 const resProduk = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PACKAGE_DETAIL")
 const produk = await resProduk.json()
 
 const detail = produk.find(p => p.package_id == found.package_id)
 
-// hitung harga
 const harga = parseInt(detail.price)
 const diskon = parseFloat(detail.discount.replace("%",""))
 const potongan = harga * diskon / 100
