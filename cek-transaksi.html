@@ -5,80 +5,63 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
-body {
-  overflow-x: hidden;
-  background: #0b0b0f;
-  );
-}
-   
-html, body {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  
+body{
+font-family:Poppins;
+background:#f3f4f8;
+margin:0;
 }
 
-/* HERO tetap ungu */
+/* HERO */
 .package-hero{
-  width:100%;
-  min-height:260px;
-  background:linear-gradient(135deg,#493d84,#6d28d9);
-
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-
-  text-align:center;
-  padding:20px;
+background:linear-gradient(135deg,#7b2ff7,#5f0a87);
+padding:50px 20px;
+text-align:center;
 }
 
-.package-hero h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(42px, 6vw, 96px);
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  margin-bottom: 14px;
-  color: #ffffff;
-  text-shadow: 0 6px 18px rgba(0,0,0,0.25);
+.package-hero h1{
+font-size:40px;
+margin-bottom:6px;
+color:white;
 }
 
-.package-hero p {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  letter-spacing: 0.3px;
-  color: rgba(255,255,255,0.85);
+.package-hero p{
+opacity:.8;
+font-size:18px;
+color:white;
 }
-
+  
 /* ===== PREMIUM GLASS INVOICE ===== */
+.invoice-box{
+background:#f9fafb;
+max-width: 800px;
+margin:20px auto; 
+border:1px solid #e5e7eb;
+border-radius:12px;
+padding:50px;
+margin-bottom:20px;
+animation:fadeUp .4s ease;
+  
+/* ✨ SHADOW SUPER RINGAN + ELEGAN */
+box-shadow: 
+0 1px 2px rgba(0,0,0,0.04),
+0 4px 10px rgba(0,0,0,0.06);
 
-.invoice-box {
-  width:80%;
-  max-width:900px;
-  margin:50px auto 120px;
-  padding:48px 50px;
-  border-radius:20px;
-  background:#14141c;
-  border:1px solid rgba(255,255,255,0.06);
-  box-shadow:0 8px 20px rgba(0,0,0,.35);
-  text-align:center;
+transition:.2s ease;
 }
-
+  
 .invoice-box h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 26px;
-  font-weight: 600;
-  letter-spacing: 0.4px;
-  margin-bottom: 10px;
-  color: #ffffff;
+font-size:24px;
+font-weight:700;
+color:#111827;
+margin-bottom:6px;
+letter-spacing:.3px;
 }
 
 .invoice-box p {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 14px;
-  letter-spacing: 0.3px;
-  color: rgba(255,255,255,0.65);
-  margin-bottom: 30px;
+font-size:14px;
+opacity:.8;
+color:#6b7280;
 }
 
 /* ===== INPUT GROUP ===== */
