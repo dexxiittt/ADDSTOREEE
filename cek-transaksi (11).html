@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cek transaksi</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+  overflow-x: hidden;
+  background: #0b0b0f;
+  );
+}
+   
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* HERO tetap ungu */
+.package-hero{
+  width:100%;
+  min-height:260px;
+  background:linear-gradient(135deg,#493d84,#6d28d9);
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+
+  text-align:center;
+  padding:20px;
+}
+
+.package-hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(42px, 6vw, 96px);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 14px;
+  color: #ffffff;
+  text-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+
+.package-hero p {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  color: rgba(255,255,255,0.85);
+}
+
+/* ===== PREMIUM GLASS INVOICE ===== */
+
+.invoice-box {
+  width:80%;
+  max-width:900px;
+  margin:50px auto 120px;
+  padding:48px 50px;
+  border-radius:20px;
+  background:#14141c;
+  border:1px solid rgba(255,255,255,0.06);
+  box-shadow:0 8px 20px rgba(0,0,0,.35);
+  text-align:center;
+}
+
+.invoice-box h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+.invoice-box p {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 30px;
+}
+
+/* ===== INPUT GROUP ===== */
+
+.invoice-input-wrap{
+  display:flex;
+  align-items:center;
+  
+  padding:8px;
+  border-radius:16px;
+  background:#1a1a24;
+
+  border:1px solid rgba(255,255,255,0.08);
+  box-shadow:0 4px 12px rgba(0,0,0,.35);
+}
+  
+.invoice-input-wrap input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+
+  padding: 16px 18px;
+  font-size: 15px;
+  color: #ffffff;
+
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.invoice-input-wrap:focus-within{
+  border:1px solid #8b5cf6;
+}
+
+.invoice-input-wrap input::placeholder {
+  color: rgba(255,255,255,0.4);
+}
+
+.invoice-input-wrap button{
+  padding:12px 20px;
+  border:none;
+  border-radius:12px;
+  font-weight:600;
+  background:#7c3aed;
+  color:#fff;
+  cursor:pointer;
+}
+
+.invoice-input-wrap button:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow:
+    0 18px 45px rgba(139,92,246,.75),
+    0 0 60px rgba(139,92,246,.45);
+}
+
+.invoice-wrapper {
+  min-height: 60vh; /* atur tinggi area */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.package-hero {
+  width: 100%;
+  padding: 72px 20px 60px;
+}
+
+*{
+  backface-visibility:hidden;
+}
+  
+</style>
+</head>
+<body class="package-page">
+<div id="navbar-placeholder"></div>
+<script src="components/navbar.js"></script>
+
+<section class="invoice-wrapper">
+<!-- HERO -->
+<div class="package-hero">
+  <h1>Cek Transaksi</h1>
+<p>Lihat semua riwayat pembelian Anda</p>
+</div>
+
+<!-- GLASS CONTAINER -->
+<div class="invoice-box">
+
+  <h2>Masukan Nomor Anda</h2>
+<p>Lihat semua transaksi berdasarkan nomor pembelian</p>
+
+  <div class="invoice-input-wrap">
+    <input 
+      type="text" 
+      placeholder="Masukkan nomor HP (contoh: 8588xxxxxxx)"
+    >
+    <button>
+      🔍 Cek
+    </button>
+  </div>
+  </div>
+
+</section>
+
+<script>
+const sheetID = "1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08";
+
+const buyerSheet = "buyer_id";
+const warrantySheet = "WARRANTY_DATA";
+
+const buyerURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${buyerSheet}`;
+const warrantyURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${warrantySheet}`;
+
+const input = document.querySelector(".invoice-input-wrap input");
+const button = document.querySelector(".invoice-input-wrap button");
+
+function normalizeNumber(num) {
+  num = num.replace(/\D/g, ""); // angka
+
+  if (num.startsWith("62")) {
+    num = num.substring(2);
+  }
+
+  if (num.startsWith("0")) {
+    num = num.substring(1);
+  }
+
+  return num;
+}
+
+async function checkTransaction() {
+  const buyerInputRaw = input.value.trim();
+
+  if (!buyerInputRaw) {
+    alert("Masukkan nomor HP dulu.");
+    return;
+  }
+
+  const buyerInput = normalizeNumber(buyerInputRaw);
+
+  try {
+
+    // 🔹 FETCH WARRANTY_DATA SAJA (buyer_id gak perlu lagi)
+    const resWarranty = await fetch(warrantyURL);
+    const textWarranty = await resWarranty.text();
+    const jsonWarranty = JSON.parse(textWarranty.substr(47).slice(0, -2));
+    const rowsWarranty = jsonWarranty.table.rows;
+
+    const transactions = rowsWarranty.filter(row => {
+      const sheetNumber = normalizeNumber(String(row.c[8]?.v || ""));
+      return sheetNumber === buyerInput;
+    });
+
+    if (transactions.length === 0) {
+      alert("Belum ada transaksi untuk nomor ini.");
+      return;
+    }
+
+    window.location.href = `semua-transaksi.html?buyer=${buyerInput}`;
+
+  } catch (err) {
+    console.error(err);
+    alert("Terjadi kesalahan mengambil data.");
+  }
+}
+
+button.addEventListener("click", checkTransaction);
+
+input.addEventListener("keypress", function(e){
+  if(e.key === "Enter"){
+    checkTransaction();
+  }
+});
+  
+</script>
+  
+<div id="footer-container"></div>
+
+<link rel="stylesheet" href="components/footer.css">
+<script src="components/footer.js"></script>
+</body>
+</html>
+
+
