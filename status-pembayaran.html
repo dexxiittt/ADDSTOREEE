@@ -313,10 +313,17 @@ document.getElementById("paket").innerText = localData.paket
 document.getElementById("paketDetail").innerText = localData.paketDetail
 
 // HARGA
+// ambil hanya harga pertama (harga lama)
+const hargaLama = localData.paketHarga
+.replace(/<[^>]*>/g, '') // hapus HTML
+.split("Rp")[1] // ambil setelah "Rp"
+.split(" ")[0] // ambil angka pertama
+
 document.getElementById("harga").innerHTML = `
-<div class="price-old">${localData.paketHarga.replace(/<[^>]*>/g, '')}</div>
+<div class="price-old">Rp ${hargaLama}</div>
 <div class="price-final">${localData.total}</div>
 `
+  
 document.getElementById("diskon").innerText = localData.diskon
 document.getElementById("hemat").innerText = localData.hemat
 
