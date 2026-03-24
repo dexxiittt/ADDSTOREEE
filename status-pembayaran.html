@@ -317,7 +317,7 @@ document.getElementById("paketDetail").innerText = localData.paketDetail
 const matches = localData.paketHarga.match(/Rp\s?[\d\.]+/g)
 
 // ambil harga pertama (harga lama)
-const hargaLama = matches ? matches[0] : "Rp 0"
+const hargaLama = matches ? matches[0].replace("Rp ", "") : "0"
 
 document.getElementById("harga").innerHTML = `
 <div class="price-old">Rp ${hargaLama}</div>
