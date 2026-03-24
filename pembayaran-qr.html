@@ -600,10 +600,12 @@ document.getElementById("qr-img").src =
 
 function cekStatus(){
 
-const invoice = localStorage.getItem("invoiceID")
+const invoiceID = params.get("invoice")
 
-if(invoice){
-window.location.href = "status-pembayaran.html?inv=" + invoice
+if(!invoiceID){
+alert("Invoice tidak ditemukan ❌")
+window.location.href = "index.html"
+return}
 }else{
 window.location.href = "status-pembayaran.html"
 }
