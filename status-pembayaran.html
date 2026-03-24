@@ -294,6 +294,23 @@ Pembayaran Berhasil
 
 <script>
 
+function generateInvoice(){
+const year = new Date().getFullYear()
+// ambil counter
+let counter = localStorage.getItem("invoiceCounter")
+if(!counter){
+counter = 1
+}else{
+counter = parseInt(counter) + 1
+}
+localStorage.setItem("invoiceCounter", counter)
+// format counter (3 digit)
+const urut = String(counter).padStart(3, "0")
+// random 4 digit
+const random = Math.floor(1000 + Math.random() * 9000)
+return `INV${year}${random}${urut}`
+}
+
 window.onload = async function(){
 
 // =============================
@@ -332,7 +349,13 @@ document.getElementById("total2").innerText = localData.total
 document.getElementById("total3").innerText = localData.total
 
 // INVOICE & TIME
-const invoice = localStorage.getItem("invoiceID") || "INV-" + Date.now()
+// INVOICE & TIME
+let invoice = localStorage.getItem("invoiceID")
+
+if(!invoice){
+invoice = generateInvoice()
+localStorage.setItem("invoiceID", invoice)
+}
 
 document.getElementById("invoice").innerText = invoice
 document.getElementById("time").innerText = new Date().toLocaleString("id-ID")
