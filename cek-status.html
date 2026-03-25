@@ -444,6 +444,18 @@ border-radius:50%;
 animation:spin .6s linear infinite;
 }
 
+.dots::after{
+content:"";
+animation:dots 1s steps(3, end) infinite;
+}
+
+@keyframes dots{
+0%   { content:""; opacity:.3; }
+33%  { content:"."; opacity:.6; }
+66%  { content:".."; opacity:.8; }
+100% { content:"..."; opacity:1; }
+}
+
 </style>
 </head>
 
@@ -777,7 +789,7 @@ const originalText = btn.innerHTML
 // loading ON
 btn.innerHTML = `<div class="btn-loading">
   <div class="btn-spinner"></div>
-  <span>Memproses...</span>
+  <span>Memproses<span class="dots"></span></span>
 </div>`
 btn.disabled = true
 
