@@ -846,17 +846,18 @@ doc.setFontSize(11)
 doc.text("Subtotal", 25, y)
 doc.text(harga, 160, y, { align: "right" })
 
-// coret otomatis
-const padding = 4
+// coret rapi
+const textWidth = doc.getTextWidth(harga)
+const xRight = 160
+const padding = 2
 
-const xStart = xRight - textWidth - padding
-const xEnd = xRight + padding
+const xStart = xRight - textWidth
+const xEnd = xRight
 
-doc.line(xStart, y - 1, xEnd, y - 1)
-  
 doc.setDrawColor(150)
 doc.setLineWidth(0.6)
-doc.line(xStart, y - 1, xRight, y - 1)
+doc.line(xStart, y - 2, xEnd, y - 2)
+
 y += 6
 
 // garis
