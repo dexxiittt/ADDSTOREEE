@@ -849,15 +849,15 @@ doc.text(harga, 160, y, { align: "right" })
 // coret rapi
 const textWidth = doc.getTextWidth(harga)
 const xRight = 160
-const padding = 2
+const padding = 6 // coba 3–6 sesuai selera
 
-const xStart = xRight - textWidth
-const xEnd = xRight
+const xStart = xRight - textWidth + padding
+const xEnd = xRight - padding
 
 doc.setDrawColor(150)
 doc.setLineWidth(0.6)
-doc.line(xStart, y - 2, xEnd, y - 2)
-
+doc.line(xStart, y - 1, xEnd, y - 1)
+  
 y += 6
 
 // garis
