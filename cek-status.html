@@ -847,11 +847,13 @@ doc.text("Subtotal", 25, y)
 doc.text(harga, 160, y, { align: "right" })
 
 // coret otomatis
-const xStart = xRight - textWidth + 5 // tambah panjang kiri
-const xEnd = xRight - 5 // tambah panjang kanan
+const padding = 4
+
+const xStart = xRight - textWidth - padding
+const xEnd = xRight + padding
 
 doc.line(xStart, y - 1, xEnd, y - 1)
-
+  
 doc.setDrawColor(150)
 doc.setLineWidth(0.6)
 doc.line(xStart, y - 1, xRight, y - 1)
