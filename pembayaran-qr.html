@@ -548,19 +548,16 @@ Kembali ke Produk
   
 <script>
 function generateInvoice(){
-const year = new Date().getFullYear()
-let counter = localStorage.getItem("invoiceCounter")
-if(!counter){
-counter = 1
-}else{
-counter = parseInt(counter) + 1
-}
-localStorage.setItem("invoiceCounter", counter)
-// 3 digit urutan
-const urut = String(counter).padStart(3, "0")
-// 4 digit random
-const random = Math.floor(1000 + Math.random() * 9000)
-return `INV${year}${random}${urut}`
+
+const now = new Date()
+
+const year = now.getFullYear()
+const date = String(now.getDate()).padStart(2, "0")
+const hour = String(now.getHours()).padStart(2, "0")
+const minute = String(now.getMinutes()).padStart(2, "0")
+const second = String(now.getSeconds()).padStart(2, "0")
+
+return `INV${year}0${date}${hour}${minute}${second}`
 }
   
 /* ==============================
@@ -615,14 +612,26 @@ document.getElementById("qr-img").src =
 
 function cekStatus(){
 
-// generate invoice
-const invoice = generateInvoice()
+const data = JSON.parse(localStorage.getItem("paymentData"))
 
-// simpan invoice
+// bikin key unik transaksi
+const uniqueKey = data.nama + "|" + data.paket + "|" + data.total
+
+// cek apakah invoice sudah ada
+let invoice = localStorage.getItem("invoice_" + uniqueKey)
+
+if(!invoice){
+  invoice = generateInvoice()
+  localStorage.setItem("invoice_" + uniqueKey, invoice)
+}
+
+// simpan invoice aktif
 localStorage.setItem("invoiceID", invoice)
 
-// simpan status pending
-localStorage.setItem("paymentStatus", "pending")
+// set status pending kalau belum ada
+if(!localStorage.getItem("paymentStatus")){
+  localStorage.setItem("paymentStatus", "pending")
+}
 
 // redirect
 window.location.href = "status-pembayaran.html?invoice=" + invoice
