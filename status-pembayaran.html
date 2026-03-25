@@ -281,10 +281,16 @@ Pembayaran Berhasil
 <div>Pembayaran telah diterima sebesar <b id="total3"></b></div>
 </div>
 
-<!-- DOWNLOAD PDF -->
+<!-- KONTAK ADMIN -->
 <div class="wa-box">
-<div><b>Download Invoice PDF</b></div>
-<button onclick="downloadPDF()" class="wa-btn">Download</button>
+<div><b>Sudah melakukan pembayaran?</b></div>
+<div style="font-size:14px; color:#4b5563; margin-top:6px;">
+Segera hubungi admin jika status masih pending
+</div>
+
+<button onclick="chatAdmin()" class="wa-btn">
+Chat Admin
+</button>
 </div>
 
 </div>
@@ -420,11 +426,41 @@ document.getElementById("total3").innerText = rp(total)
 
 }
 
-// PDF tetap sama
-function downloadPDF(){
-alert("PDF generator pakai yang sebelumnya aja 👍")
-}
+function chatAdmin(){
 
+// ambil dari tampilan
+const invoice = document.getElementById("invoice").innerText
+const nama = document.getElementById("nama").innerText
+const wa = document.getElementById("wa").innerText
+const email = document.getElementById("email").innerText
+
+const paket = document.getElementById("paket").innerText
+const detail = document.getElementById("paketDetail").innerText
+const total = document.getElementById("total").innerText
+
+// format pesan
+const pesan = `Halo Admin, saya sudah melakukan pembayaran QRIS.
+
+📌 Detail Pembayaran:
+Invoice: ${invoice}
+Nama: ${nama}
+No WA: ${wa}
+Email: ${email}
+
+📦 Paket: ${paket}
+📝 Detail: ${detail}
+💰 Total: ${total}
+
+📸 Bukti pembayaran: (saya lampirkan screenshot)
+
+Mohon dicek ya 🙏`
+
+// kirim ke WA
+const url = "https://wa.me/6285881500868?text=" + encodeURIComponent(pesan)
+
+window.open(url, "_blank")
+
+}
 </script>
 
 </body>
