@@ -428,6 +428,22 @@ from{opacity:0; transform:translateY(4px);}
 to{opacity:1; transform:translateY(0);}
 }
 
+.btn-loading{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:8px;
+}
+
+.btn-spinner{
+width:14px;
+height:14px;
+border:2px solid rgba(255,255,255,0.3);
+border-top:2px solid white;
+border-radius:50%;
+animation:spin .6s linear infinite;
+}
+
 </style>
 </head>
 
@@ -534,7 +550,7 @@ Silakan lakukan pembayaran sesuai nominal <b id="total3"></b>
 Download bukti pembayaran di bawah ini
 </div>
 
-<button onclick="downloadPDF()" class="wa-btn">
+<button id="downloadBtn" onclick="downloadPDF()" class="wa-btn">
 Download
 </button>
 </div>
@@ -755,6 +771,18 @@ alert("Gagal ambil data")
 
 async function downloadPDF(){
 
+const btn = document.getElementById("downloadBtn")
+const originalText = btn.innerHTML
+
+// loading ON
+btn.innerHTML = `<div class="btn-loading">
+  <div class="btn-spinner"></div>
+  <span>Memproses...</span>
+</div>`
+btn.disabled = true
+
+try{
+
 const { jsPDF } = window.jspdf
 const doc = new jsPDF()
 
@@ -934,7 +962,17 @@ doc.text("Invoice ini sah dan tidak memerlukan tanda tangan", 20, 226)
 
 // ================= SAVE =================
 doc.save("Invoice_" + invoice + ".pdf")
+
+}catch(err){
+console.error(err)
+alert("Gagal generate PDF ❌")
 }
+
+// 🔄 loading OFF
+btn.innerHTML = originalText
+btn.disabled = false
+}
+  
 </script>
 
 </body>
