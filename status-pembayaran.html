@@ -400,11 +400,6 @@ statusBox.innerHTML = `
 // INVOICE & TIME
 let invoice = localStorage.getItem("invoiceID")
 
-if(!invoice){
-invoice = generateInvoice()
-localStorage.setItem("invoiceID", invoice)
-}
-
 document.getElementById("invoice").innerText = invoice
 document.getElementById("time").innerText = new Date().toLocaleString("id-ID")
 
