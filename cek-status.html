@@ -847,9 +847,14 @@ doc.text("Subtotal", 25, y)
 doc.text(harga, 160, y, { align: "right" })
 
 // coret otomatis
+const padding = 4
+
 const textWidth = doc.getTextWidth(harga)
-const xRight = 130
-const xStart = xRight - textWidth
+const xRight = 160
+const xStart = xRight - textWidth - padding
+const xEnd = xRight + padding
+
+doc.line(xStart, y - 1, xEnd, y - 1)
 
 doc.setDrawColor(150)
 doc.setLineWidth(0.6)
