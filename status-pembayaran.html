@@ -300,23 +300,6 @@ Chat Admin
 
 <script>
 
-function generateInvoice(){
-const year = new Date().getFullYear()
-// ambil counter
-let counter = localStorage.getItem("invoiceCounter")
-if(!counter){
-counter = 1
-}else{
-counter = parseInt(counter) + 1
-}
-localStorage.setItem("invoiceCounter", counter)
-// format counter (3 digit)
-const urut = String(counter).padStart(3, "0")
-// random 4 digit
-const random = Math.floor(1000 + Math.random() * 9000)
-return `INV${year}${random}${urut}`
-}
-
 window.onload = async function(){
 
 // =============================
