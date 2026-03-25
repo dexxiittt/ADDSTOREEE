@@ -615,13 +615,16 @@ document.getElementById("qr-img").src =
 
 function cekStatus(){
 
-// 🔥 generate invoice SAAT tombol diklik
+// generate invoice
 const invoice = generateInvoice()
 
-// simpan ke localStorage
+// simpan invoice
 localStorage.setItem("invoiceID", invoice)
 
-// redirect bawa invoice
+// simpan status pending
+localStorage.setItem("paymentStatus", "pending")
+
+// redirect
 window.location.href = "status-pembayaran.html?invoice=" + invoice
 
 }
