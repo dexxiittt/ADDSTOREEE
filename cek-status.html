@@ -848,7 +848,7 @@ doc.text(harga, 160, y, { align: "right" })
 
 // coret rapi
 const textWidth = doc.getTextWidth(harga)
-const xRight = 160
+const xRight = 170
 
 // padding otomatis berdasarkan panjang teks
 const padding = Math.min(6, textWidth * 0.1)
@@ -858,7 +858,7 @@ const xEnd = xRight - padding
 
 doc.setDrawColor(150)
 doc.setLineWidth(0.6)
-doc.line(xStart, y - 2, xEnd, y - 2)
+doc.line(xStart, y - 1.4, xEnd, y - 1.4)
   
 y += 6
 
