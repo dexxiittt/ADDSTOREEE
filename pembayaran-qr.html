@@ -537,8 +537,8 @@ Gunakan dompet digital atau mobile banking anda
   <img id="qr-img" src="" alt="QR Code" onclick="openQR(this)">
 </div>
 
-<button class="btn-primary" onclick="cekStatus()">
-Status Pembayaran
+<button class="btn-primary" onclick="bayarMidtrans()">
+Bayar Sekarang
 </button>
 
 <button class="btn-secondary" onclick="kembaliProduk()">
@@ -660,6 +660,8 @@ document.getElementById("qrModal").classList.remove("active")
 <div id="qrModal" class="qr-modal" onclick="closeQR()">
   <img id="qrModalImg" src="">
 </div>
-  
+
+<script src="https://app.sandbox.midtrans.com/snap/snap.js"
+data-client-key="Mid-client-ymN00cg1LFAH_g7D"></script>
 </body>
 </html>
