@@ -537,7 +537,7 @@ Gunakan dompet digital atau mobile banking anda
   <img id="qr-img" src="" alt="QR Code" onclick="openQR(this)">
 </div>
 
-<button class="btn-primary" onclick="bayarMidtrans()">
+<button class="btn-primary" onclick="bayar()">
 Bayar Sekarang
 </button>
 
@@ -655,12 +655,35 @@ document.getElementById("qrModal").classList.remove("active")
 }
 
 
-function bayarMidtrans(){
+<script>
+async function bayar() {
+  try {
+    const res = await fetch("https://energetic-blessing-production-b485.up.railway.app/create-transaction", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        order_id: "ORDER-" + Date.now(),
+        gross_amount: parseInt(data.total.replace(/\D/g, ""))
+      })
+    })
 
-alert("Step berikutnya kita sambungkan ke backend buat generate pembayaran 🔥")
+    const data = await res.json()
+    console.log("TOKEN:", data)
 
+    if (!data.token) {
+      alert("Token tidak ditemukan")
+      return
+    }
+
+    window.snap.pay(data.token)
+
+  } catch (err) {
+    console.error(err)
+    alert("Gagal connect ke backend")
+  }
 }
-  
 </script>
 
 <!-- QR MODAL -->
