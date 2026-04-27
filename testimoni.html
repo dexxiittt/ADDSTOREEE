@@ -1136,11 +1136,10 @@ return ratingB - ratingA
 }
 
 // jika rating sama -> terbaru dulu
-let timeA = a.createdAt?.seconds || 0
-let timeB = b.createdAt?.seconds || 0
+let timeA = a.createdAt?.seconds || new Date(a.createdAt).getTime()
+let timeB = b.createdAt?.seconds || new Date(b.createdAt).getTime()
 
 return timeB - timeA
-
 })
   
 let tampil = dataTampil.slice(0,jumlahTampil)
