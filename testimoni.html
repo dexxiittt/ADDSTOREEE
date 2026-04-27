@@ -1136,7 +1136,10 @@ return ratingB - ratingA
 }
 
 // jika rating sama -> terbaru dulu
-return new Date(b.createdAt) - new Date(a.createdAt)
+let timeA = a.createdAt?.seconds || 0
+let timeB = b.createdAt?.seconds || 0
+
+return timeB - timeA
 
 })
   
