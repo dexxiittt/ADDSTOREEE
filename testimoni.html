@@ -933,7 +933,7 @@ Lihat Lebih Banyak
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
 import { 
-getFirestore, collection, addDoc, getDocs, doc, getDoc, query, where, onSnapshot, deleteDoc, updateDoc, orderBy
+getFirestore, collection, addDoc, getDocs, doc, getDoc, query, where, onSnapshot, deleteDoc, updateDoc, orderBy, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -1012,12 +1012,12 @@ if(!snapshot.empty){
 
 // kirim testimoni
 await addDoc(collection(db,"testimoni"),{
-invoice:invoice,
-nama:nama,
-rating:rating,
-pesan:pesan,
-tanggal:new Date().toLocaleDateString(),
-createdAt:new Date()
+  invoice:invoice,
+  nama:nama,
+  rating:rating,
+  pesan:pesan,
+  tanggal:new Date().toLocaleDateString(),
+  createdAt: serverTimestamp()
 })
 
 let myInvoices =
