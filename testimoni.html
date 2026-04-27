@@ -1057,21 +1057,18 @@ container.innerHTML = `
 <div class="skeleton"></div>
 `
 
-const q = query(
-collection(db,"testimoni"),
-orderBy("createdAt","desc")
-)
+const q = collection(db,"testimoni")
+
 onSnapshot(q,(snapshot)=>{
-semuaTestimoni = []
-snapshot.forEach(d=>{
-semuaTestimoni.push({
-id:d.id,
-...d.data()
-})
-})
+  semuaTestimoni = []
+  snapshot.forEach(d=>{
+    semuaTestimoni.push({
+      id:d.id,
+      ...d.data()
+    })
+  })
 
-renderTestimoni()
-
+  renderTestimoni()
 })
 
 }
