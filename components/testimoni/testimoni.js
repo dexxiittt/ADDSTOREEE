@@ -656,3 +656,36 @@ jumlahTampil = 6
 renderTestimoni()
 document.getElementById("filterMenu").style.display="none"
 }
+
+// =========================
+// CHARACTER COUNTER
+// =========================
+const pesanInput = document.getElementById("pesan");
+const counter = document.getElementById("charCounter");
+
+if(pesanInput && counter){
+
+  pesanInput.addEventListener("input", function(){
+
+    let max = 300;
+    let sisa = max - this.value.length;
+
+    counter.innerText = "Maks: " + sisa + " karakter";
+
+    counter.classList.remove("counter-normal","counter-warning","counter-danger");
+
+    if(sisa > 200){
+      counter.classList.add("counter-normal");
+    } 
+    else if(sisa > 50){
+      counter.classList.add("counter-warning");
+    } 
+    else{
+      counter.classList.add("counter-danger");
+    }
+
+  });
+
+  // trigger awal biar langsung muncul
+  pesanInput.dispatchEvent(new Event("input"));
+  }
