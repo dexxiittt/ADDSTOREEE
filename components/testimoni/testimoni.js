@@ -1,5 +1,3 @@
-<script type="module">
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
 import { 
 getFirestore, collection, addDoc, getDocs, doc, setDoc, getDoc, query, where, onSnapshot, deleteDoc, updateDoc, orderBy
@@ -399,36 +397,46 @@ menu.style.display =
 menu.style.display === "block" ? "none" : "block"
 }
 
-document.addEventListener("click",function(e){
+// 1. untuk menu titik tiga
+document.addEventListener("click", function(e){
 
-// jika klik tombol edit / textarea jangan batal
-if(
-e.target.closest("[onclick^='editTestimoni']") ||
-e.target.closest("textarea") ||
-e.target.closest("[id^='editStars-']") ||
-e.target.closest("[id^='editNama-']")
-){
-return
-}
-  
-// tutup menu titik tiga
-document.querySelectorAll("[id^='menu-']").forEach(menu=>{
-if(!menu.contains(e.target)){
-menu.style.display="none"
-}
+   if(
+     e.target.closest("[onclick^='editTestimoni']") ||
+     e.target.closest("textarea") ||
+     e.target.closest("[id^='editStars-']") ||
+     e.target.closest("[id^='editNama-']")
+   ){
+     return
+   }
+
+   document.querySelectorAll("[id^='menu-']").forEach(menu=>{
+     if(!menu.contains(e.target)){
+       menu.style.display="none"
+     }
+   })
+
+   if(activeEditId){
+     let editBox = document.getElementById("edit-"+activeEditId)
+     if(editBox && !editBox.contains(e.target)){
+       cancelEdit(activeEditId)
+     }
+   }
+
 })
 
-document.addEventListener("click",function(e){
-let menu = document.getElementById("filterMenu")
-let icon = e.target.closest("[onclick='toggleFilterMenu()']")
 
-// jika klik icon filter -> biarkan
-if(icon) return
+// 2. untuk filter menu
+document.addEventListener("click", function(e){
 
-// jika klik di luar menu -> tutup
-if(menu && !menu.contains(e.target)){
-menu.style.display = "none"
-}
+   let menu = document.getElementById("filterMenu")
+   let icon = e.target.closest("[onclick='toggleFilterMenu()']")
+
+   if(icon) return
+
+   if(menu && !menu.contains(e.target)){
+     menu.style.display = "none"
+   }
+
 })
 
 // jika sedang edit lalu klik area luar -> batal edit
@@ -629,5 +637,3 @@ jumlahTampil = 6
 renderTestimoni()
 document.getElementById("filterMenu").style.display="none"
 }
-
-</script>
