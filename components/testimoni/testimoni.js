@@ -1,7 +1,15 @@
-import { initializeApp, getAuth, signInAnonymously, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+// firebase app
+import { initializeApp } 
+from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+
+// firestore
 import { 
 getFirestore, collection, addDoc, getDocs, doc, setDoc, getDoc, query, where, onSnapshot, deleteDoc, updateDoc, orderBy
 } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+
+//  AUTH
+import { getAuth, signInAnonymously, onAuthStateChanged } 
+from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBzuIo_i_TAAJevZMNqYtWuZoFB8wfj_RE",
