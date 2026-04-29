@@ -400,52 +400,44 @@ menu.style.display === "block" ? "none" : "block"
 // 1. untuk menu titik tiga
 document.addEventListener("click", function(e){
 
-   if(
-     e.target.closest("[onclick^='editTestimoni']") ||
-     e.target.closest("textarea") ||
-     e.target.closest("[id^='editStars-']") ||
-     e.target.closest("[id^='editNama-']")
-   ){
-     return
-   }
+  // =========================
+  // 1. MENU TITIK TIGA
+  // =========================
+  if(
+    e.target.closest("[onclick^='editTestimoni']") ||
+    e.target.closest("textarea") ||
+    e.target.closest("[id^='editStars-']") ||
+    e.target.closest("[id^='editNama-']")
+  ){
+    return
+  }
 
-   document.querySelectorAll("[id^='menu-']").forEach(menu=>{
-     if(!menu.contains(e.target)){
-       menu.style.display="none"
-     }
-   })
+  document.querySelectorAll("[id^='menu-']").forEach(menu=>{
+    if(!menu.contains(e.target)){
+      menu.style.display="none"
+    }
+  })
 
-   if(activeEditId){
-     let editBox = document.getElementById("edit-"+activeEditId)
-     if(editBox && !editBox.contains(e.target)){
-       cancelEdit(activeEditId)
-     }
-   }
-
-})
+  if(activeEditId){
+    let editBox = document.getElementById("edit-"+activeEditId)
+    if(editBox && !editBox.contains(e.target)){
+      cancelEdit(activeEditId)
+    }
+  }
 
 
-// 2. untuk filter menu
-document.addEventListener("click", function(e){
+  // =========================
+  // 2. FILTER MENU
+  // =========================
+  let filterMenu = document.getElementById("filterMenu")
+  let icon = e.target.closest("[onclick='toggleFilterMenu()']")
 
-   let menu = document.getElementById("filterMenu")
-   let icon = e.target.closest("[onclick='toggleFilterMenu()']")
+  if(icon) return
 
-   if(icon) return
+  if(filterMenu && !filterMenu.contains(e.target)){
+    filterMenu.style.display = "none"
+  }
 
-   if(menu && !menu.contains(e.target)){
-     menu.style.display = "none"
-   }
-
-})
-
-// jika sedang edit lalu klik area luar -> batal edit
-if(activeEditId){
-let editBox = document.getElementById("edit-"+activeEditId)
-if(editBox && !editBox.contains(e.target)){
-cancelEdit(activeEditId)
-}
-}
 })
 
 let deleteID = null
