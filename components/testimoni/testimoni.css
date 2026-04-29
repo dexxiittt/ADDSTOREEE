@@ -1,1 +1,705 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
+body{
+background:#f3f4f8;
+font-family:"Plus Jakarta Sans", Inter, system-ui, -apple-system, sans-serif;
+}
+
+/* HERO UNGU SAMA PERSIS */
+.package-hero{
+width:100%;
+min-height:280px;
+
+background:linear-gradient(135deg,#493d84,#6d28d9);
+
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+
+text-align:center;
+
+padding:70px 20px;
+color:white;
+}
+
+.package-hero h1{
+font-size:54px;
+font-weight:700;
+letter-spacing:0.3px;
+margin-bottom:10px;
+}
+
+.hero-sub{
+color:#e0e7ff;
+font-size:18px;
+line-height:1.7;
+max-width:520px;
+margin:auto;
+opacity:0.95;
+}
+
+.testimoni-input{
+padding:60px 20px;
+display:flex;
+justify-content:center;
+}
+
+.glass-card{
+width:100%;
+max-width:780px;
+padding:45px;
+overflow:hidden;
+border-radius:24px;
+background:rgba(255,255,255,0.65);
+text-align:center;
+color:#1f2937;
+transition:all .25s ease;
+position:relative;
+}
+
+.glass-card::before{
+content:"";
+position:absolute;
+
+top:0;
+left:0;
+right:0;
+
+height:1px;
+
+background:linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,0.9),
+transparent
+);
+}
+
+.glass-card:hover{
+transform:translateY(-4px);
+box-shadow:
+0 50px 100px rgba(0,0,0,0.18),
+0 15px 40px rgba(0,0,0,0.15);
+}
+
+.glass-card h2{
+font-family:inherit;
+font-weight:700;
+font-size:24px;
+letter-spacing:0.4px;
+margin-top:6px;
+margin-bottom:6px;
+color:#111827;
+}
+
+.glass-card p{
+font-family:inherit;
+font-size:14px;
+font-weight:500;
+letter-spacing:0.2px;
+color:#4b5563;
+margin-bottom:10px;
+}
+
+.glass-card input,
+.glass-card textarea{
+width:100%;
+padding:16px;
+margin-top:14px;
+
+border-radius:12px;
+border:1px solid rgba(0,0,0,0.12);
+background:rgba(255,255,255,0.9);
+
+color:#111827;
+font-size:14px;
+
+transition:all .2s ease;
+box-shadow:0 2px 6px rgba(0,0,0,0.06);
+}
+
+.form-error{
+font-size:12px;
+color:#ef4444;
+text-align:left;
+margin-top:6px;
+display:none;
+}
+
+.input-error{
+border-color:#ef4444 !important;
+animation:shakeError .25s ease;
+}
+
+@keyframes shakeError{
+  
+0%{transform:translateX(0)}
+25%{transform:translateX(-3px)}
+50%{transform:translateX(3px)}
+75%{transform:translateX(-3px)}
+100%{transform:translateX(0)}
+}
+
+.glass-card input:focus,
+.glass-card textarea:focus{
+
+outline:none;
+border-color:#111827;
+
+box-shadow:
+0 0 0 3px rgba(0,0,0,0.08),
+0 6px 18px rgba(0,0,0,0.12);
+
+background:white;
+}
+
+.glass-card textarea{
+min-height:120px;
+resize:none;
+
+font-family:inherit;
+font-size:15px;
+line-height:1.6;
+letter-spacing:0.2px;
+}
+
+.glass-card textarea::placeholder{
+color:#9ca3af;
+font-weight:500;
+letter-spacing:0.2px;
+}
+
+input:invalid,
+textarea:invalid{
+border-color:#ef4444;
+}
+
+.glass-card button{
+margin-top:18px;
+width:100%;
+padding:14px;
+
+border:none;
+border-radius:10px;
+background:linear-gradient(135deg,#493d84,#6d28d9);
+
+color:white;
+font-weight:600;
+
+cursor:pointer;
+transition:0.3s;
+}
+
+.glass-card button:hover{
+transform:translateY(-2px);
+box-shadow:0 12px 30px rgba(109,40,217,0.45);
+}
+
+.testimoni-list-section{
+padding:80px 20px;
+max-width:1100px;
+margin:auto;
+}
+
+.testimoni-title{
+text-align:center;
+font-size:28px;
+margin-bottom:40px;
+color:#111827;
+}
+
+.testimoni-sub{
+text-align:center;
+font-size:14px;
+color:#6b7280;
+margin-top:-25px;
+margin-bottom:35px;
+max-width:520px;
+margin-left:auto;
+margin-right:auto;
+line-height:1.6;
+}
+
+.testimoni-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:25px;
+}
+
+.testimoni-card{
+background:rgba(255,255,255,0.7);
+border-radius:18px;
+padding:25px;
+position:relative;
+
+box-shadow:
+0 20px 40px rgba(0,0,0,0.08);
+
+/* TAMBAHAN */
+opacity:0;
+transform:translateY(15px);
+animation:cardReveal .5s ease forwards;
+}
+
+@keyframes cardReveal{
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+#testimoni-container textarea{
+transition:all .25s ease;
+animation:fadeEdit .25s ease;
+
+/* IKUT FONT BODY */
+font-family:inherit;
+font-size:15px;
+line-height:1.7;
+letter-spacing:0.2px;
+
+/* PREMIUM LOOK */
+background:white;
+border:1.5px solid #e5e7eb;
+border-radius:12px;
+
+padding:12px 14px;
+
+box-shadow:
+0 2px 8px rgba(0,0,0,0.05);
+}
+
+@keyframes fadeEdit{
+
+from{
+opacity:0;
+transform:translateY(-6px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+  }
+
+.testimoni-card:hover{
+transform:translateY(-6px);
+box-shadow:
+0 30px 60px rgba(0,0,0,0.12);
+}
+
+.stars{
+color:#fbbf24;
+font-size:18px;
+margin-bottom:10px;
+}
+
+#testimoni-container [id^="editStars-"] span{
+transition:transform .15s ease;
+}
+
+#testimoni-container [id^="editStars-"] span:hover{
+transform:scale(1.2);
+}
+
+[id^="editStars-"]{
+gap:4px;
+width:fit-content;
+background:transparent;
+}
+
+[id^="editStars-"] span{
+user-select:none;
+-webkit-user-select:none;
+-webkit-tap-highlight-color:transparent;
+
+transition:transform .15s ease, filter .15s ease;
+}
+
+[id^="editStars-"] span:hover{
+transform:scale(1.2);
+}
+
+[id^="editStars-"] span:active{
+transform:scale(1.35);
+filter:drop-shadow(0 2px 6px rgba(251,191,36,.6));
+}
+
+.testimoni-card p{
+color:#374151;
+font-size:14px;
+line-height:1.6;
+margin-bottom:12px;
+}
+
+.testimoni-user strong{
+font-size:14px;
+}
+
+.testimoni-user small{
+color:#6b7280;
+font-size:12px;
+}
+
+.testimoni-card > div:first-child{
+font-weight:bold;
+}
+
+.testimoni-avatar{
+width:48px;
+height:48px;
+
+border-radius:50%;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+background:linear-gradient(135deg,#6366f1,#8b5cf6);
+
+color:white;
+font-weight:700;
+font-size:16px;
+box-shadow:0 6px 14px rgba(99,102,241,0.3);
+margin-right:12px;
+
+transition:transform .18s ease;
+}
+
+.testimoni-user{
+display:flex;
+align-items:center;
+margin-top:15px;
+}
+
+.load-more-btn{
+margin:40px auto 0;
+display:block;
+background:linear-gradient(135deg,#6366f1,#8b5cf6);
+
+color:white;
+border:none;
+padding:13px 24px;
+border-radius:12px;
+
+cursor:pointer;
+font-weight:600;
+transition:0.25s;
+
+}
+
+.load-more-btn:hover{
+transform:translateY(-2px);
+box-shadow:0 10px 25px rgba(99,102,241,0.35);
+}
+
+.skeleton{
+height:120px;
+background:linear-gradient(
+90deg,
+#f3f4f6 25%,
+#e5e7eb 37%,
+#f3f4f6 63%
+);
+background-size:400% 100%;
+
+animation:skeleton 1.4s ease infinite;
+border-radius:18px;
+}
+
+.rating-stars{
+display:inline-flex;
+gap:8px;
+
+margin-top:16px;
+margin-bottom:10px;
+
+font-size:28px;
+
+cursor:pointer;
+
+padding:6px 10px;
+border-radius:12px;
+}
+
+#ratingStars{
+width:fit-content;
+margin-left:auto;
+margin-right:auto;
+}
+
+.rating-stars span{
+user-select:none;
+color:#d1d5db;
+transition:transform .12s ease, color .12s ease;
+}
+
+.rating-stars span.active{
+color:#fbbf24;
+transform:scale(1.15);
+}
+
+.rating-stars span:hover{
+color:#fbbf24;
+}
+
+.toast-success{
+position:fixed;
+bottom:25px;
+left:50%;
+transform:translateX(-50%) translateY(20px);
+
+background:#111827;
+color:white;
+
+padding:14px 20px;
+border-radius:12px;
+
+font-size:14px;
+font-weight:500;
+
+box-shadow:0 10px 30px rgba(0,0,0,0.25);
+
+opacity:0;
+pointer-events:none;
+
+transition:all .35s ease;
+
+z-index:999;
+}
+
+.toast-success.show{
+opacity:1;
+transform:translateX(-50%) translateY(0);
+}
+
+.delete-modal{
+position:fixed;
+inset:0;
+
+background:rgba(0,0,0,0.35);
+
+display:flex;
+align-items:flex-end;
+justify-content:center;
+
+opacity:0;
+pointer-events:none;
+
+transition:.3s ease;
+z-index:999;
+}
+
+.delete-modal.show{
+opacity:1;
+pointer-events:auto;
+}
+
+.delete-content{
+width:100%;
+max-width:420px;
+
+background:rgba(255,255,255,0.85);
+border-radius:20px 20px 0 0;
+padding:24px;
+
+box-shadow:0 -20px 50px rgba(0,0,0,0.25);
+
+transform:translateY(100%);
+transition:.35s ease;
+}
+
+.delete-modal.show .delete-content{
+transform:translateY(0);
+}
+
+.delete-content h3{
+font-size:18px;
+margin-bottom:6px;
+}
+
+.delete-content p{
+font-size:14px;
+color:#6b7280;
+}
+
+.delete-buttons{
+display:flex;
+gap:10px;
+margin-top:18px;
+}
+
+.btn-cancel{
+flex:1;
+border:none;
+
+background:#e5e7eb;
+padding:10px;
+border-radius:10px;
+
+cursor:pointer;
+}
+
+.btn-delete{
+flex:1;
+border:none;
+
+background:#ef4444;
+color:white;
+
+padding:10px;
+border-radius:10px;
+
+cursor:pointer;
+}
+
+/* LABEL INPUT */
+.input-label{
+font-size:13px;
+font-weight:600;
+color:#374151;
+margin-top:16px;
+text-align:left;
+display:block;
+letter-spacing:0.2px;
+}
+
+/* ICON GLASS */
+.icon-glass{
+width:64px;
+height:64px;
+
+margin:auto;
+margin-bottom:10px;
+
+border-radius:16px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:24px;
+
+background:rgba(255,255,255,0.6);
+
+border:1px solid rgba(255,255,255,0.7);
+
+box-shadow:
+0 10px 30px rgba(0,0,0,0.15),
+inset 0 1px 0 rgba(255,255,255,0.8);
+
+color:#6d28d9;
+}
+
+/* TEXT DESKRIPSI RATING */
+.rating-desc{
+font-size:12px;
+color:#6b7280;
+margin-top:8px;
+}
+
+/* RATING SUMMARY */
+
+.rating-summary{
+text-align:center;
+margin-bottom:50px;
+
+width:100%;
+max-width:620px;
+margin-left:auto;
+margin-right:auto;
+
+padding:25px 20px;
+
+background:rgba(255,255,255,0.6);
+
+border-radius:18px;
+
+box-shadow:
+0 15px 35px rgba(0,0,0,0.08);
+}
+
+.rating-big{
+font-size:64px;
+font-weight:700;
+color:#111827;
+letter-spacing:1px;
+}
+
+.rating-stars-big{
+font-size:32px;
+color:#fbbf24;
+margin-top:4px;
+}
+
+.rating-count{
+font-size:14px;
+color:#6b7280;
+margin-top:6px;
+}
+
+/* DISTRIBUSI RATING */
+
+.rating-bars{
+margin-top:20px;
+max-width:480px;
+margin-left:auto;
+margin-right:auto;
+}
+
+
+.bar-row{
+display:flex;
+align-items:center;
+gap:8px;
+margin:6px 0;
+font-size:13px;
+color:#374151;
+}
+
+.bar{
+flex:1;
+height:10px;
+background:#e5e7eb;
+border-radius:20px;
+overflow:hidden;
+}
+
+.bar div{
+height:100%;
+background:linear-gradient(90deg,#fbbf24,#f59e0b);
+width:0%;
+transition:width .4s ease;
+}
+
+/* POSISI TOMBOL SIMPAN DI POJOK CARD */
+[id^="save-"]{
+position:absolute;
+right:18px;
+bottom:18px;
+margin-top:0 !important;
+}
+
+[id^="save-"] button{
+padding:8px 14px;
+font-size:13px;
+box-shadow:0 4px 12px rgba(109,40,217,0.3);
+  }
+
+@keyframes skeleton{
+0%{background-position:100% 0}
+100%{background-position:-100% 0}
+}
+
+@media (max-width:700px){
+
+.testimoni-grid{
+grid-template-columns:1fr;
+}
+
+}
