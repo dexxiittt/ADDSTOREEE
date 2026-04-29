@@ -18,6 +18,18 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 let currentUser = null;
 
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    currentUser = user;
+    console.log("User login:", user.uid);
+  } else {
+    signInAnonymously(auth)
+      .catch((error) => {
+        console.error("Auth error:", error);
+      });
+  }
+});
+
 async function kirimTestimoni(){
 
 let invoice = document.getElementById("invoice").value
