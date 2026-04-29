@@ -15,7 +15,7 @@
 <script src="components/navbar.js"></script>
   
 <div id="toastSuccess" class="toast-success">
-✓ Testimoni berhasil dikirim
+Testimoni berhasil dikirim
 </div>
   
 <div id="deleteModal" class="delete-modal">
@@ -113,7 +113,14 @@ Dengar langsung dari pelanggan yang telah merasakan layanan premium kami
 <input type="hidden" id="rating">
 
 <label class="input-label">💬 Testimoni Anda</label>
-<textarea id="pesan" placeholder="Ceritakan pengalaman Anda menggunakan layanan kami..."></textarea>
+<textarea id="pesan" maxlength="300"
+placeholder="Ceritakan pengalaman Anda menggunakan layanan kami..."></textarea>
+
+<!-- COUNTER -->
+<div id="charCounter" class="char-counter">
+Maks: 300 karakter
+</div>
+
 <div id="errorPesan" class="form-error">Tulis pengalaman Anda</div>
 
 <button onclick="kirimTestimoni()">
