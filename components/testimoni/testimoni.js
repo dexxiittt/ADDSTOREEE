@@ -248,7 +248,7 @@ let tombolMenu = ""
 let currentInvoice =
 document.getElementById("invoice").value
 
-  if(myInvoices.includes(t.invoice) || currentInvoice === t.invoice){
+  if(currentUser && t.uid === currentUser.uid){
 tombolMenu = `
 <div style="position:absolute;top:12px;right:12px;cursor:pointer;font-size:18px;"
 onclick="toggleMenu('${t.id}')">⋮</div>
