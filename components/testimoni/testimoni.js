@@ -40,6 +40,11 @@ onAuthStateChanged(auth, (user) => {
 
 async function kirimTestimoni(){
 
+if(!currentUser){
+  alert("bentar ya, sistem lagi nyiapin user...");
+  return;
+}
+
 let invoice = document.getElementById("invoice").value
 let nama = document.getElementById("nama").value
 let rating = document.getElementById("rating").value
@@ -104,6 +109,7 @@ invoice:invoice,
 nama:nama,
 rating:rating,
 pesan:pesan,
+uid: currentUser.uid,
 tanggal:new Date().toLocaleDateString(),
 createdAt:new Date()
 })
