@@ -1,4 +1,4 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+import { initializeApp, getAuth, signInAnonymously, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
 import { 
 getFirestore, collection, addDoc, getDocs, doc, setDoc, getDoc, query, where, onSnapshot, deleteDoc, updateDoc, orderBy
 } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
@@ -15,7 +15,8 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
+const auth = getAuth(app);
+let currentUser = null;
 
 async function kirimTestimoni(){
 
