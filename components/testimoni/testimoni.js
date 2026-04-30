@@ -233,7 +233,7 @@ return ratingB - ratingA
 }
 
 // jika rating sama -> terbaru dulu
-return new Date(b.createdAt) - new Date(a.createdAt)
+return (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0)
 
 })
   
@@ -620,6 +620,8 @@ textarea.addEventListener("input", function(){
   }
 
 })
+
+}
 
 function cancelEdit(id){
 document.getElementById("text-"+id).style.display="block"
