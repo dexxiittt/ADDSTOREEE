@@ -308,12 +308,14 @@ color:#d1d5db;
 
 <p id="text-${t.id}" class="clamp">"${t.pesan}"</p>
 
+${t.pesan.length > 120 ? `
 <span 
 id="toggle-${t.id}" 
 style="color:#6d28d9;cursor:pointer;font-size:13px;"
 onclick="toggleText('${t.id}')">
 Lihat Selengkapnya
 </span>
+` : ""}
 
 <textarea id="edit-${t.id}" maxlength="300" style="
 display:none;
@@ -432,13 +434,16 @@ window.toggleText = function(id){
   let text = document.getElementById("text-"+id)
   let btn = document.getElementById("toggle-"+id)
 
+  if(!text || !btn) return
+
   if(text.classList.contains("clamp")){
     text.classList.remove("clamp")
-    btn.innerText = "Lebih Sedikit..."
+    btn.innerText = "Lihat Lebih Sedikit"
   }else{
     text.classList.add("clamp")
-    btn.innerText = "Selengkapnya..."
+    btn.innerText = "Lihat Selengkapnya"
   }
+
 
 setTimeout(()=>{
   semuaTestimoni.forEach(t=>{
@@ -453,12 +458,6 @@ setTimeout(()=>{
   })
 },100)
   
-}
-
-event.stopPropagation()
-const menu = document.getElementById("menu-"+id)
-menu.style.display =
-menu.style.display === "block" ? "none" : "block"
 }
 
 // 1. untuk menu titik tiga
