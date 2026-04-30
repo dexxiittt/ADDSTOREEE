@@ -463,6 +463,17 @@ setTimeout(()=>{
   
 }
 
+window.toggleMenu = function(id, e){
+  if(e) e.stopPropagation()
+
+  const menu = document.getElementById("menu-"+id)
+
+  if(!menu) return
+
+  menu.style.display =
+    menu.style.display === "block" ? "none" : "block"
+}
+
 // 1. untuk menu titik tiga
 document.addEventListener("click", function(e){
 
