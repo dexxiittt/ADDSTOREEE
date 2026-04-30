@@ -251,7 +251,7 @@ document.getElementById("invoice").value
   if(currentUser && t.uid === currentUser.uid){
 tombolMenu = `
 <div style="position:absolute;top:12px;right:12px;cursor:pointer;font-size:18px;"
-onclick="toggleMenu('${t.id}')">⋮</div>
+onclick="toggleMenu('${t.id}', event)">⋮</div>
 
 <div id="menu-${t.id}" 
 class="menu-box"
