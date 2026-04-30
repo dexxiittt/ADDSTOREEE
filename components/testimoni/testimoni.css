@@ -140,12 +140,12 @@ display:none;
   margin-top: 6px;
   text-align: right;
   transition: 0.2s ease;
-  color: #ffffff; /* default putih */
+  color: #6b7280; /* default putih */
 }
 
 /* warna */
 .counter-normal{
-  color: #ffffff;
+  color: #6b7280;
 }
 
 .counter-warning{
