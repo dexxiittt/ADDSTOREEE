@@ -362,6 +362,15 @@ color:#374151;
 font-size:14px;
 line-height:1.6;
 margin-bottom:12px;
+
+display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+/* FIX LAY OUT*/
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .testimoni-user strong{
