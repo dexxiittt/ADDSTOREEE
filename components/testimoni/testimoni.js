@@ -308,7 +308,7 @@ color:#d1d5db;
 
 <p id="text-${t.id}">"${t.pesan}"</p>
 
-<textarea id="edit-${t.id}" style="
+<textarea id="edit-${t.id}" maxlength="300" style="
 display:none;
 width:100%;
 margin-top:8px;
@@ -317,6 +317,10 @@ border-radius:8px;
 border:1px solid #ddd;
 font-size:14px;
 ">${t.pesan}</textarea>
+
+<div id="charCounter-${t.id}" class="char-counter" style="display:none;">
+Maks: 300 karakter
+</div>
 
 <div id="save-${t.id}" style="display:none;margin-top:8px;">
 <button onclick="simpanEdit('${t.id}')" style="
@@ -584,7 +588,38 @@ let textarea = document.getElementById("edit-"+id)
 textarea.focus()
 textarea.setSelectionRange(textarea.value.length, textarea.value.length)
 
-}
+
+// =========================
+// CHARACTER COUNTER EDIT
+// =========================
+let counter = document.getElementById("charCounter-"+id)
+
+// tampilkan counter
+counter.style.display = "block"
+
+// trigger awal
+textarea.dispatchEvent(new Event("input"))
+
+textarea.addEventListener("input", function(){
+
+  let max = 300
+  let sisa = max - this.value.length
+
+  counter.innerText = "Maks: " + sisa + " karakter"
+
+  counter.classList.remove("counter-normal","counter-warning","counter-danger")
+
+  if(sisa >= 201){
+    counter.classList.add("counter-normal")
+  } 
+  else if(sisa >= 51){
+    counter.classList.add("counter-warning")
+  } 
+  else{
+    counter.classList.add("counter-danger")
+  }
+
+})
 
 function cancelEdit(id){
 document.getElementById("text-"+id).style.display="block"
@@ -599,6 +634,10 @@ let titik = document.querySelector(
 "[onclick=\"toggleMenu('"+id+"')\"]"
 )
 if(titik) titik.style.display = "block"
+
+let counter = document.getElementById("charCounter-"+id)
+if(counter) counter.style.display = "none"
+  
 activeEditId = null
 }
   
