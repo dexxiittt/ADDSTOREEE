@@ -451,9 +451,12 @@ setTimeout(()=>{
     let btn = document.getElementById("toggle-"+t.id)
 
     if(el && btn){
-      if(el.scrollHeight <= el.clientHeight){
-        btn.style.display = "none"
-      }
+  let terlaluPendek = el.scrollHeight <= el.clientHeight
+  let teksPendek = t.pesan.length < 120
+
+  if(terlaluPendek || teksPendek){
+    btn.style.display = "none"
+  }
     }
   })
 },100)
