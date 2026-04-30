@@ -428,7 +428,33 @@ document.getElementById("invoice").addEventListener("input",function(){
 renderTestimoni()
 })
 
-window.toggleMenu = function(id){
+window.toggleText = function(id){
+  let text = document.getElementById("text-"+id)
+  let btn = document.getElementById("toggle-"+id)
+
+  if(text.classList.contains("clamp")){
+    text.classList.remove("clamp")
+    btn.innerText = "Lebih Sedikit..."
+  }else{
+    text.classList.add("clamp")
+    btn.innerText = "Selengkapnya..."
+  }
+
+setTimeout(()=>{
+  semuaTestimoni.forEach(t=>{
+    let el = document.getElementById("text-"+t.id)
+    let btn = document.getElementById("toggle-"+t.id)
+
+    if(el && btn){
+      if(el.scrollHeight <= el.clientHeight){
+        btn.style.display = "none"
+      }
+    }
+  })
+},100)
+  
+}
+
 event.stopPropagation()
 const menu = document.getElementById("menu-"+id)
 menu.style.display =
