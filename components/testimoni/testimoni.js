@@ -674,15 +674,22 @@ if(pesanInput && counter){
 
     counter.classList.remove("counter-normal","counter-warning","counter-danger");
 
-    if(sisa > 200){
-      counter.classList.add("counter-normal");
-    } 
-    else if(sisa > 50){
-      counter.classList.add("counter-warning");
-    } 
-    else{
-      counter.classList.add("counter-danger");
-    }
+    if(sisa >= 201){
+  counter.classList.add("counter-normal"); // putih
+} 
+else if(sisa >= 51){
+  counter.classList.add("counter-warning"); // kuning
+} 
+else{
+  counter.classList.add("counter-danger"); // merah
+}
+
+ if(sisa <= 10){
+  counter.style.transform = "scale(1.1)";
+  setTimeout(()=>{
+    counter.style.transform = "scale(1)";
+  },150);
+}
 
   });
 
