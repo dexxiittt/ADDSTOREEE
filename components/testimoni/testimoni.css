@@ -358,19 +358,21 @@ filter:drop-shadow(0 2px 6px rgba(251,191,36,.6));
 }
 
 .testimoni-card p{
-color:#374151;
-font-size:14px;
-line-height:1.6;
-margin-bottom:12px;
+  color:#374151;
+  font-size:14px;
+  line-height:1.6;
+  margin-bottom:12px;
 
-display: -webkit-box;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+/* MODE COLLAPSE */
+.testimoni-card p.clamp{
+  display: -webkit-box;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
-
-/* FIX LAY OUT*/
-  word-break: break-word;
-  overflow-wrap: anywhere;
 }
 
 .testimoni-user strong{
