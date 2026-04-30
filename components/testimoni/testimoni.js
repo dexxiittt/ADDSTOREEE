@@ -306,7 +306,14 @@ color:#d1d5db;
 <span data-value="5">★</span>
 </div>
 
-<p id="text-${t.id}">"${t.pesan}"</p>
+<p id="text-${t.id}" class="clamp">"${t.pesan}"</p>
+
+<span 
+id="toggle-${t.id}" 
+style="color:#6d28d9;cursor:pointer;font-size:13px;"
+onclick="toggleText('${t.id}')">
+Lihat Selengkapnya
+</span>
 
 <textarea id="edit-${t.id}" maxlength="300" style="
 display:none;
