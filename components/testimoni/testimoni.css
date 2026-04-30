@@ -138,6 +138,8 @@ display:none;
 .char-counter{
   font-size: 13px;
   margin-top: 6px;
+  position: relative;
+  z-index: 5;
   text-align: right;
   transition: 0.2s ease;
   color: #6b7280; /* default putih */
