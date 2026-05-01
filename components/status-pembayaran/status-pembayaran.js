@@ -250,6 +250,10 @@ const paket = document.getElementById("paket").innerText
 const detail = document.getElementById("paketDetail").innerText
 const total = document.getElementById("total").innerText
 
+// ambil ulang dari source utama (INI KUNCI)
+const data = JSON.parse(localStorage.getItem("paymentData"))
+const packageId = data?.package_id || "-"
+
 // format pesan
 const pesan = `Halo Admin, saya sudah melakukan pembayaran QRIS.
 
@@ -260,6 +264,7 @@ No WA: ${wa}
 Email: ${email}
 
 📦 Paket: ${paket}
+🆔 Package ID: ${packageId}
 📝 Detail: ${detail}
 💰 Total: ${total}
 
@@ -271,5 +276,4 @@ Mohon dicek ya 🙏`
 const url = "https://wa.me/6285881500868?text=" + encodeURIComponent(pesan)
 
 window.open(url, "_blank")
-
 }
