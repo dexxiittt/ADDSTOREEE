@@ -264,7 +264,6 @@ No WA: ${wa}
 Email: ${email}
 
 📦 Paket: ${paket}
-🆔 Package ID: ${package_id}
 📝 Detail: ${detail}
 💰 Total: ${total}
 
