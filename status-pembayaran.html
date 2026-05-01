@@ -487,13 +487,25 @@ statusBox.innerHTML = `
 let invoice = localStorage.getItem("invoiceID")
 
 document.getElementById("invoice").innerText = invoice
-document.getElementById("time").innerText = new Date().toLocaleString("id-ID")
+const now = new Date()
 
-return // ⛔ STOP di sini (gak lanjut ke fetch)
+const formattedTime = now.toLocaleString("id-ID", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+  hour12: false
+}).replace(",", "")
+.replace(/\./g, ".") // tetap pakai titik
+
+document.getElementById("time").innerText = formattedTime
+return // STOP di sini
 }
 
 // =============================
-// 🔥 FALLBACK: AMBIL DARI SHEET
+// FALLBACK: AMBIL DARI SHEET
 // =============================
 const params = new URLSearchParams(window.location.search)
 const invoiceID = params.get("invoice")
