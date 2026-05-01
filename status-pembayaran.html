@@ -429,10 +429,43 @@ statusText.style.color = "#ca8a04"
 
 // box bawah
 statusBox.innerHTML = `
-<div class="status-title" style="color:#ca8a04">
-⚠ Menunggu Pembayaran
+<div class="status-title" style="color:#ca8a04; display:flex; align-items:center; gap:10px;">
+
+  <!-- BOX PUTIH ICON -->
+  <span style="
+    background:white;
+    padding:6px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid #fde68a;
+  ">
+
+    <svg xmlns="http://www.w3.org/2000/svg" 
+         width="16" height="16" 
+         viewBox="0 0 24 24" 
+         fill="none" 
+         stroke="#ca8a04" 
+         stroke-width="2" 
+         stroke-linecap="round" 
+         stroke-linejoin="round">
+
+      <path d="M12 9v4"></path>
+      <path d="M12 17h.01"></path>
+      <path d="M10.29 3.86l-7.34 12.73A2 2 0 0 0 4.63 20h14.74a2 2 0 0 0 1.68-3.41L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+
+    </svg>
+
+  </span>
+
+  <span>Menunggu Pembayaran</span>
+
 </div>
-<div>Silahkan lakukan pembayaran sesuai nominal <b>${localData.total}</b></div>
+
+<div style="margin-left:38px;">
+  Silahkan lakukan pembayaran sesuai nominal <b>${localData.total}</b>
+</div>
 `
 
 }else{
