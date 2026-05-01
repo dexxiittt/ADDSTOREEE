@@ -1,8 +1,4 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-<script>
-
-window.onload = async function(){
+document.addEventListener("DOMContentLoaded", async function(){
 
 // =============================
 // 🔥 PRIORITAS: AMBIL DARI LOCAL STORAGE
@@ -240,7 +236,7 @@ document.getElementById("total").innerText = rp(total)
 document.getElementById("total2").innerText = rp(total)
 document.getElementById("total3").innerText = rp(total)
 
-}
+}) 
 
 function chatAdmin(){
 
@@ -277,4 +273,3 @@ const url = "https://wa.me/6285881500868?text=" + encodeURIComponent(pesan)
 window.open(url, "_blank")
 
 }
-</script>
