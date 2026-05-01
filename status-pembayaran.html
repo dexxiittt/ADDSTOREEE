@@ -497,8 +497,10 @@ const formattedTime = now.toLocaleString("id-ID", {
   minute: "2-digit",
   second: "2-digit",
   hour12: false
-}).replace(",", "")
-.replace(/\./g, ".") // tetap pakai titik
+})
+.replace(",", "")       // hapus koma
+.replace("pukul", "")   // hapus kata "pukul"
+.trim()                 // rapihin spasi
 
 document.getElementById("time").innerText = formattedTime
 return // STOP di sini
