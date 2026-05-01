@@ -41,6 +41,20 @@ padding:20px;
 box-shadow:0 6px 18px rgba(0,0,0,0.1);
 }
 
+.product-image-box{
+margin-bottom:20px;
+border-radius:12px;
+overflow:hidden;
+border:1px solid #e5e7eb;
+}
+
+.product-image-box img{
+width:100%;
+height:180px;
+object-fit:cover;
+display:block;
+}
+
 /* COPY STYLE DARI CEK STATUS */
 .invoice-box{
 background:#dcfce7;
@@ -219,6 +233,11 @@ border:none;
 <!-- RESULT LANGSUNG TAMPIL -->
 <div class="container" id="resultBox">
 
+<!-- IMAGE PRODUK -->
+<div id="productImageBox" class="product-image-box">
+  <img id="productImage" src="" alt="Produk">
+</div>
+
 <!-- INVOICE -->
 <div class="invoice-box" id="invoiceBox">
 <div class="invoice-id" id="invoice"></div>
@@ -320,6 +339,17 @@ document.getElementById("email").innerText = localData.email
 document.getElementById("paket").innerText = localData.paket
 document.getElementById("paketDetail").innerText = localData.paketDetail
 
+// GAMBAR PRODUK 
+const img = document.getElementById("productImage")
+
+if(img){
+  if(localData.image){
+    img.src = localData.image
+  }else{
+    document.getElementById("productImageBox").style.display = "none"
+  }
+}
+  
 // HARGA
 // ambil semua harga Rp xxx
 const matches = localData.paketHarga.match(/Rp\s?[\d\.]+/g)
@@ -424,6 +454,11 @@ const resProduk = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy
 const produk = await resProduk.json()
 
 const detail = produk.find(p => p.package_id == found.package_id)
+
+// GAMBAR DARI SHEET (fallback)
+if(detail.image_url){
+document.getElementById("productImage").src = detail.image_url
+}
 
 const harga = parseInt(detail.price)
 const diskon = parseFloat(detail.discount.replace("%",""))
