@@ -393,7 +393,27 @@ statusBox.style.background = "#fef9c3"
 statusBox.style.border = "1px solid #fde047"
 
 // teks
-statusText.innerText = "Menunggu Pembayaran"
+statusText.innerHTML = `
+<span style="display:flex; align-items:center; gap:8px;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" 
+       width="18" height="18" 
+       viewBox="0 0 24 24" 
+       fill="none" 
+       stroke="#7c3aed" 
+       stroke-width="2" 
+       stroke-linecap="round" 
+       stroke-linejoin="round"
+       style="filter: drop-shadow(0 0 4px rgba(124,58,237,0.4));">
+
+    <circle cx="12" cy="12" r="9"></circle>
+    <path d="M12 7v5l3 2"></path>
+
+  </svg>
+
+  <span>Menunggu Pembayaran</span>
+</span>
+`
 statusText.style.color = "#ca8a04"
 
 // box bawah
