@@ -250,10 +250,6 @@ const paket = document.getElementById("paket").innerText
 const detail = document.getElementById("paketDetail").innerText
 const total = document.getElementById("total").innerText
 
-// ambil ulang dari source utama (INI KUNCI)
-const data = JSON.parse(localStorage.getItem("paymentData"))
-const packageId = data?.package_id || "-"
-
 // format pesan
 const pesan = `Halo Admin, saya sudah melakukan pembayaran QRIS.
 
