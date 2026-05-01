@@ -167,9 +167,9 @@ const formattedTime = now.toLocaleString("id-ID", {
   second: "2-digit",
   hour12: false
 })
-.replace(",", "")       // hapus koma
-.replace("pukul", "")   // hapus kata "pukul"
-.trim()                 // rapihin spasi
+.replace(",", "")       
+.replace("pukul", "")   
+.trim()                 
 
 document.getElementById("time").innerText = formattedTime
 return // STOP di sini
