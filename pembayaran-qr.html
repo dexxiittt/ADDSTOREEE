@@ -548,19 +548,28 @@ Kembali ke Produk
   
 <script>
 function generateInvoice(){
-const year = new Date().getFullYear()
-let counter = localStorage.getItem("invoiceCounter")
-if(!counter){
-counter = 1
-}else{
-counter = parseInt(counter) + 1
-}
+
+const now = new Date()
+
+const year = now.getFullYear()
+
+const random = Math.floor(10000 + Math.random() * 90000)
+
+const tanggal = String(now.getDate()).padStart(2, "0")
+const bulan = String(now.getMonth() + 1).padStart(2, "0")
+
+const jam = String(now.getHours()).padStart(2, "0")
+const menit = String(now.getMinutes()).padStart(2, "0")
+const detik = String(now.getSeconds()).padStart(2, "0")
+
+// COUNTER BACKUP
+let counter = localStorage.getItem("invoiceCounter") || 0
+counter++
 localStorage.setItem("invoiceCounter", counter)
-// 3 digit urutan
+
 const urut = String(counter).padStart(3, "0")
-// 4 digit random
-const random = Math.floor(1000 + Math.random() * 9000)
-return `INV${year}${random}${urut}`
+
+return `INV${year}${random}${tanggal}${bulan}${jam}${menit}${detik}${urut}`
 }
   
 /* ==============================
