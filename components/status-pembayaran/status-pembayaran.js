@@ -25,7 +25,7 @@ try {
 
   if(status === "pending"){
 
-  setInterval(async () => {
+  const interval = setInterval(async () => {
 
     const invoiceID = localStorage.getItem("invoiceID")
 
@@ -38,7 +38,8 @@ try {
     if(found && found.status === "success"){
   status = "success"
   localStorage.setItem("paymentStatus", "success") // 🔥 penting
-  renderUI(status)
+  clearInterval(interval) // 🔥 WAJIB
+  location.reload() // 🔥 paling aman
 }
 
   }, 5000)
