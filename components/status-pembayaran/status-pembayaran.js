@@ -1,14 +1,6 @@
 document.addEventListener("DOMContentLoaded", async function(){
 
 // =============================
-// 🔥 PRIORITAS: AMBIL DARI LOCAL STORAGE
-// =============================
-
-
-if(false && localData){
-
-
-// =============================
 // FALLBACK: AMBIL DARI SHEET
 // =============================
 const params = new URLSearchParams(window.location.search)
@@ -109,9 +101,11 @@ if(status === "pending"){
   `
 }
 
- setInterval(() => {
-  location.reload()
-}, 5000)
+ if(status === "pending"){
+  setInterval(() => {
+    location.reload()
+  }, 5000)
+}
   
 }) 
 
