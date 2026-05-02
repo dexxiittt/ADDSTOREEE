@@ -19,8 +19,9 @@ try {
   const found = data.find(x => x.invoice == invoiceID)
 
   if(found && found.status){
-    
-  }
+  status = found.status
+  localStorage.setItem("paymentStatus", found.status)
+}
 
   if(status === "pending"){
 
@@ -35,10 +36,10 @@ try {
 
     // 🔥 HANYA BERUBAH KALAU SUDAH SUCCESS DI SHEET
     if(found && found.status === "success"){
-      localStorage.setItem("paymentStatus", "success")
-      status = "success"
-renderUI()
-    }
+  status = "success"
+  localStorage.setItem("paymentStatus", "success") // 🔥 penting
+  renderUI(status)
+}
 
   }, 5000)
 
