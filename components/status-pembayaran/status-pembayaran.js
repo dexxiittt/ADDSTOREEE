@@ -7,7 +7,27 @@ const localData = JSON.parse(localStorage.getItem("paymentData"))
 
 if(localData){
 
-const status = localStorage.getItem("paymentStatus") || "pending"
+let status = localStorage.getItem("paymentStatus") || "pending"
+
+// 🔥 CEK STATUS DARI GOOGLE SHEET
+try {
+  const invoiceID = localStorage.getItem("invoiceID")
+
+  const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/payment_id")
+  const data = await res.json()
+
+  const found = data.find(x => x.invoice == invoiceID)
+
+  if(found && found.status === "success"){
+      location.reload()
+    }
+
+  }, 5000)
+}
+
+} catch(e){
+  console.log("Gagal ambil status dari sheet", e)
+}
 
 // CUSTOMER
 document.getElementById("nama").innerText = localData.nama
