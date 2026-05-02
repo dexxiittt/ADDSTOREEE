@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", async function(){
 
 // =============================
-// 🔥 PRIORITAS: AMBIL DARI LOCAL STORAGE
+// PRIORITAS: AMBIL DARI LOCAL STORAGE
 // =============================
 const localData = JSON.parse(localStorage.getItem("paymentData"))
 
@@ -9,7 +9,7 @@ if(localData){
 
 let status = localStorage.getItem("paymentStatus") || "pending"
 
-// 🔥 CEK STATUS DARI GOOGLE SHEET
+// CEK STATUS DARI GOOGLE SHEET
 try {
   const invoiceID = localStorage.getItem("invoiceID")
 
@@ -34,12 +34,12 @@ try {
 
     const found = data.find(x => x.invoice == invoiceID)
 
-    // 🔥 HANYA BERUBAH KALAU SUDAH SUCCESS DI SHEET
+    
     if(found && found.status === "success"){
   status = "success"
-  localStorage.setItem("paymentStatus", "success") // 🔥 penting
-  clearInterval(interval) // 🔥 WAJIB
-  location.reload() // 🔥 paling aman
+  localStorage.setItem("paymentStatus", "success") 
+  clearInterval(interval) 
+  location.reload() 
 }
 
   }, 5000)
