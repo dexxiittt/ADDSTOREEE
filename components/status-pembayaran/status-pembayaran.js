@@ -18,9 +18,13 @@ try {
 
   const found = data.find(x => x.invoice == invoiceID)
 
-  if(found && found.status === "success"){
-      location.reload()
-    }
+  if(found && found.status){
+    status = found.status // 🔥 INI YANG PENTING
+  }
+
+} catch(e){
+  console.log("Gagal ambil status dari sheet", e)
+}
 
   }, 5000)
 }
