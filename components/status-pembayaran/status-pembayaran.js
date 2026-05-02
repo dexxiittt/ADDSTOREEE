@@ -132,7 +132,7 @@ statusBox.innerHTML = `
 </div>
 
 <div style="margin-left:2px;">
-  Silahkan Konfirmasi pembayaran sesuai nominal <b>${localData.total}</b>
+  Silahkan Konfirmasi pembayaran sebesar <b>${localData.total}</b>
 </div>
 `
 
@@ -196,6 +196,8 @@ alert("Invoice tidak ditemukan ❌")
 return
 }
 
+const status = found.status
+
 // split customer
 const info = found.informasi_pelanggan.split("|")
 
@@ -236,6 +238,11 @@ document.getElementById("total").innerText = rp(total)
 document.getElementById("total2").innerText = rp(total)
 document.getElementById("total3").innerText = rp(total)
 
+
+ setInterval(() => {
+  location.reload()
+}, 5000)
+  
 }) 
 
 function chatAdmin(){
