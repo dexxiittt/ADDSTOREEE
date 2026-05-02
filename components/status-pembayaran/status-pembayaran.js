@@ -19,10 +19,11 @@ try {
   const found = data.find(x => x.invoice == invoiceID)
 
   if(found && found.status){
-    status = found.status // 🔥 INI YANG PENTING
+    
   }
 
   if(status === "pending"){
+
   setInterval(async () => {
 
     const invoiceID = localStorage.getItem("invoiceID")
@@ -32,11 +33,15 @@ try {
 
     const found = data.find(x => x.invoice == invoiceID)
 
-    if(found && found.status === "success" && status !== "success"){
-      location.reload()
+    // 🔥 HANYA BERUBAH KALAU SUDAH SUCCESS DI SHEET
+    if(found && found.status === "success"){
+      localStorage.setItem("paymentStatus", "success")
+      status = "success"
+renderUI()
     }
 
   }, 5000)
+
 }
 
 } catch(e){
