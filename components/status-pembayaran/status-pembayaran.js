@@ -91,7 +91,7 @@ statusText.innerHTML = `
 
   </span>
 
-  <span>Menunggu Pembayaran</span>
+  <span>Konfirmasi Pembayaran</span>
 </span>
 `
 statusText.style.color = "#ca8a04"
@@ -127,12 +127,12 @@ statusBox.innerHTML = `
 
   </span>
 
-  <span>Menunggu Pembayaran</span>
+  <span>Konfirmasi Pembayaran</span>
 
 </div>
 
 <div style="margin-left:2px;">
-  Silahkan lakukan pembayaran sesuai nominal <b>${localData.total}</b>
+  Konfirmasi pembayaran sebesar <b>${localData.total}</b>
 </div>
 `
 
