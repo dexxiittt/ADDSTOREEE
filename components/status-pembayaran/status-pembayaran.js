@@ -22,9 +22,19 @@ try {
     status = found.status // 🔥 INI YANG PENTING
   }
 
-} catch(e){
-  console.log("Gagal ambil status dari sheet", e)
-}
+  if(status === "pending"){
+  setInterval(async () => {
+
+    const invoiceID = localStorage.getItem("invoiceID")
+
+    const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/payment_id")
+    const data = await res.json()
+
+    const found = data.find(x => x.invoice == invoiceID)
+
+    if(found && found.status === "success" && status !== "success"){
+      location.reload()
+    }
 
   }, 5000)
 }
@@ -32,6 +42,8 @@ try {
 } catch(e){
   console.log("Gagal ambil status dari sheet", e)
 }
+
+  
 
 // CUSTOMER
 document.getElementById("nama").innerText = localData.nama
