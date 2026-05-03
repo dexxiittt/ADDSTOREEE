@@ -158,6 +158,151 @@ body{
   box-shadow:
   0 4px 10px rgba(124,58,237,0.35);
 }
+
+/* OVERLAY */
+.alert-overlay{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.3);
+  backdrop-filter:blur(8px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s ease;
+  z-index:999;
+}
+
+/* ACTIVE */
+.alert-overlay.active{
+  opacity:1;
+  pointer-events:auto;
+}
+
+/* BOX */
+.alert-box{
+  background:white;
+  border-radius:16px;
+  padding:20px;
+  width:90%;
+  max-width:320px;
+  text-align:center;
+
+  box-shadow:
+  0 10px 30px rgba(0,0,0,0.15);
+
+  transform:scale(0.9);
+  transition:.25s ease;
+}
+
+/* ANIMASI MASUK */
+.alert-overlay.active .alert-box{
+  transform:scale(1);
+}
+
+/* TITLE */
+.alert-title{
+  font-weight:600;
+  font-size:18px;
+  margin-bottom:6px;
+  color:#111827;
+}
+
+/* MESSAGE */
+.alert-message{
+  font-size:14px;
+  color:#6b7280;
+  margin-bottom:15px;
+}
+
+/* BUTTON */
+.alert-box button{
+  width:100%;
+  border:none;
+  background:#7c3aed;
+  color:white;
+  padding:10px;
+  border-radius:10px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+/* MOBILE (<= 480px) */
+@media (max-width:480px){
+
+  .package-hero{
+    padding:40px 16px;
+  }
+
+  .package-hero h1{
+    font-size:28px;
+  }
+
+  .package-hero p{
+    font-size:14px;
+  }
+
+  .invoice-box{
+    margin:16px;
+    padding:25px;
+  }
+
+  .invoice-box h2{
+    font-size:18px;
+  }
+
+  .invoice-box p{
+    font-size:13px;
+  }
+
+  /* paling penting */
+  .invoice-input-wrap{
+    flex-direction:column;
+    gap:8px;
+  }
+
+  .invoice-input-wrap button{
+    width:100%;
+  }
+}
+
+ /* DEVICE (481px - 768px) */
+@media (max-width:768px){
+
+  .invoice-box{
+    margin:20px;
+    padding:35px;
+  }
+
+  .package-hero h1{
+    font-size:32px;
+  }
+}
+
+ /* DESKTOP (>= 1200px) */
+@media (min-width:1200px){
+
+  .invoice-box{
+    max-width:900px;
+    padding:60px;
+  }
+
+  .package-hero{
+    padding:70px 20px;
+  }
+
+  .package-hero h1{
+    font-size:48px;
+  }
+
+  .package-hero p{
+    font-size:20px;
+  }
+}
     
   </style>
 </head>
@@ -198,12 +343,20 @@ body{
   
 
   <script>
+function showAlert(title, message){
+  document.getElementById("alertTitle").innerText = title;
+  document.getElementById("alertMessage").innerText = message;
+  document.getElementById("customAlert").classList.add("active");
+}
+
+function closeAlert(){
+  document.getElementById("customAlert").classList.remove("active");
+}
+    
 document.addEventListener("DOMContentLoaded", function(){
 
 const sheetID = "1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08";
-
 const warrantySheet = "WARRANTY_DATA";
-
 const warrantyURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${warrantySheet}`;
 
 const input = document.querySelector(".invoice-input-wrap input");
@@ -227,7 +380,7 @@ async function checkTransaction() {
   const buyerInputRaw = input.value.trim();
 
   if (!buyerInputRaw) {
-    alert("Masukkan nomor HP dulu.");
+    showAlert("Oops", "Masukkan nomor HP dulu.");
     return;
   }
 
@@ -251,7 +404,7 @@ async function checkTransaction() {
     });
 
     if (transactions.length === 0) {
-      alert("Belum ada transaksi untuk nomor ini.");
+      showAlert("Tidak ditemukan", "Belum ada transaksi untuk nomor ini.");
       return;
     }
 
@@ -259,7 +412,7 @@ async function checkTransaction() {
 
   } catch (err) {
     console.error(err);
-    alert("Terjadi kesalahan mengambil data.");
+    showAlert("Error", "Terjadi kesalahan mengambil data.");
   }
 
   // balikin tombol
@@ -278,6 +431,15 @@ input.addEventListener("keypress", function(e){
 
 });
 </script>
+
+<!-- ALERT -->
+<div id="customAlert" class="alert-overlay">
+  <div class="alert-box">
+    <div class="alert-title" id="alertTitle">Judul</div>
+    <div class="alert-message" id="alertMessage">Pesan</div>
+    <button onclick="closeAlert()">OK</button>
+  </div>
+</div>
 </body>
 </html>
 
