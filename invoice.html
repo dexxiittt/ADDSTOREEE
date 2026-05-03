@@ -27,6 +27,52 @@ body{
   font-size:18px;
   color:white;
 }
+
+ /* WRAPPER BIAR CENTER & SIMETRIS */
+.invoice-wrapper{
+  padding:20px;
+}
+
+/* CARD UTAMA */
+.invoice-box{
+  background:#f9fafb;
+  max-width:800px;
+  margin:20px auto;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  padding:50px;
+
+  /* shadow premium */
+  box-shadow: 
+  0 1px 2px rgba(0,0,0,0.04),
+  0 4px 10px rgba(0,0,0,0.06);
+
+  transition:.2s ease;
+}
+
+/* hover biar hidup */
+.invoice-box:hover{
+  transform:translateY(-2px);
+  box-shadow: 
+  0 4px 12px rgba(0,0,0,0.06),
+  0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* TITLE DALAM BOX */
+.invoice-box h2{
+  font-size:24px;
+  font-weight:700;
+  color:#111827;
+  margin-bottom:6px;
+  text-align:center;
+}
+
+.invoice-box p{
+  font-size:14px;
+  color:#6b7280;
+  text-align:center;
+  margin-bottom:20px;
+}
     
   </style>
 </head>
@@ -36,6 +82,20 @@ body{
   <h1>Cek Invoice</h1>
   <p>Lacak status pembayaran dan detail pesanan</p>
 </div>
+
+<section class="invoice-wrapper">
+
+  <div class="package-hero">
+    <h1>Cek Invoice</h1>
+    <p>Lacak status pembayaran dan detail pesanan</p>
+  </div>
+
+  <div class="invoice-box">
+    <h2>Masukan Invoice Anda</h2>
+    <p>Lacak status pembayaran dan detail pesanan</p>
+  </div>
+
+</section>
 
 <script>
 
