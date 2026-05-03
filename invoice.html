@@ -68,6 +68,63 @@ body{
   text-align:center;
   margin-bottom:20px;
 }
+
+/* INPUT WRAP */
+.invoice-input-wrap{
+  display:flex;
+  gap:10px;
+  padding:6px;
+  border-radius:12px;
+  background:#ffffff;
+
+  /* floating shadow */
+  box-shadow:
+  0 2px 6px rgba(0,0,0,0.05),
+  0 6px 14px rgba(0,0,0,0.06);
+
+  transition:.2s ease;
+}
+
+/* efek pas diklik */
+.invoice-input-wrap:focus-within{
+  transform:translateY(-1px);
+  box-shadow:
+  0 4px 10px rgba(0,0,0,0.06),
+  0 10px 20px rgba(0,0,0,0.08);
+}
+
+/* INPUT */
+.invoice-input-wrap input{
+  flex:1;
+  padding:12px 14px;
+  border:none;
+  outline:none;
+  font-size:14px;
+  border-radius:8px;
+  background:transparent;
+}
+
+/* BUTTON */
+.invoice-input-wrap button{
+  background:#7c3aed;
+  color:white;
+  border:none;
+  padding:12px 16px;
+  border-radius:8px;
+  font-weight:600;
+  cursor:pointer;
+
+  box-shadow:
+  0 2px 6px rgba(124,58,237,0.25);
+
+  transition:.2s;
+}
+
+.invoice-input-wrap button:hover{
+  transform:translateY(-1px);
+  box-shadow:
+  0 4px 10px rgba(124,58,237,0.35);
+}
     
   </style>
 </head>
@@ -82,6 +139,14 @@ body{
     <h2>Masukan Invoice Anda</h2>
     <p>Lacak status pembayaran dan detail pesanan</p>
   </div>
+
+  <div class="invoice-input-wrap">
+  <input 
+    type="text" 
+    placeholder="Masukkan nomor invoice (contoh: INV20241201001)"
+  >
+  <button>🔍 Cek</button>
+</div>
 
 </section>
 
