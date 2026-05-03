@@ -6,48 +6,29 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
-body {
-  overflow-x: hidden;
-  background: #0b0b0f;
-}
-   
-html, body {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+body{
+font-family:Poppins;
+background:#f3f4f8;
+margin:0;
 }
 
-/* HERO tetap ungu */
+/* HERO */
 .package-hero{
-  width:100%;
-  min-height:260px;
-  background:linear-gradient(135deg,#493d84,#6d28d9);
-
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-
-  text-align:center;
-  padding:20px;
+background:linear-gradient(135deg,#7b2ff7,#5f0a87);
+padding:50px 20px;
+text-align:center;
 }
 
-.package-hero h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(42px, 6vw, 96px);
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  margin-bottom: 14px;
-  color: #ffffff;
-  text-shadow: 0 6px 18px rgba(0,0,0,0.25);
+.package-hero h1{
+font-size:40px;
+margin-bottom:6px;
+color:white;
 }
 
-.package-hero p {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  letter-spacing: 0.3px;
-  color: rgba(255,255,255,0.85);
+.package-hero p{
+opacity:.8;
+font-size:18px;
+color:white;
 }
 
 .invoice-box p {
@@ -61,18 +42,21 @@ html, body {
 /* ===== LIGHTWEIGHT INVOICE CARD ===== */
 
 .invoice-box {
-  width: 100%;
-  max-width: 900px;
+background:#f9fafb;
+max-width: 800px;
+margin:20px auto; 
+border:1px solid #e5e7eb;
+border-radius:12px;
+padding:50px;
+margin-bottom:20px;
+animation:fadeUp .4s ease;
+  
+/* ✨ SHADOW SUPER RINGAN + ELEGAN */
+box-shadow: 
+0 1px 2px rgba(0,0,0,0.04),
+0 4px 10px rgba(0,0,0,0.06);
 
-  margin: 50px auto 120px;
-  padding: 40px 24px;
-
-  border-radius: 20px;
-
-  background: #16161f;
-  border: 1px solid rgba(255,255,255,0.06);
-
-  text-align: center;
+transition:.2s ease;
 }
 
 /* TITLE */
