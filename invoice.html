@@ -317,32 +317,44 @@ body{
   </style>
 </head>
 <body>
-  
-<div class="package-hero">
-  <h1>Cek Invoice</h1>
-  <p>Lacak status pembayaran dan detail pesanan</p>
-</div>
 
-<div class="invoice-box">
-  <div class="invoice-icon">
-  <svg viewBox="0 0 24 24" fill="none">
-    <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
-    <line x1="16.5" y1="16.5" x2="21" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-  </svg>
-</div>
-  <h2>Masukan Invoice Anda</h2>
-  <p>Lacak status pembayaran dan detail pesanan</p>
+<body class="package-page">
 
-  <!-- -------------------------- -->
-  <div class="invoice-input-wrap">
-    <input 
-      type="text" 
-      placeholder="Masukkan nomor INV (contoh: 20241100001)"
-    >
-    <button>🔍 Cek</button>
+<div id="navbar-placeholder"></div>
+<script src="components/navbar.js"></script>
+
+<section class="invoice-wrapper">
+
+  <!-- HERO -->
+  <div class="package-hero">
+    <h1>Cek Invoice</h1>
+    <p>Lacak status pembayaran dan detail pesanan</p>
   </div>
 
-</div>
+  <!-- CARD -->
+  <div class="invoice-box">
+
+    <div class="invoice-icon">
+      <svg viewBox="0 0 24 24" fill="none">
+        <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
+        <line x1="16.5" y1="16.5" x2="21" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <h2>Masukan Invoice Anda</h2>
+    <p>Lacak status pembayaran dan detail pesanan</p>
+
+    <div class="invoice-input-wrap">
+      <input 
+        type="text" 
+        placeholder="Masukkan nomor INV (contoh: 20241100001)"
+      >
+      <button>🔍 Cek</button>
+    </div>
+
+  </div>
+
+</section>
 
 <script>
 
