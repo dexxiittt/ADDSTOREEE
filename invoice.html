@@ -405,7 +405,7 @@ document.addEventListener("DOMContentLoaded", function(){
       if (invoiceList.includes(String(invoiceValue))) {
         window.location.href = `status-pesanan.html?inv=${invoiceValue}`;
       } else {
-        showAlert("Tidak ditemukan", "Invoice tidak ditemukan ❌");
+        showAlert("Tidak ditemukan", "Invoice tidak ditemukan");
       }
 
     } catch (err) {
