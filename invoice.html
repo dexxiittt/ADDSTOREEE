@@ -2,6 +2,9 @@
 <html>
 <head>
 <title>INVOICE</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
   <style>
 body{
   font-family:'Poppins',sans-serif;
@@ -124,6 +127,84 @@ body{
   transform:translateY(-1px);
   box-shadow:
   0 4px 10px rgba(124,58,237,0.35);
+}
+
+/* MOBILE (<= 480px) */
+@media (max-width:480px){
+
+  .package-hero{
+    padding:40px 16px;
+  }
+
+  .package-hero h1{
+    font-size:28px;
+  }
+
+  .package-hero p{
+    font-size:14px;
+  }
+
+  .invoice-box{
+    margin:16px;
+    padding:25px;
+  }
+
+  .invoice-box h2{
+    font-size:18px;
+  }
+
+  .invoice-box p{
+    font-size:13px;
+  }
+
+  /* biar gak kepotong */
+  .invoice-input-wrap{
+    flex-direction:column;
+    gap:8px;
+  }
+
+  .invoice-input-wrap input{
+    font-size:14px;
+  }
+
+  .invoice-input-wrap button{
+    width:100%;
+    padding:12px;
+  }
+}
+
+ /* DEVICE (481px - 768px) */
+@media (max-width:768px){
+
+  .invoice-box{
+    margin:20px;
+    padding:35px;
+  }
+
+  .package-hero h1{
+    font-size:32px;
+  }
+}
+
+ /* DESKTOP (>= 1200px) */
+@media (min-width:1200px){
+
+  .invoice-box{
+    max-width:900px;
+    padding:60px;
+  }
+
+  .package-hero{
+    padding:70px 20px;
+  }
+
+  .package-hero h1{
+    font-size:48px;
+  }
+
+  .package-hero p{
+    font-size:20px;
+  }
 }
     
   </style>
