@@ -99,6 +99,472 @@ body{
   color: transparent;
 }
 
+/* WRAPPER IMAGE */
+.product-image {
+  position: relative;
+  width: 100%;
+  margin-bottom: 14px;
+
+  border-radius: 16px;
+  overflow: hidden;
+
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.35),
+    rgba(255,255,255,0.12)
+  );
+}
+
+/* IMAGE */
+.product-image img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  display: block;
+
+  transform: scale(0.98);
+  transition: transform .45s cubic-bezier(.22,1,.36,1);
+}
+
+.product-image::after {
+  content: "";
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  bottom: -18px;
+  height: 34px;
+
+  border-radius: 50%;
+
+  background: radial-gradient(
+    ellipse at center bottom,
+    rgba(139,92,246,0.75) 0%,
+    rgba(139,92,246,0.45) 35%,
+    rgba(139,92,246,0.18) 60%,
+    transparent 75%
+  );
+
+  opacity: 0;
+  transform: scale(0.9);
+  filter: blur(1.5px);
+
+  transition:
+    opacity .35s ease,
+    transform .35s ease;
+
+  pointer-events: none;
+}
+
+/* saat klik / buka detail */
+.glass-card:active .product-image::after,
+.glass-card:has(.package-detail.open) .product-image::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* image ikut naik */
+.glass-card:active .product-image img,
+.glass-card:has(.package-detail.open) .product-image img {
+  transform: translateY(-3px) scale(1.045);
+}
+
+/* ROW PAKET */
+.package-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 12px 0;
+  margin-bottom: 6px;
+
+  text-decoration: none;
+  color: inherit;
+
+  border-bottom: 1px solid rgba(255,255,255,.2);
+
+  transition: opacity .25s ease;
+}
+
+.package-row:last-child {
+  border-bottom: none;
+}
+
+.package-row:hover {
+  opacity: 0.85;
+}
+
+/* NAMA PAKET */
+.package-row span {
+  font-size: 13.5px;
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+/* HARGA */
+.package-row b {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14.5px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+/* BASE FEATURED */
+.package-row.featured {
+  position: relative;
+  padding-inline: 6px;
+  overflow: hidden;
+  margin: 6px 0;
+}
+
+/* ORANGE */
+.package-row.featured-orange {
+  background: linear-gradient(
+    90deg,
+    rgba(245,158,11,0.35),
+    rgba(245,158,11,0.12)
+  );
+}
+
+/* PURPLE (PAKET MAHAL) */
+.package-row.featured-purple {
+  background: linear-gradient(
+    90deg,
+    rgba(139,92,246,0.42),
+    rgba(139,92,246,0.16)
+  );
+}
+
+/* BLUE (REKOMENDASI) */
+.package-row.featured-blue {
+  background: linear-gradient(
+    90deg,
+    rgba(59,130,246,0.38),
+    rgba(59,130,246,0.14)
+  );
+}
+
+/* GLOW BASE */
+.package-row.featured::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+}
+
+/* SOFT */
+.package-row.glow-soft::before {
+  opacity: 0.65;
+}
+
+/* WARNA GLOW */
+.package-row.featured-orange.glow-soft::before {
+  box-shadow: 0 0 18px 4px rgba(245,158,11,0.45);
+}
+
+.package-row.featured-purple.glow-soft::before {
+  box-shadow: 0 0 22px 6px rgba(139,92,246,0.55);
+}
+
+.package-row.featured-blue.glow-soft::before {
+  box-shadow: 0 0 20px 5px rgba(59,130,246,0.5);
+}
+
+/* WRAPPER HARGA */
+.price-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.1;
+}
+
+/* HARGA LAMA */
+.price-old {
+  font-size: 12px;
+  text-decoration: line-through;
+  opacity: 0.55;
+}
+
+/* HARGA BARU */
+.price-new {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #dc2626;
+}
+
+/* SATU BARIS HARGA */
+.price-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* DEFAULT: PROMO DI KIRI */
+.price-line.promo-left {
+  justify-content: flex-end;
+}
+
+/* ALTERNATIF: PROMO DI KANAN */
+.price-line.promo-right {
+  flex-direction: row-reverse;
+}
+
+/* JIKA TANPA DISKON */
+.price-line:has(.price-wrap):not(:has(.discount-badge)) {
+  justify-content: flex-end;
+}
+
+/* BADGE DISKON */
+.discount-badge {
+  margin-left: 8px;
+  padding: 1px 6px;
+
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+
+  border-radius: 999px;
+
+  background: #ef4444;
+  color: white;
+}
+
+/* BIAR LEBIH RAPET */
+.price-line .discount-badge {
+  font-size: 8px;
+  line-height: 1;
+  padding: 1px 4px;
+
+  display: inline-flex;
+  align-items: center;
+}
+
+.toggle-detail {
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px 0;
+
+  border: none;
+  background: transparent;
+
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+
+  color: #2563eb;
+  cursor: pointer;
+
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+.toggle-detail:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+/* CONTAINER DETAIL */
+.package-detail {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+
+  opacity: 0;
+
+  transition:
+    grid-template-rows 0.5s cubic-bezier(.22,1,.36,1),
+    opacity 0.35s ease;
+}
+
+/* isi dalam */
+.package-detail > * {
+  overflow: hidden;
+}
+
+/* STATE OPEN */
+.package-detail.open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.package-detail.open .role-section {
+  animation: detail-fade-slide 0.45s ease both;
+}
+
+@keyframes detail-fade-slide {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.role-section {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(0,0,0,0.15);
+}
+
+.role-title {
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  opacity: 0.7;
+}
+
+/* badge role */
+.role-badge {
+  margin-left: 8px;
+  padding: 3px 10px;
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 500;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+
+  background: rgba(17,24,39,0.08);
+  color: #374151;
+}
+
+/* BADGE UMUM */
+.badge {
+  margin-left: 8px;
+  padding: 3px 8px;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  border-radius: 999px;
+
+  background: #ef4444;
+  color: white;
+}
+
+.badge-hot {
+  position: absolute;
+  right: 10px;
+
+  padding: 4px 10px;
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  background: #f59e0b;
+  color: white;
+
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+}
+
+/* posisi bertingkat */
+.badge-line-0 { top: 10px; }
+.badge-line-1 { top: 34px; }
+.badge-line-2 { top: 58px; }
+.badge-line-3 { top: 82px; }
+
+/* variasi warna */
+.badge-hot-red { background: #ef4444; }
+.badge-hot-green { background: #22c55e; }
+.badge-hot-orange { background: #f59e0b; }
+
+/* PROMO */
+.package-row.promo {
+  background: linear-gradient(
+    90deg,
+    rgba(239,68,68,0.12),
+    rgba(239,68,68,0.05)
+  );
+}
+
+/* SOLD OUT */
+.package-row.soldout {
+  opacity: 0.45;
+  pointer-events: none;
+  text-decoration: line-through;
+}
+
+/* EXPIRED */
+.package-row.expired {
+  opacity: 0.35;
+  filter: grayscale(1);
+  pointer-events: none;
+}
+
+/* NOTE GARANSI */
+.glass-card .note {
+  display: block;
+  margin-top: 16px;
+
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+
+  animation: guarantee-pulse 3.8s ease-in-out infinite;
+}
+
+.glass-card .note::before {
+  content: "✔ ";
+}
+
+/* ADA GARANSI */
+.note.has-guarantee {
+  color: #16a34a;
+}
+
+/* TANPA GARANSI */
+.note.no-guarantee {
+  color: #dc2626;
+  animation: none;
+}
+
+/* AUTO HIDE */
+.glass-card .note:empty {
+  display: none;
+}
+
+@keyframes guarantee-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.75; }
+}
+
+/* NO GARANSI */
+.badge-nogar {
+  margin-left: 6px;
+  padding: 2px 8px;
+  font-size: 10.5px;
+  font-weight: 700;
+  border-radius: 999px;
+
+  background: rgba(220,38,38,0.12);
+  color: #dc2626;
+
+  border: 1px solid rgba(220,38,38,0.35);
+}
+
+/* BERGARANSI */
+.badge-gar {
+  margin-left: 6px;
+  padding: 2px 8px;
+  font-size: 10.5px;
+  font-weight: 700;
+  border-radius: 999px;
+
+  background: rgba(22,163,74,0.12);
+  color: #16a34a;
+
+  border: 1px solid rgba(22,163,74,0.35);
+}
+
+  
+
 /* CATEGORY WRAPPER */
 .category-content {
   width: 100%;
