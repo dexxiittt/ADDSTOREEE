@@ -3,6 +3,8 @@
 <head>
 <title>Page Title</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600&family=Poppins:wght@400;600;800&family=DM+Sans:wght@500;600&display=swap" rel="stylesheet">
+  
 <style>
 /* BODY */
 body{
@@ -10,6 +12,11 @@ body{
   background:#f3f4f8;
   margin:0;
   overflow-x: hidden;
+}
+
+:root {
+  --card-min-width: 320px;
+  --grid-max-width: 880px;
 }
 
 /* HERO */
@@ -563,7 +570,15 @@ body{
   border: 1px solid rgba(22,163,74,0.35);
 }
 
-  
+/* NOTE PULSE HALUS */
+.note {
+  animation: pulse-note 3.5s ease-in-out infinite;
+}
+
+@keyframes pulse-note {
+  0%,100% { opacity: .5; }
+  50% { opacity: 1; }
+}
 
 /* CATEGORY WRAPPER */
 .category-content {
@@ -603,6 +618,63 @@ body{
 @media (max-width: 480px) {
   #product-cards {
     gap: 26px 18px;
+  }
+}
+
+/* PAUSE ANIMASI SAAT SCROLL */
+body.is-scrolling * {
+  animation-play-state: paused !important;
+}
+
+/* REDUCE MOTION (aksesibilitas + device lemah) */
+@media (prefers-reduced-motion: reduce) {
+  .package-detail {
+    transition: none !important;
+  }
+
+  .glass-card {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* MATIKAN EFEK BERAT DI MOBILE */
+@media (max-width:768px) {
+
+  .glass-card {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    animation: none !important;
+    transition-duration: .55s;
+  }
+}
+
+/* ULTRA LOW DEVICE MODE */
+@media (max-width:480px){
+
+  .glass-card{
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+    animation:none !important;
+  }
+
+  .package-row::before,
+  .package-row::after{
+    animation:none !important;
+    filter:none !important;
+  }
+
+  .product-image::after{
+    filter:none !important;
+  }
+}
+
+/* FIX GRID MOBILE */
+@media (max-width: 768px) {
+  #product-cards {
+    grid-template-columns: 1fr;
+    max-width: 520px;
   }
 }
   
