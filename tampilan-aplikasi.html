@@ -32,6 +32,73 @@ body{
   color:white;
 }
 
+/* CARD UTAMA */
+.glass-card {
+  padding: 20px;
+  border-radius: 20px;
+
+  font-family: 'Plus Jakarta Sans', sans-serif;
+
+  background: rgba(255,255,255,0.9);
+
+  box-shadow: 
+    0 12px 30px rgba(0,0,0,.08),
+    0 4px 12px rgba(0,0,0,.05);
+
+  opacity: 0;
+  transform: translateY(24px);
+
+  transition:
+    opacity .35s ease,
+    transform .35s ease;
+
+  will-change: transform, opacity;
+}
+
+/* HOVER EFFECT */
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 52px rgba(0,0,0,.25);
+}
+
+/* ANIMASI MASUK */
+.glass-card.reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.glass-card[data-delay="1"] { transition-delay: .05s; }
+.glass-card[data-delay="2"] { transition-delay: .1s; }
+.glass-card[data-delay="3"] { transition-delay: .15s; }
+.glass-card[data-delay="4"] { transition-delay: .2s; }
+
+.glass-card h3 {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+
+  transition:
+    transform .35s cubic-bezier(.22,1,.36,1),
+    color .25s ease;
+}
+
+.glass-card:hover h3 {
+  transform: translateY(-1px) scale(1.04);
+}
+
+.glass-card:active h3 {
+  transform: translateY(0) scale(0.98);
+}
+
+/* efek ungu saat aktif */
+.glass-card:active h3,
+.glass-card:has(.package-detail.open) h3 {
+  background: linear-gradient(90deg, #8b5cf6, #6d28d9);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
 /* CATEGORY WRAPPER */
 .category-content {
   width: 100%;
