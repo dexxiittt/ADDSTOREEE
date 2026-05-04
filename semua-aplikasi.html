@@ -756,7 +756,6 @@ function renderBadges(badgeText) {
     .join("");
 }
 
-<script>
 
 /* ===== FETCH DATA ===== */
 fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRODUCT_PACKAGES")
@@ -784,11 +783,13 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
   window.PRODUCT_DATA = grouped;
 
   /* =========================
-     🔥 TARUH DI SINI (STEP 3)
+      (Bagian 3)
      ========================= */
 
   const wrap = document.getElementById("product-cards");
   if (!wrap) return;
+
+  let html = ""; // TAMBAH INI
 
   Object.values(grouped).forEach(prod => {
 
@@ -797,7 +798,7 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
     const primaryItem =
       items.find(i => i.image_url) || items[0];
 
-    wrap.innerHTML += `
+    html += `
       <div class="glass-card">
 
         <div class="product-image">
