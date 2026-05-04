@@ -9,6 +9,7 @@ body{
   font-family:'Plus Jakarta Sans',sans-serif;
   background:#f3f4f8;
   margin:0;
+  overflow-x: hidden;
 }
 
 /* HERO */
@@ -29,6 +30,47 @@ body{
   opacity:.85;
   font-size:24px;
   color:white;
+}
+
+/* CATEGORY WRAPPER */
+.category-content {
+  width: 100%;
+  margin: 0 auto;
+  padding-bottom: 120px;
+}
+
+/* GRID PRODUCT */
+#product-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(var(--card-min-width), 1fr));
+  gap: 28px 22px;
+
+  width: 100%;
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+}
+
+/* RESPONSIVE */
+@media (min-width: 1200px) {
+  #product-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --card-min-width: 100%;
+  }
+
+  #product-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  #product-cards {
+    gap: 26px 18px;
+  }
 }
   
 </style>
