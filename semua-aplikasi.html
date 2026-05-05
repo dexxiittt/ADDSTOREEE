@@ -563,6 +563,15 @@ color:white;
 </svg>");
 }
 
+/* MIXED GARANSI (CIRCLE HALF ICON) */
+.note.mixed-guarantee::before {
+  background-image: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f59e0b' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'>\
+<circle cx='12' cy='12' r='9'/>\
+<path d='M12 3v18'/>\
+</svg>");
+}
+
 .note.has-guarantee::before {
   filter: drop-shadow(0 0 4px rgba(22,163,74,0.5));
 }
@@ -1230,7 +1239,7 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
   }
 
   if (g.includes("mixed")) {
-    return `<div class="note has-guarantee">Mixed Garansi</div>`;
+    return `<div class="note mixed-guarantee">Mixed Garansi</div>`;
   }
 
   if (g.includes("tidak") || g.includes("no")) {
