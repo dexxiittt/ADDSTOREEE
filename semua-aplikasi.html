@@ -1220,23 +1220,21 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
 
       ${(() => {
 
-  const statuses = prod.items.map(i =>
-    String(i.no_gar).toLowerCase()
-  );
+  // ambil guarantee dari salah satu item yang ada isinya
+  const g = prod.items.find(i => i.guarantee)?.guarantee?.toLowerCase();
 
-  const hasYes = statuses.includes("yes");
-  const hasNo = statuses.includes("no");
+  if (!g) return "";
 
-  if (hasYes && hasNo) {
+  if (g.includes("full")) {
+    return `<div class="note has-guarantee">Full Garansi</div>`;
+  }
+
+  if (g.includes("mixed")) {
     return `<div class="note has-guarantee">Mixed Garansi</div>`;
   }
 
-  if (hasYes) {
+  if (g.includes("tidak") || g.includes("no")) {
     return `<div class="note no-guarantee">Tidak Bergaransi</div>`;
-  }
-
-  if (hasNo) {
-    return `<div class="note has-guarantee">Full Garansi</div>`;
   }
 
   return "";
