@@ -530,8 +530,45 @@ color:white;
   animation: guarantee-pulse 3.8s ease-in-out infinite;
 }
 
+.glass-card .note {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* BASE ICON */
 .glass-card .note::before {
-  content: "✔ ";
+  content: "";
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+/* GARANSI (CHECK ICON SVG) */
+.note.has-guarantee::before {
+  background-image: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2316a34a' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'>\
+<path d='M20 6L9 17l-5-5'/>\
+</svg>");
+}
+
+/* TIDAK GARANSI (X ICON SVG) */
+.note.no-guarantee::before {
+  background-image: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23dc2626' stroke-width='3' stroke-linecap='round'>\
+<line x1='6' y1='6' x2='18' y2='18'/>\
+<line x1='18' y1='6' x2='6' y2='18'/>\
+</svg>");
+}
+
+.note.has-guarantee::before {
+  filter: drop-shadow(0 0 4px rgba(22,163,74,0.5));
+}
+
+.note.no-guarantee::before {
+  filter: drop-shadow(0 0 4px rgba(220,38,38,0.4));
 }
 
 /* ADA GARANSI */
@@ -1177,18 +1214,27 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
 })()}
 
       ${(() => {
-        // cek apakah ada yang NO GARANSI
-        const hasNoGar = prod.items.some(i => String(i.no_gar).toLowerCase() === "yes");
 
-        if (hasNoGar) {
-          return `<div class="note no-guarantee">Tidak Bergaransi</div>`;
-        } else {
-          return `<div class="note has-guarantee">Full Garansi</div>`;
-        }
-      })()}
+  // ambil value pertama (karena 1 produk biasanya konsisten)
+  const status = String(prod.items[0]?.no_gar).toLowerCase();
 
-      </div>
-    `;
+  if (status === "yes") {
+    return `<div class="note no-guarantee">Tidak Bergaransi</div>`;
+  }
+
+  if (status === "no") {
+    return `<div class="note has-guarantee">Full Garansi</div>`;
+  }
+
+  if (status === "half") {
+    return `<div class="note has-guarantee">Mixed Garansi</div>`;
+  }
+
+  return ""; // kalau kosong
+})()}
+
+</div>
+`;
   });
 wrap.innerHTML = html;
 
