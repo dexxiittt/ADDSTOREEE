@@ -1220,22 +1220,27 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
 
       ${(() => {
 
-  // ambil value pertama (karena 1 produk biasanya konsisten)
-  const status = String(prod.items[0]?.no_gar).toLowerCase();
+  const statuses = prod.items.map(i =>
+    String(i.no_gar).toLowerCase()
+  );
 
-  if (status === "yes") {
-    return `<div class="note no-guarantee">Tidak Bergaransi</div>`;
-  }
+  const hasYes = statuses.includes("yes");
+  const hasNo = statuses.includes("no");
 
-  if (status === "no") {
-    return `<div class="note has-guarantee">Full Garansi</div>`;
-  }
-
-  if (status === "half") {
+  if (hasYes && hasNo) {
     return `<div class="note has-guarantee">Mixed Garansi</div>`;
   }
 
-  return ""; // kalau kosong
+  if (hasYes) {
+    return `<div class="note no-guarantee">Tidak Bergaransi</div>`;
+  }
+
+  if (hasNo) {
+    return `<div class="note has-guarantee">Full Garansi</div>`;
+  }
+
+  return "";
+
 })()}
 
 </div>
