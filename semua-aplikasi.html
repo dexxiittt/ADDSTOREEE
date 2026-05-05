@@ -633,18 +633,25 @@ color:white;
   border: 1px solid rgba(22,163,74,0.35);
 }
 
-.gar-time {
-  margin-left: 6px;
-  padding: 2px 6px;
-  font-size: 9.5px;
+/* WRAPPER BIAR RAPI */
+.badge-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* BADGE TIME (DURASI) */
+.badge-time {
+  padding: 2px 8px;
+  font-size: 9px;
   opacity: 0.85;
   font-weight: 700;
   border-radius: 999px;
 
-  background: rgba(22,163,74,0.15);
+  background: rgba(22,163,74,0.12);
   color: #16a34a;
 
-  border: 1px solid rgba(22,163,74,0.25);
+  border: 1px solid rgba(22,163,74,0.3);
 }
 
 /* NOTE PULSE HALUS */
@@ -1022,15 +1029,16 @@ function garBadge(i) {
     return `<em class="badge-nogar">NoGar</em>`;
   }
 
-  // Ada garansi + durasi
+  // Ada garansi
   if (noGar === "no") {
 
+    // kalau ada durasi → pisah badge
     if (until) {
       return `
-        <em class="badge-gar">
-          Bergaransi
-          <span class="gar-time">${until}</span>
-        </em>
+        <span class="badge-wrap">
+          <em class="badge-gar">Bergaransi</em>
+          <em class="badge-time">${until}</em>
+        </span>
       `;
     }
 
@@ -1039,7 +1047,6 @@ function garBadge(i) {
 
   return "";
 }
-
 function isNoGar(i) {
   return String(i.no_gar).toLowerCase() === "yes";
 }
