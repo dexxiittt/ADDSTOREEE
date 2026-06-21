@@ -2128,20 +2128,7 @@ document.querySelectorAll(".fade-sync")
 
 <link rel="stylesheet" href="components/footer.css">
 <script src="components/footer.js"></script>
-
-<script>
-fetch("components/section-trust.html")
-  .then(res => res.text())
-  .then(data => {
-    document.getElementById("trust-section").innerHTML = data;
-
-    // Re-observe fade effect
-    const trust = document.querySelector("#trust-section .fade-on-scroll");
-
-    if (trust) {
-      fadeObserver.observe(trust);
-    }
-  });
-</script>
+<script src="components/section-trust.js"></script>
+  
 </body>
 </html>
