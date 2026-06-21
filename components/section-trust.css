@@ -131,3 +131,41 @@
 
   margin: 0;
 }
+
+@media (max-width: 480px) {
+
+  .trust-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+@media (max-width: 420px) {
+
+  .trust-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .trust-card {
+    padding: 26px 22px;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .trust-title {
+    font-size: 28px;
+  }
+
+  .trust-desc {
+    font-size: 14px;
+  }
+
+  .trust-card p {
+    font-size: 13.8px;
+    line-height: 1.65;
+  }
+
+}
