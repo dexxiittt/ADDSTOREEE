@@ -11,6 +11,10 @@ fetch("components/category-tabs.html")
 
     container.innerHTML = data;
 
+    document.dispatchEvent(
+  new Event("categoryTabsReady")
+);
+
     // Fade observer
     container
       .querySelectorAll(".fade-sync")
