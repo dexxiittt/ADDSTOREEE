@@ -100,13 +100,8 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
 
   const wrap = document.getElementById("product-cards");
 
-console.log("PRODUCT WRAP:", wrap);
-
-if (!wrap) {
-  console.log("PRODUCT-CARDS TIDAK DITEMUKAN");
-  return;
-}
-
+if (!wrap) return;
+  
   let html = ""; // TAMBAH INI
 
   const products = Object.values(grouped);
