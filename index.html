@@ -509,27 +509,7 @@ body {
        
 
 
-/* ================= MIDDLE SMALL MOBILE ================= */
-@media (max-width: 480px) {
 
-  #product-cards {
-    gap: 26px 18px;
-  }
-
-  .glass-card {
-    padding: 18px;
-  }
-
-  .product-image img {
-    height: 120px;
-  }
-
-  .discount-badge {
-    font-size: 9px;
-    padding: 1px 5px;
-  }
-
-}
     
     
 /* ================= MOBILE GLOBAL ================= */
@@ -607,14 +587,12 @@ body {
 
   .floating-icon,
   .app-icon,
-  .glass-card,
   .trust-card {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
   }
 
-  .trust-card,
-  .glass-card {
+  .trust-card {
     animation: none !important;
   }
 
@@ -626,7 +604,7 @@ body {
   backface-visibility: hidden;
 }
 
-.glass-card,
+
 .trust-card {
   will-change: transform;
 }
@@ -634,10 +612,6 @@ body {
 /* ================= REDUCED MOTION ================= */
 
 @media (prefers-reduced-motion: reduce) {
-
-  .package-detail {
-    transition: none !important;
-  }
 
   .premium-stats .stat-item {
     animation: none;
@@ -656,17 +630,11 @@ body.is-scrolling
 body.is-scrolling 
 .premium-trust,
 body.is-scrolling 
-.package-row::before,
-body.is-scrolling 
-.package-row::after,
-body.is-scrolling 
 .floating-icon {
   animation-play-state: paused !important;
 }
 
 /* Matikan efek berat saat scroll */
-body.is-scrolling 
-.glass-card,
 body.is-scrolling 
 .trust-card,
 body.is-scrolling 
