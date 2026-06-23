@@ -931,7 +931,8 @@ body.is-scrolling * {
 /* FIX GRID MOBILE */
 @media (max-width: 768px) {
   #product-cards {
-    max-width: 680px;
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 100%;
   }
 }
 
