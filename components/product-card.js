@@ -103,7 +103,9 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
 
   let html = ""; // TAMBAH INI
 
-  Object.values(grouped).forEach(prod => {
+  Object.values(grouped)
+  .slice(0, 4)
+  .forEach(prod => {
 
     const items = prod.items;
 
