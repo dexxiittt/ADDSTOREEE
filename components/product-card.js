@@ -342,12 +342,7 @@ document.addEventListener("click", function(e) {
 });
 
   
-<!-- scroll smooth -->
-<script>
 document.documentElement.style.scrollBehavior = "smooth";
-
-
-<!-- performance scroll -->
 
 let scrollTimeout;
 
@@ -355,6 +350,7 @@ window.addEventListener("scroll", () => {
   document.body.classList.add("is-scrolling");
 
   clearTimeout(scrollTimeout);
+
   scrollTimeout = setTimeout(() => {
     document.body.classList.remove("is-scrolling");
   }, 120);
