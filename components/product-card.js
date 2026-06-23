@@ -1,5 +1,3 @@
-<script>
-
 /* ===== HELPER FUNCTIONS ===== */
 
 function garBadge(i) {
@@ -305,9 +303,9 @@ const observer = new IntersectionObserver((entries) => {
     console.error("Sheet error:", err);
   });
 
-</script>
 
-<script>
+
+
 document.addEventListener("click", function(e) {
 
   const btn = e.target.closest(".toggle-detail");
@@ -342,15 +340,15 @@ document.addEventListener("click", function(e) {
   }
 
 });
-</script>
+
   
 <!-- scroll smooth -->
 <script>
 document.documentElement.style.scrollBehavior = "smooth";
-</script>
+
 
 <!-- performance scroll -->
-<script>
+
 let scrollTimeout;
 
 window.addEventListener("scroll", () => {
@@ -361,4 +359,3 @@ window.addEventListener("scroll", () => {
     document.body.classList.remove("is-scrolling");
   }, 120);
 });
-</script>
