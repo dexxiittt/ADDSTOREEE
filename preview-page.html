@@ -67,13 +67,23 @@ height:130px;
 margin:0 auto 45px;
 
 border-radius:50%;
-border:5px solid #25c2ff;
-
 background:rgba(255,255,255,.45);
 
 box-shadow:
 0 10px 25px rgba(0,0,0,.05),
 inset 0 1px 0 rgba(255,255,255,.9);
+}
+
+.logo img{
+width:100%;
+height:100%;
+
+object-fit:contain;
+padding:12px; /* Bisa diubah 8px–18px sesuai ukuran logo */
+
+display:block;
+user-select:none;
+pointer-events:none;
 
 }
 
@@ -377,7 +387,9 @@ animation-delay:.47s;
 <body>
 
 <div class="container">
-<div class="logo"></div>
+<div class="logo">
+<img src="https://raw.githubusercontent.com/dexxiittt/Image/main/logo.png" alt="ADDSTOREEE Logo">
+</div>
 <div class="menu">
 
 <!-- HOME -->
