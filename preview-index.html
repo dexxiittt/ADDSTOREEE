@@ -21,7 +21,12 @@ scroll-behavior:smooth;
 
 body{
 font-family:Poppins,sans-serif;
-background:linear-gradient(180deg,#6d58b8,#8a68cf);
+background:
+linear-gradient(
+135deg,
+#493d84 0%,
+#8662b2 90%
+);
 color:#fff;
 overflow-x:hidden;
 min-height:100vh;
@@ -49,7 +54,6 @@ text-align:center;
 /* TITLE */
 
 .hero-title{
-
 font-size:clamp(38px,6vw,62px);
 font-weight:800;
 line-height:1.2;
@@ -58,7 +62,6 @@ text-shadow:
 0 10px 25px rgba(0,0,0,.25);
 
 margin-bottom:28px;
-
 }
 
 .hero-title span{
@@ -73,73 +76,78 @@ display:inline-flex;
 align-items:center;
 gap:10px;
 
-background:rgba(255,255,255,.12);
-
 padding:12px 22px;
 
-border-radius:50px;
+border-radius:999px;
+background:rgba(255,255,255,.12);
+border:1px solid rgba(255,255,255,.18);
 
-backdrop-filter:blur(10px);
+backdrop-filter:blur(12px);
+margin-bottom:28px;
 
-margin-bottom:26px;
-
-font-weight:700;
 font-size:22px;
+font-weight:700;
 
+box-shadow:
+0 0 18px rgba(255,255,255,.10),
+0 8px 25px rgba(0,0,0,.18);
+
+animation:trustGlow 3s ease-in-out infinite;
+transition:.35s;
 }
 
 .trust .dot{
-
 width:18px;
 height:18px;
 
 background:#39d86a;
-
 border-radius:50%;
-
 }
 
 /* DESC */
 
 .desc{
-
 font-size:18px;
 line-height:1.8;
 
 color:rgba(255,255,255,.92);
-
 max-width:560px;
-
 margin:auto auto 45px;
-
 }
 
 /* STATS */
 
 .stats{
-
 display:flex;
-
 justify-content:center;
 
 gap:40px;
-
 flex-wrap:wrap;
-
 }
 
 .stat h2{
-
 font-size:42px;
 font-weight:800;
-
 }
 
 .stat p{
-
 opacity:.8;
 margin-top:6px;
+}
 
+@keyframes trustGlow{
+
+0%,100%{
+box-shadow:
+0 0 18px rgba(255,255,255,.10),
+0 8px 25px rgba(0,0,0,.18);
+}
+
+50%{
+box-shadow:
+0 0 30px rgba(255,255,255,.18),
+0 10px 35px rgba(255,255,255,.12);
+}
 }
 
 </style>
