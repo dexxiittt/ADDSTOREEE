@@ -56,77 +56,81 @@ max-width:650px;
 text-align:center;
 }
 
-.float-icon{
+.floating-icons{
+position:absolute;
+inset:0;
+pointer-events:none;
+}
+
+.floating-icon{
 position:absolute;
 
-width:54px;
-height:54px;
+width:56px;
+height:56px;
 
 display:flex;
-align-items:center;
 justify-content:center;
+align-items:center;
 
 border-radius:18px;
-background:rgba(255,255,255,.10);
-border:1px solid rgba(255,255,255,.18);
-backdrop-filter:blur(12px);
+
+background:linear-gradient(
+180deg,
+rgba(255,255,255,.18),
+rgba(255,255,255,.08)
+);
+
+border:1px solid rgba(255,255,255,.22);
 
 box-shadow:
-0 8px 25px rgba(0,0,0,.20),
-0 0 20px rgba(255,255,255,.08);
+0 12px 28px rgba(0,0,0,.22),
+inset 0 1px 0 rgba(255,255,255,.25);
+
+backdrop-filter:blur(12px);
 
 animation:float 4s ease-in-out infinite;
-
 }
 
-.float-icon svg{
-width:26px;
-height:26px;
-
-stroke:white;
-stroke-width:2;
-
-fill:none;
+.floating-icon i{
+font-size:22px;
+color:#fff;
 }
 
-/* posisi */
+/* Posisi */
 
-.icon-shield{
-top:28%;
+.left{
+top:30%;
 left:18%;
-
 animation-delay:0s;
 }
 
-.icon-diamond{
+.center{
 top:22%;
 right:18%;
-
 animation-delay:.8s;
 }
 
-.icon-bolt{
+.right{
 bottom:28%;
 right:18%;
-
 animation-delay:1.6s;
 }
 
-/* glow warna */
+/* Glow */
 
-.icon-shield{
+.icon-green{
 box-shadow:
-0 0 20px rgba(0,220,255,.35);
+0 0 18px rgba(80,255,120,.35);
 }
 
-.icon-diamond{
+.icon-blue{
 box-shadow:
-0 0 20px rgba(0,255,120,.30);
+0 0 18px rgba(0,210,255,.35);
 }
 
-.icon-bolt{
+.icon-gold{
 box-shadow:
-0 0 20px rgba(70,110,255,.35);
+0 0 18px rgba(80,120,255,.35);
 }
 
 /* TITLE */
@@ -229,15 +233,15 @@ box-shadow:
 }
 
 @keyframes float{
+
 0%,100%{
-transform:
-translateY(0px);
+transform:translateY(0) rotate(-3deg);
 }
 
 50%{
-transform:
-translateY(-10px);
+transform:translateY(-10px) rotate(3deg);
 }
+
 }
   
 </style>
