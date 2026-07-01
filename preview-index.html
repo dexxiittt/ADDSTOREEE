@@ -200,12 +200,14 @@ animation:trustGlow 3s ease-in-out infinite;
 transition:.35s;
 }
 
-.trust .dot{
-width:18px;
-height:18px;
+.trust i{
+font-size:24px;
+color:#4ade80;
 
-background:#39d86a;
-border-radius:50%;
+text-shadow:
+0 0 8px rgba(74,222,128,.45);
+
+animation:checkPulse 2.8s ease-in-out infinite;
 }
 
 /* DESC */
@@ -305,6 +307,21 @@ opacity:1;
 transform:translateY(0);
 }
 }
+
+@keyframes checkPulse{
+
+0%,100%{
+transform:scale(1);
+text-shadow:
+0 0 8px rgba(74,222,128,.35);
+}
+
+50%{
+transform:scale(1.08);
+text-shadow:
+0 0 14px rgba(74,222,128,.65);
+}
+}
   
 </style>
 
@@ -337,8 +354,7 @@ transform:translateY(0);
 </h1>
 
 <div class="trust">
-
-<div class="dot"></div>
+<i class="fa-solid fa-circle-check"></i>
 <span>Aman & Terpercaya</span>
 </div>
 
