@@ -70,44 +70,50 @@ gap:18px;
 .card{
 
 display:flex;
-align-items:center;
 justify-content:space-between;
+align-items:center;
 
-height:82px;
+height:84px;
 
 padding:0 22px;
 
-border-radius:20px;
+border-radius:22px;
 
-background:rgba(255,255,255,.45);
+background:rgba(255,255,255,.52);
 
-backdrop-filter:blur(12px);
--webkit-backdrop-filter:blur(12px);
+backdrop-filter:blur(8px);
+-webkit-backdrop-filter:blur(8px);
 
 box-shadow:
 
-0 8px 20px rgba(0,0,0,.05),
+0 6px 20px rgba(32,38,58,.06),
 
 inset 0 1px 0 rgba(255,255,255,.9);
 
-transition:.28s;
+transition:
+transform .25s ease,
+box-shadow .25s ease,
+background .25s ease;
 
 text-decoration:none;
 
-color:#222;
+overflow:hidden;
+position:relative;
+will-change:transform;
 
 }
 
 .card:hover{
-
-transform:translateY(-3px);
-
-background:rgba(255,255,255,.65);
+transform:translateY(-4px);
+background:rgba(255,255,255,.68);
 
 }
 
-.left{
+.card:active{
+transform:scale(.985);
+}
 
+.left{
 display:flex;
 align-items:center;
 gap:16px;
@@ -115,18 +121,33 @@ gap:16px;
 }
 
 .icon{
-width:46px;
-height:46px;
+width:48px;
+height:48px;
 
-border-radius:15px;
+border-radius:50%;
 
 display:flex;
 justify-content:center;
 align-items:center;
 
-background:rgba(255,255,255,.55);
+background:linear-gradient(
+145deg,
+rgba(255,255,255,.92),
+rgba(255,255,255,.45)
+);
+
+backdrop-filter:blur(12px);
+-webkit-backdrop-filter:blur(12px);
 box-shadow:
+
+inset 0 1px 0 rgba(255,255,255,.95),
 0 5px 12px rgba(0,0,0,.05);
+transition:.28s;
+
+}
+
+.card:hover .icon{
+transform:scale(1.08);
 
 }
 
@@ -153,6 +174,7 @@ width:22px;
 height:22px;
 
 fill:none;
+stroke:currentColor;
 stroke-width:2.4;
 stroke-linecap:round;
 stroke-linejoin:round;
@@ -165,7 +187,7 @@ transition:.3s;
 .card:hover .arrow{
 transform:translateX(6px);
 opacity:1;
-
+filter:drop-shadow(0 0 6px currentColor);
 }
 
 /* Warna */
@@ -175,82 +197,141 @@ border:2px solid #2D7DFF;
 color:#2D7DFF;
 
 }
-
 .blue .title{
 color:#222;
+}
+
+.blue:hover{
+box-shadow:
+0 0 18px rgba(45,125,255,.18),
+0 10px 25px rgba(32,38,58,.08);
 
 }
 
 .yellow{
 border:2px solid #FFC300;
 color:#FFC300;
-
 }
 
 .yellow .title{
 color:#222;
+}
 
+.yellow:hover{
+box-shadow:0 0 18px rgba(255,195,0,.18);
 }
 
 .green{
 border:2px solid #49C41C;
 color:#49C41C;
-
 }
 
 .green .title{
 color:#222;
+}
 
+.green:hover{
+box-shadow:0 0 18px rgba(73,196,28,.18);
 }
 
 .cyan{
 border:2px solid #7ED8D2;
 color:#34bfb6;
-
 }
 
 .cyan .title{
 color:#222;
-
 }
 
+.cyan:hover{
+box-shadow:0 0 18px rgba(126,216,210,.22);
+}
+  
 .red{
 border:2px solid #F04C4C;
 color:#F04C4C;
-
 }
 
 .red .title{
 color:#222;
+}
+
+.red:hover{
+box-shadow:0 0 18px rgba(240,76,76,.18);
+}
+
+.blue .icon{
+
+background:
+linear-gradient(
+135deg,
+rgba(45,125,255,.16),
+rgba(45,125,255,.05)
+);
+
+}
+
+.yellow .icon{
+
+background:
+linear-gradient(
+135deg,
+rgba(255,195,0,.18),
+rgba(255,195,0,.05)
+);
+
+}
+
+.green .icon{
+
+background:
+linear-gradient(
+135deg,
+rgba(73,196,28,.16),
+rgba(73,196,28,.05)
+);
+
+}
+
+.cyan .icon{
+
+background:
+linear-gradient(
+135deg,
+rgba(126,216,210,.18),
+rgba(126,216,210,.05)
+);
+
+}
+
+.red .icon{
+
+background:
+linear-gradient(
+135deg,
+rgba(240,76,76,.16),
+rgba(240,76,76,.05)
+);
 
 }
 
 </style>
-
 </head>
-
 <body>
 
 <div class="container">
-
 <div class="logo"></div>
-
 <div class="menu">
 
 <!-- HOME -->
 
 <a href="index.html" class="card blue">
-
 <div class="left">
-
 <div class="icon">
-
+  
 <svg viewBox="0 0 24 24">
-
 <path d="M3 11L12 4L21 11"/>
-
 <path d="M5 10V20H10V15H14V20H19V10"/>
-
 </svg>
 
 </div>
@@ -258,29 +339,20 @@ color:#222;
 <span class="title">Home</span>
 
 </div>
-
 <svg class="arrow" viewBox="0 0 24 24">
-
 <path d="M9 6L15 12L9 18"/>
-
 </svg>
-
 </a>
 
 <!-- TESTIMONI -->
 
 <a href="#" class="card yellow">
-
 <div class="left">
-
 <div class="icon">
 
 <svg viewBox="0 0 24 24">
-
 <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/>
-
 <path d="M12 8l1 2h2l-1.5 1.3.6 2-1.6-1-1.6 1 .6-2L9 10h2z"/>
-
 </svg>
 
 </div>
@@ -288,33 +360,22 @@ color:#222;
 <span class="title">Testimoni</span>
 
 </div>
-
 <svg class="arrow" viewBox="0 0 24 24">
-
 <path d="M9 6L15 12L9 18"/>
-
 </svg>
-
 </a>
 
 <!-- INVOICE -->
 
 <a href="#" class="card green">
-
 <div class="left">
-
 <div class="icon">
 
 <svg viewBox="0 0 24 24">
-
 <path d="M7 3H17V21L14 19L12 21L10 19L7 21Z"/>
-
 <path d="M10 8H15"/>
-
 <path d="M10 12H15"/>
-
 <path d="M10 16H13"/>
-
 </svg>
 
 </div>
