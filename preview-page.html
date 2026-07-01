@@ -1,17 +1,166 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Preview Page</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#f3f4f8;
+min-height:100vh;
+
+display:flex;
+justify-content:center;
+padding:35px 18px;
+
+}
+
+.container{
+width:100%;
+max-width:460px;
+
+}
+
+
+/* Logo */
+
+
+.logo{
+
+width:130px;
+height:130px;
+margin:0 auto 45px;
   
+border-radius:50%;
+border:5px solid #25c2ff;
+  
+background:rgba(255,255,255,.45);
+backdrop-filter:blur(12px);
+-webkit-backdrop-filter:blur(12px);
+
+box-shadow:
+0 10px 25px rgba(0,0,0,.06),
+inset 0 1px 0 rgba(255,255,255,.9);
+
+}
+
+/* Menu */
+
+.menu{
+display:flex;
+flex-direction:column;
+gap:18px;
+
+}
+
+.card{
+height:78px;
+display:flex;
+align-items:center;
+
+padding:0 24px;
+border-radius:20px;
+background:rgba(255,255,255,.42);
+
+backdrop-filter:blur(10px);
+-webkit-backdrop-filter:blur(10px);
+box-shadow:
+0 10px 20px rgba(0,0,0,.05),
+
+inset 0 1px 0 rgba(255,255,255,.8);
+transition:.28s;
+cursor:pointer;
+
+text-decoration:none;
+color:#222;
+
+font-weight:600;
+font-size:18px;
+
+}
+
+.card:hover{
+transform:translateY(-3px);
+background:rgba(255,255,255,.58);
+
+}
+
+.blue{
+
+border:2px solid #2D7DFF;
+
+}
+
+.yellow{
+
+border:2px solid #FFC300;
+
+}
+
+.green{
+
+border:2px solid #49C41C;
+
+}
+
+.cyan{
+
+border:2px solid #7ED8D2;
+
+}
+
+.red{
+
+border:2px solid #F04C4C;
+
+}
+
 </style>
-  
 </head>
 <body>
 
+<div class="container">
+<div class="logo"></div>
+<div class="menu">
 
-<script>
-  
-</script>
+<a href="index.html" class="card blue">
+Home
+</a>
+
+<a href="#" class="card yellow">
+Testimoni
+</a>
+
+<a href="#" class="card green">
+Invoice
+</a>
+
+<a href="#" class="card cyan">
+Semua Transaksi
+</a>
+
+<a href="#" class="card red">
+Cek Status Pembayaran
+</a>
+
+</div>
+
+</div>
+
 </body>
 </html>
