@@ -1,19 +1,211 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
+
 <head>
-<title>Page Title</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Preview</title>
+
 <style>
-  
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:Poppins,sans-serif;
+background:linear-gradient(180deg,#6d58b8,#8a68cf);
+color:#fff;
+overflow-x:hidden;
+min-height:100vh;
+}
+
+/* SECTION */
+
+.hero{
+width:100%;
+min-height:100vh;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+padding:40px 24px;
+}
+
+.container{
+width:100%;
+max-width:650px;
+text-align:center;
+}
+
+/* TITLE */
+
+.hero-title{
+
+font-size:clamp(38px,6vw,62px);
+font-weight:800;
+line-height:1.2;
+
+text-shadow:
+0 10px 25px rgba(0,0,0,.25);
+
+margin-bottom:28px;
+
+}
+
+.hero-title span{
+display:block;
+}
+
+/* TRUST */
+
+.trust{
+
+display:inline-flex;
+align-items:center;
+gap:10px;
+
+background:rgba(255,255,255,.12);
+
+padding:12px 22px;
+
+border-radius:50px;
+
+backdrop-filter:blur(10px);
+
+margin-bottom:26px;
+
+font-weight:700;
+font-size:22px;
+
+}
+
+.trust .dot{
+
+width:18px;
+height:18px;
+
+background:#39d86a;
+
+border-radius:50%;
+
+}
+
+/* DESC */
+
+.desc{
+
+font-size:18px;
+line-height:1.8;
+
+color:rgba(255,255,255,.92);
+
+max-width:560px;
+
+margin:auto auto 45px;
+
+}
+
+/* STATS */
+
+.stats{
+
+display:flex;
+
+justify-content:center;
+
+gap:40px;
+
+flex-wrap:wrap;
+
+}
+
+.stat h2{
+
+font-size:42px;
+font-weight:800;
+
+}
+
+.stat p{
+
+opacity:.8;
+margin-top:6px;
+
+}
+
 </style>
+
 </head>
+
 <body>
 
+<section class="hero">
+
+<div class="container">
+
+<h1 class="hero-title">
+
+<span>Aplikasi Premium</span>
+
+<span>Kebutuhan Medsos</span>
+
+<span>Topup Game</span>
+
+</h1>
+
+<div class="trust">
+
+<div class="dot"></div>
+
+<span>Aman & Terpercaya</span>
+
+</div>
+
+<p class="desc">
+
+Dapatkan akses premium ke aplikasi favoritmu,
+kebutuhan media sosial,
+dan top up game dengan harga terjangkau,
+layanan aman,
+dan support 24/7.
+
+</p>
+
+<div class="stats">
+
+<div class="stat">
+<h2>1000+</h2>
+<p>Pelanggan</p>
+</div>
+
+<div class="stat">
+<h2>50+</h2>
+<p>Kategori</p>
+</div>
+
+<div class="stat">
+<h2>24/7</h2>
+<p>Support</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
 
 <script>
-  
+
 </script>
+
 </body>
 </html>
-
-
-
