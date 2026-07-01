@@ -51,8 +51,10 @@ padding:40px 24px;
 }
 
 .container{
+position:relative;
 width:100%;
 max-width:650px;
+margin:auto;
 text-align:center;
 }
 
@@ -98,21 +100,30 @@ color:#fff;
 
 /* Posisi */
 
-.left{
-top:30%;
-left:18%;
+.floating-icons{
+position:absolute;
+inset:0;
+pointer-events:none;
+}
+
+.shield{
+left:clamp(-60px,-8vw,-90px);
+top:50px;
+
 animation-delay:0s;
 }
 
-.center{
-top:22%;
-right:18%;
+.diamond{
+right:clamp(-60px,-8vw,-90px);
+top:-10px;
+
 animation-delay:.8s;
 }
 
-.right{
-bottom:28%;
-right:18%;
+.bolt{
+right:clamp(-60px,-8vw,-90px);
+bottom:40px;
+
 animation-delay:1.6s;
 }
 
@@ -251,6 +262,8 @@ transform:translateY(-10px) rotate(3deg);
 <body>
 
 <section class="hero">
+  
+<div class="container">
 
 <div class="floating-icons">
 
@@ -267,8 +280,6 @@ transform:translateY(-10px) rotate(3deg);
   </div>
 
 </div>
-  
-<div class="container">
 
 <h1 class="hero-title">
 <span>Aplikasi Premium</span>
