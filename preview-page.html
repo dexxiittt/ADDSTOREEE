@@ -26,6 +26,7 @@ min-height:100vh;
 
 display:flex;
 justify-content:center;
+
 padding:35px 18px;
 
 }
@@ -36,32 +37,32 @@ max-width:460px;
 
 }
 
-
 /* Logo */
 
-
 .logo{
-
 width:130px;
 height:130px;
 margin:0 auto 45px;
-  
+
 border-radius:50%;
 border:5px solid #25c2ff;
-  
+
 background:rgba(255,255,255,.45);
-backdrop-filter:blur(12px);
--webkit-backdrop-filter:blur(12px);
+backdrop-filter:blur(14px);
+-webkit-backdrop-filter:blur(14px);
 
 box-shadow:
-0 10px 25px rgba(0,0,0,.06),
+0 10px 25px rgba(0,0,0,.05),
 inset 0 1px 0 rgba(255,255,255,.9);
 
 }
 
+/* ========================= */
 /* Menu */
+/* ========================= */
 
 .menu{
+
 display:flex;
 flex-direction:column;
 gap:18px;
@@ -69,40 +70,136 @@ gap:18px;
 }
 
 .card{
-height:78px;
+
 display:flex;
 align-items:center;
+justify-content:space-between;
 
-padding:0 24px;
+height:82px;
+
+padding:0 22px;
+
 border-radius:20px;
-background:rgba(255,255,255,.42);
 
-backdrop-filter:blur(10px);
--webkit-backdrop-filter:blur(10px);
+background:rgba(255,255,255,.45);
+
+backdrop-filter:blur(12px);
+-webkit-backdrop-filter:blur(12px);
+
 box-shadow:
-0 10px 20px rgba(0,0,0,.05),
 
-inset 0 1px 0 rgba(255,255,255,.8);
+0 8px 20px rgba(0,0,0,.05),
+
+inset 0 1px 0 rgba(255,255,255,.9);
+
 transition:.28s;
-cursor:pointer;
 
 text-decoration:none;
-color:#222;
 
-font-weight:600;
-font-size:18px;
+color:#222;
 
 }
 
 .card:hover{
+
 transform:translateY(-3px);
-background:rgba(255,255,255,.58);
+
+background:rgba(255,255,255,.65);
 
 }
+
+.left{
+
+display:flex;
+align-items:center;
+gap:16px;
+
+}
+
+.icon{
+
+width:46px;
+height:46px;
+
+border-radius:15px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+background:rgba(255,255,255,.55);
+
+box-shadow:
+
+0 5px 12px rgba(0,0,0,.05);
+
+}
+
+.icon svg{
+
+width:22px;
+height:22px;
+
+fill:none;
+
+stroke-width:2;
+
+stroke-linecap:round;
+
+stroke-linejoin:round;
+
+}
+
+.title{
+
+font-size:17px;
+
+font-weight:600;
+
+}
+
+.arrow{
+
+width:22px;
+height:22px;
+
+fill:none;
+
+stroke-width:2.4;
+
+stroke-linecap:round;
+
+stroke-linejoin:round;
+
+opacity:.55;
+
+transition:.3s;
+
+}
+
+.card:hover .arrow{
+
+transform:translateX(6px);
+
+opacity:1;
+
+}
+
+/* ========================= */
+/* Warna */
+/* ========================= */
 
 .blue{
 
 border:2px solid #2D7DFF;
+
+color:#2D7DFF;
+
+}
+
+.blue .title{
+
+color:#222;
 
 }
 
@@ -110,11 +207,27 @@ border:2px solid #2D7DFF;
 
 border:2px solid #FFC300;
 
+color:#FFC300;
+
+}
+
+.yellow .title{
+
+color:#222;
+
 }
 
 .green{
 
 border:2px solid #49C41C;
+
+color:#49C41C;
+
+}
+
+.green .title{
+
+color:#222;
 
 }
 
@@ -122,40 +235,200 @@ border:2px solid #49C41C;
 
 border:2px solid #7ED8D2;
 
+color:#34bfb6;
+
+}
+
+.cyan .title{
+
+color:#222;
+
 }
 
 .red{
 
 border:2px solid #F04C4C;
 
+color:#F04C4C;
+
+}
+
+.red .title{
+
+color:#222;
+
 }
 
 </style>
+
 </head>
+
 <body>
 
 <div class="container">
+
 <div class="logo"></div>
+
 <div class="menu">
 
+<!-- HOME -->
+
 <a href="index.html" class="card blue">
-Home
+
+<div class="left">
+
+<div class="icon">
+
+<svg viewBox="0 0 24 24">
+
+<path d="M3 11L12 4L21 11"/>
+
+<path d="M5 10V20H10V15H14V20H19V10"/>
+
+</svg>
+
+</div>
+
+<span class="title">Home</span>
+
+</div>
+
+<svg class="arrow" viewBox="0 0 24 24">
+
+<path d="M9 6L15 12L9 18"/>
+
+</svg>
+
 </a>
+
+<!-- TESTIMONI -->
 
 <a href="#" class="card yellow">
-Testimoni
+
+<div class="left">
+
+<div class="icon">
+
+<svg viewBox="0 0 24 24">
+
+<path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/>
+
+<path d="M12 8l1 2h2l-1.5 1.3.6 2-1.6-1-1.6 1 .6-2L9 10h2z"/>
+
+</svg>
+
+</div>
+
+<span class="title">Testimoni</span>
+
+</div>
+
+<svg class="arrow" viewBox="0 0 24 24">
+
+<path d="M9 6L15 12L9 18"/>
+
+</svg>
+
 </a>
+
+<!-- INVOICE -->
 
 <a href="#" class="card green">
-Invoice
+
+<div class="left">
+
+<div class="icon">
+
+<svg viewBox="0 0 24 24">
+
+<path d="M7 3H17V21L14 19L12 21L10 19L7 21Z"/>
+
+<path d="M10 8H15"/>
+
+<path d="M10 12H15"/>
+
+<path d="M10 16H13"/>
+
+</svg>
+
+</div>
+
+<span class="title">Invoice</span>
+
+</div>
+
+<svg class="arrow" viewBox="0 0 24 24">
+
+<path d="M9 6L15 12L9 18"/>
+
+</svg>
+
 </a>
+
+<!-- TRANSAKSI -->
 
 <a href="#" class="card cyan">
-Semua Transaksi
+
+<div class="left">
+
+<div class="icon">
+
+<svg viewBox="0 0 24 24">
+
+<path d="M20 7V3L16 7"/>
+
+<path d="M4 17V21L8 17"/>
+
+<path d="M20 7A8 8 0 0 0 6 5"/>
+
+<path d="M4 17A8 8 0 0 0 18 19"/>
+
+</svg>
+
+</div>
+
+<span class="title">Semua Transaksi</span>
+
+</div>
+
+<svg class="arrow" viewBox="0 0 24 24">
+
+<path d="M9 6L15 12L9 18"/>
+
+</svg>
+
 </a>
 
+<!-- STATUS PEMBAYARAN -->
+
 <a href="#" class="card red">
-Cek Status Pembayaran
+
+<div class="left">
+
+<div class="icon">
+
+<svg viewBox="0 0 24 24">
+
+<rect x="3" y="5" width="18" height="14" rx="2"/>
+
+<path d="M3 10H21"/>
+
+<path d="M15 15l2 2 4-4"/>
+
+</svg>
+
+</div>
+
+<span class="title">Cek Status Pembayaran</span>
+
+</div>
+
+<svg class="arrow" viewBox="0 0 24 24">
+
+<path d="M9 6L15 12L9 18"/>
+
+</svg>
+
 </a>
 
 </div>
