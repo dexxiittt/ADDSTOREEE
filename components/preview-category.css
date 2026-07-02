@@ -18,10 +18,20 @@
     --preview-tab-padding-y:22px;
     --preview-tab-padding-x:42px;
 
+    --preview-tab-radius:999px;
+
+    --preview-tab-bg:#ececec;
+    --preview-tab-hover:#dddddd;
+    --preview-tab-active:#141c31;
+
     /* Title */
 
     --preview-title-margin-top:70px;
     --preview-title-margin-bottom:50px;
+
+    /* Grid */
+
+    --preview-grid-gap:22px;
 
     /* Button */
 
@@ -39,6 +49,7 @@
 ========================== */
 
 .preview-category{
+
     width:100%;
     max-width:var(--preview-max-width);
 
@@ -47,6 +58,7 @@
     padding:
     var(--preview-padding)
     var(--preview-side-padding);
+
 }
 
 /* ==========================
@@ -54,69 +66,83 @@
 ========================== */
 
 .preview-tabs{
+
     display:flex;
+
     justify-content:center;
     align-items:center;
-    gap:22px;
+
+    gap:var(--preview-gap);
 
     flex-wrap:wrap;
+
 }
 
-/* Tab */
+/* ==========================
+   TAB
+========================== */
 
 .preview-tabs button{
+
     font-family:"Plus Jakarta Sans",sans-serif;
+
     font-size:20px;
     font-weight:700;
 
     border:none;
     outline:none;
+
     cursor:pointer;
 
-    padding:22px 42px;
-    border-radius:999px;
+    padding:
+    var(--preview-tab-padding-y)
+    var(--preview-tab-padding-x);
 
-    background:#ececec;
+    border-radius:var(--preview-tab-radius);
+
+    background:var(--preview-tab-bg);
+
     color:#111827;
 
-    transition:.3s ease;
-}
-
-/* Hover */
-
-.preview-tabs button:hover{
-    transform:translateY(-2px);
-    background:#dddddd;
-}
-
-/* Active */
-
-.preview-tabs button.active{
-    background:#141c31;
-    color:#fff;
-
-    box-shadow:
-    0 8px 24px rgba(20,28,49,.18);
-}
-
-/* ==========================
-   TAB ANIMATION
-========================== */
-
-.preview-tabs button{
     transition:
     background .25s ease,
     color .25s ease,
     transform .25s ease,
     box-shadow .25s ease;
+
 }
+
+/* Hover */
 
 .preview-tabs button:hover{
-    transform:translateY(-2px) scale(1.02);
+
+    background:var(--preview-tab-hover);
+
+    transform:
+    translateY(-2px)
+    scale(1.02);
+
 }
 
+/* Active */
+
+.preview-tabs button.active{
+
+    background:var(--preview-tab-active);
+
+    color:#fff;
+
+    box-shadow:
+    0 8px 24px rgba(20,28,49,.18);
+
+}
+
+/* Click */
+
 .preview-tabs button:active{
+
     transform:scale(.98);
+
 }
 
 /* ==========================
@@ -124,19 +150,26 @@
 ========================== */
 
 .preview-title{
+
     font-family:"Plus Jakarta Sans",sans-serif;
+
     font-size:clamp(38px,6vw,62px);
 
     font-weight:800;
+
     letter-spacing:-1.5px;
 
     line-height:1.15;
+
     color:#111827;
 
     text-align:center;
 
     margin:
-    70px 0 50px;
+    var(--preview-title-margin-top)
+    0
+    var(--preview-title-margin-bottom);
+
 }
 
 /* ==========================
@@ -144,12 +177,72 @@
 ========================== */
 
 #preview-card-grid{
+
     width:100%;
+
     display:grid;
 
     grid-template-columns:
     repeat(2,minmax(0,1fr));
 
-    gap:22px;
+    gap:var(--preview-grid-gap);
+
     margin-bottom:60px;
+
+}
+
+/* ==========================
+   BUTTON
+========================== */
+
+.preview-button{
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    width:fit-content;
+    margin:0 auto;
+
+    padding:
+    var(--preview-button-padding-y)
+    var(--preview-button-padding-x);
+
+    border-radius:var(--preview-button-radius);
+
+    background:var(--preview-button-color);
+
+    color:#fff;
+
+    text-decoration:none;
+
+    font-family:"Plus Jakarta Sans",sans-serif;
+
+    font-size:20px;
+    font-weight:700;
+
+    transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    background .25s ease;
+
+    box-shadow:
+    0 10px 30px rgba(47,99,245,.25);
+}
+
+/* Hover */
+
+.preview-button:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+    0 14px 36px rgba(47,99,245,.35);
+
+}
+
+/* Click */
+
+.preview-button:active{
+    transform:scale(.98);
 }
