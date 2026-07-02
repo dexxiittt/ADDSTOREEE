@@ -45,20 +45,26 @@
 }
 
 /* ==========================
+   PREVIEW CATEGORY SECTION
+========================== */
+
+.preview-category-section{
+    width:100%;
+    background:#fff;
+    padding:80px 0;
+}
+
+/* ==========================
    PREVIEW CATEGORY
 ========================== */
 
 .preview-category{
-
     width:100%;
     max-width:var(--preview-max-width);
 
     margin:0 auto;
 
-    padding:
-    var(--preview-padding)
-    var(--preview-side-padding);
-
+    padding:0 var(--preview-side-padding);
 }
 
 /* ==========================
