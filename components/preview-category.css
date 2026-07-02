@@ -1,1 +1,155 @@
+/* ==========================
+   VARIABLES
+========================== */
 
+:root{
+
+    /* Layout */
+
+    --preview-max-width:1200px;
+
+    --preview-padding:80px;
+    --preview-side-padding:24px;
+
+    --preview-gap:22px;
+
+    /* Tabs */
+
+    --preview-tab-padding-y:22px;
+    --preview-tab-padding-x:42px;
+
+    /* Title */
+
+    --preview-title-margin-top:70px;
+    --preview-title-margin-bottom:50px;
+
+    /* Button */
+
+    --preview-button-padding-y:22px;
+    --preview-button-padding-x:44px;
+
+    --preview-button-radius:18px;
+
+    --preview-button-color:#2f63f5;
+
+}
+
+/* ==========================
+   PREVIEW CATEGORY
+========================== */
+
+.preview-category{
+    width:100%;
+    max-width:var(--preview-max-width);
+
+    margin:0 auto;
+
+    padding:
+    var(--preview-padding)
+    var(--preview-side-padding);
+}
+
+/* ==========================
+   CATEGORY TABS
+========================== */
+
+.preview-tabs{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:22px;
+
+    flex-wrap:wrap;
+}
+
+/* Tab */
+
+.preview-tabs button{
+    font-family:"Plus Jakarta Sans",sans-serif;
+    font-size:20px;
+    font-weight:700;
+
+    border:none;
+    outline:none;
+    cursor:pointer;
+
+    padding:22px 42px;
+    border-radius:999px;
+
+    background:#ececec;
+    color:#111827;
+
+    transition:.3s ease;
+}
+
+/* Hover */
+
+.preview-tabs button:hover{
+    transform:translateY(-2px);
+    background:#dddddd;
+}
+
+/* Active */
+
+.preview-tabs button.active{
+    background:#141c31;
+    color:#fff;
+
+    box-shadow:
+    0 8px 24px rgba(20,28,49,.18);
+}
+
+/* ==========================
+   TAB ANIMATION
+========================== */
+
+.preview-tabs button{
+    transition:
+    background .25s ease,
+    color .25s ease,
+    transform .25s ease,
+    box-shadow .25s ease;
+}
+
+.preview-tabs button:hover{
+    transform:translateY(-2px) scale(1.02);
+}
+
+.preview-tabs button:active{
+    transform:scale(.98);
+}
+
+/* ==========================
+   TITLE
+========================== */
+
+.preview-title{
+    font-family:"Plus Jakarta Sans",sans-serif;
+    font-size:clamp(38px,6vw,62px);
+
+    font-weight:800;
+    letter-spacing:-1.5px;
+
+    line-height:1.15;
+    color:#111827;
+
+    text-align:center;
+
+    margin:
+    70px 0 50px;
+}
+
+/* ==========================
+   CARD GRID
+========================== */
+
+#preview-card-grid{
+    width:100%;
+    display:grid;
+
+    grid-template-columns:
+    repeat(2,minmax(0,1fr));
+
+    gap:22px;
+    margin-bottom:60px;
+}
