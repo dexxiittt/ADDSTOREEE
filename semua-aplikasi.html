@@ -12,53 +12,6 @@
 
 <link rel="stylesheet" href="components/product-card.css">
 
-<style>
-
-body{
-  font-family:'Plus Jakarta Sans',sans-serif;
-  background:#f3f4f8;
-  margin:0;
-  overflow-x:hidden;
-}
-
-:root{
-  --card-min-width:320px;
-  --grid-max-width:880px;
-}
-
-/* HERO */
-.package-hero{
-  width:100%;
-  margin-left:calc(50% - 50vw);
-  min-height:280px;
-
-  background:linear-gradient(135deg,#493d84,#6d28d9);
-
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-
-  text-align:center;
-
-  padding:40px 20px;
-  color:#fff;
-}
-
-.package-hero h1{
-  font-family:'Playfair Display',serif;
-  font-size:50px;
-  margin-bottom:6px;
-  color:#fff;
-}
-
-.package-hero p{
-  opacity:.85;
-  font-size:24px;
-  color:#fff;
-}
-
-</style>
 
 </head>
 <body class="package-page">
@@ -67,12 +20,7 @@ body{
 <script src="components/navbar.js"></script>
 
   <!-- HERO -->
-  <section>
-  <div class="package-hero">
-    <h1>Semua Aplikasi </h1>
-    <p>Temukan aplikasi premium favoritmu dengan harga terbaik.</p>
-  </div>
-  </section>
+<div id="preview-aplikasi-placeholder"></div>
 
 <section class="category-content">
   <div id="apk" class="category-panel active">
@@ -80,6 +28,14 @@ body{
   </div>
 </section>
 
+<script>
+fetch("components/preview-aplikasi.html")
+  .then(r => r.text())
+  .then(html => {
+    document.getElementById("preview-aplikasi-placeholder").innerHTML = html;
+  });
+</script>
+  
 <script src="components/product-card.js"></script>
 <div id="footer-container"></div>
 
