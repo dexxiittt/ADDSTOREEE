@@ -44,6 +44,29 @@
 
 }
 
+/* =========================================
+/* Hilangkan highlight biru saat disentuh
+============================================ */
+
+.preview-tabs button{
+    -webkit-tap-highlight-color: transparent;
+
+    user-select: none;
+    -webkit-user-select: none;
+
+    outline: none;
+}
+
+.preview-tabs button:focus{
+    outline: none;
+
+   
+}
+
+.preview-tabs button:focus-visible{
+    outline: none;
+}
+
 /* ==========================
    PREVIEW CATEGORY SECTION
 ========================== */
