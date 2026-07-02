@@ -392,6 +392,18 @@ dan support 24/7.
 <div id="trust-section"></div>
   
 <script src="components/section-trust.js"></script>
+<div id="preview-category"></div>
 
+<script>
+
+fetch("components/preview-category/preview-category.html")
+.then(r=>r.text())
+.then(html=>{
+
+document.getElementById("preview-category").innerHTML=html;
+
+});
+
+</script>
 </body>
 </html>
