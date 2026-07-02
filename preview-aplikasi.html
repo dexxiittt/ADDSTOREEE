@@ -10,6 +10,7 @@
   
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
+<link rel="stylesheet" href="components/product-card.css">
 <style>
 
 *{
@@ -47,12 +48,26 @@ body{
 </style>
 
 </head>
-<body>
+<body class="package-page">
+
+<div id="navbar-placeholder"></div>
+<script src="components/navbar.js"></script>
 
 <div class="package-hero">
     <h1>Semua Aplikasi</h1>
     <p>Temukan aplikasi premium favoritmu dengan harga terbaik.</p>
 </div>
 
+<section class="category-content">
+  <div id="apk" class="category-panel active">
+    <div id="product-cards"></div>
+  </div>
+</section>
+
+<script src="components/product-card.js"></script>
+<div id="footer-container"></div>
+
+<link rel="stylesheet" href="components/footer.css">
+<script src="components/footer.js"></script>
 </body>
 </html>
