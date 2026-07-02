@@ -15,9 +15,9 @@
 <style>
 
 body{
+  margin:0;
   font-family:'Plus Jakarta Sans',sans-serif;
   background:#f3f4f8;
-  margin:0;
   overflow-x:hidden;
 }
 
@@ -26,12 +26,16 @@ body{
   --grid-max-width:880px;
 }
 
-/* HERO */
-.package-hero{
-  width:100%;
-  min-height:280px;
+/* =========================
+   HERO
+========================= */
 
-  background:linear-gradient(135deg,#493d84,#6d28d9);
+.package-hero{
+
+  width:100%;
+  min-height:300px;
+
+  padding:80px 20px 70px;
 
   display:flex;
   flex-direction:column;
@@ -40,21 +44,41 @@ body{
 
   text-align:center;
 
-  padding:40px 20px;
+  background:
+  radial-gradient(circle at top,#8b5cf655 0%,transparent 45%),
+  linear-gradient(135deg,#493d84 0%,#6d28d9 100%);
+
   color:#fff;
+
+  box-sizing:border-box;
 }
 
 .package-hero h1{
+
+  margin:0;
+
   font-family:'Playfair Display',serif;
-  font-size:50px;
-  margin-bottom:6px;
-  color:#fff;
+  font-size:clamp(2.3rem,7vw,3.3rem);
+  font-weight:700;
+  line-height:1.15;
+  letter-spacing:.3px;
+
+  text-shadow:
+  0 8px 25px rgba(0,0,0,.18);
+
 }
 
 .package-hero p{
-  opacity:.85;
-  font-size:24px;
-  color:#fff;
+
+  margin:18px auto 0;
+
+  max-width:640px;
+
+  font-size:clamp(1rem,3.8vw,1.3rem);
+  line-height:1.75;
+
+  color:rgba(255,255,255,.88);
+
 }
 
 </style>
