@@ -1,1 +1,248 @@
+/* ==========================
+   VARIABLES
+========================== */
 
+:root{
+
+    /* Layout */
+
+    --preview-max-width:1200px;
+
+    --preview-padding:80px;
+    --preview-side-padding:24px;
+
+    --preview-gap:22px;
+
+    /* Tabs */
+
+    --preview-tab-padding-y:22px;
+    --preview-tab-padding-x:42px;
+
+    --preview-tab-radius:999px;
+
+    --preview-tab-bg:#ececec;
+    --preview-tab-hover:#dddddd;
+    --preview-tab-active:#141c31;
+
+    /* Title */
+
+    --preview-title-margin-top:70px;
+    --preview-title-margin-bottom:50px;
+
+    /* Grid */
+
+    --preview-grid-gap:22px;
+
+    /* Button */
+
+    --preview-button-padding-y:22px;
+    --preview-button-padding-x:44px;
+
+    --preview-button-radius:18px;
+
+    --preview-button-color:#2f63f5;
+
+}
+
+/* ==========================
+   PREVIEW CATEGORY
+========================== */
+
+.preview-category{
+
+    width:100%;
+    max-width:var(--preview-max-width);
+
+    margin:0 auto;
+
+    padding:
+    var(--preview-padding)
+    var(--preview-side-padding);
+
+}
+
+/* ==========================
+   CATEGORY TABS
+========================== */
+
+.preview-tabs{
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    gap:var(--preview-gap);
+
+    flex-wrap:wrap;
+
+}
+
+/* ==========================
+   TAB
+========================== */
+
+.preview-tabs button{
+
+    font-family:"Plus Jakarta Sans",sans-serif;
+
+    font-size:20px;
+    font-weight:700;
+
+    border:none;
+    outline:none;
+
+    cursor:pointer;
+
+    padding:
+    var(--preview-tab-padding-y)
+    var(--preview-tab-padding-x);
+
+    border-radius:var(--preview-tab-radius);
+
+    background:var(--preview-tab-bg);
+
+    color:#111827;
+
+    transition:
+    background .25s ease,
+    color .25s ease,
+    transform .25s ease,
+    box-shadow .25s ease;
+
+}
+
+/* Hover */
+
+.preview-tabs button:hover{
+
+    background:var(--preview-tab-hover);
+
+    transform:
+    translateY(-2px)
+    scale(1.02);
+
+}
+
+/* Active */
+
+.preview-tabs button.active{
+
+    background:var(--preview-tab-active);
+
+    color:#fff;
+
+    box-shadow:
+    0 8px 24px rgba(20,28,49,.18);
+
+}
+
+/* Click */
+
+.preview-tabs button:active{
+
+    transform:scale(.98);
+
+}
+
+/* ==========================
+   TITLE
+========================== */
+
+.preview-title{
+
+    font-family:"Plus Jakarta Sans",sans-serif;
+
+    font-size:clamp(38px,6vw,62px);
+
+    font-weight:800;
+
+    letter-spacing:-1.5px;
+
+    line-height:1.15;
+
+    color:#111827;
+
+    text-align:center;
+
+    margin:
+    var(--preview-title-margin-top)
+    0
+    var(--preview-title-margin-bottom);
+
+}
+
+/* ==========================
+   CARD GRID
+========================== */
+
+#preview-card-grid{
+
+    width:100%;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(2,minmax(0,1fr));
+
+    gap:var(--preview-grid-gap);
+
+    margin-bottom:60px;
+
+}
+
+/* ==========================
+   BUTTON
+========================== */
+
+.preview-button{
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    width:fit-content;
+    margin:0 auto;
+
+    padding:
+    var(--preview-button-padding-y)
+    var(--preview-button-padding-x);
+
+    border-radius:var(--preview-button-radius);
+
+    background:var(--preview-button-color);
+
+    color:#fff;
+
+    text-decoration:none;
+
+    font-family:"Plus Jakarta Sans",sans-serif;
+
+    font-size:20px;
+    font-weight:700;
+
+    transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    background .25s ease;
+
+    box-shadow:
+    0 10px 30px rgba(47,99,245,.25);
+}
+
+/* Hover */
+
+.preview-button:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+    0 14px 36px rgba(47,99,245,.35);
+
+}
+
+/* Click */
+
+.preview-button:active{
+    transform:scale(.98);
+}
