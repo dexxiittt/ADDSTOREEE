@@ -87,21 +87,25 @@ dan support 24/7.
 <script src="components/section-trust.js"></script>
 
 <script>
-fetch("components/preview-category/preview-category.html")
-.then(r=>r.text())
-.then(html=>{
-    document.getElementById("preview-category").innerHTML=html;
+window.HOMEPAGE_LIMIT = 4;
 
-    // setelah HTML masuk, baru jalankan JS
-    initPreviewCategory();
+fetch("components/preview-category/preview-category.html")
+.then(r => r.text())
+.then(html => {
+    document.getElementById("preview-category").innerHTML = html;
+
+    // Muat product-card.js setelah container sudah ada
+    const productScript = document.createElement("script");
+    productScript.src = "components/product-card.js";
+
+    productScript.onload = () => {
+        initPreviewCategory();
+    };
+
+    document.body.appendChild(productScript);
 });
 </script>
 
-<script>
-window.HOMEPAGE_LIMIT = 4;
-</script>
-
-<script src="components/product-card.js"></script>
 <script src="components/preview-category/preview-category.js"></script>
 </body>
 </html>
