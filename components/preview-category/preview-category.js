@@ -1,21 +1,17 @@
-function initPreviewCategory(){
+function initPreviewCategory() {
 
-    const tabs=document.querySelectorAll(".preview-tabs button");
+    const tabs = document.querySelectorAll(".preview-tabs button");
 
-    tabs.forEach(tab=>{
+    tabs.forEach(tab => {
 
-        tab.onclick=()=>{
+        tab.onclick = () => {
 
-            tabs.forEach(t=>t.classList.remove("active"));
-
+            tabs.forEach(t => t.classList.remove("active"));
             tab.classList.add("active");
 
-            loadPreview(tab.dataset.category);
-
+            // nanti di sini baru kita tambahkan filter kategori
         };
 
     });
-
-    loadPreview("premium");
 
 }
