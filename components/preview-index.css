@@ -12,12 +12,6 @@ scroll-behavior:smooth;
 
 body{
 font-family:Poppins,sans-serif;
-background:
-linear-gradient(
-135deg,
-#493d84 0%,
-#8662b2 90%
-);
 color:#111827;
 overflow-x:hidden;
 min-height:100vh;
