@@ -23,6 +23,11 @@ overflow-x:hidden;
 min-height:100vh;
 }
 
+.preview-content{
+    background:#fff;
+    color:#111827;
+}
+
 /* SECTION */
 
 .hero{
