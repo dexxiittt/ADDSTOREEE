@@ -48,10 +48,32 @@ renderPreviewTestimoni();
 
 function loadTestimoni(){
 
-const loading = document.getElementById("preview-testimoni-loading");
+    const loading = document.getElementById("preview-testimoni-loading");
 
-if(loading){
-loading.style.display = "grid";
+    if(loading){
+        loading.style.display = "grid";
+    }
+
+    const q = query(
+        collection(db,"testimoni"),
+        orderBy("createdAt","desc")
+    );
+
+    onSnapshot(q,(snapshot)=>{
+
+        semuaTestimoni = [];
+
+        snapshot.forEach(d=>{
+            semuaTestimoni.push({
+                id:d.id,
+                ...d.data()
+            });
+        });
+
+        renderPreviewTestimoni();
+
+    });
+
 }
 
 function renderPreviewTestimoni(){
@@ -121,3 +143,5 @@ ${avatar}
 });
 
 }
+
+loadTestimoni();
