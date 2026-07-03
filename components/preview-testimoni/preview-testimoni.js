@@ -46,4 +46,78 @@ renderPreviewTestimoni();
 
 }
 
-loadTestimoni()
+function loadTestimoni(){
+
+const loading = document.getElementById("preview-testimoni-loading");
+
+if(loading){
+loading.style.display = "grid";
+}
+
+function renderPreviewTestimoni(){
+
+const container = document.getElementById("preview-testimoni-container");
+const loading = document.getElementById("preview-testimoni-loading");
+
+if(!container) return;
+
+// sembunyikan loading
+if(loading){
+loading.style.display = "none";
+}
+
+container.innerHTML = "";
+
+// hanya rating 5
+let data = semuaTestimoni.filter(t => parseInt(t.rating) === 5);
+
+// terbaru dulu
+data.sort((a,b)=>
+(b.createdAt?.seconds || 0) -
+(a.createdAt?.seconds || 0)
+);
+
+// ambil 4
+data = data.slice(0,4);
+
+data.forEach(t=>{
+
+const avatar = t.nama.charAt(0).toUpperCase();
+
+container.innerHTML += `
+
+<div class="preview-testimoni-card">
+
+<div class="stars">
+${"⭐".repeat(5)}
+</div>
+
+<p class="clamp">
+"${t.pesan}"
+</p>
+
+<div class="preview-testimoni-user">
+
+<div class="preview-testimoni-avatar">
+${avatar}
+</div>
+
+<div>
+
+<strong>${t.nama}</strong>
+
+<br>
+
+<small>${t.tanggal}</small>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
