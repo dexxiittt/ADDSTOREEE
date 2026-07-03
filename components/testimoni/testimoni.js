@@ -143,13 +143,18 @@ let activeEditId = null
 let editRating = {}
 
 function loadTestimoni(){
-let container = document.getElementById("testimoni-container")
+
+let container = document.getElementById("testimoni-container");
+
+if(container){
 
 container.innerHTML = `
 <div class="skeleton"></div>
 <div class="skeleton"></div>
 <div class="skeleton"></div>
-`
+`;
+
+}
 
 const q = query(
 collection(db,"testimoni"),
@@ -164,7 +169,13 @@ id:d.id,
 })
 })
 
-renderTestimoni()
+if(document.getElementById("testimoni-container")){
+renderTestimoni();
+}
+
+if(document.getElementById("preview-testimoni-container")){
+renderPreviewTestimoni();
+}
 
 })
 
@@ -388,6 +399,73 @@ btn.innerText = "Lihat Lebih Banyak"
 }
   
 }
+
+// =========================
+// PREVIEW TESTIMONI
+// =========================
+
+function renderPreviewTestimoni(){
+
+const container = document.getElementById("preview-testimoni-container");
+
+if(!container) return;
+
+container.innerHTML = "";
+
+// hanya rating 5
+let data = semuaTestimoni.filter(t => parseInt(t.rating) === 5);
+
+// terbaru dulu
+data.sort((a,b)=>
+(b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0)
+);
+
+// ambil 4
+data = data.slice(0,4);
+
+data.forEach(t=>{
+
+const avatar = t.nama.charAt(0).toUpperCase();
+
+container.innerHTML += `
+
+<div class="preview-testimoni-card">
+
+<div class="stars">
+${"⭐".repeat(5)}
+</div>
+
+<p>"${t.pesan}"</p>
+
+<div class="preview-user">
+
+<div class="preview-avatar">
+${avatar}
+</div>
+
+<div>
+
+<strong>${t.nama}</strong>
+
+<br>
+
+<small>${t.tanggal}</small>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+
+// PREVIEW TESTIMONI HABIS DISINI
+// =========================
 
 document.getElementById("loadMoreBtn").onclick=function(){
 if(jumlahTampil >= semuaTestimoni.length){
