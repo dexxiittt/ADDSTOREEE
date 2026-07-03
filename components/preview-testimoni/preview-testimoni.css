@@ -36,8 +36,9 @@ margin-top:35px;
 }
 
 .preview-testimoni-btn{
+display:flex;
+width:fit-content;
 
-display:inline-flex;
 align-items:center;
 justify-content:center;
 
@@ -46,7 +47,7 @@ margin:45px auto 0;
 padding:14px 28px;
 
 background:linear-gradient(135deg,#493d84,#6d28d9);
-color:white;
+color:#fff;
 
 border-radius:14px;
 
@@ -54,6 +55,25 @@ text-decoration:none;
 font-weight:600;
 
 transition:.25s;
+
+/* Hilangkan highlight biru */
+-webkit-tap-highlight-color:transparent;
+user-select:none;
+-webkit-user-select:none;
+outline:none;
+
+}
+
+.preview-testimoni-btn:focus{
+outline:none;
+}
+
+.preview-testimoni-btn:focus-visible{
+outline:none;
+}
+
+.preview-testimoni-btn:active{
+transform:scale(.97);
 }
 
 .preview-testimoni-btn:hover{
