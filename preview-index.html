@@ -105,7 +105,15 @@ window.HOMEPAGE_LIMIT = 4;
 fetch("components/preview-testimoni/preview-testimoni.html")
 .then(r => r.text())
 .then(html => {
+
     document.getElementById("preview-testimoni").innerHTML = html;
+
+    const script = document.createElement("script");
+    script.type = "module";
+    script.src = "components/preview-testimoni/preview-testimoni.js";
+
+    document.body.appendChild(script);
+
 });
   
 fetch("components/preview-category/preview-category.html")
@@ -126,7 +134,7 @@ fetch("components/preview-category/preview-category.html")
 </script>
 
 <script src="components/preview-category/preview-category.js"></script>
-<script type="module" src="components/testimoni/testimoni.js"></script>
+<script type="module" src="components/preview-testimoni/preview-testimoni.js"></script>
 
 <script src="components/premium-cta.js"></script>
 <script src="components/footer.js"></script>
