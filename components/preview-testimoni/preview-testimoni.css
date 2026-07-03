@@ -1,4 +1,4 @@
-.testimoni-card{
+.preview-testimoni-card{
 background:rgba(255,255,255,0.7);
 border-radius:18px;
 padding:25px;
@@ -20,7 +20,7 @@ transform:translateY(0);
 }
 }
 
-.testimoni-card:hover{
+.preview-testimoni-card:hover{
 transform:translateY(-6px);
 box-shadow:
 0 30px 60px rgba(0,0,0,0.12);
@@ -32,7 +32,7 @@ font-size:18px;
 margin-bottom:10px;
 }
 
-.testimoni-card p{
+.preview-testimoni-card p{
   color:#374151;
   font-size:14px;
   line-height:1.6;
@@ -45,29 +45,29 @@ margin-bottom:10px;
 }
 
 /* MODE COLLAPSE */
-.testimoni-card p.clamp{
+.preview-testimoni-card p.clamp{
   display: -webkit-box;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-.testimoni-user{
+.preview-testimoni-user{
 display:flex;
 align-items:center;
 margin-top:15px;
 }
 
-.testimoni-user strong{
+.preview-testimoni-user strong{
 font-size:14px;
 }
 
-.testimoni-user small{
+.preview-testimoni-user small{
 color:#6b7280;
 font-size:12px;
 }
 
-.testimoni-avatar{
+.preview-testimoni-avatar{
 width:48px;
 height:48px;
 
