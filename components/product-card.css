@@ -14,6 +14,14 @@
   opacity: 0;
   transform: translateY(24px);
 
+  transform:translateZ(0);
+
+  backface-visibility:hidden;
+
+  -webkit-font-smoothing:antialiased;
+
+  text-rendering:optimizeLegibility;
+
   transition:
     opacity .35s ease,
     transform .35s ease;
@@ -42,6 +50,8 @@
   font-size: 17px;
   font-weight: 600;
   letter-spacing: 0.2px;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
 
   transition:
     transform .35s cubic-bezier(.22,1,.36,1),
@@ -145,6 +155,9 @@
 
   text-decoration: none;
   color: inherit;
+
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
 
   border-bottom: 1px solid rgba(255,255,255,.2);
 
@@ -265,6 +278,9 @@
   display: flex;
   align-items: center;
   gap: 8px;
+
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
 }
 
 /* DEFAULT: PROMO DI KIRI */
@@ -472,6 +488,9 @@
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.3px;
+
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
 
   animation: guarantee-pulse 3.8s ease-in-out infinite;
 }
