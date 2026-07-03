@@ -620,7 +620,7 @@
 /* GRID PRODUCT */
 #product-cards {
   display: grid;
-  grid-template-columns: repeat(2, minmax(var(--card-min-width), 1fr));
+  grid-template-columns: 1fr;
   gap: 28px 22px;
 
   width: 100%;
@@ -929,10 +929,19 @@ body.is-scrolling * {
 }
 
 /* FIX GRID MOBILE */
+@/* MOBILE = 1 CARD */
 @media (max-width: 768px) {
   #product-cards {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+}
+
+/* DESKTOP / TABLET BESAR = 2 CARD */
+@media (min-width: 769px) {
+  #product-cards {
     grid-template-columns: repeat(2, 1fr);
-    max-width: 100%;
   }
 }
 
