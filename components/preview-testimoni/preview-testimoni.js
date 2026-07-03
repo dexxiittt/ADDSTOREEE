@@ -27,26 +27,6 @@ const db = getFirestore(app);
 let semuaTestimoni = []
 
 function loadTestimoni(){
-  const q = query(
-collection(db,"testimoni"),
-orderBy("createdAt","desc")
-)
-onSnapshot(q,(snapshot)=>{
-semuaTestimoni = []
-snapshot.forEach(d=>{
-semuaTestimoni.push({
-id:d.id,
-...d.data()
-})
-})
-
-renderPreviewTestimoni();
-
-})
-
-}
-
-function loadTestimoni(){
 
     const loading = document.getElementById("preview-testimoni-loading");
 
