@@ -15,6 +15,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 <link rel="stylesheet" href="components/section-trust.css">
 <link rel="stylesheet" href="components/product-card.css">
 <link rel="stylesheet" href="components/preview-category/preview-category.css">
+<link rel="stylesheet" href="components/preview-testimoni/preview-testimoni.css">
 <link rel="stylesheet" href="components/preview-index.css">
 
 <link rel="stylesheet" href="components/premium-cta.css">
@@ -84,10 +85,15 @@ dan support 24/7.
 </section>
 
 <section class="preview-content">
-    <div id="trust-section"></div>
-    <div id="preview-category"></div>
-</section>
 
+    <div id="trust-section"></div>
+
+    <div id="preview-testimoni"></div>
+
+    <div id="preview-category"></div>
+
+</section>
+  
 <div id="premium-cta"></div>
 <div id="footer-container"></div>
   
@@ -96,6 +102,12 @@ dan support 24/7.
 <script>
 window.HOMEPAGE_LIMIT = 4;
 
+fetch("components/preview-testimoni/preview-testimoni.html")
+.then(r => r.text())
+.then(html => {
+    document.getElementById("preview-testimoni").innerHTML = html;
+});
+  
 fetch("components/preview-category/preview-category.html")
 .then(r => r.text())
 .then(html => {
@@ -114,6 +126,7 @@ fetch("components/preview-category/preview-category.html")
 </script>
 
 <script src="components/preview-category/preview-category.js"></script>
+<script type="module" src="pages/testimoni/testimoni.js"></script>
 
 <script src="components/premium-cta.js"></script>
 <script src="components/footer.js"></script>
