@@ -3,8 +3,12 @@ import { initializeApp }
 from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
 
 // firestore
-import { 
-getFirestore, collection, addDoc, getDocs, doc, setDoc, getDoc, query, where, onSnapshot, deleteDoc, updateDoc, orderBy
+import {
+getFirestore,
+collection,
+query,
+orderBy,
+onSnapshot
 } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -36,13 +40,7 @@ id:d.id,
 })
 })
 
-if(document.getElementById("testimoni-container")){
-renderTestimoni();
-}
-
-if(document.getElementById("preview-testimoni-container")){
 renderPreviewTestimoni();
-}
 
 })
 
