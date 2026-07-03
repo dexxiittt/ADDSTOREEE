@@ -206,18 +206,11 @@
 ========================== */
 
 #preview-card-grid{
-
     width:100%;
-
     display:grid;
-
-    grid-template-columns:
-    repeat(2,minmax(0,1fr));
-
-    gap:var(--preview-grid-gap);
-
-    margin-bottom:60px;
-
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:22px;
+    align-items:start;
 }
 
 /* ==========================
@@ -274,4 +267,18 @@
 
 .preview-button:active{
     transform:scale(.98);
+}
+
+/* Tablet */
+@media (max-width:1100px){
+#preview-card-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+}
+}
+
+/* HP */
+@media (max-width:768px){
+#preview-card-grid{
+    grid-template-columns:1fr;
+}
 }
