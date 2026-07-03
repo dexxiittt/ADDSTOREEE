@@ -435,11 +435,11 @@ container.innerHTML += `
 ${"⭐".repeat(5)}
 </div>
 
-<p>"${t.pesan}"</p>
+<p class="clamp">"${t.pesan}"</p>
 
-<div class="preview-user">
+<div class="preview-testimoni-user">
 
-<div class="preview-avatar">
+<div class="preview-testimoni-avatar">
 ${avatar}
 </div>
 
