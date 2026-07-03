@@ -98,7 +98,9 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
       (Bagian 3)
      ========================= */
 
-  const wrap = document.getElementById("product-cards");
+  const wrap =
+  document.getElementById("product-cards") ||
+  document.getElementById("preview-card-grid");
 
 if (!wrap) return;
   
