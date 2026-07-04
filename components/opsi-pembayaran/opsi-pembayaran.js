@@ -123,20 +123,6 @@ window.location.href = row.qris_url
 }
 
 
-
-/* ==============================
-LYNK ID
-============================== */
-
-function bayarLynk(){
-const row = paymentData.find(p => p.package_id == packageId)
-if(!row){
-alert("Data paket tidak ditemukan")
-return
-}
-window.location.href = row.lynk_id
-}
-
 /* ==============================
 VALIDASI FORM
 ============================== */
@@ -219,51 +205,6 @@ gmailInput.addEventListener("input",validEmail)
 SWITCH BUTTON
 ============================== */
 
-let selectedPayment = "qris"
-
-function setPayment(method){
-selectedPayment = method
-
-const btnQris = document.getElementById("btnQris")
-const btnLynk = document.getElementById("btnLynk")
-const label = document.getElementById("payment-method")
-const payBtn = document.getElementById("payBtn")
-const form = document.getElementById("form-input")
-
-btnQris.classList.remove("active")
-btnLynk.classList.remove("active")
-
-if(method === "qris"){
-btnQris.classList.add("active")
-label.innerText = "QRIS"
-payBtn.innerText = "Lanjut Pembayaran QRIS"
-
-// warna default
-payBtn.classList.remove("lynk")
-
-form.classList.remove("hide")
-form.style.display = "block"
-
-cekForm()
-
-}else{
-btnLynk.classList.add("active")
-label.innerText = "Lynk ID"
-payBtn.innerText = "Lanjut Pembayaran Lynk ID"
-
-// 🔥 WARNA HIJAU
-payBtn.classList.add("lynk")
-
-form.classList.add("hide")
-
-setTimeout(()=>{
-form.style.display = "none"
-},200)
-
-payBtn.disabled = false
-}
-}
-
 function handlePayment(){
 
 const data = {
@@ -281,10 +222,6 @@ const data = {
 
 localStorage.setItem("paymentData", JSON.stringify(data))
 
-if(selectedPayment === "qris"){
-  window.location.href = "pembayaran-qr.html"
-}else{
-  bayarLynk()
-}
+window.location.href = "pembayaran-qr.html"
 
 }
