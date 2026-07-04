@@ -202,7 +202,7 @@ cekForm()
 gmailInput.addEventListener("input",validEmail)
 
 /* ==============================
-SWITCH BUTTON
+LANJUT PEMBAYARAN QRIS
 ============================== */
 
 function handlePayment(){
