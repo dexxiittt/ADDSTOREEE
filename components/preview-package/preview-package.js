@@ -189,6 +189,7 @@ function renderPackage(data) {
     );
 
   }
+  }
 
      
 /* Warna Judul & Subtitle */
@@ -226,6 +227,7 @@ if (data.color_title_subtitle) {
     );
 
   }
+}
 
   if (colors[subtitleColor]) {
 
