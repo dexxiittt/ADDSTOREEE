@@ -148,6 +148,12 @@ function renderPackage(data){
   console.log("7");
   renderLegalNote(data);
 
+  console.log("8");
+  renderButton(data);
+
+  console.log("9");
+  initStickyCTA();
+
   console.log("SELESAI");
 
 }
@@ -580,4 +586,26 @@ function renderLegalNote(data) {
 }
 
 
+/* =========================
+   RENDER BUTTON
+========================= */
+
+function renderButton(data){
+
+  const url =
+  `opsi-pembayaran.html?package_id=${data.package_id}`;
+
+  if(payBtn){
+
+    payBtn.href = url;
+
+  }
+
+  if(stickyPay){
+
+    stickyPay.href = url;
+
+  }
+
+}
 
