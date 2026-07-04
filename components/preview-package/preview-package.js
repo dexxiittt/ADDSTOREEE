@@ -237,7 +237,7 @@ if (data.color_title_subtitle) {
   }
 
 }
-  }
+  
 
 
 /* =========================
