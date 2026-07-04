@@ -152,10 +152,10 @@ function renderPackage(data) {
   renderLegalNote(data);
 
   /* Tombol Pembayaran */
-  renderButton(data);
+  
 
   /* Sticky CTA */
-  initStickyCTA();
+  
 
 }
 
@@ -170,14 +170,31 @@ function renderTheme(data) {
   const root = document.documentElement;
 
   /* Warna Harga */
+  function renderTheme(data) {
+
+  const root = document.documentElement;
+
+  /* Warna Harga */
   if (data.price_color) {
+
     root.style.setProperty(
       "--price-color",
       data.price_color
     );
+
   }
 
-  /* Badge Diskon */
+  /* Warna Badge Diskon */
+  if (data.discount_color) {
+
+    root.style.setProperty(
+      "--discount-color",
+      data.discount_color
+    );
+
+  }
+
+     
 /* Warna Judul & Subtitle */
 if (data.color_title_subtitle) {
 
