@@ -614,7 +614,7 @@ color:#111827;
 
 .info-list p{
 display:flex;
-align-items:center;
+align-items:flex-start;
 gap:12px;
 
 margin:16px 0;
@@ -635,6 +635,10 @@ flex-shrink:0;
 
 box-shadow:none;
 margin:0;
+}
+
+.info-list p span:last-child{
+flex:1;
 }
 
 /* hover subtle */
