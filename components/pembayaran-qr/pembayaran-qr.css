@@ -1,7 +1,8 @@
 body{
-font-family:Poppins;
+font-family:"Plus Jakarta Sans",sans-serif;
 background:#f3f4f8;
 margin:0;
+color:#111827;
 }
 
 /* =========================
@@ -70,6 +71,10 @@ transition:.25s ease;
 /* DETAIL */
 
 .container h3{
+font-family:"Sora",sans-serif;
+font-size:24px;
+font-weight:700;
+letter-spacing:-.4px;
 color:#111827;
 margin-bottom:30px;
 text-align:center;
@@ -202,13 +207,17 @@ margin-bottom:14px;
 }
 
 .detail-label{
-font-size:12px;
-color:#9ca3af;
-margin-bottom:3px;
+font-family:"DM Sans",sans-serif;
+font-size:11px;
+font-weight:700;
+letter-spacing:1px;
+text-transform:uppercase;
+color:#94a3b8;
 }
 
 .detail-value{
-font-size:15px;
+font-family:"Outfit",sans-serif;
+font-size:17px;
 font-weight:600;
 color:#111827;
 }
@@ -295,6 +304,7 @@ transparent
 }
 
 .summary-total{
+font-family:"Outfit",sans-serif;
 display:flex;
 justify-content:space-between;
 align-items:center;
@@ -461,7 +471,7 @@ margin-bottom:4px;
 }
 
 .price-final{
-font-family:"Sora",sans-serif;
+font-family:"Outfit",sans-serif;
 
 font-size:22px;
 font-weight:700;
