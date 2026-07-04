@@ -151,9 +151,6 @@ function renderPackage(data){
   console.log("8");
   renderButton(data);
 
-  console.log("9");
-  initStickyCTA();
-
   console.log("SELESAI");
 
 }
