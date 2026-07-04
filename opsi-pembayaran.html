@@ -1,15 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
+
 <head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Opsi Pembayaran</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="components/opsi-pembayaran/opsi-pembayaran.css">
+
 </head>
 
 <body>
-
 
 <!-- HERO -->
 
@@ -18,14 +23,6 @@
 <p>Pilih pembayaran yang ingin dilakukan</p>
 </div>
 
-<div class="payment-switch">
-  <button class="switch-btn active" id="btnQris" onclick="setPayment('qris')">
-    QRIS
-  </button>
-  <button class="switch-btn" id="btnLynk" onclick="setPayment('lynk')">
-    Lynk ID
-  </button>
-</div>
 <!-- FORM -->
 
 <div class="payment-container">
@@ -33,7 +30,7 @@
 <div class="paket-banner">
 <img id="paket-img" src="" alt="paket">
 </div>
-  
+
 <div id="form-input">
 <h3>Format Aplikasi Premium</h3>
 
@@ -67,7 +64,7 @@
 <div class="paket-sub" id="paket-detail"></div>
 </div>
 </div>
-  
+
 <div class="summary-row">
 <span>Subtotal</span>
 <div id="paket-harga" class="price-box"></div>
@@ -104,7 +101,7 @@ Transaksi aman & terenkripsi
 
 </div>
 
-
 <script src="components/opsi-pembayaran/opsi-pembayaran.js"></script>
+
 </body>
 </html>
