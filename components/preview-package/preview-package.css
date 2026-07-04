@@ -28,6 +28,13 @@ ROOT
   --accent:#8b5cf6;
   --accent-dark:#6d28d9;
 
+  --price-color:#22c55e;
+  --discount-color:#ef4444;
+
+  --badge-glow:rgba(167,139,250,.55);
+  --title-glow:rgba(255,255,255,.75);
+  --subtitle-glow:rgba(255,255,255,.45);
+
   --container:920px;
 
 }
@@ -179,6 +186,8 @@ PACKAGE INFO
   line-height:1.2;
 
   color:#ffffff;
+  text-shadow:
+  0 0 12px var(--title-glow);
 }
 
 #pkg-subtitle{
@@ -189,6 +198,9 @@ PACKAGE INFO
   line-height:1.5;
 
   color:var(--text-soft);
+
+  text-shadow:
+  0 0 10px var(--subtitle-glow);
 }
 
 #pkg-title .badge-icon{
@@ -199,6 +211,10 @@ PACKAGE INFO
   margin-left:8px;
 
   font-size:22px;
+  filter:
+  drop-shadow(
+    0 0 10px var(--badge-glow)
+  );
 }
 
 .package-info-text{
@@ -286,7 +302,7 @@ PACKAGE META
   font-size:11px;
   font-weight:700;
 
-  background:#ef4444;
+  background:var(--discount-color,#ef4444);
   color:#ffffff;
 }
 
@@ -387,10 +403,13 @@ NOTE
 }
 
 .note-extra{
-  display:flex;
+  display:none;
   flex-direction:column;
   gap:10px;
+}
 
+.package-note.expanded .note-extra{
+  display:flex;
 }
 
 .note-toggle{
