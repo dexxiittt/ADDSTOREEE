@@ -111,15 +111,7 @@ fetch(
 
   console.error(error);
 
-  alert(
-
-    error.name +
-
-    "\n\n" +
-
-    error.message
-
-  );
+  alert(error.message);
 
 })
 
