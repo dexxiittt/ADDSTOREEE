@@ -1,1 +1,360 @@
+body{
+font-family:Poppins;
+background:#f3f4f8;
+margin:0;
+color:white;
+}
 
+/* HERO */
+
+.package-hero{
+background:linear-gradient(135deg,#7b2ff7,#5f0a87);
+padding:50px 20px;
+text-align:center;
+}
+
+.package-hero h1{
+font-size:38px;
+margin-bottom:6px;
+}
+
+.package-hero p{
+opacity:.8;
+font-size:20px;
+}
+
+/* CONTAINER */
+
+.payment-container{
+max-width:850px;
+width:100%;
+margin:35px auto;
+background:#ffffff;
+border-radius:14px;
+padding:26px;
+box-shadow:0 6px 18px rgba(0,0,0,0.15);
+transition:box-shadow .2s ease;
+}
+
+.paket-banner{
+width:100%;
+margin-bottom:18px;
+border-radius:10px;
+overflow:hidden;
+}
+
+.paket-banner img{
+width:100%;
+height:210px;
+object-fit:cover;
+display:block;
+}
+
+.payment-container:hover{
+box-shadow:0 8px 22px rgba(0,0,0,0.2);
+}
+
+/* INPUT */
+
+.payment-container input{
+width:95%;
+padding:6px;
+border-radius:8px;
+border:1px solid #e5e7eb;
+background:#f9fafb;
+color:#111827;
+font-size:14px;
+transition:border .2s ease;
+  }
+
+.paket-info{
+background:#f9fafb;
+border:1px solid #e5e7eb;
+border-radius:10px;
+padding:12px 14px;
+margin-bottom:14px;
+}
+
+.paket-title{
+font-size:15px;
+font-weight:600;
+color:#111827;
+margin-bottom:3px;
+}
+
+.paket-sub{
+font-size:13px;
+color:#6b7280;
+}
+
+.paket-price-wrap{
+margin-top:10px;
+padding-top:10px;
+border-top:1px dashed #e5e7eb;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.paket-price-label{
+font-size:13px;
+color:#6b7280;
+}
+
+.paket-price{
+font-size:16px;
+font-weight:700;
+color:#111827;
+}
+
+.price-box{
+text-align:right;
+display:flex;
+flex-direction:column;
+align-items:flex-end;
+gap:2px;
+}
+
+/* ===== PRICE STYLE PREMIUM ===== */
+
+.price-old{
+font-size:12px;
+color:#9ca3af;
+text-decoration:line-through;
+display:block;
+}
+
+.price-final{
+font-size:18px;
+font-weight:700;
+color:#111827;
+letter-spacing:-0.3px;
+}
+
+.discount-info{
+font-size:12px;
+color:#16a34a;
+font-weight:600;
+margin-top:-6px;
+margin-bottom:8px;
+
+display:flex;
+justify-content:flex-end;
+gap:6px;
+align-items:center;
+}
+
+.discount-info span{
+background:rgba(34,197,94,.1);
+padding:3px 8px;
+border-radius:999px;
+}
+
+#paket-diskon{
+color:#ef4444;
+font-weight:600;
+}
+
+#paket-hemat{
+color:#16a34a;
+font-weight:600;
+}
+
+@keyframes badgePulse{
+0%,100%{transform:scale(1)}
+50%{transform:scale(1.05)}
+}
+
+.summary-title{
+font-size:14px;
+font-weight:600;
+color:#374151;
+margin-bottom:10px;
+}
+
+.summary-item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:12px;
+}
+
+.summary-row{
+display:flex;
+justify-content:space-between;
+padding:6px 0;
+font-size:14px;
+color:#374151;
+border-top:1px dashed #e5e7eb;
+}
+
+.summary-row span:last-child{
+font-weight:600;
+color:#111827;
+}
+
+.summary-total{
+display:flex;
+justify-content:space-between;
+padding-top:10px;
+margin-top:8px;
+border-top:2px solid #e5e7eb;
+font-size:16px;
+font-weight:700;
+color:#111827;
+}
+
+.secure-info{
+text-align:center;
+margin-top:12px;
+font-size:13px;
+color:#6b7280;
+background:#f9fafb;
+border:1px solid #e5e7eb;
+padding:6px 12px;
+border-radius:8px;
+display:inline-flex;
+gap:6px;
+}
+
+.icon-label{
+display:flex;
+align-items:center;
+gap:6px;
+font-size:13px;
+font-weight:600;
+color:#374151;
+}
+
+.input-icon{
+position:relative;
+margin-bottom:12px;
+}
+
+.input-icon span{
+position:absolute;
+left:10px;
+top:50%;
+transform:translateY(-50%);
+font-size:15px;
+opacity:.6;
+}
+
+.input-icon input{
+padding-left:34px;
+}
+  
+.icon-label::first-letter{
+font-size:15px;
+}
+  
+.payment-container label{
+display:block;
+font-size:13px;
+font-weight:600;
+margin-top:8px;
+margin-bottom:4px;
+color:#374151;
+}
+  
+.payment-container input:focus{
+outline:none;
+border:1px solid #8b5cf6;
+background:#ffffff;
+}
+
+.payment-container h3{
+color:#111827;
+margin-bottom:15px;
+}
+
+.payment-container input::placeholder{
+color:#94a3b8;
+}
+
+/* BUTTON */
+
+.cta-btn{
+width:100%;
+padding:14px;
+border:none;
+border-radius:30px;
+background:linear-gradient(135deg,#8b5cf6,#6366f1);
+color:white;
+font-weight:600;
+cursor:pointer;
+}
+
+.cta-btn.lynk{
+background:linear-gradient(135deg,#10b981,#059669);
+}
+  
+.cta-btn:hover{
+opacity:.9;
+}
+
+/* LYNK BUTTON */
+
+.cta-btn:disabled{
+opacity:.5;
+cursor:not-allowed;
+}
+
+.loading-dots::after{
+content:'...';
+animation:dots 1s infinite steps(3);
+}
+
+@keyframes dots{
+0%{content:'';}
+33%{content:'.';}
+66%{content:'..';}
+100%{content:'...';}
+}
+
+/* SWITCH PAYMENT */
+
+.payment-switch{
+display:flex;
+justify-content:center;
+gap:10px;
+margin-top:30px;
+margin-bottom:20px;
+}
+
+.switch-btn{
+padding:10px 20px;
+border:none;
+border-radius:30px;
+background:#e5e7eb;
+color:#374151;
+font-weight:600;
+cursor:pointer;
+transition:all .2s ease;
+transform:scale(1);
+}
+
+.switch-btn:active{
+transform:scale(0.96);
+}
+
+#form-input{
+transition:opacity .25s ease, transform .25s ease;
+transform:translateY(0);
+opacity:1;
+will-change:opacity, transform;
+}
+
+#form-input.hide{
+opacity:0;
+transform:translateY(-10px);
+pointer-events:none;
+}
+
+.payment-container{
+transition:transform .2s ease;
+}
+
+.payment-container:active{
+transform:scale(0.995);
+}
