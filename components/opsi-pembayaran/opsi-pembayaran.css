@@ -285,10 +285,6 @@ font-weight:600;
 cursor:pointer;
 }
 
-.cta-btn.lynk{
-background:linear-gradient(135deg,#10b981,#059669);
-}
-  
 .cta-btn:hover{
 opacity:.9;
 }
@@ -310,45 +306,6 @@ animation:dots 1s infinite steps(3);
 33%{content:'.';}
 66%{content:'..';}
 100%{content:'...';}
-}
-
-/* SWITCH PAYMENT */
-
-.payment-switch{
-display:flex;
-justify-content:center;
-gap:10px;
-margin-top:30px;
-margin-bottom:20px;
-}
-
-.switch-btn{
-padding:10px 20px;
-border:none;
-border-radius:30px;
-background:#e5e7eb;
-color:#374151;
-font-weight:600;
-cursor:pointer;
-transition:all .2s ease;
-transform:scale(1);
-}
-
-.switch-btn:active{
-transform:scale(0.96);
-}
-
-#form-input{
-transition:opacity .25s ease, transform .25s ease;
-transform:translateY(0);
-opacity:1;
-will-change:opacity, transform;
-}
-
-#form-input.hide{
-opacity:0;
-transform:translateY(-10px);
-pointer-events:none;
 }
 
 .payment-container{
