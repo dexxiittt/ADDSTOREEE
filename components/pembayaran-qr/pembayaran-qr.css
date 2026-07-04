@@ -597,28 +597,6 @@ line-height:1.8;
 color:#4b5563;
 }
 
-.info-list p::before{
-content:"✓";
-position:absolute;
-left:0;
-top:1px;
-
-width:20px;
-height:20px;
-
-border-radius:50%;
-background:#ede9fe;
-
-color:#7c3aed;
-font-size:12px;
-
-font-weight:700;
-display:flex;
-
-justify-content:center;
-align-items:center;
-}
-
 /* hover subtle */
 .info-box:hover{
 transform:translateY(-2px);
@@ -692,31 +670,6 @@ z-index:0;
 pointer-events:none;
 }
 
-.qr-box::after{
-content:"📱 Scan untuk Membayar";
-position:absolute;
-
-left:50%;
-top:-18px;
-transform:translateX(-50%);
-
-padding:10px 18px;
-border-radius:999px;
-background:#fff;
-border:1px solid #ddd6fe;
-
-font-family:"Plus Jakarta Sans",sans-serif;
-font-size:13px;
-font-weight:700;
-color:#7c3aed;
-
-box-shadow:
-0 10px 20px rgba(15,23,42,.06);
-
-z-index:5;
-white-space:nowrap;
-}
-
 .qr-box{
 background-image:
 
@@ -775,6 +728,34 @@ object-fit:cover;
 transition:
 transform .35s ease,
 box-shadow .35s ease;
+}
+
+.qr-badge{
+position:absolute;
+top:-18px;
+left:50%;
+transform:translateX(-50%);
+
+display:flex;
+align-items:center;
+
+gap:10px;
+padding:8px 18px;
+background:#fff;
+
+border-radius:999px;
+border:1px solid rgba(139,92,246,.15);
+box-shadow:
+0 10px 24px rgba(15,23,42,.06);
+
+z-index:10;
+
+font-family:"Plus Jakarta Sans",sans-serif;
+font-size:13px;
+font-weight:700;
+
+color:#7c3aed;
+white-space:nowrap;
 }
 
 /* =========================
