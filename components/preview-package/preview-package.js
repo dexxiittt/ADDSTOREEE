@@ -125,37 +125,30 @@ fetch(
    RENDER PACKAGE
 ========================= */
 
-function renderPackage(data) {
+function renderPackage(data){
 
-  /* Hilangkan Skeleton */
+  console.log("1");
   sk?.remove();
 
-  /* Aktifkan kembali tombol */
-  payBtn?.classList.remove("is-loading");
-
-  /* Tema dari Spreadsheet */
+  console.log("2");
   renderTheme(data);
 
-  /* Informasi Produk */
+  console.log("3");
   renderInfo(data);
 
-  /* Harga • Durasi • Garansi */
+  console.log("4");
   renderMeta(data);
 
-  /* Trust Badge */
+  console.log("5");
   renderTrust(data);
 
-  /* Informasi Paket */
+  console.log("6");
   renderProductNote(data);
 
-  /* Catatan Penting */
+  console.log("7");
   renderLegalNote(data);
 
-  /* Tombol Pembayaran */
-  
-
-  /* Sticky CTA */
-  
+  console.log("SELESAI");
 
 }
 
@@ -238,7 +231,7 @@ if (data.color_title_subtitle) {
 
 }
   
-
+  }
 
 /* =========================
    RENDER INFO
