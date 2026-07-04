@@ -109,9 +109,9 @@ fetch(
 
 .catch(error => {
 
-  console.error("Gagal mengambil data package.", error);
+  console.error(error);
 
-  alert("Terjadi kesalahan saat memuat data.");
+  alert(error.message);
 
 })
 
@@ -237,6 +237,7 @@ if (data.color_title_subtitle) {
   }
 
 }
+  }
 
 
 /* =========================
