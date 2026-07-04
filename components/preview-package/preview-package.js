@@ -109,9 +109,9 @@ fetch(
 
 .catch(error => {
 
-  console.error(error);
+  console.error("Gagal mengambil data package.", error);
 
-  alert(error.message);
+  alert("Terjadi kesalahan saat memuat data.");
 
 })
 
