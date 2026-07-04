@@ -178,15 +178,52 @@ function renderTheme(data) {
   }
 
   /* Badge Diskon */
-  if (data.discount_color) {
+/* Warna Judul & Subtitle */
+if (data.color_title_subtitle) {
 
-    document.documentElement.style.setProperty(
-      "--discount-color",
-      data.discount_color
+  const [titleColor, subtitleColor] =
+
+    data.color_title_subtitle
+      .split("|")
+      .map(item => item.trim().toLowerCase());
+
+  const colors = {
+
+    white: "#ffffff",
+
+    blue: "#60a5fa",
+
+    orange: "#fb923c",
+
+    purple: "#a78bfa",
+
+    green: "#22c55e",
+
+    red: "#ef4444",
+
+    gold: "#fbbf24"
+
+  };
+
+  if (colors[titleColor]) {
+
+    root.style.setProperty(
+      "--title-glow",
+      hexToRgba(colors[titleColor], 0.75)
     );
 
   }
 
+  if (colors[subtitleColor]) {
+
+    root.style.setProperty(
+      "--subtitle-glow",
+      hexToRgba(colors[subtitleColor], 0.45)
+    );
+
+  }
+
+}
 }
 
 
@@ -203,21 +240,65 @@ function renderInfo(data){
 
   const title = document.getElementById("pkg-title");
 
-  if(data.badge_icon){
+  if (data.badge_icon) {
 
-    title.innerHTML = `
-      ${data.title}
-      <span class="badge-icon">
-        ${data.badge_icon.split("|")[0]}
-      </span>
-    `;
+  const parts = data.badge_icon
+    .split("|")
+    .map(item => item.trim());
 
-  }else{
+  const icon = parts[0] || "";
 
-    title.textContent = data.title;
+  const color = (parts[1] || "").toLowerCase();
+
+  const intensity = Number(parts[2]) || 0.55;
+
+  const colors = {
+
+    white: "#ffffff",
+
+    blue: "#60a5fa",
+
+    orange: "#fb923c",
+
+    purple: "#a78bfa",
+
+    green: "#22c55e",
+
+    red: "#ef4444",
+
+    gold: "#fbbf24"
+
+  };
+
+  if (colors[color]) {
+
+    document.documentElement.style.setProperty(
+
+      "--badge-glow",
+
+      hexToRgba(colors[color], intensity)
+
+    );
 
   }
 
+  title.innerHTML = `
+
+    ${data.title}
+
+    <span class="badge-icon">
+
+      ${icon}
+
+    </span>
+
+  `;
+
+} else {
+
+  title.textContent = data.title;
+
+}
   document
   .getElementById("pkg-subtitle")
   .textContent = data.subtitle;
@@ -349,6 +430,147 @@ function renderTrust(data){
     </span>
 
   `).join("");
+
+}
+
+/* =========================
+   RENDER PRODUCT NOTE
+========================= */
+
+function renderProductNote(data) {
+
+  const note =
+  document.getElementById("pkg-product-note");
+
+  if (!note) return;
+
+  /* Tidak ada data */
+  if (!data.not_product) {
+
+    note.remove();
+
+    return;
+
+  }
+
+  const items = data.not_product
+
+    .split("|")
+
+    .map(item => item.trim())
+
+    .filter(item => item.length > 0);
+
+  note.innerHTML = `
+
+    <div class="product-note-title">
+      Informasi Paket
+    </div>
+
+    ${items.map(item => `
+
+      <div class="product-note-line">
+        ${item}
+      </div>
+
+    `).join("")}
+
+  `;
+
+}
+
+
+/* =========================
+   RENDER LEGAL NOTE
+========================= */
+
+function renderLegalNote(data) {
+
+  const note =
+  document.getElementById("pkg-note");
+
+  if (!note) return;
+
+  /* Tidak ada catatan */
+  if (!data.not_legal) {
+
+    note.remove();
+
+    return;
+
+  }
+
+  const lines = data.not_legal
+
+    .split("|")
+
+    .map(line => line.trim())
+
+    .filter(line => line.length > 0);
+
+  const firstLine = lines[0] || "";
+
+  const otherLines = lines.slice(1);
+
+  note.innerHTML = `
+
+    <div class="note-title">
+
+      <span class="note-icon">ⓘ</span>
+
+      Catatan Penting
+
+    </div>
+
+    <div class="note-line">
+
+      ${firstLine}
+
+    </div>
+
+    <div class="note-extra">
+
+      ${otherLines.map(line => `
+
+        <div class="note-line">
+
+          ${line}
+
+        </div>
+
+      `).join("")}
+
+    </div>
+
+  `;
+
+  /* Kalau hanya 1 baris, tidak perlu tombol */
+  if (otherLines.length === 0) {
+
+    return;
+
+  }
+
+  const button =
+  document.createElement("button");
+
+  button.className = "note-toggle";
+
+  button.textContent = "Selengkapnya...";
+
+  button.addEventListener("click", () => {
+
+    const expanded =
+    note.classList.toggle("expanded");
+
+    button.textContent =
+      expanded
+      ? "Tutup"
+      : "Selengkapnya...";
+
+  });
+
+  note.appendChild(button);
 
 }
 
