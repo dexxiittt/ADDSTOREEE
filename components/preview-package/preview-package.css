@@ -513,6 +513,9 @@ BUTTON
   text-align:center;
   text-decoration:none;
 
+  position:relative;
+  overflow:hidden;
+
   cursor:pointer;
 }
 
@@ -521,7 +524,21 @@ BUTTON
   pointer-events:none;
 }
 
+.pay-button:hover{
+  transform:translateY(-2px);
+  box-shadow:
+    0 10px 26px rgba(139,92,246,.38);
 
+  filter:brightness(1.05);
+}
+
+.pay-button:active{
+  transform:scale(.96);
+  filter:brightness(.95);
+  
+  box-shadow:
+    0 4px 12px rgba(139,92,246,.25);
+}
 
 /* ==========
 STICKY CTA
