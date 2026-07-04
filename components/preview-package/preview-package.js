@@ -165,10 +165,6 @@ function renderPackage(data) {
    RENDER THEME
 ========================= */
 
-function renderTheme(data) {
-
-  const root = document.documentElement;
-
   /* Warna Harga */
   function renderTheme(data) {
 
