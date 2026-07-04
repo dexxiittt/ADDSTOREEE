@@ -613,9 +613,11 @@ color:#111827;
 }
 
 .info-list p{
-display:flex;
-align-items:flex-start;
-gap:12px;
+display:grid;
+grid-template-columns:24px 1fr;
+
+align-items:center;
+column-gap:12px;
 
 margin:16px 0;
 font-family:"Plus Jakarta Sans",sans-serif;
@@ -629,12 +631,15 @@ color:#4b5563;
 width:22px;
 height:22px;
 
-border-radius:50%;
-font-size:10px;
-flex-shrink:0;
+display:flex;
 
+justify-content:center;
+align-items:center;
+
+border-radius:50%;
+
+ont-size:10px;
 box-shadow:none;
-margin:0;
 }
 
 .info-list p span:last-child{
