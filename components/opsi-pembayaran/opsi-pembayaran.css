@@ -1,5 +1,5 @@
 body{
-font-family:Poppins;
+font-family:"Plus Jakarta Sans",sans-serif;
 background:#f3f4f8;
 margin:0;
 color:white;
@@ -33,6 +33,7 @@ margin:0 auto;
 }
 
 .package-hero h1{
+font-family:"Sora",sans-serif;
 margin:0 0 12px;
 font-size:clamp(32px,5vw,46px);
 font-weight:700;
@@ -41,6 +42,7 @@ letter-spacing:-.6px;
 }
 
 .package-hero p{
+font-family:"Plus Jakarta Sans",sans-serif;
 margin:0;
 font-size:clamp(15px,2.5vw,19px);
 color:rgba(255,255,255,.88);
@@ -55,7 +57,7 @@ line-height:1.6;
 .payment-container{
 width:min(760px,calc(100% - 32px));
 margin:60px auto 60px;
-
+   
 padding:30px;
 background:#fff;
 
@@ -143,6 +145,7 @@ box-shadow:0 8px 22px rgba(0,0,0,0.2);
 ========================= */
 
 .payment-container h3{
+font-family:"Outfit",sans-serif;
 margin:0 0 22px;
 
 font-size:25px;
@@ -153,6 +156,8 @@ letter-spacing:-.4px;
 }
 
 .payment-container label{
+font-family:"Plus Jakarta Sans",sans-serif;
+   
 display:block;
 
 margin:0 0 8px;
@@ -196,7 +201,7 @@ border-radius:16px;
 background:#fafbff;
 
 font-size:15px;
-font-family:inherit;
+font-family:"DM Sans",sans-serif;
 
 color:#111827;
 box-sizing:border-box;
@@ -262,6 +267,7 @@ margin-bottom:18px;
 }
 
 .paket-title{
+font-family:"Outfit",sans-serif;
 font-size:17px;
 font-weight:700;
 
@@ -270,6 +276,7 @@ margin-bottom:4px;
 }
 
 .paket-sub{
+font-family:"Plus Jakarta Sans",sans-serif;
 font-size:14px;
 color:#6b7280;
 }
@@ -293,6 +300,8 @@ color:#111827;
 }
 
 .summary-total{
+font-family:"Outfit",sans-serif;
+   
 display:flex;
 
 justify-content:space-between;
@@ -374,6 +383,7 @@ text-decoration:line-through;
 }
 
 .price-final{
+font-family:"Outfit",sans-serif;
 font-size:22px;
 font-weight:700;
 
@@ -422,6 +432,8 @@ font-weight:700;
 ========================= */
 
 .secure-info{
+font-family:"Plus Jakarta Sans",sans-serif;
+   
 display:flex;
 justify-content:center;
 align-items:center;
@@ -474,7 +486,7 @@ color:#fff;
 font-size:16px;
 font-weight:700;
 
-font-family:inherit;
+font-family:"Outfit",sans-serif;
 cursor:pointer;
 
 transition:
