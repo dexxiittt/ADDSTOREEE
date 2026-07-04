@@ -441,6 +441,11 @@ box-shadow:
 0 6px 18px rgba(139,92,246,.08);
 }
 
+.secure-info i{
+font-size:16px;
+color:#7c3aed;
+}
+
 /* =========================
    PREMIUM BUTTON
 ========================= */
