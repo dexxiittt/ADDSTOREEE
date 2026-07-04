@@ -54,8 +54,8 @@ line-height:1.6;
 ========================= */
 
 .payment-container{
-width:min(760px,calc(100% - 32px));
-margin:0 auto 60px;
+width:min(760px,calc(100% - 24px));
+margin:28px auto 60px;
 
 padding:30px;
 background:#fff;
