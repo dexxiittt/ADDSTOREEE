@@ -48,7 +48,9 @@ Pembayaran pesanan kamu
 Pembayaran Berhasil
 </div>
 <div class="invoice-price" id="total"></div>
-<div class="invoice-time" id="time"></div>
+<div class="invoice-time">
+<i class="fa-regular fa-clock"></i>
+<span id="time"></span>
 </div>
 
 <!-- DETAIL -->
@@ -165,20 +167,148 @@ Email
 </div>
 
 <!-- STATUS -->
+
+<h3 class="section-title">
+<span class="section-icon icon-gold">
+<i class="fa-solid fa-circle-exclamation"></i>
+</span>
+<span>Status Pembayaran</span>
+</h3>
+
 <div class="status-box">
-<div class="status-title">✅ Sudah Dibayarkan</div>
-<div>Pembayaran telah diterima sebesar <b id="total3"></b></div>
+
+  <div class="status-header">
+
+    <div class="status-icon">
+      <i class="fa-solid fa-hourglass-half"></i>
+    </div>
+
+    <div>
+
+      <div class="status-title">
+        Menunggu Pembayaran
+      </div>
+
+      <div class="status-description">
+        Silakan lakukan pembayaran sesuai nominal yang tertera pada invoice.
+      </div>
+
+      <!-- TIMELINE STATUS -->
+      <div class="payment-progress">
+
+        <div class="progress-item active">
+
+          <div class="floating-icon icon-purple">
+            <i class="fa-solid fa-check"></i>
+          </div>
+
+          <span>Pesanan Dibuat</span>
+
+        </div>
+
+        <div class="progress-item current">
+
+          <div class="floating-icon icon-gold">
+            <i class="fa-solid fa-circle"></i>
+          </div>
+
+          <span>Menunggu Pembayaran</span>
+
+        </div>
+
+        <div class="progress-item">
+
+          <div class="floating-icon icon-white">
+            <i class="fa-solid fa-circle"></i>
+          </div>
+
+          <span>Verifikasi Admin</span>
+
+        </div>
+
+        <div class="progress-item">
+
+          <div class="floating-icon icon-white">
+            <i class="fa-solid fa-circle"></i>
+          </div>
+
+          <span>Pesanan Selesai</span>
+
+        </div>
+
+      </div>
+      <!-- END TIMELINE -->
+
+    </div>
+
+  </div>
+
+  <div class="status-total">
+
+    <div class="floating-icon icon-green">
+      <i class="fa-solid fa-sack-dollar"></i>
+    </div>
+
+    <b id="total3"></b>
+
+  </div>
+
+  <div class="status-tip">
+
+    <div style="display:flex;align-items:flex-start;gap:12px;">
+
+      <div class="floating-icon icon-gold">
+        <i class="fa-solid fa-lightbulb"></i>
+      </div>
+
+      <div>
+
+        <b>Tips</b>
+
+        <br><br>
+
+        Pastikan nominal pembayaran sesuai agar proses verifikasi oleh admin berjalan lebih cepat.
+
+      </div>
+
+    </div>
+
+  </div>
+
 </div>
 
 <!-- KONTAK ADMIN -->
+<h3 class="section-title">
+
+<span class="section-icon icon-green">
+<i class="fa-brands fa-whatsapp"></i>
+</span>
+<span>Hubungi Admin</span>
+</h3>
+
 <div class="wa-box">
-<div><b>Sudah melakukan pembayaran?</b></div>
-<div style="font-size:14px; color:#4b5563; margin-top:6px;">
-Segera hubungi admin jika status masih pending
+<div class="support-header">
+<div class="support-icon">
+<i class="fa-brands fa-whatsapp"></i>
+</div>
+
+<div>
+<div class="support-title">
+Hubungi Admin
+</div>
+
+<div class="support-description">
+Sudah melakukan pembayaran tetapi status masih <b>Pending</b>?
+<br><br>
+Kirim bukti pembayaran ke admin agar proses verifikasi dapat segera dilakukan.
+</div>
+</div>
 </div>
 
 <button onclick="chatAdmin()" class="wa-btn">
-Chat Admin
+<i class="fa-brands fa-whatsapp"></i>
+<span>Chat Admin Sekarang</span>
+
 </button>
 </div>
 
