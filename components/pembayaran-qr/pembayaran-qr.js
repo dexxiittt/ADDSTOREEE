@@ -1,24 +1,19 @@
 function generateInvoice(){
 
-const now = new Date()
+const now = new Date();
 
-const year = now.getFullYear()
+const year = now.getFullYear();
 
-// random 5 digit
-const random = Math.floor(10000 + Math.random() * 90000)
+// Random 5 digit
+const random = Math.floor(10000 + Math.random() * 90000);
 
-// tanggal & bulan
-const tanggal = String(now.getDate()).padStart(2, "0")
-const bulan = String(now.getMonth() + 1).padStart(2, "0")
+// Jam Menit Detik
+const jam = String(now.getHours()).padStart(2,"0");
+const menit = String(now.getMinutes()).padStart(2,"0");
+const detik = String(now.getSeconds()).padStart(2,"0");
 
-// jam menit detik
-const jam = String(now.getHours()).padStart(2, "0")
-const menit = String(now.getMinutes()).padStart(2, "0")
-const detik = String(now.getSeconds()).padStart(2, "0")
+return `${year}${random}${jam}${menit}${detik}`;
 
-// ⛔ counter DIHAPUS
-
-return `INV${year}${random}${tanggal}${bulan}${jam}${menit}${detik}`
 }
   
 /* ==============================
