@@ -373,26 +373,50 @@ border:1px solid #e5e7eb;
 
 .invoice-number{
 display:flex;
-justify-content:space-between;
-
 align-items:center;
 
-font-family:"Outfit";
-font-size:24px;
-
+gap:12px;
+   
+font-family:"Outfit",sans-serif;
+font-size:34px;
 font-weight:800;
-letter-spacing:.8px;
+
+letter-spacing:.5px;
+color:#111827;
+flex-wrap:wrap;
+}
+
+.invoice-label{
+display:inline-flex;
+align-items:center;
+gap:10px;
+
+margin-bottom:14px;
+
+font-family:"Sora",sans-serif;
+font-size:18px;
+font-weight:700;
+
+color:#111827;
 }
 
 .copy-invoice-btn{
-width:42px;
-height:42px;
+display:flex;
+align-items:center;
+justify-content:center;
+
+width:44px;
+height:44px;
+
+flex-shrink:0;
+
+margin-left:4px;
 border:none;
 
 border-radius:12px;
-cursor:pointer;
-
 background:#f3f4f6;
+
+cursor:pointer;
 transition:.3s;
 }
 
@@ -455,8 +479,8 @@ word-break:break-word;
 display:inline-flex;
 align-items:center;
 
-gap:10px;
-padding:10px 16px;
+gap:12px;
+padding:12px 18px;
 border-radius:999px;
 
 background:#ffffff;
@@ -464,7 +488,7 @@ border:1px solid rgba(251,191,36,.35);
   
 font-family:"Plus Jakarta Sans",sans-serif;
 font-weight:700;
-font-size:14px;
+font-size:16px;
 
 color:#ca8a04;
 margin-bottom:20px;
