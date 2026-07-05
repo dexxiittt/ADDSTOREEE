@@ -31,7 +31,8 @@ if(img){
   }
 }
   
-// HARGA
+
+  
 // ambil semua harga Rp xxx
 const matches = localData.paketHarga.match(/Rp\s?[\d\.]+/g)
 
@@ -59,41 +60,45 @@ const statusDescription = document.getElementById("statusDescription")
 const statusTipText = document.getElementById("statusTipText")
 const statusIconFa = document.getElementById("statusIconFa")
 
+
+
+
+
+
+  
 if(status==="pending"){
 
 setPendingUI();
 
-// warna kuning
-// STEP 1
-// invoiceBox.style.background = "#fef9c3"
-// invoiceBox.style.border = "1px solid #fde047"
-
-// statusBox.style.background = "#fef9c3"
-// statusBox.style.border = "1px solid #fde047"
-
-
-  // teks
 
 
 
 
-// box bawah
+
+
+
 
 
 }else{
 
 
-  // hijau (default)
-// invoiceBox.style.background = "#dcfce7"
-// invoiceBox.style.border = "1px solid #86efac"
 
-statusBadgeText.innerText = "Pembayaran Berhasil"
+
+
+
 
 
 
 setSuccessUI();
 
 }
+
+
+
+
+
+
+  
 
 // INVOICE & TIME
 let invoice = localStorage.getItem("invoiceID")
@@ -186,12 +191,17 @@ document.getElementById("total3").innerText = rp(total)
 
 }
 
+
+
+
+
+
 function setPendingUI(){
 
 }
 
 function setSuccessUI(){
-
+statusBadgeText.innerText = "Pembayaran Berhasil"
 }
 
 
@@ -235,13 +245,16 @@ window.open(url, "_blank")
 
 }
 
+
+
+
+
+
 function copyInvoice(){
-
 navigator.clipboard.writeText(rawInvoice);
-
 showCopyToast();
-
 }
+
 
 function showCopyToast(){
 
