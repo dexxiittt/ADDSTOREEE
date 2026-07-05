@@ -70,38 +70,9 @@ if(status==="pending"){
 
 setPendingUI();
 
-statusBadgeText.innerText =
-"Menunggu Pembayaran";
-statusTitle.innerText =
-"Menunggu Pembayaran";
-statusDescription.innerText =
-"Silakan lakukan pembayaran sesuai nominal yang tertera pada invoice.";
-statusTipText.innerHTML =
-"Pastikan nominal pembayaran sesuai agar proses verifikasi oleh admin berjalan lebih cepat.";
-statusBadgeIcon.className =
-"fa-solid fa-stopwatch";
-statusIconFa.className =
-"fa-solid fa-hourglass-half";
-
-
-
 }else{
 
 setSuccessUI();
-
-
-statusBadgeText.innerText =
-"Pembayaran Berhasil";
-statusTitle.innerText =
-"Pembayaran Berhasil";
-statusDescription.innerText =
-"Pembayaran telah diterima dan berhasil diverifikasi oleh admin.";
-statusTipText.innerHTML =
-"Pesanan sedang diproses oleh admin. Terima kasih telah melakukan pembayaran.";
-statusBadgeIcon.className =
-"fa-solid fa-check";
-statusIconFa.className =
-"fa-solid fa-check";
 
 }
 
@@ -157,6 +128,20 @@ if(!found){
 alert("Invoice tidak ditemukan ❌")
 return
 }
+
+const statusRes = await fetch(
+"https://opensheet.elk.sh/SPREADSHEET_ID/status_payment"
+);
+
+const statusData = await statusRes.json();
+
+const statusRow =
+statusData.find(x => x.invoice == found.invoice);
+
+const paymentStatus =
+(statusRow?.status || "").trim().toLowerCase();
+
+  
 
 // split customer
 const info = found.informasi_pelanggan.split("|")
@@ -236,6 +221,22 @@ document.getElementById("stepVerification")
 document.getElementById("stepProcess")
 .className =
 "progress-item";
+
+
+statusBadgeText.innerText =
+"Menunggu Pembayaran";
+statusTitle.innerText =
+"Menunggu Pembayaran";
+statusDescription.innerText =
+"Silakan lakukan pembayaran sesuai nominal yang tertera pada invoice.";
+statusTipText.innerHTML =
+"Pastikan nominal pembayaran sesuai agar proses verifikasi oleh admin berjalan lebih cepat.";
+statusBadgeIcon.className =
+"fa-solid fa-stopwatch";
+statusIconFa.className =
+"fa-solid fa-hourglass-half";
+
+
 }
 
 
@@ -272,6 +273,21 @@ document.getElementById("stepVerification")
 document.getElementById("stepProcess")
 .className =
 "progress-item current";
+
+
+statusBadgeText.innerText =
+"Pembayaran Berhasil";
+statusTitle.innerText =
+"Pembayaran Berhasil";
+statusDescription.innerText =
+"Pembayaran telah diterima dan berhasil diverifikasi oleh admin.";
+statusTipText.innerHTML =
+"Pesanan sedang diproses oleh admin. Terima kasih telah melakukan pembayaran.";
+statusBadgeIcon.className =
+"fa-solid fa-check";
+statusIconFa.className =
+"fa-solid fa-check";
+  
 }
 
 
