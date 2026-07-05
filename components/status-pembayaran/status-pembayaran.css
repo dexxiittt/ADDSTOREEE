@@ -968,6 +968,25 @@ color:#22c55e;
 font-size:18px;
 }
 
+.invoice-box.status-pending{
+    background:#fff9db;
+    border-color:#fde047;
+}
+
+.status-box.status-pending{
+    background:#fff9db;
+    border-color:#fde047;
+}
+
+.invoice-box.status-success{
+    background:#f0fdf4;
+    border-color:#86efac;
+}
+
+.status-box.status-success{
+    background:#f0fdf4;
+    border-color:#86efac;
+}
 
 @media (max-width:768px){
 .container{
