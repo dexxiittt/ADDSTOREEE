@@ -75,9 +75,50 @@ if(status==="pending"){
 
 setPendingUI();
 
+// =======================
+// TIMELINE PENDING
+// =======================
+
+document.getElementById("stepOrder")
+.className =
+"progress-item completed";
+
+document.getElementById("stepPayment")
+.className =
+"progress-item current";
+
+document.getElementById("stepVerification")
+.className =
+"progress-item";
+
+document.getElementById("stepProcess")
+.className =
+"progress-item";
+
+
 }else{
 
 setSuccessUI();
+
+// =======================
+// TIMELINE SUCCESS
+// =======================
+
+document.getElementById("stepOrder")
+.className =
+"progress-item completed";
+
+document.getElementById("stepPayment")
+.className =
+"progress-item completed";
+
+document.getElementById("stepVerification")
+.className =
+"progress-item completed";
+
+document.getElementById("stepProcess")
+.className =
+"progress-item current";
 
 }
 
@@ -221,27 +262,8 @@ statusBox.classList.remove("status-success");
 invoiceBox.classList.add("status-pending");
 statusBox.classList.add("status-pending");
 
-// =======================
-// TIMELINE PENDING
-// =======================
+updateProgress("pending");
 
-document.getElementById("stepOrder")
-.className =
-"progress-item completed";
-
-document.getElementById("stepPayment")
-.className =
-"progress-item current";
-
-document.getElementById("stepVerification")
-.className =
-"progress-item";
-
-document.getElementById("stepProcess")
-.className =
-"progress-item";
-
-  
 // =======================
 // STATUS PENDING
 // =======================
@@ -293,26 +315,7 @@ statusBox.classList.remove("status-pending");
 invoiceBox.classList.add("status-success");
 statusBox.classList.add("status-success");
   
-// =======================
-// TIMELINE SUCCESS
-// =======================
-
-  
-document.getElementById("stepOrder")
-.className =
-"progress-item completed";
-
-document.getElementById("stepPayment")
-.className =
-"progress-item completed";
-
-document.getElementById("stepVerification")
-.className =
-"progress-item completed";
-
-document.getElementById("stepProcess")
-.className =
-"progress-item current";
+updateProgress("success");
 
 // =======================
 // STATUS SUCCESS
@@ -337,8 +340,12 @@ statusIconFa.className =
   
 }
 
+// =============================
+// UPDATE PROGRESS
+// =============================
+function updateProgress(status){
 
-
+}
 
 // =============================
 // WA ADMIN
