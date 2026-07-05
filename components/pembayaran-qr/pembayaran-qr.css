@@ -702,10 +702,6 @@ transform .35s ease,
 box-shadow .35s ease;
 }
 
-.qr-box span{
-display:none;
-}
-
 .qr-box::before{
 content:"";
 
