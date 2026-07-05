@@ -51,103 +51,41 @@ document.getElementById("total2").innerText = localData.total
 document.getElementById("total3").innerText = localData.total
 
 const invoiceBox = document.getElementById("invoiceBox")
-const statusText = document.getElementById("statusText")
-const statusBox = document.querySelector(".status-box")
+const statusBox = document.getElementById("statusBox")
+const statusBadgeIcon = document.getElementById("statusBadgeIcon")
+const statusBadgeText = document.getElementById("statusBadgeText")
+const statusTitle = document.getElementById("statusTitle")
+const statusDescription = document.getElementById("statusDescription")
+const statusTipText = document.getElementById("statusTipText")
+const statusIconFa = document.getElementById("statusIconFa")
 
 if(status === "pending"){
 
 // warna kuning
-invoiceBox.style.background = "#fef9c3"
-invoiceBox.style.border = "1px solid #fde047"
+// STEP 1
+// invoiceBox.style.background = "#fef9c3"
+// invoiceBox.style.border = "1px solid #fde047"
 
-statusBox.style.background = "#fef9c3"
-statusBox.style.border = "1px solid #fde047"
+// statusBox.style.background = "#fef9c3"
+// statusBox.style.border = "1px solid #fde047"
 
 
   // teks
-statusText.innerHTML = `
-<span style="display:flex; align-items:center; gap:8px;">
 
-  <!-- BOX PUTIH -->
-  <span style="
-    background:white;
-    padding:6px;
-    border-radius:6px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  ">
 
-    <svg xmlns="http://www.w3.org/2000/svg" 
-         width="16" height="16" 
-         viewBox="0 0 24 24" 
-         fill="none" 
-         stroke="#7c3aed" 
-         stroke-width="2" 
-         stroke-linecap="round" 
-         stroke-linejoin="round">
 
-      <circle cx="12" cy="12" r="9"></circle>
-      <path d="M12 7v5l3 2"></path>
-
-    </svg>
-
-  </span>
-
-  <span>Menunggu Pembayaran</span>
-</span>
-`
-statusText.style.color = "#ca8a04"
 
 // box bawah
-statusBox.innerHTML = `
-<div class="status-title" style="color:#ca8a04; display:flex; align-items:center; gap:10px;">
 
-  <!-- BOX PUTIH ICON -->
-  <span style="
-    background:white;
-    padding:6px;
-    border-radius:6px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  ">
-
-    <svg xmlns="http://www.w3.org/2000/svg" 
-         width="16" height="16" 
-         viewBox="0 0 24 24" 
-         fill="none" 
-         stroke="#ca8a04" 
-         stroke-width="2" 
-         stroke-linecap="round" 
-         stroke-linejoin="round">
-
-      <path d="M12 9v4"></path>
-      <path d="M12 17h.01"></path>
-      <path d="M10.29 3.86l-7.34 12.73A2 2 0 0 0 4.63 20h14.74a2 2 0 0 0 1.68-3.41L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-
-    </svg>
-
-  </span>
-
-  <span>Menunggu Pembayaran</span>
-
-</div>
-
-<div style="margin-left:2px;">
-  Silahkan lakukan pembayaran sesuai nominal <b>${localData.total}</b>
-</div>
-`
 
 }else{
 
 
   // hijau (default)
-invoiceBox.style.background = "#dcfce7"
-invoiceBox.style.border = "1px solid #86efac"
+// invoiceBox.style.background = "#dcfce7"
+// invoiceBox.style.border = "1px solid #86efac"
 
 statusText.innerText = "Pembayaran Berhasil"
-statusText.style.color = "#16a34a"
 
 statusBox.innerHTML = `
 <div class="status-title">✅ Sudah Dibayarkan</div>
