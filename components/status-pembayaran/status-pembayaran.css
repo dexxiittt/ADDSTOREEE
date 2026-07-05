@@ -94,9 +94,10 @@ margin-inline:auto;
 
 .container{
 position:relative;
+left:20px;
 
 max-width:920px;
-margin:-48px auto 70px;
+margin:24px auto 70px;
 padding:28px;
 
 background:rgba(255,255,255,.95);
@@ -833,7 +834,7 @@ transform:scale(.98);
 
 @media (max-width:768px){
 .container{
-margin:-36px 16px 50px;
+margin:20px 16px 50px;
 padding:20px;
 border-radius:22px;
 }
