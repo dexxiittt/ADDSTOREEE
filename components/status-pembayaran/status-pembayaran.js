@@ -275,3 +275,22 @@ const url = "https://wa.me/6285881500868?text=" + encodeURIComponent(pesan)
 window.open(url, "_blank")
 
 }
+
+function copyInvoice(){
+const invoice =
+document.getElementById("invoice").textContent;
+
+navigator.clipboard.writeText(invoice);
+showCopyToast();
+}
+
+function showCopyToast(){
+
+const toast =
+document.getElementById("copyToast");
+toast.classList.add("show");
+
+setTimeout(()=>{
+toast.classList.remove("show");
+},2000);
+}
