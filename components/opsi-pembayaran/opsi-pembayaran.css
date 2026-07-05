@@ -285,16 +285,37 @@ color:#6b7280;
 }
 
 .summary-row{
+position:relative;
 display:flex;
 
 justify-content:space-between;
 align-items:center;
 
-padding:12px 0;
-font-size:14px;
+padding:12px 0 16px;
 
+font-size:14px;
 color:#6b7280;
-border-top:1px dashed #e5e7eb;
+
+border:none;
+}
+
+.summary-row::after{
+content:"";
+position:absolute;
+
+left:0;
+right:0;
+bottom:0;
+
+height:2px;
+
+background:repeating-linear-gradient(
+90deg,
+#e5e7eb 0 8px,
+transparent 8px 16px
+);
+
+opacity:.8;
 }
 
 .summary-row span:last-child{
@@ -364,6 +385,11 @@ flex-direction:column;
 align-items:flex-end;
 gap:2px;
 }
+
+.summary-row:last-of-type::after{
+display:none;
+}
+
 
 /* =========================
    PRICE STYLE
