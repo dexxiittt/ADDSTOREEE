@@ -70,26 +70,38 @@ if(status==="pending"){
 
 setPendingUI();
 
-
-
-
-
-
-
+statusBadgeText.innerText =
+"Menunggu Pembayaran";
+statusTitle.innerText =
+"Menunggu Pembayaran";
+statusDescription.innerText =
+"Silakan lakukan pembayaran sesuai nominal yang tertera pada invoice.";
+statusTipText.innerHTML =
+"Pastikan nominal pembayaran sesuai agar proses verifikasi oleh admin berjalan lebih cepat.";
+statusBadgeIcon.className =
+"fa-solid fa-stopwatch";
+statusIconFa.className =
+"fa-solid fa-hourglass-half";
 
 
 
 }else{
 
-
-
-
-
-
-
-
-
 setSuccessUI();
+
+
+statusBadgeText.innerText =
+"Pembayaran Berhasil";
+statusTitle.innerText =
+"Pembayaran Berhasil";
+statusDescription.innerText =
+"Pembayaran telah diterima dan berhasil diverifikasi oleh admin.";
+statusTipText.innerHTML =
+"Pesanan sedang diproses oleh admin. Terima kasih telah melakukan pembayaran.";
+statusBadgeIcon.className =
+"fa-solid fa-check";
+statusIconFa.className =
+"fa-solid fa-check";
 
 }
 
@@ -193,17 +205,74 @@ document.getElementById("total3").innerText = rp(total)
 
 
 
-
-
-
 function setPendingUI(){
 
+const invoiceBox = document.getElementById("invoiceBox")
+const statusBox = document.getElementById("statusBox")
+const statusBadgeIcon = document.getElementById("statusBadgeIcon")
+const statusBadgeText = document.getElementById("statusBadgeText")
+const statusTitle = document.getElementById("statusTitle")
+const statusDescription = document.getElementById("statusDescription")
+const statusTipText = document.getElementById("statusTipText")
+const statusIconFa = document.getElementById("statusIconFa")
+
+
+// =======================
+// TIMELINE PENDING
+// =======================
+
+document.getElementById("stepOrder")
+.className =
+"progress-item completed";
+
+document.getElementById("stepPayment")
+.className =
+"progress-item current";
+
+document.getElementById("stepVerification")
+.className =
+"progress-item";
+
+document.getElementById("stepProcess")
+.className =
+"progress-item";
 }
+
+
 
 function setSuccessUI(){
-statusBadgeText.innerText = "Pembayaran Berhasil"
-}
 
+const invoiceBox = document.getElementById("invoiceBox")
+const statusBox = document.getElementById("statusBox")
+const statusBadgeIcon = document.getElementById("statusBadgeIcon")
+const statusBadgeText = document.getElementById("statusBadgeText")
+const statusTitle = document.getElementById("statusTitle")
+const statusDescription = document.getElementById("statusDescription")
+const statusTipText = document.getElementById("statusTipText")
+const statusIconFa = document.getElementById("statusIconFa")
+
+  
+// =======================
+// TIMELINE SUCCESS
+// =======================
+
+  
+document.getElementById("stepOrder")
+.className =
+"progress-item completed";
+
+document.getElementById("stepPayment")
+.className =
+"progress-item completed";
+
+document.getElementById("stepVerification")
+.className =
+"progress-item completed";
+
+document.getElementById("stepProcess")
+.className =
+"progress-item current";
+}
 
 
 
