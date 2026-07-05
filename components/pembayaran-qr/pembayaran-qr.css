@@ -691,10 +691,6 @@ transform .35s ease,
 box-shadow .35s ease;
 }
 
-.qr-box span{
-display:none;
-}
-
 .qr-box::before{
 content:"";
 
@@ -780,17 +776,18 @@ box-shadow .35s ease;
 position:absolute;
 top:-18px;
 left:50%;
+
 transform:translateX(-50%);
 
 display:flex;
 align-items:center;
 
 gap:10px;
-padding:8px 18px;
+padding:8px 16px;
 background:#fff;
 
-border-radius:999px;
 border:1px solid rgba(139,92,246,.15);
+border-radius:999px;
 box-shadow:
 0 10px 24px rgba(15,23,42,.06);
 
