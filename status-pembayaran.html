@@ -43,14 +43,43 @@ Pembayaran pesanan kamu
 
 <!-- INVOICE -->
 <div class="invoice-box" id="invoiceBox">
-<div class="invoice-id" id="invoice"></div>
-<div class="invoice-status" id="statusText">
-Pembayaran Berhasil
+<div class="invoice-number-box">
+<div class="invoice-label">
+
+<div class="floating-icon icon-green">
+<i class="fa-solid fa-receipt"></i>
 </div>
+
+<span>Invoice</span>
+
+</div>
+
+<div class="invoice-number">
+<span id="invoice"></span>
+
+<button class="copy-invoice-btn"
+onclick="copyInvoice()">
+<i class="fa-regular fa-copy"></i>
+</button>
+
+</div>
+
+</div>
+
+<div class="invoice-status" id="statusText">
+<div class="floating-icon icon-gold">
+<i class="fa-solid fa-stopwatch"></i>
+</div>
+
+<span>Menunggu Pembayaran</span>
+
+</div>
+
 <div class="invoice-price" id="total"></div>
 <div class="invoice-time">
 <i class="fa-regular fa-clock"></i>
 <span id="time"></span>
+
 </div>
 
 <!-- DETAIL -->
@@ -323,5 +352,10 @@ Kirim bukti pembayaran ke admin agar proses verifikasi dapat segera dilakukan.
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <script src="components/status-pembayaran/status-pembayaran.js"></script>
+
+<div id="copyToast" class="copy-toast">
+<i class="fa-solid fa-check"></i>
+<span>Invoice berhasil disalin</span>
+</div>
 </body>
 </html>
