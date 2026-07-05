@@ -59,7 +59,9 @@ const statusDescription = document.getElementById("statusDescription")
 const statusTipText = document.getElementById("statusTipText")
 const statusIconFa = document.getElementById("statusIconFa")
 
-if(status === "pending"){
+if(status==="pending"){
+
+setPendingUI();
 
 // warna kuning
 // STEP 1
@@ -88,6 +90,8 @@ if(status === "pending"){
 statusBadgeText.innerText = "Pembayaran Berhasil"
 
 
+
+setSuccessUI();
 
 }
 
@@ -181,6 +185,19 @@ document.getElementById("total2").innerText = rp(total)
 document.getElementById("total3").innerText = rp(total)
 
 }
+
+function setPendingUI(){
+
+}
+
+function setSuccessUI(){
+
+}
+
+
+
+
+
 
 function chatAdmin(){
 
