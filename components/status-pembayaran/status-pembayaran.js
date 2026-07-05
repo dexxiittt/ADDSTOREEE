@@ -85,12 +85,9 @@ if(status === "pending"){
 // invoiceBox.style.background = "#dcfce7"
 // invoiceBox.style.border = "1px solid #86efac"
 
-statusText.innerText = "Pembayaran Berhasil"
+statusBadgeText.innerText = "Pembayaran Berhasil"
 
-statusBox.innerHTML = `
-<div class="status-title">✅ Sudah Dibayarkan</div>
-<div>Pembayaran telah diterima sebesar <b>${localData.total}</b></div>
-`
+
 
 }
 
