@@ -55,6 +55,9 @@ line-height:1.6;
 ========================= */
 
 .payment-container{
+position:relative;
+left:20px;
+   
 width:min(760px,calc(100% - 32px));
 margin:60px auto 60px;
    
