@@ -608,12 +608,14 @@ color:#6b7280;
 
 /* baris */
 .summary-row{
+position:relative;
+   
 display:flex;
 
 justify-content:space-between;
 align-items:center;
 
-padding:16px 0;
+padding:18px 0;
 font-family:"Plus Jakarta Sans",sans-serif;
 
 font-size:15px;
@@ -621,25 +623,33 @@ color:#4b5563;
 }
 
 .summary-row::after{
+content:"";
+position:absolute;
+
+left:0;
+right:0;
+bottom:0;
+
 height:1px;
 
-background:linear-gradient(
+background:repeating-linear-gradient(
 90deg,
-transparent,
-#e5e7eb,
-transparent
+#e5e7eb 0 6px,
+transparent 6px 12px
 );
-}
 
+opacity:.8;
+
+}
 /* total */
 .summary-total{
 display:flex;
 justify-content:space-between;
 
 align-items:center;
-margin-top:18px;
+margin-top:8px;
 
-padding-top:18px;
+padding-top:20px;
 border-top:2px dashed #e5e7eb;
 
 font-family:"Outfit",sans-serif;
