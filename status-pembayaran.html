@@ -66,12 +66,18 @@ onclick="copyInvoice()">
 
 </div>
 
-<div class="invoice-status" id="statusText">
-<div class="floating-icon icon-gold">
-<i class="fa-solid fa-stopwatch"></i>
-</div>
+<div class="invoice-status">
 
-<span>Menunggu Pembayaran</span>
+    <div class="floating-icon icon-gold">
+        <i id="statusBadgeIcon"
+           class="fa-solid fa-stopwatch"></i>
+    </div>
+
+    <span id="statusBadgeText">
+
+        Menunggu Pembayaran
+
+    </span>
 
 </div>
 
@@ -242,7 +248,7 @@ Silakan lakukan pembayaran sesuai nominal yang tertera pada invoice.
       <div class="payment-progress">
 
   <!-- STEP 1 -->
-  <div class="progress-item completed">
+  <div id="stepOrder" class="progress-item completed">
 
     <div class="floating-icon icon-purple">
       <i class="fa-solid fa-check"></i>
@@ -253,7 +259,7 @@ Silakan lakukan pembayaran sesuai nominal yang tertera pada invoice.
   </div>
 
   <!-- STEP 2 -->
-  <div class="progress-item current">
+  <div id="stepPayment" class="progress-item current">
 
     <div class="floating-icon icon-gold">
       <i class="fa-solid fa-hourglass-half"></i>
@@ -264,7 +270,7 @@ Silakan lakukan pembayaran sesuai nominal yang tertera pada invoice.
   </div>
 
   <!-- STEP 3 -->
-  <div class="progress-item pending">
+  <div id="stepVerification" class="progress-item pending">
 
     <div class="floating-icon icon-white">
       <i class="fa-solid fa-circle"></i>
@@ -275,7 +281,7 @@ Silakan lakukan pembayaran sesuai nominal yang tertera pada invoice.
   </div>
 
   <!-- STEP 4 -->
-  <div class="progress-item pending">
+  <div id="stepProcess" class="progress-item pending">
 
     <div class="floating-icon icon-white">
       <i class="fa-solid fa-circle"></i>
@@ -303,20 +309,21 @@ Silakan lakukan pembayaran sesuai nominal yang tertera pada invoice.
 
   </div>
 
-  <div class="status-tip"
-id="statusTip">
+<div class="status-tip" id="statusTip">
 
-    <div style="display:flex;align-items:flex-start;gap:12px;">
+  <div style="display:flex;align-items:flex-start;gap:12px;">
 
-      <div class="floating-icon icon-gold">
-        <i class="fa-solid fa-lightbulb"></i>
-      </div>
+    <div class="floating-icon icon-gold">
+      <i class="fa-solid fa-lightbulb"></i>
+    </div>
 
-      <div>
+    <div>
 
-        <b>Tips</b>
+      <b>Tips</b>
 
-        <br><br>
+      <br><br>
+
+      <div id="statusTipText">
 
         Pastikan nominal pembayaran sesuai agar proses verifikasi oleh admin berjalan lebih cepat.
 
@@ -325,6 +332,8 @@ id="statusTip">
     </div>
 
   </div>
+
+</div>
 
 </div>
 
