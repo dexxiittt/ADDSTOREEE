@@ -3,7 +3,7 @@ let rawInvoice = "";
 window.onload = async function(){
 
 // =============================
-// 🔥 PRIORITAS: AMBIL DARI LOCAL STORAGE
+// PRIORITAS: AMBIL DARI LOCAL STORAGE
 // =============================
 const localData = JSON.parse(localStorage.getItem("paymentData"))
 
@@ -11,16 +11,24 @@ if(localData){
 
 const status = localStorage.getItem("paymentStatus") || "pending"
 
+// =============================
 // CUSTOMER
+// =============================
+
 document.getElementById("nama").innerText = localData.nama
 document.getElementById("wa").innerText = localData.telepon
 document.getElementById("email").innerText = localData.email
 
-// PRODUK
+// =============================
+// // PRODUK
+// =============================
+
 document.getElementById("paket").innerText = localData.paket
 document.getElementById("paketDetail").innerText = localData.paketDetail
 
+// =============================
 // GAMBAR PRODUK 
+// =============================
 const img = document.getElementById("productImage")
 
 if(img){
@@ -60,12 +68,9 @@ const statusDescription = document.getElementById("statusDescription")
 const statusTipText = document.getElementById("statusTipText")
 const statusIconFa = document.getElementById("statusIconFa")
 
-
-
-
-
-
-  
+// =============================
+// TAMPILKAN STATUS
+// =============================
 if(status==="pending"){
 
 setPendingUI();
@@ -76,14 +81,10 @@ setSuccessUI();
 
 }
 
-
-
-
-
-
-  
-
+// =============================
 // INVOICE & TIME
+// =============================
+
 let invoice = localStorage.getItem("invoiceID")
   
 rawInvoice = invoice
@@ -105,7 +106,7 @@ const formattedTime = now.toLocaleString("id-ID", {
 .trim()                 // rapihin spasi
 
 document.getElementById("time").innerText = formattedTime
-return // STOP di sini
+return
 }
 
 // =============================
@@ -119,6 +120,9 @@ alert("Invoice tidak ditemukan ❌")
 return
 }
 
+// =============================
+// AMBIL INVOICE DARI URL
+// ============================= 
 const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/payment_id")
 const data = await res.json()
 
@@ -129,6 +133,9 @@ alert("Invoice tidak ditemukan ❌")
 return
 }
 
+// =============================
+// AMBIL STATUS PEMBAYARAN
+// =============================
 const statusRes = await fetch(
 "https://opensheet.elk.sh/SPREADSHEET_ID/status_payment"
 );
@@ -189,7 +196,9 @@ document.getElementById("total3").innerText = rp(total)
 }
 
 
-
+// =============================
+// PENDING
+// =============================
 function setPendingUI(){
 
 const invoiceBox = document.getElementById("invoiceBox")
@@ -201,6 +210,16 @@ const statusDescription = document.getElementById("statusDescription")
 const statusTipText = document.getElementById("statusTipText")
 const statusIconFa = document.getElementById("statusIconFa")
 
+
+// =======================
+// AKTIFKAN TEMA CSS
+// =======================
+
+invoiceBox.classList.remove("status-success");
+statusBox.classList.remove("status-success");
+
+invoiceBox.classList.add("status-pending");
+statusBox.classList.add("status-pending");
 
 // =======================
 // TIMELINE PENDING
@@ -222,7 +241,11 @@ document.getElementById("stepProcess")
 .className =
 "progress-item";
 
-
+  
+// =======================
+// STATUS PENDING
+// =======================
+  
 statusBadgeText.innerText =
 "Menunggu Pembayaran";
 statusTitle.innerText =
@@ -237,10 +260,17 @@ statusIconFa.className =
 "fa-solid fa-hourglass-half";
 
 
+// =======================
+// TOMBOL ADMIN
+// =======================
+
+
 }
 
 
-
+// =============================
+// SUCCESS
+// =============================
 function setSuccessUI(){
 
 const invoiceBox = document.getElementById("invoiceBox")
@@ -252,6 +282,16 @@ const statusDescription = document.getElementById("statusDescription")
 const statusTipText = document.getElementById("statusTipText")
 const statusIconFa = document.getElementById("statusIconFa")
 
+
+// =======================
+// AKTIFKAN TEMA CSS
+// =======================
+
+invoiceBox.classList.remove("status-pending");
+statusBox.classList.remove("status-pending");
+
+invoiceBox.classList.add("status-success");
+statusBox.classList.add("status-success");
   
 // =======================
 // TIMELINE SUCCESS
@@ -274,7 +314,10 @@ document.getElementById("stepProcess")
 .className =
 "progress-item current";
 
-
+// =======================
+// STATUS SUCCESS
+// =======================
+  
 statusBadgeText.innerText =
 "Pembayaran Berhasil";
 statusTitle.innerText =
@@ -287,13 +330,19 @@ statusBadgeIcon.className =
 "fa-solid fa-check";
 statusIconFa.className =
 "fa-solid fa-check";
+
+// =======================
+// TOMBOL ADMIN
+// =======================
   
 }
 
 
 
 
-
+// =============================
+// WA ADMIN
+// =============================
 function chatAdmin(){
 
 // ambil dari tampilan
@@ -306,7 +355,10 @@ const paket = document.getElementById("paket").innerText
 const detail = document.getElementById("paketDetail").innerText
 const total = document.getElementById("total").innerText
 
-// format pesan
+  
+// =============================
+// FORMAT PESAN
+// =============================
 const pesan = `Halo Admin, saya sudah melakukan pembayaran QRIS.
 
 📌 Detail Pembayaran:
@@ -329,9 +381,6 @@ const url = "https://wa.me/6285881500868?text=" + encodeURIComponent(pesan)
 window.open(url, "_blank")
 
 }
-
-
-
 
 
 
