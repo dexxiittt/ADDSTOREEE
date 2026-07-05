@@ -71,14 +71,15 @@ const statusIconFa = document.getElementById("statusIconFa")
 // =============================
 // TAMPILKAN STATUS
 // =============================
-if(status==="pending"){
+switch(status){
 
-setPendingUI();
+case "success":
+    setSuccessUI();
+    break;
 
-}else{
-
-setSuccessUI();
-
+default:
+    setPendingUI();
+    break;
 
 }
 
@@ -174,7 +175,7 @@ if(detail.image_url){
 document.getElementById("productImage").src = detail.image_url
 }
 
-  const harga = parseInt(detail.price)
+const harga = parseInt(detail.price)
 const diskon = parseFloat(detail.discount.replace("%",""))
 const potongan = harga * diskon / 100
 const total = harga - potongan
@@ -194,8 +195,21 @@ document.getElementById("total").innerText = rp(total)
 document.getElementById("total2").innerText = rp(total)
 document.getElementById("total3").innerText = rp(total)
 
+// =============================
+// TAMPILKAN STATUS
+// =============================
+
+if(paymentStatus === "success"){
+
+    setSuccessUI();
+
+}else{
+
+    setPendingUI();
+
 }
 
+}
 
 // =============================
 // PENDING
@@ -347,6 +361,27 @@ waButtonIcon.className =
 }
 
 // =============================
+// EXPIRED
+// =============================
+function setExpiredUI(){
+
+}
+
+// =============================
+// CANCEL
+// =============================
+function setCancelUI(){
+
+}
+
+// =============================
+// REFUND
+// =============================
+function setRefundUI(){
+
+}
+
+// =============================
 // UPDATE PROGRESS
 // =============================
 function updateProgress(status){
@@ -394,6 +429,20 @@ document.getElementById("stepVerification")
 document.getElementById("stepProcess")
 .className =
 "progress-item current";
+
+}
+
+else if(status==="expired"){
+
+// TODO
+
+}else if(status==="cancel"){
+
+// TODO
+
+}else if(status==="refund"){
+
+// TODO
 
 }
   
