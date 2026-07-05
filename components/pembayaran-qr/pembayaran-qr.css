@@ -54,14 +54,14 @@ line-height:1.6;
 
 .container{
 width:min(92%,900px);
-margin:28px 0;
+margin:28px auto;
 
 background:#fff;
 
 border:1px solid rgba(229,231,235,.9);
 border-radius:22px;
 
-padding:32px;
+padding:0;
 box-shadow:
 0 12px 35px rgba(15,23,42,.08);
 
