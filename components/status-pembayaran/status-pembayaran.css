@@ -401,6 +401,12 @@ color:#111827;
 }
 
 .copy-invoice-btn{
+-webkit-tap-highlight-color:transparent;
+outline:none;
+user-select:none;
+-webkit-user-select:none;
+touch-action:manipulation;
+   
 display:flex;
 align-items:center;
 justify-content:center;
@@ -423,6 +429,13 @@ transition:.3s;
 .copy-invoice-btn:hover{
 background:#dcfce7;
 color:#16a34a;
+}
+
+.copy-invoice-btn:focus,
+.copy-invoice-btn:active{
+
+outline:none;
+
 }
 
 /* =========================
@@ -860,6 +873,12 @@ box-shadow:
 }
 
 .wa-btn{
+-webkit-tap-highlight-color:transparent;
+outline:none;
+user-select:none;
+-webkit-user-select:none;
+touch-action:manipulation;
+   
 width:100%;
 margin-top:24px;
 padding:16px 22px;
@@ -900,6 +919,13 @@ box-shadow:
 
 .wa-btn:active{
 transform:scale(.98);
+}
+
+.wa-btn:focus,
+.wa-btn:active{
+
+outline:none;
+
 }
 
 .copy-toast{
