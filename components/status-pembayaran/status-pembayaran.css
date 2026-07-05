@@ -988,6 +988,18 @@ font-size:18px;
     border-color:#86efac;
 }
 
+.status-expired{
+/* TODO */
+}
+
+.status-cancel{
+/* TODO */
+}
+
+.status-refund{
+/* TODO */
+}
+
 @media (max-width:768px){
 .container{
 margin:20px 16px 50px;
