@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Status Pembayaran</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+font-family:Poppins;
+background:#f3f4f8;
+margin:0;
+}
+
+/* HERO */
+.package-hero{
+background:linear-gradient(135deg,#7b2ff7,#5f0a87);
+padding:50px 20px;
+text-align:center;
+}
+
+.package-hero h1{
+font-size:40px;
+margin-bottom:6px;
+color:white;
+}
+
+.package-hero p{
+opacity:.8;
+font-size:18px;
+color:white;
+}
+
+/* CONTAINER */
+.container{
+max-width:850px;
+margin:20px auto;
+background:#fff;
+border-radius:14px;
+padding:20px;
+box-shadow:0 6px 18px rgba(0,0,0,0.1);
+}
+
+.product-image-box{
+margin-bottom:20px;
+border-radius:12px;
+overflow:hidden;
+border:1px solid #e5e7eb;
+position:relative;
+}
+
+/* zoom hanya gambar */
+.product-image-box img{
+width:100%;
+height:180px;
+object-fit:cover;
+display:block;
+
+/* animasi smooth */
+transition:transform .4s ease;
+}
+
+/* HOVER DI CONTAINER IMG */
+.product-image-box:hover img{
+transform:scale(1.05);
+}
+
+/* COPY STYLE DARI CEK STATUS */
+.invoice-box{
+background:#dcfce7;
+border:1px solid #86efac;
+border-radius:12px;
+padding:16px;
+margin-bottom:20px;
+}
+
+.invoice-status{
+color:#16a34a;
+font-weight:600;
+}
+
+.invoice-price{
+font-size:28px;
+font-weight:700;
+margin-top:10px;
+}
+
+.section-title{
+font-size:20px;
+font-weight:700;
+margin:10px 0;
+}
+
+.summary-box{
+background:#f9fafb;
+border:1px solid #e5e7eb;
+border-radius:10px;
+padding:14px;
+margin-bottom:20px;
+}
+
+.summary-item{
+display:flex;
+justify-content:space-between;
+margin-bottom:12px;
+}
+
+.paket-title{
+font-size:15px;
+font-weight:600;
+color:#111827;
+margin-bottom:3px;
+}
+
+.paket-sub{
+font-size:13px;
+color:#6b7280;
+}
+
+/* baris */
+.summary-row{
+display:flex;
+justify-content:space-between;
+padding:10px 0;
+font-size:14px;
+color:#374151;
+position:relative;
+}
+
+.summary-row::after{
+content:"";
+position:absolute;
+left:0;
+bottom:0;
+width:100%;
+height:1px;
+background:linear-gradient(
+  to right,
+  transparent,
+  #e5e7eb,
+  transparent
+);
+}
+
+/* total */
+.summary-total{
+display:flex;
+justify-content:space-between;
+margin-top:10px;
+padding-top:10px;
+border-top:2px solid #e5e7eb;
+font-weight:700;
+font-size:16px;
+color:#111827;
+}
+
+/* warna diskon & hemat */
+#diskon{
+color:#ef4444;
+font-weight:600;
+}
+
+#hemat{
+color:#16a34a;
+font-weight:600;
+}
+
+.detail-box{
+background:#f9fafb;
+border:1px solid #e5e7eb;
+border-radius:10px;
+padding:14px;
+margin-bottom:20px;
+}
+
+.price-box{
+display:flex;
+flex-direction:column;
+align-items:flex-end;
+gap:2px;
+}
+
+.price-old{
+font-size:12px;
+color:#9ca3af;
+text-decoration:line-through;
+}
+
+.price-final{
+font-size:16px;
+font-weight:700;
+color:#111827;
+}
+
+.detail-row{
+display:flex;
+justify-content:space-between;
+margin-bottom:8px;
+}
+
+/* STATUS */
+.status-box{
+background:#dcfce7;
+border:1px solid #86efac;
+border-radius:12px;
+padding:16px;
+margin-bottom:20px;
+}
+
+.status-title{
+font-weight:600;
+color:#16a34a;
+}
+
+/* DOWNLOAD */
+.wa-box{
+background:#ecfeff;
+border:1px solid #a5f3fc;
+border-radius:12px;
+padding:16px;
+}
+
+.wa-btn{
+margin-top:10px;
+display:inline-block;
+background:#22c55e;
+color:white;
+padding:10px 16px;
+border-radius:8px;
+font-weight:600;
+border:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="package-hero">
+<h1>Status Pembayaran</h1>
+<p>Pembayaran pesanan kamu</p>
+</div>
+
+<!-- RESULT LANGSUNG TAMPIL -->
+<div class="container" id="resultBox">
+
+<!-- IMAGE PRODUK -->
+<div id="productImageBox" class="product-image-box">
+  <img id="productImage" src="" alt="Produk">
+</div>
+
+<!-- INVOICE -->
+<div class="invoice-box" id="invoiceBox">
+<div class="invoice-id" id="invoice"></div>
+<div class="invoice-status" id="statusText">
+Pembayaran Berhasil
+</div>
+<div class="invoice-price" id="total"></div>
+<div class="invoice-time" id="time"></div>
+</div>
+
+<!-- DETAIL -->
+<h3 class="section-title">Detail Pesanan</h3>
+<div class="summary-box">
+
+<!-- PRODUK -->
+<div class="summary-item">
+  <div>
+    <div class="paket-title" id="paket"></div>
+    <div class="paket-sub" id="paketDetail"></div>
+  </div>
+</div>
+
+<!-- SUBTOTAL -->
+<div class="summary-row">
+  <span>Subtotal</span>
+<div id="harga" class="price-box"></div>
+</div>
+
+<!-- DISKON -->
+<div class="summary-row">
+  <span>Diskon</span>
+  <span id="diskon"></span>
+</div>
+
+<!-- HEMAT -->
+<div class="summary-row">
+  <span>Hemat</span>
+  <span id="hemat"></span>
+</div>
+
+<!-- TOTAL -->
+<div class="summary-total">
+  <span>Total Bayar</span>
+  <span id="total2"></span>
+</div>
+
+</div>
+
+<!-- CUSTOMER -->
+<h3 class="section-title">Informasi Customer</h3>
+<div class="detail-box">
+<div class="detail-row"><span>Nama</span><span id="nama"></span></div>
+<div class="detail-row"><span>WhatsApp</span><span id="wa"></span></div>
+<div class="detail-row"><span>Email</span><span id="email"></span></div>
+</div>
+
+<!-- STATUS -->
+<div class="status-box">
+<div class="status-title">✅ Sudah Dibayarkan</div>
+<div>Pembayaran telah diterima sebesar <b id="total3"></b></div>
+</div>
+
+<!-- KONTAK ADMIN -->
+<div class="wa-box">
+<div><b>Sudah melakukan pembayaran?</b></div>
+<div style="font-size:14px; color:#4b5563; margin-top:6px;">
+Segera hubungi admin jika status masih pending
+</div>
+
+<button onclick="chatAdmin()" class="wa-btn">
+Chat Admin
+</button>
+</div>
+
+</div>
+
+<!-- JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+
+window.onload = async function(){
+
+// =============================
+// 🔥 PRIORITAS: AMBIL DARI LOCAL STORAGE
+// =============================
+const localData = JSON.parse(localStorage.getItem("paymentData"))
+
+if(localData){
+
+const status = localStorage.getItem("paymentStatus") || "pending"
+
+// CUSTOMER
+document.getElementById("nama").innerText = localData.nama
+document.getElementById("wa").innerText = localData.telepon
+document.getElementById("email").innerText = localData.email
+
+// PRODUK
+document.getElementById("paket").innerText = localData.paket
+document.getElementById("paketDetail").innerText = localData.paketDetail
+
+// GAMBAR PRODUK 
+const img = document.getElementById("productImage")
+
+if(img){
+  if(localData.image){
+    img.src = localData.image
+  }else{
+    document.getElementById("productImageBox").style.display = "none"
+  }
+}
+  
+// HARGA
+// ambil semua harga Rp xxx
+const matches = localData.paketHarga.match(/Rp\s?[\d\.]+/g)
+
+// ambil harga pertama (harga lama)
+const hargaLama = matches ? matches[0].replace("Rp ", "") : "0"
+
+document.getElementById("harga").innerHTML = `
+<div class="price-old">Rp ${hargaLama}</div>
+<div class="price-final">${localData.total}</div>
+`
+  
+document.getElementById("diskon").innerText = localData.diskon
+document.getElementById("hemat").innerText = localData.hemat
+
+document.getElementById("total").innerText = localData.total
+document.getElementById("total2").innerText = localData.total
+document.getElementById("total3").innerText = localData.total
+
+const invoiceBox = document.getElementById("invoiceBox")
+const statusText = document.getElementById("statusText")
+const statusBox = document.querySelector(".status-box")
+
+if(status === "pending"){
+
+// warna kuning
+invoiceBox.style.background = "#fef9c3"
+invoiceBox.style.border = "1px solid #fde047"
+
+statusBox.style.background = "#fef9c3"
+statusBox.style.border = "1px solid #fde047"
+
+// teks
+statusText.innerHTML = `
+<span style="display:flex; align-items:center; gap:8px;">
+
+  <!-- BOX PUTIH -->
+  <span style="
+    background:white;
+    padding:6px;
+    border-radius:6px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  ">
+
+    <svg xmlns="http://www.w3.org/2000/svg" 
+         width="16" height="16" 
+         viewBox="0 0 24 24" 
+         fill="none" 
+         stroke="#7c3aed" 
+         stroke-width="2" 
+         stroke-linecap="round" 
+         stroke-linejoin="round">
+
+      <circle cx="12" cy="12" r="9"></circle>
+      <path d="M12 7v5l3 2"></path>
+
+    </svg>
+
+  </span>
+
+  <span>Menunggu Pembayaran</span>
+</span>
+`
+statusText.style.color = "#ca8a04"
+
+// box bawah
+statusBox.innerHTML = `
+<div class="status-title" style="color:#ca8a04; display:flex; align-items:center; gap:10px;">
+
+  <!-- BOX PUTIH ICON -->
+  <span style="
+    background:white;
+    padding:6px;
+    border-radius:6px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  ">
+
+    <svg xmlns="http://www.w3.org/2000/svg" 
+         width="16" height="16" 
+         viewBox="0 0 24 24" 
+         fill="none" 
+         stroke="#ca8a04" 
+         stroke-width="2" 
+         stroke-linecap="round" 
+         stroke-linejoin="round">
+
+      <path d="M12 9v4"></path>
+      <path d="M12 17h.01"></path>
+      <path d="M10.29 3.86l-7.34 12.73A2 2 0 0 0 4.63 20h14.74a2 2 0 0 0 1.68-3.41L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+
+    </svg>
+
+  </span>
+
+  <span>Menunggu Pembayaran</span>
+
+</div>
+
+<div style="margin-left:2px;">
+  Silahkan lakukan pembayaran sesuai nominal <b>${localData.total}</b>
+</div>
+`
+
+}else{
+
+// hijau (default)
+invoiceBox.style.background = "#dcfce7"
+invoiceBox.style.border = "1px solid #86efac"
+
+statusText.innerText = "Pembayaran Berhasil"
+statusText.style.color = "#16a34a"
+
+statusBox.innerHTML = `
+<div class="status-title">✅ Sudah Dibayarkan</div>
+<div>Pembayaran telah diterima sebesar <b>${localData.total}</b></div>
+`
+
+}
+
+// INVOICE & TIME
+let invoice = localStorage.getItem("invoiceID")
+
+document.getElementById("invoice").innerText = invoice
+const now = new Date()
+
+const formattedTime = now.toLocaleString("id-ID", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+  hour12: false
+})
+.replace(",", "")       // hapus koma
+.replace("pukul", "")   // hapus kata "pukul"
+.trim()                 // rapihin spasi
+
+document.getElementById("time").innerText = formattedTime
+return // STOP di sini
+}
+
+// =============================
+// FALLBACK: AMBIL DARI SHEET
+// =============================
+const params = new URLSearchParams(window.location.search)
+const invoiceID = params.get("invoice")
+
+if(!invoiceID){
+alert("Invoice tidak ditemukan ❌")
+return
+}
+
+const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/payment_id")
+const data = await res.json()
+
+const found = data.find(x => x.invoice == invoiceID)
+
+if(!found){
+alert("Invoice tidak ditemukan ❌")
+return
+}
+
+// split customer
+const info = found.informasi_pelanggan.split("|")
+
+document.getElementById("invoice").innerText = found.invoice
+document.getElementById("nama").innerText = info[0]
+document.getElementById("wa").innerText = info[1]
+document.getElementById("email").innerText = info[2]
+
+document.getElementById("time").innerText = new Date().toLocaleString("id-ID")
+
+const resProduk = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PACKAGE_DETAIL")
+const produk = await resProduk.json()
+
+const detail = produk.find(p => p.package_id == found.package_id)
+
+// GAMBAR DARI SHEET (fallback)
+if(detail.image_url){
+document.getElementById("productImage").src = detail.image_url
+}
+
+const harga = parseInt(detail.price)
+const diskon = parseFloat(detail.discount.replace("%",""))
+const potongan = harga * diskon / 100
+const total = harga - potongan
+
+function rp(x){
+return "Rp " + x.toLocaleString("id-ID")
+}
+
+document.getElementById("paket").innerText = detail.title
+document.getElementById("paketDetail").innerText = detail.subtitle
+
+document.getElementById("harga").innerHTML = `<s>${rp(harga)}</s>`
+document.getElementById("diskon").innerText = "-" + diskon + "%"
+document.getElementById("hemat").innerText = rp(potongan)
+
+document.getElementById("total").innerText = rp(total)
+document.getElementById("total2").innerText = rp(total)
+document.getElementById("total3").innerText = rp(total)
+
+}
+
+function chatAdmin(){
+
+// ambil dari tampilan
+const invoice = document.getElementById("invoice").innerText
+const nama = document.getElementById("nama").innerText
+const wa = document.getElementById("wa").innerText
+const email = document.getElementById("email").innerText
+
+const paket = document.getElementById("paket").innerText
+const detail = document.getElementById("paketDetail").innerText
+const total = document.getElementById("total").innerText
+
+// format pesan
+const pesan = `Halo Admin, saya sudah melakukan pembayaran QRIS.
+
+📌 Detail Pembayaran:
+Invoice: ${invoice}
+Nama: ${nama}
+No WA: ${wa}
+Email: ${email}
+
+📦 Paket: ${paket}
+📝 Detail: ${detail}
+💰 Total: ${total}
+
+📸 Bukti pembayaran: (saya lampirkan screenshot)
+
+Mohon dicek ya 🙏`
+
+// kirim ke WA
+const url = "https://wa.me/6285881500868?text=" + encodeURIComponent(pesan)
+
+window.open(url, "_blank")
+
+}
+</script>
+
+</body>
+</html>
