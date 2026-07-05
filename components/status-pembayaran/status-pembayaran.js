@@ -138,7 +138,7 @@ return
 // AMBIL STATUS PEMBAYARAN
 // =============================
 const statusRes = await fetch(
-"https://opensheet.elk.sh/SPREADSHEET_ID/status_payment"
+"https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/status_payment"
 );
 
 const statusData = await statusRes.json();
@@ -241,11 +241,33 @@ statusBadgeIcon.className =
 statusIconFa.className =
 "fa-solid fa-hourglass-half";
 
-
 // =======================
-// TOMBOL ADMIN
+// BOX ADMIN
 // =======================
 
+const supportTitle =
+document.getElementById("supportTitle");
+
+const supportDescription =
+document.getElementById("supportDescription");
+
+const waButtonText =
+document.getElementById("waButtonText");
+
+const waButtonIcon =
+document.getElementById("waButtonIcon");
+
+supportTitle.innerText =
+"Hubungi Admin";
+
+supportDescription.innerHTML =
+"Sudah melakukan pembayaran tetapi status masih <b>Pending</b>? Kirim bukti pembayaran ke admin agar proses verifikasi dapat segera dilakukan.";
+
+waButtonText.innerText =
+"Chat Admin Sekarang";
+
+waButtonIcon.className =
+"fa-brands fa-whatsapp";
 
 }
 
@@ -295,8 +317,32 @@ statusIconFa.className =
 "fa-solid fa-check";
 
 // =======================
-// TOMBOL ADMIN
+// BOX ADMIN
 // =======================
+
+const supportTitle =
+document.getElementById("supportTitle");
+
+const supportDescription =
+document.getElementById("supportDescription");
+
+const waButtonText =
+document.getElementById("waButtonText");
+
+const waButtonIcon =
+document.getElementById("waButtonIcon");
+
+supportTitle.innerText =
+"Pesanan Sedang Diproses";
+
+supportDescription.innerHTML =
+"Pembayaran telah berhasil diverifikasi. Pesanan kamu sedang diproses oleh admin.";
+
+waButtonText.innerText =
+"Hubungi Admin";
+
+waButtonIcon.className =
+"fa-brands fa-whatsapp";
   
 }
 
