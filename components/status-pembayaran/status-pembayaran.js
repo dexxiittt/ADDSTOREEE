@@ -75,50 +75,10 @@ if(status==="pending"){
 
 setPendingUI();
 
-// =======================
-// TIMELINE PENDING
-// =======================
-
-document.getElementById("stepOrder")
-.className =
-"progress-item completed";
-
-document.getElementById("stepPayment")
-.className =
-"progress-item current";
-
-document.getElementById("stepVerification")
-.className =
-"progress-item";
-
-document.getElementById("stepProcess")
-.className =
-"progress-item";
-
-
 }else{
 
 setSuccessUI();
 
-// =======================
-// TIMELINE SUCCESS
-// =======================
-
-document.getElementById("stepOrder")
-.className =
-"progress-item completed";
-
-document.getElementById("stepPayment")
-.className =
-"progress-item completed";
-
-document.getElementById("stepVerification")
-.className =
-"progress-item completed";
-
-document.getElementById("stepProcess")
-.className =
-"progress-item current";
 
 }
 
@@ -345,6 +305,52 @@ statusIconFa.className =
 // =============================
 function updateProgress(status){
 
+if(status==="pending"){
+
+// =======================
+// STEP PENDING
+// =======================
+
+document.getElementById("stepOrder")
+.className =
+"progress-item completed";
+
+document.getElementById("stepPayment")
+.className =
+"progress-item current";
+
+document.getElementById("stepVerification")
+.className =
+"progress-item";
+
+document.getElementById("stepProcess")
+.className =
+"progress-item";
+
+}else if(status==="success"){
+
+// =======================
+// STEP SUCCESS
+// =======================
+
+document.getElementById("stepOrder")
+.className =
+"progress-item completed";
+
+document.getElementById("stepPayment")
+.className =
+"progress-item completed";
+
+document.getElementById("stepVerification")
+.className =
+"progress-item completed";
+
+document.getElementById("stepProcess")
+.className =
+"progress-item current";
+
+}
+  
 }
 
 // =============================
