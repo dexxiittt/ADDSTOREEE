@@ -204,23 +204,39 @@ Email
 <span>Status Pembayaran</span>
 </h3>
 
-<div class="status-box">
+<div
+id="statusBox"
+
+class="status-box">
 
   <div class="status-header">
 
-    <div class="status-icon">
-      <i class="fa-solid fa-hourglass-half"></i>
-    </div>
+    <div
+id="statusIcon"
+
+class="status-icon">
+
+<i
+id="statusIconFa"
+
+class="fa-solid fa-hourglass-half">
+
+</i>
+
+</div>
 
     <div>
 
-      <div class="status-title">
-        Menunggu Pembayaran
-      </div>
+      <div class="status-title" id="statusTitle">
+Menunggu Pembayaran
+</div>
 
-      <div class="status-description">
-        Silakan lakukan pembayaran sesuai nominal yang tertera pada invoice.
-      </div>
+      <div class="status-description"
+id="statusDescription">
+
+Silakan lakukan pembayaran sesuai nominal yang tertera pada invoice.
+
+</div>
 
       <!-- TIMELINE STATUS -->
       <div class="payment-progress">
@@ -287,7 +303,8 @@ Email
 
   </div>
 
-  <div class="status-tip">
+  <div class="status-tip"
+id="statusTip">
 
     <div style="display:flex;align-items:flex-start;gap:12px;">
 
@@ -327,11 +344,15 @@ Email
 </div>
 
 <div>
-<div class="support-title">
+<div
+class="support-title"
+id="supportTitle">
 Hubungi Admin
 </div>
 
-<div class="support-description">
+<div
+class="support-description"
+id="supportDescription">
 Sudah melakukan pembayaran tetapi status masih <b>Pending</b>?
 <br><br>
 Kirim bukti pembayaran ke admin agar proses verifikasi dapat segera dilakukan.
@@ -339,7 +360,7 @@ Kirim bukti pembayaran ke admin agar proses verifikasi dapat segera dilakukan.
 </div>
 </div>
 
-<button onclick="chatAdmin()" class="wa-btn">
+<button onclick="chatAdmin()" id="waButton"class="wa-btn">
 <i class="fa-brands fa-whatsapp"></i>
 <span>Chat Admin Sekarang</span>
 
