@@ -77,6 +77,18 @@ case "success":
     setSuccessUI();
     break;
 
+case "expired":
+    setExpiredUI();
+    break;
+
+case "cancel":
+    setCancelUI();
+    break;
+
+case "refund":
+    setRefundUI();
+    break;
+
 default:
     setPendingUI();
     break;
@@ -199,18 +211,30 @@ document.getElementById("total3").innerText = rp(total)
 // TAMPILKAN STATUS
 // =============================
 
-if(paymentStatus === "success"){
+switch(paymentStatus){
 
+case "success":
     setSuccessUI();
+    break;
 
-}else{
+case "expired":
+    setExpiredUI();
+    break;
 
+case "cancel":
+    setCancelUI();
+    break;
+
+case "refund":
+    setRefundUI();
+    break;
+
+default:
     setPendingUI();
+    break;
 
 }
-
-}
-
+  
 // =============================
 // PENDING
 // =============================
