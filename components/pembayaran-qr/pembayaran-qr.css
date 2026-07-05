@@ -53,6 +53,9 @@ line-height:1.6;
 /* CONTAINER */
 
 .container{
+position:relative;
+left:20px;
+   
 width:min(92%,900px);
 margin:28px auto;
 
