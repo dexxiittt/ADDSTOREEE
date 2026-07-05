@@ -1,3 +1,5 @@
+let rawInvoice = "";
+
 window.onload = async function(){
 
 // =============================
@@ -156,8 +158,10 @@ statusBox.innerHTML = `
 
 // INVOICE & TIME
 let invoice = localStorage.getItem("invoiceID")
-
-document.getElementById("invoice").innerText = invoice
+  
+rawInvoice = invoice
+  
+document.getElementById("invoice").innerText = "INV" + invoice
 const now = new Date()
 
 const formattedTime = now.toLocaleString("id-ID", {
@@ -201,7 +205,10 @@ return
 // split customer
 const info = found.informasi_pelanggan.split("|")
 
-document.getElementById("invoice").innerText = found.invoice
+rawInvoice = found.invoice
+
+document.getElementById("invoice").innerText =
+"INV" + found.invoice
 document.getElementById("nama").innerText = info[0]
 document.getElementById("wa").innerText = info[1]
 document.getElementById("email").innerText = info[2]
@@ -243,7 +250,7 @@ document.getElementById("total3").innerText = rp(total)
 function chatAdmin(){
 
 // ambil dari tampilan
-const invoice = document.getElementById("invoice").innerText
+const invoice = rawInvoice;
 const nama = document.getElementById("nama").innerText
 const wa = document.getElementById("wa").innerText
 const email = document.getElementById("email").innerText
@@ -277,11 +284,11 @@ window.open(url, "_blank")
 }
 
 function copyInvoice(){
-const invoice =
-document.getElementById("invoice").textContent;
 
-navigator.clipboard.writeText(invoice);
+navigator.clipboard.writeText(rawInvoice);
+
 showCopyToast();
+
 }
 
 function showCopyToast(){
