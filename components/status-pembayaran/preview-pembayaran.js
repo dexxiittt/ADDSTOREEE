@@ -430,3 +430,175 @@ function getStatusElements(){
 }
 
 
+
+// =============================
+// PENDING UI
+// =============================
+function setPendingUI(){
+
+const invoiceBox = document.getElementById("invoiceBox")
+const statusBox = document.getElementById("statusBox")
+const statusBadgeIcon = document.getElementById("statusBadgeIcon")
+const statusBadgeText = document.getElementById("statusBadgeText")
+const statusTitle = document.getElementById("statusTitle")
+const statusDescription = document.getElementById("statusDescription")
+const statusTipText = document.getElementById("statusTipText")
+const statusIconFa = document.getElementById("statusIconFa")
+
+
+// =======================
+// AKTIFKAN TEMA CSS
+// =======================
+
+invoiceBox.classList.remove("status-success");
+statusBox.classList.remove("status-success");
+
+invoiceBox.classList.add("status-pending");
+statusBox.classList.add("status-pending");
+
+updateProgress("pending");
+
+// =======================
+// STATUS PENDING
+// =======================
+  
+statusBadgeText.innerText =
+"Menunggu Pembayaran";
+statusTitle.innerText =
+"Menunggu Pembayaran";
+statusDescription.innerText =
+"Silakan lakukan pembayaran sesuai nominal yang tertera pada invoice.";
+statusTipText.innerHTML =
+"Pastikan nominal pembayaran sesuai agar proses verifikasi oleh admin berjalan lebih cepat.";
+statusBadgeIcon.className =
+"fa-solid fa-stopwatch";
+statusIconFa.className =
+"fa-solid fa-hourglass-half";
+
+// =======================
+// BOX ADMIN
+// =======================
+
+const supportTitle =
+document.getElementById("supportTitle");
+
+const supportDescription =
+document.getElementById("supportDescription");
+
+const waButtonText =
+document.getElementById("waButtonText");
+
+const waButtonIcon =
+document.getElementById("waButtonIcon");
+
+supportTitle.innerText =
+"Hubungi Admin";
+
+supportDescription.innerHTML =
+"Sudah melakukan pembayaran tetapi status masih <b>Pending</b>? Kirim bukti pembayaran ke admin agar proses verifikasi dapat segera dilakukan.";
+
+waButtonText.innerText =
+"Chat Admin Sekarang";
+
+waButtonIcon.className =
+"fa-brands fa-whatsapp";
+
+}
+
+
+// =============================
+// SUCCESS UI
+// =============================
+function setSuccessUI(){
+
+const invoiceBox = document.getElementById("invoiceBox")
+const statusBox = document.getElementById("statusBox")
+const statusBadgeIcon = document.getElementById("statusBadgeIcon")
+const statusBadgeText = document.getElementById("statusBadgeText")
+const statusTitle = document.getElementById("statusTitle")
+const statusDescription = document.getElementById("statusDescription")
+const statusTipText = document.getElementById("statusTipText")
+const statusIconFa = document.getElementById("statusIconFa")
+
+
+// =======================
+// AKTIFKAN TEMA CSS
+// =======================
+
+invoiceBox.classList.remove("status-pending");
+statusBox.classList.remove("status-pending");
+
+invoiceBox.classList.add("status-success");
+statusBox.classList.add("status-success");
+  
+updateProgress("success");
+
+// =======================
+// STATUS SUCCESS
+// =======================
+  
+statusBadgeText.innerText =
+"Pembayaran Berhasil";
+statusTitle.innerText =
+"Pembayaran Berhasil";
+statusDescription.innerText =
+"Pembayaran telah diterima dan berhasil diverifikasi oleh admin.";
+statusTipText.innerHTML =
+"Pesanan sedang diproses oleh admin. Terima kasih telah melakukan pembayaran.";
+statusBadgeIcon.className =
+"fa-solid fa-check";
+statusIconFa.className =
+"fa-solid fa-check";
+
+// =======================
+// BOX ADMIN
+// =======================
+
+const supportTitle =
+document.getElementById("supportTitle");
+
+const supportDescription =
+document.getElementById("supportDescription");
+
+const waButtonText =
+document.getElementById("waButtonText");
+
+const waButtonIcon =
+document.getElementById("waButtonIcon");
+
+supportTitle.innerText =
+"Pesanan Sedang Diproses";
+
+supportDescription.innerHTML =
+"Pembayaran telah berhasil diverifikasi. Pesanan kamu sedang diproses oleh admin.";
+
+waButtonText.innerText =
+"Hubungi Admin";
+
+waButtonIcon.className =
+"fa-brands fa-whatsapp";
+  
+}
+
+
+// =============================
+// EXPIRED
+// =============================
+function setExpiredUI(){
+
+}
+
+// =============================
+// CANCEL
+// =============================
+function setCancelUI(){
+
+}
+
+// =============================
+// REFUND
+// =============================
+function setRefundUI(){
+
+}
+
