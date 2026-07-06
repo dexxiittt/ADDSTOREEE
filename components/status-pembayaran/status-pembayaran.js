@@ -3,11 +3,7 @@ let rawInvoice = "";
 window.onload = async function(){
 
     // STEP 1
-    const loaded = loadFromLocalStorage();
-
-    if(loaded){
-        return;
-    }
+    loadFromLocalStorage();
 
     // STEP 2
     await loadFromSheet();
