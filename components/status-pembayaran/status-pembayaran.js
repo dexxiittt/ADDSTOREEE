@@ -5,9 +5,9 @@ window.onload = async function(){
     // STEP 1
     const loaded = loadFromLocalStorage();
 
-    if(loaded){
-        return;
-    }
+    // if(loaded){
+        // return;
+    //}
 
     // STEP 2
     await loadFromSheet();
