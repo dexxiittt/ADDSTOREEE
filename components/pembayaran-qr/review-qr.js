@@ -177,10 +177,19 @@ window.location.href = "preview-index.html";
 // QR MODAL
 // =======================
 
-function openQR(){
+function openQR(el){
+
+const modal = document.getElementById("qrModal");
+const img = document.getElementById("qrModalImg");
+
+img.src = el.src;
+modal.classList.add("active");
 
 }
 
 function closeQR(){
+
+document.getElementById("qrModal")
+.classList.remove("active");
 
 }
