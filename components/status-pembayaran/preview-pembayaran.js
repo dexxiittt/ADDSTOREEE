@@ -77,11 +77,6 @@ renderStatus(status);
 const invoice =
 localStorage.getItem("invoiceID");
 
-rawInvoice = invoice;
-
-document.getElementById("invoice").innerText =
-"INV" + invoice;
-
 const now = new Date();
 
 const formattedTime = now.toLocaleString("id-ID", {
@@ -97,8 +92,10 @@ const formattedTime = now.toLocaleString("id-ID", {
 .replace("pukul", "")
 .trim();
 
-document.getElementById("time").innerText =
-formattedTime;
+renderInvoice(
+    invoice,
+    formattedTime
+);
 
 return true;
 
@@ -261,11 +258,10 @@ renderStatus(paymentStatus);
 // RENDER INVOICE
 // =======================
 
-document.getElementById("invoice").innerText =
-"INV" + found.invoice;
-
-document.getElementById("time").innerText =
-new Date().toLocaleString("id-ID");
+renderInvoice(
+    found.invoice,
+    new Date().toLocaleString("id-ID")
+);
 
 return;
 
@@ -378,6 +374,22 @@ function renderStatus(status){
             break;
 
     }
+
+}
+
+// =======================
+// RENDER INVOICE
+// =======================
+
+function renderInvoice(invoice, time){
+
+    rawInvoice = invoice;
+
+    document.getElementById("invoice").innerText =
+    "INV" + invoice;
+
+    document.getElementById("time").innerText =
+    time;
 
 }
 
