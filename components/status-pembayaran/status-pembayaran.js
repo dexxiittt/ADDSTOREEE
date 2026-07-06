@@ -209,6 +209,8 @@ produk.find(
     p => p.package_id == found.package_id
 );
 
+alert(detail ? "DETAIL DITEMUKAN" : "DETAIL TIDAK DITEMUKAN");
+    
 // =======================
 // RENDER CUSTOMER
 // =======================
@@ -229,6 +231,7 @@ function rp(x){
 
 const harga =
 parseInt(detail.price);
+alert("Harga = " + detail.price);
 
 const diskon =
 parseFloat(detail.discount.replace("%",""));
