@@ -60,10 +60,6 @@ renderProduct(
 // STATUS
 // =======================
 
-const status =
-localStorage.getItem("paymentStatus") ||
-"pending";
-
 renderStatus(status);
 
 // =======================
@@ -350,8 +346,6 @@ function renderProduct(
 
 
 function renderStatus(status){
-
-console.log("STATUS =", status);
     
     switch(status){
 
