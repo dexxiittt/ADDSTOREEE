@@ -167,6 +167,215 @@ return true;
 
 }
 
+async function loadFromSheet(){
+
+// =======================
+// AMBIL INVOICE DARI URL
+// =======================
+
+const params =
+new URLSearchParams(window.location.search);
+
+const invoiceID =
+params.get("invoice");
+
+if(!invoiceID){
+
+    alert("Invoice tidak ditemukan ❌");
+
+    return;
+
+}
+
+// =======================
+// FETCH PAYMENT_ID
+// =======================
+
+const res =
+await fetch(
+"https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/payment_id"
+);
+
+const data =
+await res.json();
+
+// =======================
+// CARI INVOICE
+// =======================
+
+const found =
+data.find(x => x.invoice == invoiceID);
+
+if(!found){
+
+    alert("Invoice tidak ditemukan ❌");
+
+    return;
+
+}
+
+// =======================
+// FETCH STATUS_PAYMENT
+// =======================
+
+const statusRes =
+await fetch(
+"https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/status_payment"
+);
+
+const statusData =
+await statusRes.json();
+
+// =======================
+// CARI STATUS INVOICE
+// =======================
+
+const statusRow =
+statusData.find(
+    x => x.invoice == found.invoice
+);
+
+const paymentStatus =
+(statusRow?.status || "")
+.trim()
+.toLowerCase();
+
+// =======================
+// SPLIT CUSTOMER
+// =======================
+
+const info =
+found.informasi_pelanggan.split("|");
+
+rawInvoice =
+found.invoice;
+
+// =======================
+// FETCH PACKAGE_DETAIL
+// =======================
+
+const resProduk =
+await fetch(
+"https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PACKAGE_DETAIL"
+);
+
+const produk =
+await resProduk.json();
+
+// =======================
+// CARI PRODUK
+// =======================
+
+const detail =
+produk.find(
+    p => p.package_id == found.package_id
+);
+
+// =======================
+// RENDER CUSTOMER
+// =======================
+
+document.getElementById("nama").innerText =
+info[0];
+
+document.getElementById("wa").innerText =
+info[1];
+
+document.getElementById("email").innerText =
+info[2];
+
+// =======================
+// RENDER PRODUK
+// =======================
+
+// GAMBAR PRODUK
+if(detail.image_url){
+    document.getElementById("productImage").src =
+    detail.image_url;
+}
+
+function rp(x){
+    return "Rp " + x.toLocaleString("id-ID");
+}
+
+const harga =
+parseInt(detail.price);
+
+const diskon =
+parseFloat(detail.discount.replace("%",""));
+
+const potongan =
+harga * diskon / 100;
+
+const total =
+harga - potongan;
+
+document.getElementById("paket").innerText =
+detail.title;
+
+document.getElementById("paketDetail").innerText =
+detail.subtitle;
+
+document.getElementById("harga").innerHTML =
+`<s>${rp(harga)}</s>`;
+
+document.getElementById("diskon").innerText =
+"-" + diskon + "%";
+
+document.getElementById("hemat").innerText =
+rp(potongan);
+
+document.getElementById("total").innerText =
+rp(total);
+
+document.getElementById("total2").innerText =
+rp(total);
+
+document.getElementById("total3").innerText =
+rp(total);
+
+// =======================
+// RENDER STATUS
+// =======================
+
+switch(paymentStatus){
+
+    case "success":
+        setSuccessUI();
+        break;
+
+    case "expired":
+        setExpiredUI();
+        break;
+
+    case "cancel":
+        setCancelUI();
+        break;
+
+    case "refund":
+        setRefundUI();
+        break;
+
+    default:
+        setPendingUI();
+        break;
+
+}
+
+// =======================
+// RENDER INVOICE
+// =======================
+
+document.getElementById("invoice").innerText =
+"INV" + found.invoice;
+
+document.getElementById("time").innerText =
+new Date().toLocaleString("id-ID");
+
+return;
+
+}
+
 // =======================
 // CUSTOMER
 // =======================
