@@ -111,16 +111,7 @@ font-weight:800;
 
 letter-spacing:1px;
 
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-
 color:#5c2db8;
-
-background:linear-gradient(
-135deg,
-#4F2CC9,
-#7C3AED,
-#A855F7
 );
 
 text-shadow:
@@ -144,15 +135,12 @@ color:#8b8b99;
 /* Menu */
 
 .menu{
-
 display:flex;
 flex-direction:column;
 gap:18px;
-
 }
 
 .card{
-
 display:flex;
 justify-content:space-between;
 align-items:center;
@@ -307,17 +295,9 @@ color:currentColor;
 opacity:.55;
 transition:.3s;
 
-padding:10px;
-
-background:
-rgba(255,255,255,.55);
-
-backdrop-filter:blur(8px);
-
 transition:
 transform .3s ease,
 opacity .3s ease;
-
 }
 
 .card:hover .arrow{
