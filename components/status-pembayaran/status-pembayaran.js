@@ -349,6 +349,8 @@ function renderProduct(
 // RENDER STATUS
 // =======================
 
+console.log("STATUS =", status);
+
 function renderStatus(status){
 
     switch(status){
