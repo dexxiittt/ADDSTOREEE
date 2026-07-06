@@ -10,14 +10,6 @@ renderCustomer(customer);
   
 
 // =======================
-// QR
-// =======================
-
-await loadQRCode();
-
-}
-
-// =======================
 // CUSTOMER
 // =======================
 
@@ -61,6 +53,50 @@ document.getElementById("paket-hemat").innerText = customer.hemat;
 document.getElementById("paket-img").src = customer.image;
   
 }
+
+
+// =======================
+// QR
+// =======================
+
+async function loadQRCode(){
+
+const qrSheet =
+"https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/qr_id"
+
+  fetch(qrSheet)
+  .then(res => res.json())
+    
+  .then(data => {
+
+// ambil baris pertama
+const qr = data[0]?.qr_code
+
+if(qr){
+document.getElementById("qr-img").src = qr
+}else{
+document.getElementById("qr-img").src =
+"https://via.placeholder.com/220?text=QR+Not+Found"
+}
+
+})
+    
+.catch(()=>{
+
+document.getElementById("qr-img").src =
+"https://via.placeholder.com/220?text=Error"
+
+});
+}
+  
+// =======================
+// QR
+// =======================
+
+await loadQRCode();
+
+}
+
 
 // =======================
 // EVENT
