@@ -16,6 +16,15 @@ window.onload = async function(){
 
 function loadFromLocalStorage(){
 
+    const localData =
+    JSON.parse(localStorage.getItem("paymentData"));
+
+    if(!localData){
+        return false;
+    }
+
+    // lanjut Step 1.2
+
 }
 
 // =======================
