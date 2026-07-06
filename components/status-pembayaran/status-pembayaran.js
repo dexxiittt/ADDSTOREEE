@@ -355,7 +355,8 @@ function renderProduct(
 
 function renderStatus(status){
 
-    console.log("STATUS =", status);
+console.log("STATUS =", status);
+    
     switch(status){
 
         case "success":
