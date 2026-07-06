@@ -68,29 +68,7 @@ const status =
 localStorage.getItem("paymentStatus") ||
 "pending";
 
-switch(status){
-
-    case "success":
-        setSuccessUI();
-        break;
-
-    case "expired":
-        setExpiredUI();
-        break;
-
-    case "cancel":
-        setCancelUI();
-        break;
-
-    case "refund":
-        setRefundUI();
-        break;
-
-    default:
-        setPendingUI();
-        break;
-
-}
+renderStatus(status);
 
 // =======================
 // INVOICE & TIME
@@ -277,29 +255,7 @@ renderProduct(
 // RENDER STATUS
 // =======================
 
-switch(paymentStatus){
-
-    case "success":
-        setSuccessUI();
-        break;
-
-    case "expired":
-        setExpiredUI();
-        break;
-
-    case "cancel":
-        setCancelUI();
-        break;
-
-    case "refund":
-        setRefundUI();
-        break;
-
-    default:
-        setPendingUI();
-        break;
-
-}
+renderStatus(paymentStatus);
 
 // =======================
 // RENDER INVOICE
@@ -390,6 +346,38 @@ function renderProduct(
 
     document.getElementById("total3").innerText =
     total;
+
+}
+
+// =======================
+// RENDER STATUS
+// =======================
+
+function renderStatus(status){
+
+    switch(status){
+
+        case "success":
+            setSuccessUI();
+            break;
+
+        case "expired":
+            setExpiredUI();
+            break;
+
+        case "cancel":
+            setCancelUI();
+            break;
+
+        case "refund":
+            setRefundUI();
+            break;
+
+        default:
+            setPendingUI();
+            break;
+
+    }
 
 }
 
