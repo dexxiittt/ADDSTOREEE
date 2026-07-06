@@ -185,16 +185,10 @@ transform:scale(1.08);
 
 }
 
-.icon svg{
-width:24px;
-height:24px;
-fill:none;
-
-stroke:currentColor;
-stroke-width:2;
-stroke-linecap:round;
-stroke-linejoin:round;
-
+.icon i{
+font-size:24px;
+color:currentColor;
+line-height:1;
 }
 
 .title{
