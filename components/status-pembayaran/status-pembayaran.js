@@ -221,7 +221,11 @@ const harga =
 parseInt(detail.price);
 
 const diskon =
-parseFloat(detail.discount.replace("%",""));
+parseFloat(
+    detail.discount
+    .replace("%","")
+    .replace(",",".")
+);
 
 const potongan =
 harga * diskon / 100;
@@ -229,15 +233,17 @@ harga * diskon / 100;
 const total =
 harga - potongan;
 
-const hargaHtml =
-`<s>${rp(harga)}</s>`;
+const hargaHtml = `
+<div class="price-old">${rp(harga)}</div>
+<div class="price-final">${rp(total)}</div>
+`;
 
 renderProduct(
     detail.image_url,
     detail.title,
     detail.subtitle,
     hargaHtml,
-    "-" + diskon + "%",
+      "-" + detail.discount,
     rp(potongan),
     rp(total)
 );
