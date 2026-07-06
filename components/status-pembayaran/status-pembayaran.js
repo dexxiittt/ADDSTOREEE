@@ -252,6 +252,9 @@ renderProduct(
 // RENDER STATUS
 // =======================
 
+console.log("paymentStatus =", paymentStatus);
+alert(paymentStatus);
+    
 renderStatus(paymentStatus);
 
 // =======================
@@ -349,10 +352,10 @@ function renderProduct(
 // RENDER STATUS
 // =======================
 
-console.log("STATUS =", status);
 
 function renderStatus(status){
 
+    console.log("STATUS =", status);
     switch(status){
 
         case "success":
