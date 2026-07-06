@@ -588,3 +588,131 @@ function setRefundUI(){
 
 }
 
+// =============================
+// UPDATE PROGRESS
+// =============================
+function updateProgress(status){
+
+if(status==="pending"){
+
+// =======================
+// STEP PENDING
+// =======================
+
+document.getElementById("stepOrder")
+.className =
+"progress-item completed";
+
+document.getElementById("stepPayment")
+.className =
+"progress-item current";
+
+document.getElementById("stepVerification")
+.className =
+"progress-item";
+
+document.getElementById("stepProcess")
+.className =
+"progress-item";
+
+}else if(status==="success"){
+
+// =======================
+// STEP SUCCESS
+// =======================
+
+document.getElementById("stepOrder")
+.className =
+"progress-item completed";
+
+document.getElementById("stepPayment")
+.className =
+"progress-item completed";
+
+document.getElementById("stepVerification")
+.className =
+"progress-item completed";
+
+document.getElementById("stepProcess")
+.className =
+"progress-item current";
+
+}
+
+else if(status==="expired"){
+
+// TODO
+
+}else if(status==="cancel"){
+
+// TODO
+
+}else if(status==="refund"){
+
+// TODO
+
+}
+  
+}
+
+// =============================
+// WA ADMIN
+// =============================
+function chatAdmin(){
+
+// ambil dari tampilan
+const invoice = rawInvoice;
+const nama = document.getElementById("nama").innerText
+const wa = document.getElementById("wa").innerText
+const email = document.getElementById("email").innerText
+
+const paket = document.getElementById("paket").innerText
+const detail = document.getElementById("paketDetail").innerText
+const total = document.getElementById("total").innerText
+
+  
+// =============================
+// FORMAT PESAN
+// =============================
+const pesan = `Halo Admin, saya sudah melakukan pembayaran QRIS.
+
+📌 Detail Pembayaran:
+Invoice: ${invoice}
+Nama: ${nama}
+No WA: ${wa}
+Email: ${email}
+
+📦 Paket: ${paket}
+📝 Detail: ${detail}
+💰 Total: ${total}
+
+📸 Bukti pembayaran: (saya lampirkan screenshot)
+
+Mohon dicek ya 🙏`
+
+// kirim ke WA
+const url = "https://wa.me/6285881500868?text=" + encodeURIComponent(pesan)
+
+window.open(url, "_blank")
+
+}
+
+
+
+function copyInvoice(){
+navigator.clipboard.writeText(rawInvoice);
+showCopyToast();
+}
+
+
+function showCopyToast(){
+
+const toast =
+document.getElementById("copyToast");
+toast.classList.add("show");
+
+setTimeout(()=>{
+toast.classList.remove("show");
+},2000);
+}
+
