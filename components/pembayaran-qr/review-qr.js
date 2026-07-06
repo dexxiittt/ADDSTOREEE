@@ -4,9 +4,14 @@ window.onload = async function(){
 // CUSTOMER
 // =======================
 
+function getCustomerData(){
+
 const customer = getCustomerData();
 
 renderCustomer(customer);
+
+  
+}
 
 
 // =======================
