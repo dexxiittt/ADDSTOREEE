@@ -461,7 +461,7 @@ ui.statusTitle.innerText =
 "Menunggu Pembayaran";
 ui.statusDescription.innerText =
 "Silakan lakukan pembayaran sesuai nominal yang tertera pada invoice.";
-ui.statusDescription.innerText =
+ui.statusTipText.innerHTML =
 "Pastikan nominal pembayaran sesuai agar proses verifikasi oleh admin berjalan lebih cepat.";
 ui.statusBadgeIcon.className =
 "fa-solid fa-stopwatch";
