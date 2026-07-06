@@ -117,9 +117,29 @@ redirectStatus(invoice);
 
 function getInvoice(){
 
+let invoice =
+localStorage.getItem("invoiceID");
+
+if(!invoice){
+
+invoice = generateInvoice();
+
+localStorage.setItem("invoiceID", invoice);
+
+}
+
+return invoice;
+  
 }
 
 function generateInvoice(){
+
+}
+
+function redirectStatus(invoice){
+
+window.location.href =
+"status-pembayaran.html?invoice=" + invoice;
 
 }
 
