@@ -436,25 +436,18 @@ function getStatusElements(){
 // =============================
 function setPendingUI(){
 
-const invoiceBox = document.getElementById("invoiceBox")
-const statusBox = document.getElementById("statusBox")
-const statusBadgeIcon = document.getElementById("statusBadgeIcon")
-const statusBadgeText = document.getElementById("statusBadgeText")
-const statusTitle = document.getElementById("statusTitle")
-const statusDescription = document.getElementById("statusDescription")
-const statusTipText = document.getElementById("statusTipText")
-const statusIconFa = document.getElementById("statusIconFa")
+const ui = getStatusElements();
 
 
 // =======================
 // AKTIFKAN TEMA CSS
 // =======================
 
-invoiceBox.classList.remove("status-success");
-statusBox.classList.remove("status-success");
+ui.invoiceBox.classList.remove("status-success");
+ui.statusBox.classList.remove("status-success");
 
-invoiceBox.classList.add("status-pending");
-statusBox.classList.add("status-pending");
+ui.invoiceBox.classList.add("status-pending");
+ui.statusBox.classList.add("status-pending");
 
 updateProgress("pending");
 
@@ -462,17 +455,17 @@ updateProgress("pending");
 // STATUS PENDING
 // =======================
   
-statusBadgeText.innerText =
+ui.statusBadgeText.innerText =
 "Menunggu Pembayaran";
-statusTitle.innerText =
+ui.statusTitle.innerText =
 "Menunggu Pembayaran";
-statusDescription.innerText =
+ui.statusDescription.innerText =
 "Silakan lakukan pembayaran sesuai nominal yang tertera pada invoice.";
-statusTipText.innerHTML =
+ui.statusDescription.innerText =
 "Pastikan nominal pembayaran sesuai agar proses verifikasi oleh admin berjalan lebih cepat.";
-statusBadgeIcon.className =
+ui.statusBadgeIcon.className =
 "fa-solid fa-stopwatch";
-statusIconFa.className =
+ui.statusIconFa.className =
 "fa-solid fa-hourglass-half";
 
 // =======================
@@ -511,25 +504,18 @@ waButtonIcon.className =
 // =============================
 function setSuccessUI(){
 
-const invoiceBox = document.getElementById("invoiceBox")
-const statusBox = document.getElementById("statusBox")
-const statusBadgeIcon = document.getElementById("statusBadgeIcon")
-const statusBadgeText = document.getElementById("statusBadgeText")
-const statusTitle = document.getElementById("statusTitle")
-const statusDescription = document.getElementById("statusDescription")
-const statusTipText = document.getElementById("statusTipText")
-const statusIconFa = document.getElementById("statusIconFa")
+const ui = getStatusElements();
 
 
 // =======================
 // AKTIFKAN TEMA CSS
 // =======================
 
-invoiceBox.classList.remove("status-pending");
-statusBox.classList.remove("status-pending");
+ui.invoiceBox.classList.remove("status-pending");
+ui.statusBox.classList.remove("status-pending");
 
-invoiceBox.classList.add("status-success");
-statusBox.classList.add("status-success");
+ui.invoiceBox.classList.add("status-success");
+ui.statusBox.classList.add("status-success");
   
 updateProgress("success");
 
@@ -537,17 +523,17 @@ updateProgress("success");
 // STATUS SUCCESS
 // =======================
   
-statusBadgeText.innerText =
+ui.statusBadgeText.innerText =
 "Pembayaran Berhasil";
-statusTitle.innerText =
+ui.statusTitle.innerText =
 "Pembayaran Berhasil";
-statusDescription.innerText =
+ui.statusDescription.innerText =
 "Pembayaran telah diterima dan berhasil diverifikasi oleh admin.";
-statusTipText.innerHTML =
+ui.statusTipText.innerHTML =
 "Pesanan sedang diproses oleh admin. Terima kasih telah melakukan pembayaran.";
-statusBadgeIcon.className =
+ui.statusBadgeIcon.className =
 "fa-solid fa-check";
-statusIconFa.className =
+ui.statusIconFa.className =
 "fa-solid fa-check";
 
 // =======================
