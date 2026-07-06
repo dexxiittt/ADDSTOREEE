@@ -2,7 +2,7 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:'Poppins',sans-serif;
+font-family:'Plus Jakarta Sans',sans-serif;
 }
 
 /* Android Tap Highlight */
@@ -48,6 +48,8 @@ max-width:460px;
 /* Logo */
 
 .logo{
+position:relative;
+  
 width:130px;
 height:130px;
 margin:0 auto 45px;
@@ -62,7 +64,7 @@ inset 0 1px 0 rgba(255,255,255,.9);
 
 .logo::before{
 content:"";
-position:fixed;
+position:absolute;
 
 width:260px;
 height:260px;
@@ -71,11 +73,9 @@ top:-80px;
 left:-100px;
 
 opacity:.08;
-
 filter:blur(80px);
   
 inset:-18px;
-
 border-radius:50%;
 
 background:
@@ -101,26 +101,42 @@ pointer-events:none;
 }
 
 .store-name{
+font-family:'Outfit',sans-serif;
 margin-top:16px;
 
 text-align:center;
 
-font-size:28px;
-font-weight:700;
+font-size:42px;
+font-weight:800;
 
 letter-spacing:1px;
 
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
 color:#5c2db8;
+
+background:linear-gradient(
+135deg,
+#4F2CC9,
+#7C3AED,
+#A855F7
+);
+
+text-shadow:
+0 8px 30px rgba(124,58,237,.18);
 }
 
 .store-subtitle{
+font-family:'Plus Jakarta Sans',sans-serif;
+  
 margin-top:6px;
 margin-bottom:38px;
 
 text-align:center;
 
-font-size:14px;
-font-weight:500;
+font-size:15px;
+font-weight:600;
 
 color:#8b8b99;
 }
@@ -274,39 +290,40 @@ filter:drop-shadow(0 2px 5px rgba(0,0,0,.12));
 }
 
 .title{
-font-size:17px;
-font-weight:600;
+font-family:'Plus Jakarta Sans',sans-serif;
 
+font-size:18px;
+font-weight:700;
+
+letter-spacing:-.2px;
+color:#202124;
 }
 
 .arrow{
-width:22px;
-height:22px;
-
-fill:none;
-stroke:currentColor;
-stroke-width:2.4;
-stroke-linecap:round;
-stroke-linejoin:round;
+font-size:26px;
+font-weight:600;
+color:currentColor;
 
 opacity:.55;
 transition:.3s;
 
 padding:10px;
 
-border-radius:50%;
-
 background:
-
 rgba(255,255,255,.55);
 
 backdrop-filter:blur(8px);
+
+transition:
+transform .3s ease,
+opacity .3s ease;
+
 }
 
 .card:hover .arrow{
-transform:translateX(6px);
+transform:translateX(8px);
 opacity:1;
-filter:drop-shadow(0 0 6px currentColor);
+filter:drop-shadow(0 0 8px currentColor);
 }
 
 /* Warna */
