@@ -168,6 +168,8 @@ window.location.href =
 
 function kembaliProduk(){
 
+window.location.href = "preview-index.html";
+  
 }
 
 
