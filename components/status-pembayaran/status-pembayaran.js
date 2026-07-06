@@ -95,6 +95,8 @@ return true;
 
 async function loadFromSheet(){
 
+  try{
+
 // =======================
 // AMBIL INVOICE DARI URL
 // =======================
@@ -275,6 +277,13 @@ renderInvoice(
 );
 
 return;
+
+}catch(err){
+
+        alert(err.message);
+        console.error(err);
+
+    }
 
 }
 
