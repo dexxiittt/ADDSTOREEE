@@ -129,6 +129,12 @@ await res.json();
 // CARI INVOICE
 // =======================
 
+console.log("Invoice URL :", invoiceID);
+
+data.forEach(x => {
+    console.log("Invoice Sheet :", x.invoice);
+});
+    
 const found =
 data.find(x => x.invoice == invoiceID);
 
