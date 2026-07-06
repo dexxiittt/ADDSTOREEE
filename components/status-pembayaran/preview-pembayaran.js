@@ -27,50 +27,14 @@ function loadFromLocalStorage(){
 // CUSTOMER
 // =======================
 
-document.getElementById("nama").innerText =
-localData.nama;
-
-document.getElementById("wa").innerText =
-localData.telepon;
-
-document.getElementById("email").innerText =
-localData.email;
-
+renderCustomer(
+    localData.nama,
+    localData.telepon,
+    localData.email
+);
+    
 // =======================
 // PRODUK
-// =======================
-
- document.getElementById("paket").innerText =
- localData.paket;
-
- document.getElementById("paketDetail").innerText =
- localData.paketDetail;
-
- // =======================
-// GAMBAR PRODUK
-// =======================
-    
- const img =
-document.getElementById("productImage");
-
-if(img){
-
-    if(localData.image){
-
-        img.src =
-        localData.image;
-
-    }else{
-
-        document.getElementById("productImageBox")
-        .style.display = "none";
-
-    }
-
-}
-
-// =======================
-// HARGA
 // =======================
 
 // ambil semua harga Rp xxx
@@ -81,25 +45,20 @@ localData.paketHarga.match(/Rp\s?[\d\.]+/g);
 const hargaLama =
 matches ? matches[0].replace("Rp ", "") : "0";
 
-document.getElementById("harga").innerHTML = `
+const hargaHtml = `
 <div class="price-old">Rp ${hargaLama}</div>
 <div class="price-final">${localData.total}</div>
 `;
 
-document.getElementById("diskon").innerText =
-localData.diskon;
-
-document.getElementById("hemat").innerText =
-localData.hemat;
-
-document.getElementById("total").innerText =
-localData.total;
-
-document.getElementById("total2").innerText =
-localData.total;
-
-document.getElementById("total3").innerText =
-localData.total;
+renderProduct(
+    localData.image,
+    localData.paket,
+    localData.paketDetail,
+    hargaHtml,
+    localData.diskon,
+    localData.hemat,
+    localData.total
+);
 
 // =======================
 // STATUS
@@ -275,24 +234,15 @@ produk.find(
 // RENDER CUSTOMER
 // =======================
 
-document.getElementById("nama").innerText =
-info[0];
-
-document.getElementById("wa").innerText =
-info[1];
-
-document.getElementById("email").innerText =
-info[2];
+renderCustomer(
+    info[0],
+    info[1],
+    info[2]
+);
 
 // =======================
 // RENDER PRODUK
 // =======================
-
-// GAMBAR PRODUK
-if(detail.image_url){
-    document.getElementById("productImage").src =
-    detail.image_url;
-}
 
 function rp(x){
     return "Rp " + x.toLocaleString("id-ID");
@@ -310,29 +260,18 @@ harga * diskon / 100;
 const total =
 harga - potongan;
 
-document.getElementById("paket").innerText =
-detail.title;
-
-document.getElementById("paketDetail").innerText =
-detail.subtitle;
-
-document.getElementById("harga").innerHTML =
+const hargaHtml =
 `<s>${rp(harga)}</s>`;
 
-document.getElementById("diskon").innerText =
-"-" + diskon + "%";
-
-document.getElementById("hemat").innerText =
-rp(potongan);
-
-document.getElementById("total").innerText =
-rp(total);
-
-document.getElementById("total2").innerText =
-rp(total);
-
-document.getElementById("total3").innerText =
-rp(total);
+renderProduct(
+    detail.image_url,
+    detail.title,
+    detail.subtitle,
+    hargaHtml,
+    "-" + diskon + "%",
+    rp(potongan),
+    rp(total)
+);
 
 // =======================
 // RENDER STATUS
@@ -373,6 +312,84 @@ document.getElementById("time").innerText =
 new Date().toLocaleString("id-ID");
 
 return;
+
+}
+
+// =======================
+// RENDER CUSTOMER
+// =======================
+
+function renderCustomer(nama, wa, email){
+
+    document.getElementById("nama").innerText =
+    nama;
+
+    document.getElementById("wa").innerText =
+    wa;
+
+    document.getElementById("email").innerText =
+    email;
+
+}
+
+// =======================
+// RENDER PRODUCT
+// =======================
+
+function renderProduct(
+    image,
+    title,
+    subtitle,
+    hargaHtml,
+    diskon,
+    hemat,
+    total
+){
+
+    // GAMBAR PRODUK
+    const img =
+    document.getElementById("productImage");
+
+    if(img){
+
+        if(image){
+
+            img.src = image;
+
+        }else{
+
+            document.getElementById("productImageBox")
+            .style.display = "none";
+
+        }
+
+    }
+
+    // PRODUK
+    document.getElementById("paket").innerText =
+    title;
+
+    document.getElementById("paketDetail").innerText =
+    subtitle;
+
+    // HARGA
+    document.getElementById("harga").innerHTML =
+    hargaHtml;
+
+    document.getElementById("diskon").innerText =
+    diskon;
+
+    document.getElementById("hemat").innerText =
+    hemat;
+
+    document.getElementById("total").innerText =
+    total;
+
+    document.getElementById("total2").innerText =
+    total;
+
+    document.getElementById("total3").innerText =
+    total;
 
 }
 
