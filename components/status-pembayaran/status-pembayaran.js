@@ -95,7 +95,7 @@ return true;
 
 async function loadFromSheet(){
 
-  try{
+try{
 
 // =======================
 // AMBIL INVOICE DARI URL
@@ -130,12 +130,6 @@ await res.json();
 // =======================
 // CARI INVOICE
 // =======================
-
-console.log("Invoice URL :", invoiceID);
-
-data.forEach(x => {
-    console.log("Invoice Sheet :", x.invoice);
-});
     
 const found =
 data.find(x => x.invoice == invoiceID);
@@ -148,8 +142,6 @@ if(!found){
 
 }
 
-    alert("1. Invoice ditemukan ✅");
-
 // =======================
 // FETCH STATUS_PAYMENT
 // =======================
@@ -161,9 +153,7 @@ await fetch(
 
 const statusData =
 await statusRes.json();
-
-alert("2. Status sheet berhasil diambil ✅");
-
+      
 // =======================
 // CARI STATUS INVOICE
 // =======================
@@ -177,8 +167,6 @@ const paymentStatus =
 (statusRow?.status || "")
 .trim()
 .toLowerCase();
-
-alert("3. paymentStatus = " + paymentStatus);
 
 // =======================
 // SPLIT CUSTOMER
@@ -210,8 +198,6 @@ const detail =
 produk.find(
     p => p.package_id == found.package_id
 );
-
-alert(detail ? "DETAIL DITEMUKAN" : "DETAIL TIDAK DITEMUKAN");
     
 // =======================
 // RENDER CUSTOMER
@@ -233,7 +219,6 @@ function rp(x){
 
 const harga =
 parseInt(detail.price);
-alert("Harga = " + detail.price);
 
 const diskon =
 parseFloat(detail.discount.replace("%",""));
@@ -261,11 +246,7 @@ renderProduct(
 // RENDER STATUS
 // =======================
 
-console.log("paymentStatus =", paymentStatus);
-
-alert("4. Sebelum renderStatus");
 renderStatus(paymentStatus);
-alert("5. Sesudah renderStatus");
     
 // =======================
 // RENDER INVOICE
@@ -524,8 +505,6 @@ waButtonIcon.className =
 // SUCCESS UI
 // =============================
 function setSuccessUI(){
-
-    alert("MASUK setSuccessUI() ✅");
 
 const ui = getStatusElements();
 
