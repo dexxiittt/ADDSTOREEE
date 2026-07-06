@@ -134,6 +134,24 @@ return invoice;
 
 function generateInvoice(){
 
+const now = new Date();
+
+const year = now.getFullYear();
+
+const random =
+Math.floor(10000 + Math.random() * 90000);
+
+const jam =
+String(now.getHours()).padStart(2,"0");
+
+const menit =
+String(now.getMinutes()).padStart(2,"0");
+
+const detik =
+String(now.getSeconds()).padStart(2,"0");
+
+return `${year}${random}${jam}${menit}${detik}`;
+
 }
 
 function redirectStatus(invoice){
