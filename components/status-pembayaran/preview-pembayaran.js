@@ -393,4 +393,40 @@ function renderInvoice(invoice, time){
 
 }
 
+// =======================
+// STATUS ELEMENTS
+// =======================
+
+function getStatusElements(){
+
+    return {
+
+        invoiceBox:
+        document.getElementById("invoiceBox"),
+
+        statusBox:
+        document.getElementById("statusBox"),
+
+        statusBadgeIcon:
+        document.getElementById("statusBadgeIcon"),
+
+        statusBadgeText:
+        document.getElementById("statusBadgeText"),
+
+        statusTitle:
+        document.getElementById("statusTitle"),
+
+        statusDescription:
+        document.getElementById("statusDescription"),
+
+        statusTipText:
+        document.getElementById("statusTipText"),
+
+        statusIconFa:
+        document.getElementById("statusIconFa"),
+
+    };
+
+}
+
 
