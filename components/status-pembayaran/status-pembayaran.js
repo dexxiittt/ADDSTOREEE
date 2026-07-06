@@ -257,10 +257,11 @@ renderProduct(
 // =======================
 
 console.log("paymentStatus =", paymentStatus);
-alert(paymentStatus);
+alert(JSON.stringify(paymentStatus));
     
 renderStatus(paymentStatus);
-
+alert(paymentStatus === "success");
+    
 // =======================
 // RENDER INVOICE
 // =======================
