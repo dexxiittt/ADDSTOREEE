@@ -17,19 +17,50 @@ await loadQRCode();
 
 }
 
+
+// =======================
+// EVENT
+// =======================
+
 function cekStatus(){
+
+const invoice = getInvoice();
+
+redirectStatus(invoice);
+
+}
+
 
 // =======================
 // INVOICE
 // =======================
 
-const invoice = getInvoice();
+function getInvoice(){
+
+}
+
+function generateInvoice(){
+
+}
 
 
 // =======================
-// REDIRECT
+// NAVIGATION
 // =======================
 
-redirectStatus(invoice);
+function kembaliProduk(){
+
+}
+
+
+// =======================
+// QR MODAL
+// =======================
+
+function openQR(){
+
+}
+
+function closeQR(){
 
 }
