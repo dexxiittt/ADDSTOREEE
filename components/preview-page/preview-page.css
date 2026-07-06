@@ -28,7 +28,8 @@ outline:none;
 
 
 body{
-background:#f3f4f8;
+background:
+radial-gradient(circle at top,#ffffff 0%,#f7f7fb 45%,#eef2ff 100%);
 min-height:100vh;
 
 display:flex;
@@ -57,6 +58,34 @@ background:rgba(255,255,255,.45);
 box-shadow:
 0 10px 25px rgba(0,0,0,.05),
 inset 0 1px 0 rgba(255,255,255,.9);
+}
+
+.logo::before{
+content:"";
+position:fixed;
+
+width:260px;
+height:260px;
+
+top:-80px;
+left:-100px;
+
+opacity:.08;
+
+filter:blur(80px);
+  
+inset:-18px;
+
+border-radius:50%;
+
+background:
+radial-gradient(
+circle,
+rgba(124,58,237,.22),
+transparent 72%
+);
+
+z-index:-1;
 }
 
 .logo img{
@@ -115,14 +144,23 @@ align-items:center;
 height:84px;
 padding:0 22px;
 border-radius:22px;
-background:rgba(255,255,255,.52);
+background:
+linear-gradient(
+180deg,
+rgba(255,255,255,.82),
+rgba(255,255,255,.58)
+);
+
+backdrop-filter:blur(18px);
+
+border:1px solid rgba(255,255,255,.7);
 
 box-shadow:
 
-0 6px 20px rgba(32,38,58,.06),
+0 18px 40px rgba(40,40,80,.08),
 
-inset 0 1px 0 rgba(255,255,255,.9);
-
+inset 0 1px 0 rgba(255,255,255,.95);
+  
 transition:
 transform .25s ease,
 box-shadow .25s ease,
@@ -136,9 +174,48 @@ will-change:transform;
 
 }
 
+.card::before{
+
+content:"";
+
+position:absolute;
+
+top:0;
+left:-120%;
+
+width:80px;
+height:100%;
+
+background:
+
+linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,.7),
+transparent
+);
+
+transform:skewX(-20deg);
+
+transition:.7s;
+}
+
 .card:hover{
-transform:translateY(-3px);
-background:rgba(255,255,255,.65);
+
+transform:
+
+translateY(-6px)
+scale(1.02);
+
+box-shadow:
+
+0 18px 45px rgba(90,90,140,.12),
+
+0 0 24px rgba(93,92,255,.18);
+}
+
+.card:hover::before{
+left:150%;
 }
 
 .card:active{
@@ -157,8 +234,8 @@ gap:16px;
 }
 
 .icon{
-width:48px;
-height:48px;
+width:56px;
+height:56px;
 
 border-radius:50%;
 
@@ -174,10 +251,13 @@ rgba(255,255,255,.45)
 
 box-shadow:
 
-inset 0 1px 0 rgba(255,255,255,.95),
-0 5px 12px rgba(0,0,0,.05);
-transition:.28s;
+0 8px 20px rgba(0,0,0,.08),
 
+inset 0 1px 0 rgba(255,255,255,.95);
+
+border:1px solid rgba(255,255,255,.7);
+  
+transition:.28s;
 }
 
 .card:hover .icon{
@@ -186,9 +266,11 @@ transform:scale(1.08);
 }
 
 .icon i{
-font-size:24px;
+font-size:26px;
 color:currentColor;
 line-height:1;
+
+filter:drop-shadow(0 2px 5px rgba(0,0,0,.12));
 }
 
 .title{
@@ -210,6 +292,15 @@ stroke-linejoin:round;
 opacity:.55;
 transition:.3s;
 
+padding:10px;
+
+border-radius:50%;
+
+background:
+
+rgba(255,255,255,.55);
+
+backdrop-filter:blur(8px);
 }
 
 .card:hover .arrow{
@@ -221,10 +312,20 @@ filter:drop-shadow(0 0 6px currentColor);
 /* Warna */
 
 .blue{
-border:2px solid #2D7DFF;
-color:#2D7DFF;
+background:
 
+linear-gradient(#fff,#fff) padding-box,
+
+linear-gradient(
+135deg,
+#4f8fff,
+#89b8ff
+) border-box;
+
+border:2px solid transparent;
+color:#2D7DFF;
 }
+
 .blue .title{
 color:#222;
 }
@@ -237,7 +338,17 @@ box-shadow:
 }
 
 .yellow{
-border:2px solid #FFC300;
+
+background:
+linear-gradient(#fff,#fff) padding-box,
+linear-gradient(
+135deg,
+#FFD84A,
+#FFC300
+) border-box;
+
+border:2px solid transparent;
+
 color:#FFC300;
 }
 
@@ -250,7 +361,17 @@ box-shadow:0 0 18px rgba(255,195,0,.18);
 }
 
 .green{
-border:2px solid #49C41C;
+
+background:
+linear-gradient(#fff,#fff) padding-box,
+linear-gradient(
+135deg,
+#6BEA45,
+#49C41C
+) border-box;
+
+border:2px solid transparent;
+
 color:#49C41C;
 }
 
@@ -263,8 +384,18 @@ box-shadow:0 0 18px rgba(73,196,28,.18);
 }
 
 .cyan{
-border:2px solid #7ED8D2;
-color:#34bfb6;
+
+background:
+linear-gradient(#fff,#fff) padding-box,
+linear-gradient(
+135deg,
+#8EE8E3,
+#34BFB6
+) border-box;
+
+border:2px solid transparent;
+
+color:#34BFB6;
 }
 
 .cyan .title{
@@ -276,7 +407,17 @@ box-shadow:0 0 18px rgba(126,216,210,.22);
 }
   
 .red{
-border:2px solid #F04C4C;
+
+background:
+linear-gradient(#fff,#fff) padding-box,
+linear-gradient(
+135deg,
+#FF7A7A,
+#F04C4C
+) border-box;
+
+border:2px solid transparent;
+
 color:#F04C4C;
 }
 
@@ -383,4 +524,20 @@ animation-delay:.39s;
 
 .menu .card:nth-child(5){
 animation-delay:.47s;
+}
+
+@keyframes float{
+
+0%,100%{
+transform:translateY(0);
+}
+
+50%{
+transform:translateY(-5px);
+}
+
+}
+
+.icon{
+animation:float 3s ease-in-out infinite;
 }
