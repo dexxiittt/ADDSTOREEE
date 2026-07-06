@@ -60,7 +60,7 @@ renderProduct(
 // STATUS
 // =======================
 
-renderStatus(status);
+renderStatus(localData.status || "pending");
 
 // =======================
 // INVOICE & TIME
@@ -146,6 +146,8 @@ if(!found){
 
 }
 
+    alert("1. Invoice ditemukan ✅");
+
 // =======================
 // FETCH STATUS_PAYMENT
 // =======================
@@ -157,6 +159,8 @@ await fetch(
 
 const statusData =
 await statusRes.json();
+
+alert("2. Status sheet berhasil diambil ✅");
 
 // =======================
 // CARI STATUS INVOICE
@@ -171,6 +175,8 @@ const paymentStatus =
 (statusRow?.status || "")
 .trim()
 .toLowerCase();
+
+alert("3. paymentStatus = " + paymentStatus);
 
 // =======================
 // SPLIT CUSTOMER
