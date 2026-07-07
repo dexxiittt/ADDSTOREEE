@@ -1288,6 +1288,27 @@ box-shadow:
 0 12px 28px rgba(34,197,94,.30);
 }
 
+.status-box.status-success .status-icon{
+background:#ffffff;
+color:#22c55e;
+
+box-shadow:
+0 0 0 6px rgba(34,197,94,.10),
+0 12px 24px rgba(34,197,94,.18);
+}
+
+.status-box.status-success .status-title{
+color:#16a34a;
+}
+
+.status-box.status-success .status-description{
+color:#166534;
+}
+
+.status-box.status-success #statusIconFa{
+color:#22c55e;
+}
+
 .status-expired{
 /* TODO */
 }
