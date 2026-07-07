@@ -231,7 +231,7 @@ const potongan =
 harga * diskon / 100;
 
 const total =
-harga - potongan;
+Math.floor(harga - potongan);
 
 const hargaHtml = `
 <div class="price-old">${rp(harga)}</div>
@@ -244,7 +244,7 @@ renderProduct(
     detail.subtitle,
     hargaHtml,
       "-" + detail.discount,
-    rp(potongan),
+    rp(Math.floor(potongan)),
     rp(total)
 );
 
@@ -258,9 +258,22 @@ renderStatus(paymentStatus);
 // RENDER INVOICE
 // =======================
 
+const waktu = new Date().toLocaleString("id-ID",{
+    day:"numeric",
+    month:"long",
+    year:"numeric",
+    hour:"2-digit",
+    minute:"2-digit",
+    second:"2-digit",
+    hour12:false
+})
+.replace(",", "")
+.replace("pukul", "")
+.trim();
+
 renderInvoice(
     found.invoice,
-    new Date().toLocaleString("id-ID")
+    waktu
 );
 
 return;
