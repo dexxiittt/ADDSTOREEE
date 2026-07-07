@@ -494,6 +494,11 @@ ui.statusBadgeIcon.className =
 ui.statusIconFa.className =
 "fa-solid fa-hourglass-half";
 
+document
+.getElementById("statusSectionIcon")
+.className =
+"section-icon icon-gold";
+
 // =======================
 // BOX ADMIN
 // =======================
@@ -561,6 +566,11 @@ ui.statusBadgeIcon.className =
 "fa-solid fa-check";
 ui.statusIconFa.className =
 "fa-solid fa-check";
+
+document
+.getElementById("statusSectionIcon")
+.className =
+"section-icon icon-green";
 
 // =======================
 // BOX ADMIN
