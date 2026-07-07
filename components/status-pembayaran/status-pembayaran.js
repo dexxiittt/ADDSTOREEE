@@ -673,22 +673,17 @@ document.getElementById("stepProcess")
 .className =
 "progress-item current";
 
-progressItems[0]
-.querySelector("i").className =
+document.querySelector("#stepOrder i").className =
 "fa-solid fa-check";
 
-progressItems[1]
-.querySelector("i").className =
+document.querySelector("#stepPayment i").className =
 "fa-solid fa-check";
 
-progressItems[2]
-.querySelector("i").className =
+document.querySelector("#stepVerification i").className =
 "fa-solid fa-check";
 
-progressItems[3]
-.querySelector("i").className =
+document.querySelector("#stepProcess i").className =
 "fa-solid fa-box-open";
-
 }
 
 else if(status==="expired"){
