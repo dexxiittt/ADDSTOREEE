@@ -1267,6 +1267,13 @@ box-shadow:
 0 12px 28px rgba(250,204,21,.30);
 }
 
+.invoice-box.status-pending .invoice-status i,
+.status-box.status-pending .status-icon{
+animation:
+hourglassRotate 4s ease-in-out infinite,
+badgeFloat 3s ease-in-out infinite;
+}
+
 .invoice-box.status-success .invoice-status{
 background:linear-gradient(
 135deg,
@@ -1329,6 +1336,30 @@ transform:translateY(0);
 
 50%{
 transform:translateY(-3px);
+}
+
+}
+
+@keyframes hourglassRotate{
+
+0%{
+transform:rotate(0deg);
+}
+
+45%{
+transform:rotate(0deg);
+}
+
+50%{
+transform:rotate(180deg);
+}
+
+95%{
+transform:rotate(180deg);
+}
+
+100%{
+transform:rotate(360deg);
 }
 
 }
