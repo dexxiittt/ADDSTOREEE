@@ -1231,6 +1231,12 @@ font-size:18px;
     border-color:#86efac;
 }
 
+.invoice-box.status-pending .invoice-status{
+background:#ffffff;
+border:1px solid #fde68a;
+color:#ca8a04;
+}
+
 .invoice-box.status-success .invoice-status{
 background:linear-gradient(
 135deg,
