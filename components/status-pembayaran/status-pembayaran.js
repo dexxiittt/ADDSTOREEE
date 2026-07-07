@@ -230,8 +230,13 @@ parseFloat(
 const potongan =
 harga * diskon / 100;
 
+// Total dibulatkan ke bawah
 const total =
 Math.floor(harga - potongan);
+
+// Hemat dihitung dari selisih harga asli dan total
+const hemat =
+harga - total;
 
 const hargaHtml = `
 <div class="price-old">${rp(harga)}</div>
@@ -244,7 +249,7 @@ renderProduct(
     detail.subtitle,
     hargaHtml,
       "-" + detail.discount,
-    rp(Math.floor(potongan)),
+    rp(hemat),
     rp(total)
 );
 
