@@ -168,6 +168,11 @@ const paymentStatus =
 .trim()
 .toLowerCase();
 
+const processStatus =
+(statusRow?.proses || "")
+.trim()
+.toLowerCase();
+
 // =======================
 // SPLIT CUSTOMER
 // =======================
@@ -257,7 +262,10 @@ renderProduct(
 // RENDER STATUS
 // =======================
 
-renderStatus(paymentStatus);
+renderStatus(
+    paymentStatus,
+    processStatus
+);
     
 // =======================
 // RENDER INVOICE
@@ -375,12 +383,15 @@ function renderProduct(
 // =======================
 
 
-function renderStatus(status){
+function renderStatus(
+    status,
+    proses
+){
     
     switch(status){
 
         case "success":
-            setSuccessUI();
+            setSuccessUI(proses);
             break;
 
         case "expired":
@@ -533,7 +544,7 @@ waButtonIcon.className =
 // =============================
 // SUCCESS UI
 // =============================
-function setSuccessUI(){
+function setSuccessUI(proses){
 
 const ui = getStatusElements();
 
@@ -548,7 +559,10 @@ ui.statusBox.classList.remove("status-pending");
 ui.invoiceBox.classList.add("status-success");
 ui.statusBox.classList.add("status-success");
   
-updateProgress("success");
+updateProgress(
+    "success",
+    proses
+);
 
 // =======================
 // STATUS SUCCESS
@@ -627,7 +641,10 @@ function setRefundUI(){
 // =============================
 // UPDATE PROGRESS
 // =============================
-function updateProgress(status){
+function updateProgress(
+    status,
+    proses
+){
 
 if(status==="pending"){
 
@@ -700,6 +717,25 @@ document.querySelector("#stepProcess i").className =
 document.querySelector("#stepProcess .floating-icon")
 .className =
 "floating-icon icon-green";
+
+if(proses === "done"){
+
+document.getElementById("stepProcess")
+.className =
+"progress-item completed";
+
+document
+.querySelector("#stepProcess i")
+.className =
+"fa-solid fa-check";
+
+document
+.querySelector("#stepProcess .floating-icon")
+.className =
+"floating-icon icon-purple";
+        
+}
+
 }
 
 else if(status==="expired"){
