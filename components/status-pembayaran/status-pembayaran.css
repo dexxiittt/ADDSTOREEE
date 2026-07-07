@@ -1270,8 +1270,7 @@ box-shadow:
 .invoice-box.status-pending .invoice-status i,
 .status-box.status-pending .status-icon{
 animation:
-hourglassRotate 4s ease-in-out infinite,
-badgeFloat 3s ease-in-out infinite;
+hourglassPremium 4s ease-in-out infinite;
 }
 
 .invoice-box.status-success .invoice-status{
@@ -1340,26 +1339,42 @@ transform:translateY(-3px);
 
 }
 
-@keyframes hourglassRotate{
+@keyframes hourglassPremium{
 
 0%{
-transform:rotate(0deg);
+transform:translateY(0) rotate(0deg);
 }
 
-45%{
-transform:rotate(0deg);
+22%{
+transform:translateY(0) rotate(0deg);
 }
 
-50%{
-transform:rotate(180deg);
+30%{
+transform:translateY(-4px) rotate(0deg);
 }
 
-95%{
-transform:rotate(180deg);
+40%{
+transform:translateY(-4px) rotate(180deg);
+}
+
+48%{
+transform:translateY(0) rotate(180deg);
+}
+
+72%{
+transform:translateY(0) rotate(180deg);
+}
+
+80%{
+transform:translateY(-4px) rotate(180deg);
+}
+
+90%{
+transform:translateY(-4px) rotate(360deg);
 }
 
 100%{
-transform:rotate(360deg);
+transform:translateY(0) rotate(360deg);
 }
 
 }
