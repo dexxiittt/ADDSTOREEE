@@ -550,22 +550,6 @@ ui.statusBox.classList.add("status-success");
   
 updateProgress("success");
 
-progressItems[0]
-.querySelector("i").className =
-"fa-solid fa-check";
-
-progressItems[1]
-.querySelector("i").className =
-"fa-solid fa-check";
-
-progressItems[2]
-.querySelector("i").className =
-"fa-solid fa-check";
-
-progressItems[3]
-.querySelector("i").className =
-"fa-solid fa-box-open";
-
 // =======================
 // STATUS SUCCESS
 // =======================
@@ -688,6 +672,22 @@ document.getElementById("stepVerification")
 document.getElementById("stepProcess")
 .className =
 "progress-item current";
+
+progressItems[0]
+.querySelector("i").className =
+"fa-solid fa-check";
+
+progressItems[1]
+.querySelector("i").className =
+"fa-solid fa-check";
+
+progressItems[2]
+.querySelector("i").className =
+"fa-solid fa-check";
+
+progressItems[3]
+.querySelector("i").className =
+"fa-solid fa-box-open";
 
 }
 
