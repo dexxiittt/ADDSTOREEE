@@ -447,7 +447,9 @@ display:none;
 background:#8b5cf6;
 color:#fff;
 
-
+box-shadow:
+0 0 0 6px rgba(139,92,246,.12),
+0 10px 22px rgba(139,92,246,.28);
 
 transform:scale(1.05);
 }
@@ -462,6 +464,10 @@ font-weight:700;
 background:#facc15;
 color:#fff;
 
+box-shadow:
+0 0 0 8px rgba(250,204,21,.16),
+0 12px 26px rgba(250,204,21,.30);
+   
 animation:progressPulse 2s infinite;
 }
 
