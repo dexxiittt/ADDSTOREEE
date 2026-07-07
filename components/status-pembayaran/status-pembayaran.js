@@ -547,6 +547,8 @@ ui.statusBox.classList.remove("status-pending");
 
 ui.invoiceBox.classList.add("status-success");
 ui.statusBox.classList.add("status-success");
+  
+updateProgress("success");
 
 progressItems[0]
 .querySelector("i").className =
@@ -563,8 +565,6 @@ progressItems[2]
 progressItems[3]
 .querySelector("i").className =
 "fa-solid fa-box-open";
-  
-updateProgress("success");
 
 // =======================
 // STATUS SUCCESS
