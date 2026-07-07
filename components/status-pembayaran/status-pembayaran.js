@@ -391,7 +391,7 @@ function renderStatus(
     switch(status){
 
         case "success":
-            setSuccessUI();
+            setSuccessUI(proses);
             break;
 
         case "expired":
@@ -544,7 +544,7 @@ waButtonIcon.className =
 // =============================
 // SUCCESS UI
 // =============================
-function setSuccessUI(proses);{
+function setSuccessUI(proses){
 
 const ui = getStatusElements();
 
@@ -718,6 +718,8 @@ document.querySelector("#stepProcess .floating-icon")
 .className =
 "floating-icon icon-green";
 
+if(proses === "done"){
+    
 document.getElementById("stepProcess")
 .className =
 "progress-item completed";
@@ -733,6 +735,7 @@ document
 "floating-icon icon-purple";
     
 }
+
 
 
 else if(status==="expired"){
