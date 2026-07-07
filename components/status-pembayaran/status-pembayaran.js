@@ -673,18 +673,33 @@ document.getElementById("stepProcess")
 .className =
 "progress-item current";
 
+// STEP 1
 document.querySelector("#stepOrder i").className =
 "fa-solid fa-check";
 
+// STEP 2
 document.querySelector("#stepPayment i").className =
 "fa-solid fa-check";
 
+document.querySelector("#stepPayment .floating-icon")
+.className =
+"floating-icon icon-purple";
+
+// STEP 3
 document.querySelector("#stepVerification i").className =
 "fa-solid fa-check";
 
+document.querySelector("#stepVerification .floating-icon")
+.className =
+"floating-icon icon-purple";
+
+// STEP 4
 document.querySelector("#stepProcess i").className =
 "fa-solid fa-box-open";
-}
+
+document.querySelector("#stepProcess .floating-icon")
+.className =
+"floating-icon icon-green";
 
 else if(status==="expired"){
 
