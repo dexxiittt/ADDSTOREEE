@@ -1267,10 +1267,12 @@ box-shadow:
 0 12px 28px rgba(250,204,21,.30);
 }
 
-.invoice-box.status-pending .invoice-status i,
-.status-box.status-pending .status-icon{
-animation:
-hourglassPremium 4s ease-in-out infinite;
+.invoice-box.status-pending .invoice-status i{
+animation:badgeFloat 3s ease-in-out infinite;
+}
+
+.progress-item.current .floating-icon{
+animation:hourglassPremium 4.8s ease-in-out infinite;
 }
 
 .invoice-box.status-success .invoice-status{
