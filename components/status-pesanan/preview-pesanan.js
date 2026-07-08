@@ -958,3 +958,136 @@ if (infoClose) {
 
 }
 
+// =============================
+// AMBIL STORAGE KEY
+// =============================
+
+const WAIT_DURATION =
+  1 * 60 * 1000;
+
+const storageKey =
+  "invoice_wait_" + invoice;
+
+const storedValue =
+  localStorage.getItem(storageKey);
+
+// =============================
+// CEK STATUS WAITING
+// =============================
+
+if (storedValue === "DONE") {
+
+  fetchWarrantyData();
+
+  return;
+
+}
+
+// =============================
+// MULAI WAITING
+// =============================
+
+const startTime =
+  storedValue
+    ? Number(storedValue)
+    : Date.now();
+
+if (!storedValue) {
+
+  localStorage.setItem(
+    storageKey,
+    startTime
+  );
+
+}
+
+// =============================
+// SELESAI WAITING
+// =============================
+
+startWaitingTimer(startTime);
+
+function startWaitingTimer(startTime) {
+
+  const timerEl =
+    document.getElementById("loadingTimer");
+
+  const waitText =
+    timerEl?.nextElementSibling;
+
+  function update() {
+
+    const elapsed =
+      Date.now() - startTime;
+
+    const remaining =
+      WAIT_DURATION - elapsed;
+
+    if (remaining <= 0) {
+
+      localStorage.setItem(
+        storageKey,
+        "DONE"
+      );
+
+      if (timerEl)
+        timerEl.style.display = "none";
+
+      if (waitText)
+        waitText.style.display = "none";
+
+      fetchWarrantyData();
+
+      return;
+
+    }
+
+    const minutes =
+      Math.floor(remaining / 60000);
+
+    const seconds =
+      Math.floor(
+        (remaining % 60000) / 1000
+      );
+
+    if (timerEl) {
+
+      timerEl.innerHTML =
+        `${minutes.toString().padStart(2,"0")}:${seconds.toString().padStart(2,"0")}`;
+
+    }
+
+  }
+
+  update();
+
+  setInterval(update, 1000);
+
+}
+
+// =============================
+// AMBIL ELEMENT LOADING
+// =============================
+
+const loadingText =
+  document.getElementById("loadingText");
+
+// =============================
+// JALANKAN LOADING DOT
+// =============================
+
+if (loadingText) {
+
+  let dotCount = 0;
+
+  setInterval(() => {
+
+    dotCount = (dotCount + 1) % 4;
+
+    loadingText.innerHTML =
+      "Memuat Data" + ".".repeat(dotCount);
+
+  }, 500);
+
+}
+
