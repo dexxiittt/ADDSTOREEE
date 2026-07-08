@@ -144,44 +144,6 @@ if (matchedData) {
   wrapper.style.display = "block";
 
 // =============================
-// MAPPING HEADER
-// =============================
-
-
-const headers = json.table.cols.map(
-  col => col.label.trim()
-);
-
-const rowData = {};
-
-headers.forEach((header, index) => {
-
-  rowData[header.trim()] =
-    matchedData.c[index]?.v ?? "";
-
-});
-
-} else {
-
-  // TODO:
-  // Render Data Tidak Ditemukan
-  return;
-
-}
-
-  } catch (err) {
-
-    console.error(
-      "Error ambil warranty_data:",
-      err
-    );
-
-  }
-
-}
-
-
-// =============================
 // AMBIL DATA UTAMA
 // =============================
 
@@ -249,7 +211,7 @@ function parseDiscount(value) {
 
 }
 
-  // =============================
+// =============================
 // HITUNG HARGA AKHIR
 // =============================
 
@@ -331,6 +293,7 @@ let berlakuSampai = "-";
 
 const validUntilRaw =
   rowData.valid_until;
+  
 
 // =============================
 // HITUNG TANGGAL BERAKHIR
@@ -403,6 +366,7 @@ const months =
 
 const remainingDays =
   durationDays % 30;
+
 
 // =============================
 // GENERATE TEKS DURASI
@@ -568,6 +532,7 @@ const metaCard = `
   </div>
 `;
 
+
 // =============================
 // RENDER DETAIL CARD
 // =============================
@@ -611,6 +576,7 @@ const detailCard = `
 
   </div>
 `;
+
 
 // =============================
 // RENDER INFORMASI CARD
@@ -674,3 +640,40 @@ wrapper.innerHTML = `
   ${detailCard}
   ${informasiCard}
 `;
+
+// =============================
+// MAPPING HEADER
+// =============================
+  
+const headers = json.table.cols.map(
+  col => col.label.trim()
+);
+
+const rowData = {};
+
+headers.forEach((header, index) => {
+
+  rowData[header.trim()] =
+    matchedData.c[index]?.v ?? "";
+
+});
+
+} else {
+
+  // TODO:
+  // Render Data Tidak Ditemukan
+  return;
+
+}
+
+  } catch (err) {
+
+    console.error(
+      "Error ambil warranty_data:",
+      err
+    );
+
+  }
+
+}
+
