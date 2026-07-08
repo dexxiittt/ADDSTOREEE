@@ -941,8 +941,77 @@ if (infoClose) {
   
 } else {
 
-  // TODO:
-  // Render Data Tidak Ditemukan
+// =============================
+// GENERATE NOT FOUND HTML
+// =============================
+
+const notFoundHTML = `
+<div style="
+  width:85%;
+  max-width:750px;
+  padding:60px;
+  border-radius:28px;
+  background:linear-gradient(
+    145deg,
+    rgba(18,18,28,.9),
+    rgba(10,10,18,.85)
+  );
+  backdrop-filter:blur(25px);
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 40px 120px rgba(0,0,0,.7);
+  text-align:center;
+  color:white;
+  font-family:'Plus Jakarta Sans',sans-serif;
+">
+
+<h2 style="
+  font-family:'Playfair Display',serif;
+  font-size:30px;
+  margin-bottom:20px;
+">
+  Data Tidak Ditemukan
+</h2>
+
+<p style="
+  opacity:.75;
+  margin-bottom:30px;
+">
+  Invoice
+  <strong>${invoice}</strong>
+  tidak ditemukan di sistem kami.
+</p>
+
+<button
+onclick="window.location.href='invoice.html'"
+style="
+padding:12px 26px;
+border-radius:20px;
+border:none;
+cursor:pointer;
+font-weight:600;
+background:linear-gradient(
+135deg,
+#9f7aea,
+#6d28d9
+);
+box-shadow:0 12px 30px rgba(139,92,246,.5);
+color:white;
+">
+
+Kembali ke Cek Invoice
+
+</button>
+
+</div>
+`;
+
+// =============================
+// RENDER NOT FOUND
+// =============================
+
+wrapper.innerHTML = notFoundHTML;
+
+  
   return;
 
 }
