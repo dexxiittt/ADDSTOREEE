@@ -658,7 +658,287 @@ wrapper.innerHTML = `
   ${informasiCard}
 `;
 
+// =============================
+// AMBIL ELEMENT COLLAPSIBLE
+// =============================
 
+const infoIcon =
+  document.getElementById("infoIcon");
+
+const infoContent =
+  document.getElementById("infoContent");
+
+const infoMore =
+  document.getElementById("infoMore");
+
+const infoClose =
+  document.getElementById("infoClose");
+
+// =============================
+// EVENT BUKA INFORMASI
+// =============================
+
+if (infoMore) {
+
+  infoMore.addEventListener("click", () => {
+
+    infoContent.classList.add("open");
+    infoIcon.classList.add("active");
+
+    infoMore.style.display = "none";
+    infoClose.style.display = "block";
+
+    const notes =
+      infoContent.querySelectorAll("li");
+
+    notes.forEach((note, index) => {
+
+      note.classList.remove("show");
+
+      setTimeout(() => {
+
+        note.classList.add("show");
+
+      }, index * 120);
+
+    });
+
+  });
+
+}
+
+// =============================
+// EVENT TUTUP INFORMASI
+// =============================
+
+if (infoClose) {
+
+  infoClose.addEventListener("click", () => {
+
+    infoContent.classList.remove("open");
+    infoIcon.classList.remove("active");
+
+    infoClose.style.display = "none";
+    infoMore.style.display = "block";
+
+  });
+
+}
+
+// =============================
+// JALANKAN INIT FADE-UP
+// =============================
+
+initFadeUp();
+
+// =============================
+// BUAT FADE OBSERVER
+// =============================
+
+const fadeObserver =
+  new IntersectionObserver(
+
+    (entries) => {
+
+      entries.forEach((entry) => {
+
+        if (entry.isIntersecting) {
+
+          entry.target.classList.add("show");
+
+          fadeObserver.unobserve(entry.target);
+
+        }
+
+      });
+
+    },
+
+    {
+      threshold: 0.15
+    }
+
+  );
+
+// =============================
+// OBSERVE SEMUA ELEMENT
+// =============================
+
+function initFadeUp() {
+
+  const elements =
+    document.querySelectorAll(".fade-up");
+
+  elements.forEach((element, index) => {
+
+    element.style.transitionDelay =
+      `${index * 100}ms`;
+
+    fadeObserver.observe(element);
+
+  });
+
+}
+
+// =============================
+// AMBIL ELEMENT COUNTDOWN
+// =============================
+
+const countdownTimer =
+  document.getElementById("countdownTimer");
+
+const statusText =
+  document.getElementById("statusText");
+
+// =============================
+// VALIDASI STATUS ACTIVE
+// =============================
+
+if (durationDays <= 0) {
+  return;
+}
+
+if (status.toLowerCase() !== "active") {
+
+  statusText.style.color = "#9ca3af";
+
+  countdownTimer.innerHTML =
+    `${durationDays} Hari 00:00:00`;
+
+  return;
+
+}
+
+// =============================
+// PARSE TANGGAL AKTIVASI
+// =============================
+
+const activatedDate =
+  new Date(activated_at);
+
+// =============================
+// HITUNG EXPIRY DATE
+// =============================
+
+const expiryDate =
+  new Date(
+    activatedDate.getTime() +
+    durationDays * 24 * 60 * 60 * 1000
+  );
+
+// =============================
+// JALANKAN COUNTDOWN
+// =============================
+
+const timer = setInterval(() => {
+
+  const now = new Date();
+
+  const diff =
+    expiryDate.getTime() - now.getTime();
+
+  if (diff <= 0) {
+
+    clearInterval(timer);
+
+    countdownTimer.innerHTML =
+      "Garansi Berakhir";
+
+    statusText.textContent =
+      "Expired";
+
+    statusText.style.color =
+      "#ef4444";
+
+    return;
+
+  }
+
+  const days =
+    Math.floor(diff / (1000 * 60 * 60 * 24));
+
+  const hours =
+    Math.floor(
+      (diff % (1000 * 60 * 60 * 24)) /
+      (1000 * 60 * 60)
+    );
+
+  const minutes =
+    Math.floor(
+      (diff % (1000 * 60 * 60)) /
+      (1000 * 60)
+    );
+
+  const seconds =
+    Math.floor(
+      (diff % (1000 * 60)) /
+      1000
+    );
+
+  countdownTimer.innerHTML =
+    `${days} Hari ${String(hours).padStart(2,"0")}:${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
+
+}, 1000);
+
+// =============================
+// COLLAPSIBLE INFORMASI
+// =============================
+
+const infoIcon =
+  document.getElementById("infoIcon");
+
+const infoContent =
+  document.getElementById("infoContent");
+
+const infoMore =
+  document.getElementById("infoMore");
+
+const infoClose =
+  document.getElementById("infoClose");
+
+if (infoMore) {
+
+  infoMore.addEventListener("click", () => {
+
+    infoContent.classList.add("open");
+    infoIcon.classList.add("active");
+
+    infoMore.style.display = "none";
+    infoClose.style.display = "block";
+
+    const notes =
+      infoContent.querySelectorAll("li");
+
+    notes.forEach((note, index) => {
+
+      note.classList.remove("show");
+
+      setTimeout(() => {
+
+        note.classList.add("show");
+
+      }, index * 120);
+
+    });
+
+  });
+
+}
+
+if (infoClose) {
+
+  infoClose.addEventListener("click", () => {
+
+    infoContent.classList.remove("open");
+    infoIcon.classList.remove("active");
+
+    infoClose.style.display = "none";
+    infoMore.style.display = "block";
+
+  });
+
+}
+  
 } else {
 
   // TODO:
