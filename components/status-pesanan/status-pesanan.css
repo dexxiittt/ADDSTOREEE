@@ -1,1 +1,281 @@
+body {
+  overflow-x: hidden;
+  background: #0b0b0f;
+}
 
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* HERO UNGU SAMA PERSIS */
+.package-hero{
+  width:100%;
+  min-height:260px;
+  background:linear-gradient(135deg,#493d84,#6d28d9);
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+
+  text-align:center;
+  padding:20px;
+}
+
+.package-hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(42px, 6vw, 96px);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 14px;
+  color: #ffffff;
+  text-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+
+.package-hero p {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  color: rgba(255,255,255,0.85);
+}
+
+/* Wrapper nanti untuk card */
+.status-wrapper {
+  width: 100%;
+  padding: 0 0 80px;
+}
+
+/* ============================= */
+/* LIGHTWEIGHT CARD SYSTEM */
+/* ============================= */
+
+.package-preview,
+.status-meta-card{
+
+  width:100%;
+  margin:13px 0 0;
+  padding:26px 20px 28px;
+
+  border-radius:18px;
+
+  background:#16161f;
+
+  border:1px solid rgba(255,255,255,0.05);
+
+  color:white;
+
+  font-family:'Manrope',sans-serif;
+
+}
+
+/* IMAGE */
+
+.package-preview img{
+  width:100%;
+  height:clamp(180px,42vw,300px);
+  object-fit:cover;
+  border-radius:14px;
+  margin-bottom:16px;
+}
+
+/* TITLE */
+
+.package-preview h3{
+  margin:0 0 6px;
+  font-size:22px;
+  font-weight:600;
+}
+
+.package-preview p{
+  margin:0;
+  opacity:.75;
+  font-size:14px;
+}
+
+/* ============================= */
+/* META GRID */
+/* ============================= */
+
+.status-meta-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  text-align:center;
+}
+
+.status-meta-grid span{
+  display:block;
+  font-size:10px;
+  letter-spacing:1px;
+  margin-bottom:4px;
+  text-transform:uppercase;
+  color:#ffffff;
+}
+
+.status-meta-grid b{
+  font-size:20px;
+  font-weight:700;
+}
+
+/* Invoice */
+
+.status-meta-grid div:nth-child(1) b{
+  font-size:24px;
+  letter-spacing:1px;
+}
+
+/* Durasi */
+
+.status-meta-grid div:nth-child(2) b{
+  font-size:22px;
+}
+
+/* ============================= */
+/* STATUS BADGE */
+/* ============================= */
+
+.status-badge-expired{
+
+  display:inline-block;
+  margin-top:12px;
+  padding:8px 26px;
+
+  font-size:12px;
+  font-weight:600;
+
+  border-radius:999px;
+
+  background:#2b0d0d;
+
+  color:#ff4d4f;
+
+  border:1px solid rgba(255,80,80,0.35);
+
+  text-transform:uppercase;
+
+}
+
+/* ============================= */
+/* FADE UP SYSTEM */
+/* ============================= */
+
+.fade-up{
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .5s ease, transform .5s ease;
+}
+
+.fade-up.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* ============================= */
+/* COLLAPSIBLE INFO */
+/* ============================= */
+
+.info-toggle{
+  cursor:pointer;
+  user-select:none;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  font-weight:600;
+  font-size:15px;
+}
+
+.info-header{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.info-icon{
+  color:#ffffff;
+  font-size:16px;
+  font-weight:700;
+}
+
+.info-icon.active{
+  color:#9f7aea;
+}
+
+.info-more,
+.info-close{
+  color:#9f7aea;
+  font-weight:700;
+  font-size:14px;
+  cursor:pointer;
+}
+
+.info-content{
+  overflow:hidden;
+  max-height:0;
+  transition:max-height .3s ease;
+}
+
+.info-content.open{
+  max-height:600px;
+}
+
+/* NOTE LIST */
+
+.info-content ul{
+  margin:12px 0 14px;
+  padding:0;
+  list-style:none;
+  font-size:14px;
+  line-height:1.55;
+}
+
+.info-content ul li{
+  position:relative;
+  padding-left:18px;
+  margin-bottom:4px;
+}
+
+.info-content ul li::before{
+  content:"•";
+  position:absolute;
+  left:0;
+  top:2px;
+  font-size:12px;
+  color:#9f7aea;
+}
+
+
+/* ============================= */
+/* MOBILE */
+/* ============================= */
+
+@media (max-width:768px){
+
+.status-meta-grid{
+  grid-template-columns:1fr;
+  gap:14px;
+}
+}
+  
+/* Lebih halus di device cepat */
+@media (prefers-reduced-motion: reduce) {
+  .fade-up {
+    transition: none;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@media (min-width: 1200px) {
+  .package-preview {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+}
+
+*{
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
