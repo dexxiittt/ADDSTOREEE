@@ -144,6 +144,23 @@ if (matchedData) {
   wrapper.style.display = "block";
 
 // =============================
+// MAPPING HEADER
+// =============================
+  
+const headers = json.table.cols.map(
+  col => col.label.trim()
+);
+
+const rowData = {};
+
+headers.forEach((header, index) => {
+
+  rowData[header.trim()] =
+    matchedData.c[index]?.v ?? "";
+
+});
+
+// =============================
 // AMBIL DATA UTAMA
 // =============================
 
@@ -641,22 +658,6 @@ wrapper.innerHTML = `
   ${informasiCard}
 `;
 
-// =============================
-// MAPPING HEADER
-// =============================
-  
-const headers = json.table.cols.map(
-  col => col.label.trim()
-);
-
-const rowData = {};
-
-headers.forEach((header, index) => {
-
-  rowData[header.trim()] =
-    matchedData.c[index]?.v ?? "";
-
-});
 
 } else {
 
