@@ -278,6 +278,8 @@ if (validUntilRaw) {
 const status = rowData.status || "-";
 const image_url = rowData.image_url || "";
 
+console.log("image_url:", image_url);
+
 const activated_at = rowData[headers.find(h =>
   h.toLowerCase().includes("activated")
 )] || "";
@@ -462,7 +464,11 @@ Garansi Tersisa
 
 <span>Harga</span>
 
-<b>${hargaHTML}</b>
+<div class="info-price">
+
+${hargaHTML}
+
+</div>
 
 </div>
 
