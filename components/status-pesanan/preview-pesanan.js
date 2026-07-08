@@ -880,64 +880,6 @@ const timer = setInterval(() => {
 
 }, 1000);
 
-// =============================
-// COLLAPSIBLE INFORMASI
-// =============================
-
-const infoIcon =
-  document.getElementById("infoIcon");
-
-const infoContent =
-  document.getElementById("infoContent");
-
-const infoMore =
-  document.getElementById("infoMore");
-
-const infoClose =
-  document.getElementById("infoClose");
-
-if (infoMore) {
-
-  infoMore.addEventListener("click", () => {
-
-    infoContent.classList.add("open");
-    infoIcon.classList.add("active");
-
-    infoMore.style.display = "none";
-    infoClose.style.display = "block";
-
-    const notes =
-      infoContent.querySelectorAll("li");
-
-    notes.forEach((note, index) => {
-
-      note.classList.remove("show");
-
-      setTimeout(() => {
-
-        note.classList.add("show");
-
-      }, index * 120);
-
-    });
-
-  });
-
-}
-
-if (infoClose) {
-
-  infoClose.addEventListener("click", () => {
-
-    infoContent.classList.remove("open");
-    infoIcon.classList.remove("active");
-
-    infoClose.style.display = "none";
-    infoMore.style.display = "block";
-
-  });
-
-}
   
 } else {
 
