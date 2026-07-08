@@ -17,8 +17,54 @@ if (!invoice) {
 const wrapper = document.querySelector(".status-wrapper");
 
 // =============================
-// STEP 1.3 DITUNDA
+// TAMPILKAN LOADING CARD
 // =============================
+
+wrapper.innerHTML = `
+  <div style="
+    width: 100%;
+    padding: 120px 20px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    border-radius: 24px;
+    background: rgba(18,18,28,0.75);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+    text-align:center;
+    color:white;
+    font-family:'Plus Jakarta Sans', sans-serif;
+  ">
+
+    <h2 id="loadingText" style="margin-bottom:10px;">
+      Memuat Data...
+    </h2>
+
+    <div id="loadingTimer" style="
+      font-size:22px;
+      font-weight:700;
+      margin-bottom:10px;
+      color:#9f7aea;
+    ">
+      10:00
+    </div>
+
+    <p style="opacity:.8; margin-bottom:6px;">
+      Invoice sedang dibuat, mohon tunggu
+    </p>
+
+    <p style="opacity:.6;">
+      Invoice:
+    </p>
+
+    <h3 style="margin-top:5px; color:#9f7aea;">
+      ${invoice}
+    </h3>
+
+  </div>
+`;
 
 // =============================
 // SERVER TIME API
@@ -613,4 +659,15 @@ const informasiCard = `
     </div>
 
   </div>
+`;
+
+// =============================
+// INJECT KE WRAPPER
+// =============================
+
+wrapper.innerHTML = `
+  ${packageCard}
+  ${metaCard}
+  ${detailCard}
+  ${informasiCard}
 `;
