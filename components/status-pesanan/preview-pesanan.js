@@ -147,6 +147,7 @@ if (matchedData) {
 // MAPPING HEADER
 // =============================
 
+
 const headers = json.table.cols.map(
   col => col.label.trim()
 );
@@ -178,6 +179,7 @@ headers.forEach((header, index) => {
   }
 
 }
+
 
 // =============================
 // AMBIL DATA UTAMA
@@ -219,6 +221,7 @@ if (notesRaw && notesRaw.includes("|")) {
   ];
 
 }
+
 
 // =============================
 // PARSE DISCOUNT
