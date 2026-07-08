@@ -1018,12 +1018,38 @@ wrapper.innerHTML = notFoundHTML;
 
   } catch (err) {
 
-    console.error(
-      "Error ambil warranty_data:",
-      err
-    );
+// =============================
+// ERROR HANDLER
+// =============================
 
-  }
+console.error(
+  "Error ambil warranty_data:",
+  err
+);
+
+wrapper.innerHTML = `
+<div class="status-error-card">
+
+  <h2>
+    Terjadi Kesalahan
+  </h2>
+
+  <p>
+    Gagal mengambil data pesanan.
+    Silakan coba beberapa saat lagi.
+  </p>
+
+  <button
+    onclick="location.reload()">
+
+    Muat Ulang
+
+  </button>
+
+</div>
+`;
+
+}
 
 }
 
