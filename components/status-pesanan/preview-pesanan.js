@@ -203,32 +203,6 @@ if (notesRaw && notesRaw.includes("|")) {
 
 
 // =============================
-// PARSE DISCOUNT
-// =============================
-
-function parseDiscount(value) {
-
-  if (!value) return 0;
-
-  // Jika sudah berupa number
-  if (typeof value === "number") {
-    return value < 1 ? value * 100 : value;
-  }
-
-  const clean = String(value)
-    .replace("%", "")
-    .replace(",", ".")
-    .trim();
-
-  const discount = Number(clean) || 0;
-
-  return discount < 1
-    ? discount * 100
-    : discount;
-
-}
-
-// =============================
 // HITUNG HARGA AKHIR
 // =============================
 
@@ -761,26 +735,6 @@ const fadeObserver =
   );
 
 // =============================
-// OBSERVE SEMUA ELEMENT
-// =============================
-
-function initFadeUp() {
-
-  const elements =
-    document.querySelectorAll(".fade-up");
-
-  elements.forEach((element, index) => {
-
-    element.style.transitionDelay =
-      `${index * 100}ms`;
-
-    fadeObserver.observe(element);
-
-  });
-
-}
-
-// =============================
 // AMBIL ELEMENT COUNTDOWN
 // =============================
 
@@ -995,46 +949,50 @@ wrapper.innerHTML = `
 
 }
 
-// =============================
-// AMBIL STORAGE KEY
-// =============================
-
-const WAIT_DURATION =
-  1 * 60 * 1000;
-
-const storageKey =
-  "invoice_wait_" + invoice;
-
-const storedValue =
-  localStorage.getItem(storageKey);
 
 // =============================
-// CEK STATUS WAITING
+// PARSE DISCOUNT
 // =============================
 
-if (storedValue === "DONE") {
+function parseDiscount(value) {
 
-  fetchWarrantyData();
+  if (!value) return 0;
 
-  return;
+  // Jika sudah berupa number
+  if (typeof value === "number") {
+    return value < 1 ? value * 100 : value;
+  }
+
+  const clean = String(value)
+    .replace("%", "")
+    .replace(",", ".")
+    .trim();
+
+  const discount = Number(clean) || 0;
+
+  return discount < 1
+    ? discount * 100
+    : discount;
 
 }
 
 // =============================
-// MULAI WAITING
+// OBSERVE SEMUA ELEMENT
 // =============================
 
-const startTime =
-  storedValue
-    ? Number(storedValue)
-    : Date.now();
+function initFadeUp() {
 
-if (!storedValue) {
+  const elements =
+    document.querySelectorAll(".fade-up");
 
-  localStorage.setItem(
-    storageKey,
-    startTime
-  );
+  elements.forEach((element, index) => {
+
+    element.style.transitionDelay =
+      `${index * 100}ms`;
+
+    fadeObserver.observe(element);
+
+  });
 
 }
 
@@ -1101,6 +1059,50 @@ function startWaitingTimer(startTime) {
   setInterval(update, 1000);
 
 }
+
+// =============================
+// AMBIL STORAGE KEY
+// =============================
+
+const WAIT_DURATION =
+  1 * 60 * 1000;
+
+const storageKey =
+  "invoice_wait_" + invoice;
+
+const storedValue =
+  localStorage.getItem(storageKey);
+
+// =============================
+// CEK STATUS WAITING
+// =============================
+
+if (storedValue === "DONE") {
+
+  fetchWarrantyData();
+
+  return;
+
+}
+
+// =============================
+// MULAI WAITING
+// =============================
+
+const startTime =
+  storedValue
+    ? Number(storedValue)
+    : Date.now();
+
+if (!storedValue) {
+
+  localStorage.setItem(
+    storageKey,
+    startTime
+  );
+
+}
+
 
 // =============================
 // AMBIL ELEMENT LOADING
