@@ -108,6 +108,16 @@ headers.forEach((header, index) => {
 const product_id  = rowData.product_id || "-";
 const title       = rowData.title || "-";
 const packageName = rowData.package || "-";
+let badge = "Produk Premium";
+const id = product_id.toLowerCase();
+
+if (id.includes("apk")) {
+  badge = "APK Premium";
+} else if (id.includes("sosmed")) {
+  badge = "Layanan Sosial Media";
+} else if (id.includes("topup")) {
+  badge = "Top Up Game";
+}     
 const notesRaw = rowData.notes || "";
 
 let informasiList = [];
@@ -298,48 +308,75 @@ console.log("durationDays:", durationDays);
   <!-- CARD 1 -->
   <div class="package-preview fade-up">
 
+  <div class="package-image">
+  
     <img 
       src="${image_url || 'https://dummyimage.com/800x400/111827/ffffff&text=Package'}" 
       alt="${title}"
       onerror="this.src='https://dummyimage.com/800x400/111827/ffffff&text=Package';">
 
-    <h2 style="
-      font-family:'Cormorant Garamond', serif;
-      font-size:30px;
-      margin:20px 0 10px;
-      text-align:center;
-    ">
-      Detail Pesanan
-    </h2>
+      <div class="package-overlay"></div>
 
-    <h3>${title}</h3>
-    <p style="margin-bottom:20px;">${packageName}</p>
+      <div class="package-badge">
+      Premium
+      </div>
+    </div>
 
+<div class="product-header">
+<div class="product-category">
+<i class="fa-solid fa-crown"></i>
+
+${badge}
+
+</div>
+
+<h2> ${title} </h2>
+<p> ${packageName} </p>
+
+</div>
   </div>
 
-  <!-- CARD 2 (GLASS META) -->
+<!-- CARD 2 (GLASS META) -->
 <div class="status-meta-card fade-up">
-  <div class="status-meta-grid">
+<div class="status-meta-grid">
 
-    <div>
-      <span>Invoice</span>
-      <b>${invoice}</b>
-    </div>
+<div class="status-meta-item">
+<div class="status-meta-icon">
+<i class="fa-solid fa-file-invoice"></i>
 
-    <div>
-      <span>Durasi</span>
-      <b>${durationDisplay}</b>
-    </div>
+</div>
+<span>Invoice</span>
+<b>${invoice}</b>
+</div>
 
-    <div>
-      <span>Status</span>
-      <b id="statusText">
-        ${status}
-      </b>
-      <div id="countdownBox" style="margin-top:6px; font-size:13px; opacity:.8;">
-  Garansi Tersisa
-  <div id="countdownTimer" style="font-weight:600; margin-top:3px;"></div>
-  
+<div class="status-meta-item">
+<div class="status-meta-icon">
+<i class="fa-regular fa-clock"></i>
+
+</div>
+<span>Durasi</span>
+<b>${durationDisplay}</b>
+</div>
+
+<div class="status-meta-item">
+<div class="status-meta-icon">
+<i class="fa-solid fa-shield-halved"></i>
+</div>
+
+<span>Status</span>
+<b id="statusText">
+${status}
+</b>
+
+<div id="countdownBox">
+<div class="countdown-title">
+<i class="fa-regular fa-clock"></i>
+
+Garansi Tersisa
+
+</div>
+<div id="countdownTimer"></div>
+
 </div>
 </div>
 
@@ -350,22 +387,41 @@ console.log("durationDays:", durationDays);
 <div class="status-meta-card fade-up">
   <div class="status-meta-grid">
 
-    <div>
-      <span>Berlaku Sampai</span>
-      <b>${berlakuSampai}</b>
-    </div>
+<div class="info-tile">
+<div class="info-tile-icon">
+<i class="fa-regular fa-calendar-days"></i>
+</div>
 
-    <div>
-      <span>Harga</span>
-<b>${hargaHTML}</b>
-    </div>
+<div class="info-tile-content">
+<span>Berlaku Sampai</span>
+<b>${berlakuSampai}</b>
 
-<div>
-      <span>Pembayaran</span>
-      <b style="font-size:16px; line-height:1.4;">
-        ${metodePembayaran}
-      </b>
-    </div>
+</div>
+</div>
+
+<div class="info-tile">
+<div class="info-tile-icon">
+<i class="fa-solid fa-wallet"></i>
+</div>
+
+<div class="info-tile-content">
+<span>Harga</span>
+<b> ${hargaHTML} </b>
+
+</div>
+</div>
+
+<div class="info-tile">
+<div class="info-tile-icon">
+<i class="fa-solid fa-credit-card"></i>
+</div>
+
+<div class="info-tile-content">
+<span>Pembayaran</span>
+<b>${metodePembayaran}</b>
+
+</div>
+</div>
 
   </div>
 </div>
@@ -394,7 +450,6 @@ console.log("durationDays:", durationDays);
 
 </div>
 `;
-
 
       
 // =============================
@@ -553,8 +608,18 @@ const diff = fullDurationMs - elapsed;
     const minutes = Math.floor((diff % 3600000) / 60000);
     const seconds = Math.floor((diff % 60000) / 1000);
     
-    countdownTimer.innerHTML =
-      `${days} Hari ${hours.toString().padStart(2,"0")}:${minutes.toString().padStart(2,"0")}:${seconds.toString().padStart(2,"0")}`;
+    countdownTimer.innerHTML = `
+
+<div class="countdown-days">
+${days} Hari
+</div>
+
+<div class="countdown-time">
+${hours.toString().padStart(2,"0")}:
+${minutes.toString().padStart(2,"0")}:
+${seconds.toString().padStart(2,"0")}
+</div>
+`;
 
     // PREMIUM BEHAVIOUR COLOR SYSTEM
 if (days > 7) {
