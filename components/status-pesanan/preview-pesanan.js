@@ -23,6 +23,9 @@ const wrapper = document.querySelector(".status-wrapper");
 const loadingInvoice =
   document.getElementById("loadingInvoice");
 
+console.log("loadingInvoice =", loadingInvoice);
+console.log("invoice =", invoice);
+
 // =============================
 // TAMPILKAN NOMOR INVOICE
 // =============================
