@@ -968,6 +968,32 @@ function initFadeUp() {
 
 }
 
+
+// =============================
+// AMBIL STORAGE KEY
+// =============================
+
+const WAIT_DURATION =
+  1 * 60 * 1000;
+
+const storageKey =
+  "invoice_wait_" + invoice;
+
+const storedValue =
+  localStorage.getItem(storageKey);
+
+// =============================
+// CEK STATUS WAITING
+// =============================
+
+if (storedValue === "DONE") {
+
+  fetchWarrantyData();
+
+  return;
+
+}
+
 // =============================
 // SELESAI WAITING
 // =============================
@@ -1032,30 +1058,6 @@ function startWaitingTimer(startTime) {
 
 }
 
-// =============================
-// AMBIL STORAGE KEY
-// =============================
-
-const WAIT_DURATION =
-  1 * 60 * 1000;
-
-const storageKey =
-  "invoice_wait_" + invoice;
-
-const storedValue =
-  localStorage.getItem(storageKey);
-
-// =============================
-// CEK STATUS WAITING
-// =============================
-
-if (storedValue === "DONE") {
-
-  fetchWarrantyData();
-
-  return;
-
-}
 
 // =============================
 // MULAI WAITING
