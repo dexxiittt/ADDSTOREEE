@@ -17,54 +17,26 @@ if (!invoice) {
 const wrapper = document.querySelector(".status-wrapper");
 
 // =============================
-// TAMPILKAN LOADING CARD
+// AMBIL ELEMENT LOADING
 // =============================
 
-wrapper.innerHTML = `
-  <div style="
-    width: 100%;
-    padding: 120px 20px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    border-radius: 24px;
-    background: rgba(18,18,28,0.75);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255,255,255,0.08);
-    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
-    text-align:center;
-    color:white;
-    font-family:'Plus Jakarta Sans', sans-serif;
-  ">
+const loadingInvoice =
+  document.getElementById("loadingInvoice");
 
-    <h2 id="loadingText" style="margin-bottom:10px;">
-      Memuat Data...
-    </h2>
+// =============================
+// TAMPILKAN NOMOR INVOICE
+// =============================
 
-    <div id="loadingTimer" style="
-      font-size:22px;
-      font-weight:700;
-      margin-bottom:10px;
-      color:#9f7aea;
-    ">
-      10:00
-    </div>
+if (loadingInvoice) {
 
-    <p style="opacity:.8; margin-bottom:6px;">
-      Invoice sedang dibuat, mohon tunggu
-    </p>
+  loadingInvoice.textContent =
+    invoice;
 
-    <p style="opacity:.6;">
-      Invoice:
-    </p>
+}
 
-    <h3 style="margin-top:5px; color:#9f7aea;">
-      ${invoice}
-    </h3>
-
-  </div>
-`;
+// =============================
+// TAMPILKAN LOADING CARD
+// =============================
 
 // =============================
 // SERVER TIME API
