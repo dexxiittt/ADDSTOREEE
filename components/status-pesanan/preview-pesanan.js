@@ -994,6 +994,26 @@ if (storedValue === "DONE") {
 
 }
 
+
+
+// =============================
+// MULAI WAITING
+// =============================
+
+const startTime =
+  storedValue
+    ? Number(storedValue)
+    : Date.now();
+
+if (!storedValue) {
+
+  localStorage.setItem(
+    storageKey,
+    startTime
+  );
+
+}
+
 // =============================
 // SELESAI WAITING
 // =============================
@@ -1057,26 +1077,6 @@ function startWaitingTimer(startTime) {
   setInterval(update, 1000);
 
 }
-
-
-// =============================
-// MULAI WAITING
-// =============================
-
-const startTime =
-  storedValue
-    ? Number(storedValue)
-    : Date.now();
-
-if (!storedValue) {
-
-  localStorage.setItem(
-    storageKey,
-    startTime
-  );
-
-}
-
 
 // =============================
 // AMBIL ELEMENT LOADING
