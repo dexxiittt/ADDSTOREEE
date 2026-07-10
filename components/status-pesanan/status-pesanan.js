@@ -115,20 +115,24 @@ async function fetchWarrantyData() {
       }
     });
 
-    // =============================
-    // KALAU DATA DITEMUKAN
-    // =============================
-    if (matchedData) {
+    
+// =============================
+// KALAU DATA DITEMUKAN
+// =============================
+    
+if (matchedData) {
 
-      wrapper.style.display = "block";
-      loadingCard.style.display = "none";
+wrapper.style.display = "block";
+loadingCard.style.display = "none";
 
-    const headers = json.table.cols.map(col => col.label.trim());
+const headers = json.table.cols.map(col => col.label.trim());
 
 const rowData = {};
 headers.forEach((header, index) => {
   rowData[header.trim()] = matchedData.c[index]?.v ?? "";
 });
+
+metaInvoice.textContent = invoice;
 
 const product_id  = rowData.product_id || "-";
 const title       = rowData.title || "-";
@@ -161,6 +165,10 @@ if (id.includes("apk")) {
 packageBadge.textContent = badge;
       
 const notesRaw = rowData.notes || "";
+
+const status = rowData.status || "-";
+
+statusText.textContent = status;
 
 let informasiList = [];
 
@@ -341,7 +349,8 @@ if (durationDays >= 30) {
   durationDisplay = `${durationDays} Hari`;
 
 }
-      
+
+metaDuration.textContent = durationDisplay;
 
 console.log("activated_at:", activated_at);
 console.log("durationDays:", durationDays);
@@ -516,9 +525,6 @@ console.log("durationDays raw:", durationDays);
  
 if (durationDays > 0) {
 
-  const countdownTimer = document.getElementById("countdownTimer");
-  const statusText = document.getElementById("statusText");
-
   // ==========================
   // JIKA BELUM ACTIVE
   // ==========================
@@ -604,6 +610,8 @@ const diff = fullDurationMs - elapsed;
   countdownTimer.innerHTML = "";
   statusText.innerHTML = "Expired";
   statusText.style.color = "#ef4444";
+
+  countdownBox.style.display = "none";
 
   if (!document.querySelector(".status-badge-expired")) {
     const badge = document.createElement("div");
