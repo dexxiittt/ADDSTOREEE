@@ -41,6 +41,28 @@ document.getElementById("productTitle");
 const packageNameText =
 document.getElementById("packageName");
 
+// =============================
+// CARD 2 ELEMENT
+// =============================
+
+const metaCard =
+document.getElementById("metaCard");
+
+const metaInvoice =
+document.getElementById("metaInvoice");
+
+const metaDuration =
+document.getElementById("metaDuration");
+
+const statusText =
+document.getElementById("statusText");
+
+const countdownBox =
+document.getElementById("countdownBox");
+
+const countdownTimer =
+document.getElementById("countdownTimer");
+
 resultWrapper.style.display = "none";
 
 const loadingText =
