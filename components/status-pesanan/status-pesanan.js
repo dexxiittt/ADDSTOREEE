@@ -79,6 +79,15 @@ document.getElementById("validUntil");
 const priceInfo =
 document.getElementById("priceInfo");
 
+const oldPrice =
+document.getElementById("oldPrice");
+
+const finalPriceText =
+document.getElementById("finalPrice");
+
+const discountBadge =
+document.getElementById("discountBadge");
+
 const paymentMethod =
 document.getElementById("paymentMethod");
 
