@@ -82,6 +82,28 @@ document.getElementById("priceInfo");
 const paymentMethod =
 document.getElementById("paymentMethod");
 
+// =============================
+// CARD 4 ELEMENT
+// =============================
+
+const infoCard =
+document.getElementById("infoCard");
+
+const infoIcon =
+document.getElementById("infoIcon");
+
+const infoMore =
+document.getElementById("infoMore");
+
+const infoContent =
+document.getElementById("infoContent");
+
+const infoList =
+document.getElementById("infoList");
+
+const infoClose =
+document.getElementById("infoClose");
+
 resultWrapper.style.display = "none";
 
 const loadingText =
@@ -295,6 +317,8 @@ const informasiHTML = informasiList
   .map(item => `<li>${item}</li>`)
   .join("");
 
+infoList.innerHTML = informasiHTML;
+
 // =============================
 // VALID UNTIL SYSTEM (PREMIUM VERSION)
 // =============================
@@ -413,9 +437,6 @@ console.log("durationDays:", durationDays);
   </div>
 
   <div id="infoContent" class="info-content">
-    <ul>
-      ${informasiHTML}
-    </ul>
 
     <div id="infoClose" class="info-close" style="display:none;">
       Tutup
@@ -429,11 +450,6 @@ console.log("durationDays:", durationDays);
 // =============================
 // CLEAN COLLAPSIBLE SYSTEM
 // =============================
-
-const infoIcon = document.getElementById("infoIcon");
-const infoContent = document.getElementById("infoContent");
-const infoMore = document.getElementById("infoMore");
-const infoClose = document.getElementById("infoClose");
 
 if (infoMore) {
   infoMore.addEventListener("click", () => {
