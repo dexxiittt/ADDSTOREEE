@@ -19,6 +19,28 @@ document.getElementById("loadingCard");
 const resultWrapper =
 document.getElementById("resultWrapper");
 
+// =============================
+// CARD 1 ELEMENT
+// =============================
+
+const packageCard =
+document.getElementById("packageCard");
+
+const packageImage =
+document.getElementById("packageImage");
+
+const packageBadge =
+document.getElementById("packageBadge");
+
+const productCategory =
+document.getElementById("productCategory");
+
+const productTitle =
+document.getElementById("productTitle");
+
+const packageNameText =
+document.getElementById("packageName");
+
 resultWrapper.style.display = "none";
 
 const loadingText =
@@ -88,7 +110,21 @@ headers.forEach((header, index) => {
 
 const product_id  = rowData.product_id || "-";
 const title       = rowData.title || "-";
+
+productTitle.textContent = title;
+      
 const packageName = rowData.package || "-";
+
+packageNameText.textContent = packageName;
+
+const image_url = rowData.image_url || "";
+
+packageImage.src =
+image_url ||
+"https://dummyimage.com/800x400/111827/ffffff&text=Package";
+
+packageImage.alt = title;
+      
 let badge = "Produk Premium";
 const id = product_id.toLowerCase();
 
@@ -99,6 +135,9 @@ if (id.includes("apk")) {
 } else if (id.includes("topup")) {
   badge = "Top Up Game";
 }     
+
+packageBadge.textContent = badge;
+      
 const notesRaw = rowData.notes || "";
 
 let informasiList = [];
