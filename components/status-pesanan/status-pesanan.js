@@ -370,20 +370,7 @@ console.log("durationDays:", durationDays);
 </div>
 
 <span>Status</span>
-<b id="statusText">
-${status}
-</b>
 
-<div id="countdownBox">
-<div class="countdown-title">
-<i class="fa-regular fa-clock"></i>
-
-Garansi Tersisa
-
-</div>
-<div id="countdownTimer"></div>
-
-</div>
 </div>
 
   </div>
