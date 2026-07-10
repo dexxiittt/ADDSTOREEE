@@ -599,6 +599,8 @@ notFoundInvoice.textContent = invoice;
 
 loadingCard.style.display = "none";
 
+resultWrapper.style.display = "block";
+
 resultWrapper.style.display = "none";
 
 notFoundCard.style.display = "block";
