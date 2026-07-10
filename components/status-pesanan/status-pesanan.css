@@ -229,6 +229,18 @@ color:#111827;
 line-height:1.5;
 }
 
+/* =========================
+   PRICE BOX
+========================= */
+
+.price-box{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:8px;
+flex-wrap:wrap;
+}
+
 .info-tile-content .price-old{
 font-size:14px;
 text-decoration:line-through;
