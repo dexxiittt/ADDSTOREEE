@@ -429,9 +429,12 @@ if (infoClose) {
 }
 
       initFadeUp();
- 
-if (durationDays > 0) {
+alert("STEP C.3 - Lewat initFadeUp");
 
+alert("STEP C.4 - Sebelum duration");
+if (durationDays > 0) {
+alert("STEP C.5 - Masuk duration");
+  
   // ==========================
   // JIKA BELUM ACTIVE
   // ==========================
@@ -720,6 +723,7 @@ const fadeObserver = new IntersectionObserver((entries) => {
 });
 
 function initFadeUp() {
+  
   const elements = document.querySelectorAll(".fade-up");
 
   elements.forEach((el, index) => {
