@@ -395,9 +395,6 @@ if (durationDays >= 30) {
 }
 
 metaDuration.textContent = durationDisplay;
-
-console.log("activated_at:", activated_at);
-console.log("durationDays:", durationDays);
       
 // =============================
 // CLEAN COLLAPSIBLE SYSTEM
@@ -440,9 +437,6 @@ if (infoClose) {
 }
 
       initFadeUp();
-      
-console.log("activated_at raw:", activated_at);
-console.log("durationDays raw:", durationDays);
  
 if (durationDays > 0) {
 
