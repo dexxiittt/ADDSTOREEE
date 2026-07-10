@@ -609,6 +609,7 @@ const elapsed = now - activatedDate;
 const diff = fullDurationMs - elapsed;
 
 countdownBox.style.display = "block";
+expiredBadge.style.display = "none";
 
     if (diff <= 0) {
 
@@ -617,7 +618,6 @@ countdownBox.style.display = "block";
   statusText.style.color = "#ef4444";
 
   countdownBox.style.display = "none";
-
   expiredBadge.style.display = "block";
 
   /* if (!document.querySelector(".status-badge-expired")) {
