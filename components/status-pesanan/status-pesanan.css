@@ -83,17 +83,24 @@ z-index:5;
 position:relative;
 left:18px;
   
-background:#ffffff;
+background:linear-gradient(
+180deg,
+#1d1b27,
+#17151f
+);
+  
 color:#111827;
 
-border-radius:24px;
+border:1px solid
+rgba(139,92,246,.14);
 padding:28px;
 
 margin-bottom:18px;
 border:1px solid rgba(15,23,42,.05);
 
 box-shadow:
-0 12px 35px rgba(15,23,42,.08);
+0 20px 45px rgba(0,0,0,.35),
+0 0 28px rgba(139,92,246,.08);
 
 transition:
 transform .28s ease,
