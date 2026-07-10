@@ -339,9 +339,6 @@ if (validUntilRaw) {
 }
 
 validUntil.textContent = berlakuSampai;
-      
-const status = rowData.status || "-";
-const image_url = rowData.image_url || "";
 
 const activated_at = rowData[headers.find(h =>
   h.toLowerCase().includes("activated")
@@ -399,42 +396,6 @@ console.log("durationDays:", durationDays);
 <!-- CARD 3 (GLASS DETAIL TAMBAHAN) -->
 <div class="status-meta-card fade-up">
   <div class="status-meta-grid">
-
-<div class="info-tile">
-<div class="info-tile-icon">
-<i class="fa-regular fa-calendar-days"></i>
-</div>
-
-<div class="info-tile-content">
-<span>Berlaku Sampai</span>
-<b>${berlakuSampai}</b>
-
-</div>
-</div>
-
-<div class="info-tile">
-<div class="info-tile-icon">
-<i class="fa-solid fa-wallet"></i>
-</div>
-
-<div class="info-tile-content">
-<span>Harga</span>
-<b> ${hargaHTML} </b>
-
-</div>
-</div>
-
-<div class="info-tile">
-<div class="info-tile-icon">
-<i class="fa-solid fa-credit-card"></i>
-</div>
-
-<div class="info-tile-content">
-<span>Pembayaran</span>
-<b>${metodePembayaran}</b>
-
-</div>
-</div>
 
   </div>
 </div>
