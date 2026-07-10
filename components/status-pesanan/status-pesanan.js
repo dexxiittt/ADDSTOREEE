@@ -399,30 +399,7 @@ metaDuration.textContent = durationDisplay;
 console.log("activated_at:", activated_at);
 console.log("durationDays:", durationDays);
 
-      resultWrapper.innerHTML = `
-  
-<!-- CARD 2 (GLASS META) -->
-<div class="status-meta-card fade-up">
-<div class="status-meta-grid">
-
-<div class="status-meta-item">
-<div class="status-meta-icon">
-<i class="fa-solid fa-shield-halved"></i>
-</div>
-
-<span>Status</span>
-
-</div>
-
-  </div>
-</div>
-
-<!-- CARD 3 (GLASS DETAIL TAMBAHAN) -->
-<div class="status-meta-card fade-up">
-  <div class="status-meta-grid">
-
-  </div>
-</div>
+resultWrapper.innerHTML = `
 
 <!-- CARD 4 (INFORMASI PENTING) -->
 <div class="status-meta-card fade-up">
@@ -438,9 +415,6 @@ console.log("durationDays:", durationDays);
 
   <div id="infoContent" class="info-content">
 
-    <div id="infoClose" class="info-close" style="display:none;">
-      Tutup
-    </div>
   </div>
 
 </div>
