@@ -634,6 +634,7 @@ if (storedValue === "DONE") {
   if (timerEl) timerEl.style.display = "none";
   if (waitText) waitText.style.display = "none";
 
+  alert("STEP A - Timer selesai, fetchWarrantyData akan dijalankan");
   // Langsung ambil status
   fetchWarrantyData();
 
