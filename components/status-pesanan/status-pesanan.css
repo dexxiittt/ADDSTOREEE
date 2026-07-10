@@ -98,11 +98,13 @@ box-shadow .28s ease;
 
 font-family:"Plus Jakarta Sans",sans-serif;
 overflow:hidden;
+
+transform:translateX(18px);
 }
 
 .package-preview:hover,
 .status-meta-card:hover{
-transform:translateY(-4px);
+transform:translateX(18px) translateY(-4px);
 
 box-shadow:
 0 20px 55px rgba(15,23,42,.12);
@@ -170,10 +172,12 @@ transition:
 transform .28s ease,
 box-shadow .28s ease,
 border-color .28s ease;
+
+transform:translateX(18px);
 }
 
 .info-tile:hover{
-transform:translateY(-4px);
+transform:translateX(18px) translateY(-4px);
 border-color:#c4b5fd;
 
 box-shadow:
