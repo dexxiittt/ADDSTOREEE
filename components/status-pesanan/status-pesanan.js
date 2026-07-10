@@ -398,28 +398,6 @@ metaDuration.textContent = durationDisplay;
 
 console.log("activated_at:", activated_at);
 console.log("durationDays:", durationDays);
-
-resultWrapper.innerHTML = `
-
-<!-- CARD 4 (INFORMASI PENTING) -->
-<div class="status-meta-card fade-up">
-
-  <div class="info-header" style="margin-bottom:6px;">
-    <span id="infoIcon" class="info-icon">ⓘ</span>
-    <span>Informasi Penting</span>
-  </div>
-
-  <div id="infoMore" class="info-more">
-    Selengkapnya...
-  </div>
-
-  <div id="infoContent" class="info-content">
-
-  </div>
-
-</div>
-`;
-
       
 // =============================
 // CLEAN COLLAPSIBLE SYSTEM
