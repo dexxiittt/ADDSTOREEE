@@ -19,6 +19,8 @@ document.getElementById("loadingCard");
 const resultWrapper =
 document.getElementById("resultWrapper");
 
+resultWrapper.style.display = "none";
+
 const loadingText =
 document.getElementById("loadingText");
 
@@ -75,6 +77,7 @@ async function fetchWarrantyData() {
     if (matchedData) {
 
       wrapper.style.display = "block";
+      loadingCard.style.display = "none";
 
     const headers = json.table.cols.map(col => col.label.trim());
 
