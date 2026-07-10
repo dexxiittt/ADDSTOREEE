@@ -486,14 +486,20 @@ left:18px;
 padding:8px 18px;
 border-radius:999px;
 
-background:rgba(255,255,255,.94);
-backdrop-filter:blur(12px);
+background:rgba(20,20,30,.72);
+
+border:1px solid
+rgba(255,255,255,.08);
+
+box-shadow:
+0 6px 18px rgba(0,0,0,.22),
+0 0 12px rgba(139,92,246,.08);
 
 font-family:"Plus Jakarta Sans",sans-serif;
 font-size:13px;
 font-weight:700;
 
-color:#7c3aed;
+color:#f8fafc;
 
 box-shadow:
 0 10px 25px rgba(0,0,0,.12);
