@@ -282,7 +282,7 @@ if (durationDays >= 30) {
 console.log("activated_at:", activated_at);
 console.log("durationDays:", durationDays);
 
-      wrapper.innerHTML = `
+      resultWrapper.innerHTML = `
   <!-- CARD 1 -->
   <div class="package-preview fade-up">
 
