@@ -366,24 +366,6 @@ console.log("durationDays:", durationDays);
 
 <div class="status-meta-item">
 <div class="status-meta-icon">
-<i class="fa-solid fa-file-invoice"></i>
-
-</div>
-<span>Invoice</span>
-<b>${invoice}</b>
-</div>
-
-<div class="status-meta-item">
-<div class="status-meta-icon">
-<i class="fa-regular fa-clock"></i>
-
-</div>
-<span>Durasi</span>
-<b>${durationDisplay}</b>
-</div>
-
-<div class="status-meta-item">
-<div class="status-meta-icon">
 <i class="fa-solid fa-shield-halved"></i>
 </div>
 
