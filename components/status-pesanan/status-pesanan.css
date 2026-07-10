@@ -625,6 +625,9 @@ box-shadow:
 /* ============================= */
 
 #countdownBox{
+position:relative;
+left: -8px;
+  
 margin-top:18px;
 padding:18px;
 
