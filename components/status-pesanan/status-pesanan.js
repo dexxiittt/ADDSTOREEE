@@ -325,37 +325,7 @@ console.log("activated_at:", activated_at);
 console.log("durationDays:", durationDays);
 
       resultWrapper.innerHTML = `
-  <!-- CARD 1 -->
-  <div class="package-preview fade-up">
-
-  <div class="package-image">
   
-    <img 
-      src="${image_url || 'https://dummyimage.com/800x400/111827/ffffff&text=Package'}" 
-      alt="${title}"
-      onerror="this.src='https://dummyimage.com/800x400/111827/ffffff&text=Package';">
-
-      <div class="package-overlay"></div>
-
-      <div class="package-badge">
-      Premium
-      </div>
-    </div>
-
-<div class="product-header">
-<div class="product-category">
-<i class="fa-solid fa-crown"></i>
-
-${badge}
-
-</div>
-
-<h2> ${title} </h2>
-<p> ${packageName} </p>
-
-</div>
-  </div>
-
 <!-- CARD 2 (GLASS META) -->
 <div class="status-meta-card fade-up">
 <div class="status-meta-grid">
