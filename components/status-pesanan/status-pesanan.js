@@ -63,6 +63,9 @@ document.getElementById("countdownBox");
 const countdownTimer =
 document.getElementById("countdownTimer");
 
+const expiredBadge =
+document.getElementById("expiredBadge");
+
 resultWrapper.style.display = "none";
 
 const loadingText =
@@ -615,12 +618,15 @@ countdownBox.style.display = "block";
 
   countdownBox.style.display = "none";
 
-  if (!document.querySelector(".status-badge-expired")) {
+  expiredBadge.style.display = "block";
+
+  /* if (!document.querySelector(".status-badge-expired")) {
     const badge = document.createElement("div");
     badge.className = "status-badge-expired";
     badge.innerText = "EXPIRED";
     statusText.parentNode.appendChild(badge);
   }
+*/
 
   return;
 }
