@@ -625,9 +625,6 @@ box-shadow:
 /* ============================= */
 
 #countdownBox{
-position:relative;
-left:-18px;
-  
 margin-top:18px;
 padding:18px;
 
@@ -712,6 +709,9 @@ color:#16a34a;
 ========================= */
 
 .loading-card{
+position:relative;
+left:-18px;
+  
 width:100%;
 padding:110px 28px;
 
