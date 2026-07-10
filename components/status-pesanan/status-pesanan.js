@@ -66,6 +66,22 @@ document.getElementById("countdownTimer");
 const expiredBadge =
 document.getElementById("expiredBadge");
 
+// =============================
+// CARD 3 ELEMENT
+// =============================
+
+const detailCard =
+document.getElementById("detailCard");
+
+const validUntil =
+document.getElementById("validUntil");
+
+const priceInfo =
+document.getElementById("priceInfo");
+
+const paymentMethod =
+document.getElementById("paymentMethod");
+
 resultWrapper.style.display = "none";
 
 const loadingText =
@@ -268,7 +284,8 @@ if (discount > 0) {
   `;
 }
 
-      const durationDays = parseInt(rowData.duration_days) || 0;
+priceInfo.innerHTML = hargaHTML;
+const durationDays = parseInt(rowData.duration_days) || 0;
 
 // =============================
 // GENERATE INFORMASI HTML
@@ -320,6 +337,8 @@ if (validUntilRaw) {
 
   }
 }
+
+validUntil.textContent = berlakuSampai;
       
 const status = rowData.status || "-";
 const image_url = rowData.image_url || "";
@@ -335,6 +354,7 @@ const metodePembayaran = `
   </div>
 `;
 
+paymentMethod.innerHTML = metodePembayaran;
 
 if (durationDays >= 30) {
 
