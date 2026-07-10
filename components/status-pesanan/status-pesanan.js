@@ -681,8 +681,6 @@ function startWaitingTimer(startTime) {
 // LOADING DOT ANIMATION
 // =============================
 
-const loadingText = document.getElementById("loadingText");
-
 if (loadingText) {
 
   let dotCount = 0;
