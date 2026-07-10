@@ -941,6 +941,9 @@ transform:translateY(-6px);
 ========================= */
 
 .not-found-card{
+position:relative;
+left:18px;
+  
 width:85%;
 max-width:750px;
 
