@@ -265,57 +265,24 @@ const discount = parseDiscount(rowData.discount);
 const finalPrice = discount > 0
   ? Math.round(price - (price * discount / 100))
   : price;
-
-let hargaHTML;
+  
+oldPrice.textContent =
+`Rp${price.toLocaleString("id-ID")}`;
+  
+finalPriceText.textContent =
+`Rp${finalPrice.toLocaleString("id-ID")}`;
 
 if (discount > 0) {
-  hargaHTML = `
-    <div style="display:flex; align-items:center; justify-content:center; gap:8px;">
 
-      <span style="
-        font-size:14px;
-        text-decoration:line-through;
-        color:#ffffff;
-        opacity:0.6;
-      ">
-        Rp${price.toLocaleString("id-ID")}
-      </span>
+  discountBadge.textContent =
+  `-${discount.toFixed(2).replace(".", ",")}%`;
 
-      <span style="
-        font-weight:900;
-        font-size:22px;
-        color:#ffffff;
-      ">
-        Rp${finalPrice.toLocaleString("id-ID")}
-      </span>
-
-      <span style="
-        padding:4px 10px;
-        font-size:12px;
-        font-weight:700;
-        border-radius:999px;
-        background:#22c55e;
-        color:#ffffff;
-        white-space:nowrap;
-      ">
-        -${discount.toFixed(2).replace('.', ',')}%
-      </span>
-
-    </div>
-  `;
 } else {
-  hargaHTML = `
-    <span style="
-      font-weight:900;
-      font-size:22px;
-      color:#ffffff;
-    ">
-      Rp${price.toLocaleString("id-ID")}
-    </span>
-  `;
-}
 
-priceInfo.innerHTML = hargaHTML;
+  discountBadge.style.display = "none";
+
+}
+  
 const durationDays = parseInt(rowData.duration_days) || 0;
 
 // =============================
