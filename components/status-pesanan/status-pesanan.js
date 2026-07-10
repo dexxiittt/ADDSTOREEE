@@ -605,6 +605,8 @@ const fullDurationMs = durationDays * 24 * 60 * 60 * 1000;
 const elapsed = now - activatedDate;
 const diff = fullDurationMs - elapsed;
 
+countdownBox.style.display = "block";
+
     if (diff <= 0) {
 
   countdownTimer.innerHTML = "";
