@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Status Pesanan</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="components/status-pesanan/status-pesanan.css">
+
+</head>
+  
+<body>
+<div id="navbar-placeholder"></div>
+<script src="components/navbar.js"></script>
+  
+<!-- HERO -->
+<div class="package-hero">
+  <h1>Status Pesanan</h1>
+  <p>Status paket dan detail pesanan</p>
+</div>
+
+<section class="status-wrapper">
+<div id="loadingCard" class="loading-card">
+
+<h2 id="loadingText">
+Memuat Data...
+</h2>
+
+<div id="loadingTimer">
+10:00
+</div>
+
+<p class="loading-desc">
+Invoice sedang dibuat, mohon tunggu
+</p>
+
+<p class="loading-label">
+Invoice:
+</p>
+
+<h3 id="loadingInvoice"></h3>
+</div>
+
+</section>
+
+<div id="footer-container"></div>
+
+<link rel="stylesheet" href="components/footer.css">
+<script src="components/footer.js"></script>
+
+<script src="components/status-pesanan/status-pesanan.js"></script>
+</body>
+</html>
