@@ -190,6 +190,7 @@ if (matchedData) {
 
 wrapper.style.display = "block";
 loadingCard.style.display = "none";
+resultWrapper.style.display = "block";
 
 const headers = json.table.cols.map(col => col.label.trim());
 
