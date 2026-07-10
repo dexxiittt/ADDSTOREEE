@@ -80,6 +80,9 @@ z-index:5;
 
 .package-preview,
 .status-meta-card{
+position:relative;
+left:18px;
+  
 background:#ffffff;
 color:#111827;
 
@@ -155,6 +158,9 @@ color:#64748b;
 ========================= */
 
 .info-tile{
+position:relative;
+left:18px;
+  
 display:flex;
 
 align-items:center;
