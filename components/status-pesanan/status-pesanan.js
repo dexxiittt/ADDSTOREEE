@@ -161,6 +161,7 @@ const sheetURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=
 // FETCH WARRANTY_DATA
 // =============================
 async function fetchWarrantyData() {
+  alert("STEP B - Masuk fetchWarrantyData");
   try {
     const res = await fetch(sheetURL);
     const text = await res.text();
@@ -184,6 +185,8 @@ async function fetchWarrantyData() {
 // =============================
     
 if (matchedData) {
+
+  alert("STEP C - Data ditemukan");
 
 wrapper.style.display = "block";
 loadingCard.style.display = "none";
@@ -590,6 +593,8 @@ startCountdown();
 
       } else {
 
+  alert("STEP D - Data tidak ditemukan");
+
 notFoundInvoice.textContent = invoice;
 
 loadingCard.style.display = "none";
@@ -659,6 +664,7 @@ function startWaitingTimer(startTime) {
       if (timerEl) timerEl.style.display = "none";
       if (waitText) waitText.style.display = "none";
 
+      alert("STEP A - Timer selesai, fetchWarrantyData akan dijalankan");
       // Ambil status pesanan
       fetchWarrantyData();
       return;
