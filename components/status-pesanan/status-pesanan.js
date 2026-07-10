@@ -134,6 +134,9 @@ document.getElementById("loadingText");
 const loadingTimer =
 document.getElementById("loadingTimer");
 
+const loadingTimerText =
+document.getElementById("loadingTimerText");
+
 const loadingInvoice =
 document.getElementById("loadingInvoice");
 
@@ -670,10 +673,10 @@ function startWaitingTimer(startTime) {
     const minutes = Math.floor(remaining / 60000);
     const seconds = Math.floor((remaining % 60000) / 1000);
 
-    if (timerEl) {
-      timerEl.innerHTML =
-        `${minutes.toString().padStart(2,"0")}:${seconds.toString().padStart(2,"0")}`;
-    }
+    if (loadingTimerText) {
+  loadingTimerText.textContent =
+    `${minutes.toString().padStart(2,"0")}:${seconds.toString().padStart(2,"0")}`;
+}
   }
 
   update();
