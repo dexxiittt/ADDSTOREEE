@@ -16,6 +16,9 @@ const wrapper = document.querySelector(".status-wrapper");
 const loadingCard =
 document.getElementById("loadingCard");
 
+const resultWrapper =
+document.getElementById("resultWrapper");
+
 const loadingText =
 document.getElementById("loadingText");
 
