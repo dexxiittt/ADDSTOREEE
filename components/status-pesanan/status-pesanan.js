@@ -385,9 +385,9 @@ if (durationDays >= 30) {
   durationDisplay = `${durationDays} Hari`;
 
 }
-
+alert("STEP C.1 - Sebelum metaDuration");
 metaDuration.textContent = durationDisplay;
-      
+alert("STEP C.2 - Sesudah metaDuration");
 // =============================
 // CLEAN COLLAPSIBLE SYSTEM
 // =============================
