@@ -146,22 +146,9 @@ return{
 
 noteClass:"note-expired",
 
-autoNote:`
-<span class="note-icon">
-<svg viewBox="0 0 24 24" width="16" height="16">
-<circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.15"/>
-<path d="M12 7v6"
-stroke="currentColor"
-stroke-width="2"
-stroke-linecap="round"/>
-<circle cx="12" cy="17" r="1.5" fill="currentColor"/>
-</svg>
-</span>
+noteTemplate:
+"noteExpiredTemplate"
 
-Paket dan Garansi telah berakhir.<br>
-Layanan tidak lagi termasuk dalam cakupan garansi.<br>
-Jika ingin melanjutkan layanan hubungi admin untuk pembelian ulang.
-`
 };
   
 }
