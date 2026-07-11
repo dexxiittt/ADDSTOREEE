@@ -125,14 +125,14 @@ Belum ada transaksi.
 
 }
 
-function generateMetaHtml(item, activated, expired){
+function generateMetaHtml(metaData){
 
 return `
 <div class="meta">
-Produk: ${item.title}<br>
-Paket: ${item.package}<br>
-Aktivasi: ${activated}<br>
-Berakhir: ${expired}
+Produk: ${metaData.title}<br>
+Paket: ${metaData.package}<br>
+Aktivasi: ${metaData.activated}<br>
+Berakhir: ${metaData.expired}
 </div>
 `;
 
@@ -257,6 +257,23 @@ statusClass:isActive?
 };
 
 }
+
+function getMetaData(
+item,
+activated,
+expired
+){
+
+return{
+
+title:item.title,
+package:item.package,
+activated,
+expired
+
+};
+
+}
   
 const isActive=
 isPackageActive(
@@ -267,7 +284,19 @@ endDate
 function generateStatusHtml(statusData){
 
 return `
-${statusHtml}
+<div class="status-row">
+
+<span class="${statusData.statusClass}">
+<span class="status-dot"></span>
+${statusData.statusPaket}
+</span>
+
+<span class="${statusData.statusClass}">
+<span class="status-dot"></span>
+${statusData.statusGaransi}
+</span>
+
+</div>
 `;
 
 }
@@ -290,13 +319,19 @@ formatIndoDate(
 endDate
 );
 
-const statusHtml=
-generateStatusHtml(statusData);
-const metaHtml=
-generateMetaHtml(
+const metaData=
+getMetaData(
 item,
 activated,
 expired
+);
+
+const statusHtml=
+generateStatusHtml(statusData);
+  
+const metaHtml=
+generateMetaHtml(
+metaData
 );
 
 const noteHtml=
