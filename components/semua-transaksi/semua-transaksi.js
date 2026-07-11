@@ -39,13 +39,6 @@ headers.forEach((h,i)=>{
 rowData[h]=row.c[i]?.v ?? "";
 });
 
-function normalizeNumber(num) {
-  num = String(num).replace(/\D/g, "");
-  if (num.startsWith("62")) num = num.substring(2);
-  if (num.startsWith("0")) num = num.substring(1);
-  return num;
-}
-
 if(normalizeNumber(rowData.buyer_contact) === normalizeNumber(buyer)){
 result.push(rowData);
 }
@@ -129,6 +122,13 @@ year:"numeric"
 }
 );
 
+}
+
+function normalizeNumber(num) {
+  num = String(num).replace(/\D/g, "");
+  if (num.startsWith("62")) num = num.substring(2);
+  if (num.startsWith("0")) num = num.substring(1);
+  return num;
 }
 
 function getNoteData(isActive){
