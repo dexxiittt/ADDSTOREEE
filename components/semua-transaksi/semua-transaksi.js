@@ -231,7 +231,7 @@ getWrapper().innerHTML=html;
 }
 
 function clearWrapper(){
-getWrapper().innerHTML="";
+setWrapperHtml("");
 }
 
 function appendCard(html){
@@ -285,6 +285,20 @@ ${autoNote}
 `;
 }
 
+function generateButtonHtml(item){
+return `
+<div class="button-group">
+<a href="status-pesanan.html?inv=${item.invoice}" class="btn btn-detail">
+Detail Paket
+</a>
+
+<a href="https://wa.me/6281234567890" class="btn btn-wa">
+Hubungi Admin
+</a>
+</div>
+`;
+}
+
 function generateCardHtml(
 item,
 statusHtml,
@@ -306,21 +320,6 @@ ${buttonHtml}
 `;
 
 }
-
-function generateButtonHtml(item){
-return `
-<div class="button-group">
-<a href="status-pesanan.html?inv=${item.invoice}" class="btn btn-detail">
-Detail Paket
-</a>
-
-<a href="https://wa.me/6281234567890" class="btn btn-wa">
-Hubungi Admin
-</a>
-</div>
-`;
-}
-
 
 /* ============================= */
 /* RENDER */
