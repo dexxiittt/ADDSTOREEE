@@ -88,6 +88,25 @@ function parseIndoDate(value) {
   return new Date(value);
 }
 
+function getEndDate(activatedDate, validUntil){
+
+// Kalau valid_until adalah jumlah hari
+if(!isNaN(validUntil)){
+
+const durationDays=
+Number(validUntil)||0;
+
+return new Date(
+activatedDate.getTime()+
+durationDays*24*60*60*1000
+);
+
+}
+
+// Kalau valid_until berupa tanggal
+return parseIndoDate(validUntil);
+}
+
 function getWrapper(){
 return document.getElementById("wrapper");
 }
@@ -143,23 +162,109 @@ const activatedDate = parseIndoDate(item["activated_at"]);
 
 if(!activatedDate) return;
 
-let endDate;
+const endDate=
+getEndDate(
+activatedDate,
+item.valid_until
+);
 
-// Kalau valid_until adalah angka (durasi)
-if (!isNaN(item.valid_until)) {
-  const durationDays = Number(item.valid_until) || 0;
-  endDate = new Date(
-    activatedDate.getTime() + durationDays * 24 * 60 * 60 * 1000
-  );
-}
-// Kalau valid_until adalah tanggal
-else {
-  endDate = parseIndoDate(item.valid_until);
+function isPackageActive(now, endDate){
+return now <= endDate;
 }
 
-const isActive = now <= endDate;
+function formatIndoDate(date){
 
-function generateStatusHtml(isActive){
+return date.toLocaleDateString(
+"id-ID",
+{
+day:"numeric",
+month:"long",
+year:"numeric"
+}
+);
+
+}
+
+function getNoteData(isActive){
+
+if(isActive){
+
+return{
+
+noteClass:"note-active",
+
+autoNote:`
+<span class="note-icon">
+<svg viewBox="0 0 24 24" width="16" height="16">
+<circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.15"/>
+<path d="M7 12.5L10.2 15.5L17 9"
+fill="none"
+stroke="currentColor"
+stroke-width="2"
+stroke-linecap="round"
+stroke-linejoin="round"/>
+</svg>
+</span>
+
+Paket dan Garansi telah aktif.<br>
+Layanan dalam cakupan garansi.
+`
+
+};
+
+}
+
+return{
+
+noteClass:"note-expired",
+
+autoNote:`
+<span class="note-icon">
+<svg viewBox="0 0 24 24" width="16" height="16">
+<circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.15"/>
+<path d="M12 7v6"
+stroke="currentColor"
+stroke-width="2"
+stroke-linecap="round"/>
+<circle cx="12" cy="17" r="1.5" fill="currentColor"/>
+</svg>
+</span>
+
+Paket dan Garansi telah berakhir.<br>
+Layanan tidak lagi termasuk dalam cakupan garansi.<br>
+Jika ingin melanjutkan layanan hubungi admin untuk pembelian ulang.
+`
+};
+  
+}
+
+function getStatusData(isActive){
+
+return{
+
+statusPaket:isActive?
+"Paket Aktif":
+"Paket Berakhir",
+
+statusGaransi:isActive?
+"Garansi Aktif":
+"Garansi Berakhir",
+
+statusClass:isActive?
+"status-active":
+"status-expired"
+
+};
+
+}
+  
+const isActive=
+isPackageActive(
+now,
+endDate
+);
+
+function generateStatusHtml(statusData){
 
 return `
 ${statusHtml}
@@ -167,42 +272,26 @@ ${statusHtml}
 
 }
 
-let autoNote;
-let noteClass;
+const{
+noteClass,
+autoNote
+}=getNoteData(isActive);
 
-  if(isActive){
-  noteClass = "note-active";
-  autoNote = `
-  <span class="note-icon">
-  <svg viewBox="0 0 24 24" width="16" height="16">
-  <circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.15"/>
-  <path d="M7 12.5L10.2 15.5L17 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-  </span>
-  Paket dan Garansi telah aktif.<br>
-  Layanan dalam cakupan garansi.
-  `;
-}else{
-  noteClass = "note-expired";
-  autoNote = `
-  <span class="note-icon">
-  <svg viewBox="0 0 24 24" width="16" height="16">
-  <circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.15"/>
-  <path d="M12 7v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-  <circle cx="12" cy="17" r="1.5" fill="currentColor"/>
-  </svg>
-  </span>
-  Paket dan Garansi telah berakhir.<br>
-  Layanan tidak lagi termasuk dalam cakupan garansi. <br>
-  Jika ingin melanjutkan layanan hubungi admin untuk pembelian ulang.
-  `;
-}
+const statusData=
+getStatusData(isActive);
+  
+const activated=
+formatIndoDate(
+activatedDate
+);
 
-const activated=activatedDate.toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"});
-const expired=endDate.toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"});
+const expired=
+formatIndoDate(
+endDate
+);
 
 const statusHtml=
-generateStatusHtml(isActive);
+generateStatusHtml(statusData);
 const metaHtml=
 generateMetaHtml(
 item,
