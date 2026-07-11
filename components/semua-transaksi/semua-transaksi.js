@@ -23,9 +23,18 @@ throw new Error(
 /* ============================= */
 
 fetch(sheetURL)
-.then(res=>res.text())
+.then(res=>{
+
+alert("🔥 Fetch berhasil");
+
+return res.text();
+
+})
+  
 .then(text=>{
 const json=JSON.parse(text.substr(47).slice(0,-2));
+alert("🔥 JSON berhasil diparse");
+  
 const rows=json.table.rows;
 const headers=json.table.cols.map(c=>c.label);
 
@@ -44,6 +53,10 @@ result.push(rowData);
 }
 });
 
+alert(
+"🔥 Total data: " +
+result.length
+);
 render(result);
 });
 
@@ -433,7 +446,9 @@ return wrapper.innerHTML;
 /* ============================= */
 
 function render(data){
+alert("🔥 Masuk render()");
 
+  
 if(data.length===0){
 renderEmpty();
 return;
@@ -442,6 +457,10 @@ return;
 clearWrapper();
 
 data.forEach(item=>{
+alert(
+"🔥 " +
+item.title
+);
 
 const now=new Date();
 const activatedDate = parseIndoDate(item["activated_at"]);
