@@ -107,67 +107,6 @@ durationDays*24*60*60*1000
 return parseIndoDate(validUntil);
 }
 
-function getWrapper(){
-return document.getElementById("wrapper");
-}
-
-function clearWrapper(){
-getWrapper().innerHTML="";
-}
-
-function renderEmpty(){
-
-getWrapper().innerHTML=`
-<p class="transaksi-message">
-Belum ada transaksi.
-</p>
-`;
-
-}
-
-function generateMetaHtml(metaData){
-
-return `
-<div class="meta">
-Produk: ${metaData.title}<br>
-Paket: ${metaData.package}<br>
-Aktivasi: ${metaData.activated}<br>
-Berakhir: ${metaData.expired}
-</div>
-`;
-
-}
-
-function render(data){
-
-const wrapper=getWrapper();
-
-if(data.length===0){
-renderEmpty();
-return;
-}
-
-clearWrapper();
-
-function appendCard(html){
-getWrapper().innerHTML+=html;
-}
-
-data.forEach(item=>{
-
-const now=new Date();
-
-// 🔥 TAMBAHKAN INI DI SINI
-const activatedDate = parseIndoDate(item["activated_at"]);
-
-if(!activatedDate) return;
-
-const endDate=
-getEndDate(
-activatedDate,
-item.valid_until
-);
-
 function isPackageActive(now, endDate){
 return now <= endDate;
 }
@@ -274,15 +213,83 @@ expired
 };
 
 }
-  
-const isActive=
-isPackageActive(
-now,
-endDate
-);
+
+function getWrapper(){
+return document.getElementById("wrapper");
+}
+
+function clearWrapper(){
+getWrapper().innerHTML="";
+}
+
+function appendCard(html){
+getWrapper().innerHTML+=html;
+}
+
+function renderEmpty(){
+
+getWrapper().innerHTML=`
+<p class="transaksi-message">
+Belum ada transaksi.
+</p>
+`;
+
+}
+
+function generateMetaHtml(metaData){
+return `
+<div class="meta">
+Produk: ${metaData.title}<br>
+Paket: ${metaData.package}<br>
+Aktivasi: ${metaData.activated}<br>
+Berakhir: ${metaData.expired}
+</div>
+`;
+}
+
+function generateNoteHtml(noteClass, autoNote){
+return `
+${noteHtml}
+`;
+}
+
+function generateButtonHtml(item){
+return `
+<div class="button-group">
+<a href="status-pesanan.html?inv=${item.invoice}" class="btn btn-detail">
+Detail Paket
+</a>
+
+<a href="https://wa.me/6281234567890" class="btn btn-wa">
+Hubungi Admin
+</a>
+</div>
+`;
+}
+
+function generateCardHtml(
+item,
+statusHtml,
+metaHtml,
+noteHtml,
+buttonHtml
+){
+
+return `
+<div class="transaksi-card">
+<img src="${item.image_url}" alt="">
+<h3>${item.title}</h3>
+
+${statusHtml}
+${metaHtml}
+${noteHtml}
+${buttonHtml}
+</div>
+`;
+
+}
 
 function generateStatusHtml(statusData){
-
 return `
 <div class="status-row">
 
@@ -298,8 +305,39 @@ ${statusData.statusGaransi}
 
 </div>
 `;
-
 }
+
+function render(data){
+
+const wrapper=getWrapper();
+
+if(data.length===0){
+renderEmpty();
+return;
+}
+
+clearWrapper();
+
+data.forEach(item=>{
+
+const now=new Date();
+
+// 🔥 TAMBAHKAN INI DI SINI
+const activatedDate = parseIndoDate(item["activated_at"]);
+
+if(!activatedDate) return;
+
+const endDate=
+getEndDate(
+activatedDate,
+item.valid_until
+);
+  
+const isActive=
+isPackageActive(
+now,
+endDate
+);
 
 const{
 noteClass,
@@ -351,52 +389,6 @@ metaHtml,
 noteHtml,
 buttonHtml
 );
-
-function generateCardHtml(
-item,
-statusHtml,
-metaHtml,
-noteHtml,
-buttonHtml
-){
-
-return `
-<div class="transaksi-card">
-<img src="${item.image_url}" alt="">
-<h3>${item.title}</h3>
-
-${statusHtml}
-${metaHtml}
-${noteHtml}
-${buttonHtml}
-</div>
-`;
-
-}
-  
-function generateNoteHtml(noteClass, autoNote){
-
-return `
-${noteHtml}
-`;
-
-}
-
-function generateButtonHtml(item){
-
-return `
-<div class="button-group">
-<a href="status-pesanan.html?inv=${item.invoice}" class="btn btn-detail">
-Detail Paket
-</a>
-
-<a href="https://wa.me/6281234567890" class="btn btn-wa">
-Hubungi Admin
-</a>
-</div>
-`;
-
-}
   
 appendCard(cardHtml);
 }
