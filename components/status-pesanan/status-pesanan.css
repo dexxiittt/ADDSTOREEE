@@ -1,8 +1,17 @@
 body{
-  overflow-x:hidden;
-  font-family:"Plus Jakarta Sans",sans-serif;
-  background:#f3f4f8;
-  color:#fff;
+overflow-x:hidden;
+font-family:"Plus Jakarta Sans",sans-serif;
+background-color:#151822;
+
+background:linear-gradient(
+180deg,
+#0f1117 0%,
+#151822 50%,
+#1b1f2b 100%
+);
+
+color:#fff;
+
 }
 
 html, body {
