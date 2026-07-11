@@ -318,7 +318,7 @@ wrapper.querySelector(".note");
 
 note.classList.add(noteClass);
 
-const template=
+const contentTemplate=
 document.getElementById(
 noteTemplate
 );
@@ -326,7 +326,7 @@ noteTemplate
 wrapper
 .querySelector(".note-content")
 .innerHTML=
-template.innerHTML;
+contentTemplate.innerHTML;
 
 return wrapper.innerHTML;
 }
