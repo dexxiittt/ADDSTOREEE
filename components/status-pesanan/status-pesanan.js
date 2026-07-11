@@ -309,7 +309,7 @@ const durationDays = parseInt(rowData.duration_days) || 0;
 infoList.innerHTML = informasiList
   .map(item => `
 <li>
-  <i class="fa-solid fa-circle-dot"></i>
+  <i class="fa-solid fa-dot"></i>
   <span>${item}</span>
 </li>
 `)
