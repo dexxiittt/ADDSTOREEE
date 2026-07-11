@@ -364,11 +364,48 @@ const activated_at = rowData[headers.find(h =>
   h.toLowerCase().includes("activated")
 )] || "";
 
+const metode = (rowData.metode_pembayaran || "lynk")
+.toLowerCase()
+.trim();
+  
+let namaMetode = "Lynk ID";
+let deskripsiMetode = "Checkout diproses oleh Lynk ID";
+
+switch (metode) {
+
+  case "qr":
+  case "qris":
+    namaMetode = "QRIS";
+    deskripsiMetode = "Checkout melalui QRIS";
+    break;
+
+  case "dana":
+    namaMetode = "DANA";
+    deskripsiMetode = "Checkout melalui DANA";
+    break;
+
+  case "gopay":
+    namaMetode = "GoPay";
+    deskripsiMetode = "Checkout melalui GoPay";
+    break;
+
+  case "ovo":
+    namaMetode = "OVO";
+    deskripsiMetode = "Checkout melalui OVO";
+    break;
+
+  case "shopeepay":
+    namaMetode = "ShopeePay";
+    deskripsiMetode = "Checkout melalui ShopeePay";
+    break;
+
+}
+
 const metodePembayaran = `
-  Lynk ID Verified
-  <div style="opacity:.6; font-size:12px; margin-top:4px;">
-    Checkout diproses oleh Lynk ID
-  </div>
+${namaMetode} Verified
+<div style="opacity:.6;font-size:12px;margin-top:4px;">
+${deskripsiMetode}
+</div>
 `;
 
 paymentMethod.innerHTML = metodePembayaran;
