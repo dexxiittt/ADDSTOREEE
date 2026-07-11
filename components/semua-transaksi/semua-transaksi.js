@@ -509,20 +509,25 @@ expired
 
 const statusHtml=
 generateStatusHtml(statusData);
+alert("✅ Status OK");
+  
   
 const metaHtml=
 generateMetaHtml(
 metaData
 );
+alert("✅ Meta OK");
 
 const noteHtml=
 generateNoteHtml(
 noteClass,
 noteTemplate
 );
+alert("✅ Note OK");
 
 const buttonHtml=
 generateButtonHtml(item);
+alert("✅ Button OK");
 
 const cardHtml=
 generateCardHtml(
@@ -532,8 +537,10 @@ metaHtml,
 noteHtml,
 buttonHtml
 );
+alert("✅ Card OK");
   
 appendCard(cardHtml);
 });
+alert("✅ Append OK");
 
 }
