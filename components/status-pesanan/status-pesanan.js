@@ -306,11 +306,14 @@ const durationDays = parseInt(rowData.duration_days) || 0;
 // GENERATE INFORMASI HTML
 // =============================
 
-const informasiHTML = informasiList
-  .map(item => `<li>${item}</li>`)
+infoList.innerHTML = informasiList
+  .map(item => `
+<li>
+  <i class="fa-solid fa-circle-dot"></i>
+  <span>${item}</span>
+</li>
+`)
   .join("");
-
-infoList.innerHTML = informasiHTML;
 
 // =============================
 // VALID UNTIL SYSTEM (PREMIUM VERSION)
