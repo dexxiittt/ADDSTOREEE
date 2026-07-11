@@ -332,17 +332,25 @@ return wrapper.innerHTML;
 }
 
 function generateButtonHtml(item){
-return `
-<div class="button-group">
-<a href="status-pesanan.html?inv=${item.invoice}" class="btn btn-detail">
-Detail Paket
-</a>
 
-<a href="https://wa.me/6281234567890" class="btn btn-wa">
-Hubungi Admin
-</a>
-</div>
-`;
+const template=
+document.getElementById(
+"buttonTemplate"
+);
+
+const wrapper=
+document.createElement("div");
+
+wrapper.innerHTML=
+template.innerHTML;
+
+wrapper
+.querySelector(".btn-detail")
+.href=
+`status-pesanan.html?inv=${item.invoice}`;
+
+return wrapper.innerHTML;
+
 }
 
 function generateCardHtml(
