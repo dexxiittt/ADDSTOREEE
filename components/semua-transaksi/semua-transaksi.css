@@ -5,31 +5,105 @@ font-family:'Plus Jakarta Sans',sans-serif;
 color:#ffffff;
 }
 
-/* HERO */
+/* =========================
+   PACKAGE HERO
+========================= */
 
 .package-hero{
 width:100%;
-min-height:260px;
-
-background:linear-gradient(135deg,#493d84,#6d28d9);
+padding:90px 20px;
 
 display:flex;
-flex-direction:column;
 justify-content:center;
 align-items:center;
-
 text-align:center;
-padding:40px 20px;
+
+background:
+linear-gradient(
+135deg,
+#8b5cf6,
+#7c3aed 45%,
+#6d28d9
+);
+
+box-shadow:
+0 18px 40px rgba(124,58,237,.22);
+
+overflow:hidden;
+position:relative;
+}
+
+.package-hero::before{
+content:"";
+position:absolute;
+
+width:420px;
+height:420px;
+
+border-radius:50%;
+
+top:-180px;
+left:-120px;
+
+background:
+radial-gradient(
+circle,
+rgba(255,255,255,.18),
+transparent 70%
+);
+
+pointer-events:none;
+}
+
+.package-hero::after{
+content:"";
+position:absolute;
+
+width:520px;
+height:520px;
+
+border-radius:50%;
+
+right:-180px;
+bottom:-260px;
+
+background:
+radial-gradient(
+circle,
+rgba(255,255,255,.08),
+transparent 72%
+);
+
+pointer-events:none;
+}
+
+.package-hero-content{
+max-width:1000px;
+margin:auto;
+position:relative;
+z-index:2;
 }
 
 .package-hero h1{
-font-family:'Playfair Display',serif;
-font-size:clamp(42px,6vw,80px);
-margin:0 0 14px;
+font-family:"Sora",sans-serif;
+margin:0 0 12px;
+
+font-size:clamp(34px,5vw,48px);
+font-weight:700;
+
+letter-spacing:-.6px;
+color:#fff;
 }
 
 .package-hero p{
-opacity:.85;
+font-family:"Plus Jakarta Sans",sans-serif;
+
+margin:0;
+font-size:clamp(15px,2vw,18px);
+font-weight:400;
+
+line-height:1.7;
+color:rgba(255,255,255,.88);
 }
 
 /* WRAPPER */
@@ -40,29 +114,115 @@ margin:30px auto 80px;
 padding:0 20px;
 }
 
-/* CARD */
+
+/* =========================
+   CARD 
+========================= */
 
 .transaksi-card{
 position:relative;
-padding:24px;
-margin-bottom:26px;
-border-radius:18px;
+
 display:flex;
 flex-direction:column;
-gap:12px;
-background:#14141c;
-border:1px solid rgba(255,255,255,.06);
-box-shadow:0 6px 16px rgba(0,0,0,.35);
+
+gap:18px;
+padding:20px;
+
+margin-bottom:28px;
+border-radius:24px;
+
+background:
+linear-gradient(
+180deg,
+#181822,
+#13131b
+);
+
+border:
+1px solid rgba(255,255,255,.08);
+
+box-shadow:
+0 10px 30px rgba(0,0,0,.35);
+
+overflow:hidden;
+  
+transition:
+transform .35s ease,
+box-shadow .35s ease,
+border-color .35s ease,
+background .35s ease;
+}
+
+.transaksi-card::before{
+content:"";
+position:absolute;
+
+top:0;
+left:0;
+right:0;
+
+height:2px;
+background:
+
+linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,.45),
+rgba(139,92,246,.45),
+rgba(255,255,255,.45),
+transparent
+);
+
+opacity:.9;
+}
+
+.transaksi-card:hover{
+transform:translateY(-6px);
+
+border-color:rgba(139,92,246,.28);
+box-shadow:
+
+0 18px 42px rgba(0,0,0,.38),
+0 0 28px rgba(139,92,246,.10);
+}
+
+.transaksi-card:active{
+transform:scale(.985);
+transition-duration:.15s;
 }
 
 /* IMAGE */
 
 .transaksi-card img{
 width:100%;
-height:180px;
+height:190px;
+
 object-fit:cover;
-border-radius:12px;
-margin-bottom:14px;
+
+display:block;
+border-radius:18px;
+margin-bottom:2px;
+
+border:
+1px solid rgba(255,255,255,.08);
+
+box-shadow:
+0 10px 26px rgba(0,0,0,.28);
+
+transition:
+transform .45s ease,
+box-shadow .45s ease;
+}
+
+.transaksi-card:hover img{
+transform:scale(1.03);
+
+box-shadow:
+0 18px 36px rgba(0,0,0,.34);
+}
+
+.transaksi-card:active img{
+transform:scale(1.015);
 }
 
 /* TITLE */
