@@ -407,17 +407,7 @@ wrapper
 .innerHTML=
 buttonHtml;
 
-return `
-<div class="transaksi-card">
-<img src="${item.image_url}" alt="">
-<h3>${item.title}</h3>
-
-${statusHtml}
-${metaHtml}
-${noteHtml}
-${buttonHtml}
-</div>
-`;
+return wrapper.innerHTML;
 
 }
 
