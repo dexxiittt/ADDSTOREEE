@@ -1,7 +1,6 @@
 /* ============================= */
 /* CONFIG SHEET */
 /* ============================= */
-alert("🔥 JS Loaded");
 
 const sheetID="1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08";
 const sheetName="WARRANTY_DATA";
@@ -9,10 +8,8 @@ const sheetURL=`https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=ou
 
 const params=new URLSearchParams(window.location.search);
 const buyer=params.get("buyer");
-alert("🔥 Buyer = " + buyer);
 
 if(!buyer){
-alert("🔥 Buyer kosong");
   
 renderNotFound();
   
@@ -27,8 +24,6 @@ throw new Error(
 
 fetch(sheetURL)
 .then(res=>{
-
-alert("🔥 Fetch berhasil");
 
 return res.text();
 
@@ -56,10 +51,6 @@ result.push(rowData);
 }
 });
 
-alert(
-"🔥 Total data: " +
-result.length
-);
 render(result);
 });
 
@@ -257,23 +248,15 @@ template.innerHTML
 
 /* ---------- HTML Helper ---------- */
 function generateStatusHtml(statusData){
-
-alert("1");
   
 const template=
 document.getElementById("statusTemplate");
 
-alert("2");
-
 const wrapper=
 document.createElement("div");
 
-alert("3");
-
 wrapper.innerHTML=
 template.innerHTML;
-
-alert("4");
 
 const status1 =
 wrapper.querySelector(".status-item-1");
@@ -285,21 +268,15 @@ wrapper.querySelector(".status-item-2");
 
 status2.classList.add(statusData.statusClass);
 
-alert("8");
-
 wrapper
 .querySelector(".status-text-1")
 .textContent=
 statusData.statusPaket;
 
-alert("9");
-
 wrapper
 .querySelector(".status-text-2")
 .textContent=
 statusData.statusGaransi;
-
-alert("10");
 
 return wrapper.innerHTML;
 }
@@ -455,9 +432,7 @@ return wrapper.innerHTML;
 /* ============================= */
 
 function render(data){
-alert("🔥 Masuk render()");
-
-  
+ 
 if(data.length===0){
 renderEmpty();
 return;
@@ -466,10 +441,6 @@ return;
 clearWrapper();
 
 data.forEach(item=>{
-alert(
-"🔥 " +
-item.title
-);
 
 const now=new Date();
 const activatedDate = parseIndoDate(item["activated_at"]);
@@ -515,25 +486,21 @@ expired
 
 const statusHtml=
 generateStatusHtml(statusData);
-alert("✅ Status OK");
   
   
 const metaHtml=
 generateMetaHtml(
 metaData
 );
-alert("✅ Meta OK");
 
 const noteHtml=
 generateNoteHtml(
 noteClass,
 noteTemplate
 );
-alert("✅ Note OK");
 
 const buttonHtml=
 generateButtonHtml(item);
-alert("✅ Button OK");
 
 const cardHtml=
 generateCardHtml(
@@ -543,10 +510,8 @@ metaHtml,
 noteHtml,
 buttonHtml
 );
-alert("✅ Card OK");
   
 appendCard(cardHtml);
 });
-alert("✅ Append OK");
 
 }
