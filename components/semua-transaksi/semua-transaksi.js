@@ -218,6 +218,37 @@ autoNote
 
 const buttonHtml=
 generateButtonHtml(item);
+
+const cardHtml=
+generateCardHtml(
+item,
+statusHtml,
+metaHtml,
+noteHtml,
+buttonHtml
+);
+
+function generateCardHtml(
+item,
+statusHtml,
+metaHtml,
+noteHtml,
+buttonHtml
+){
+
+return `
+<div class="transaksi-card">
+<img src="${item.image_url}" alt="">
+<h3>${item.title}</h3>
+
+${statusHtml}
+${metaHtml}
+${noteHtml}
+${buttonHtml}
+</div>
+`;
+
+}
   
 function generateNoteHtml(noteClass, autoNote){
 
