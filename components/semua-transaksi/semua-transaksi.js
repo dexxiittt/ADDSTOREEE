@@ -10,8 +10,12 @@ const params=new URLSearchParams(window.location.search);
 const buyer=params.get("buyer");
 
 if(!buyer){
-  document.getElementById("wrapper").innerHTML=
-  `<p style="text-align:center;opacity:.6;">Nomor tidak ditemukan.</p>`;
+
+renderNotFound();
+  
+throw new Error(
+"Buyer parameter not found"
+);
 }
 
 /* ============================= */
@@ -219,6 +223,19 @@ document.getElementById("emptyTemplate");
 setWrapperHtml(
 template.innerHTML
 );
+}
+
+function renderNotFound(){
+
+const template=
+document.getElementById(
+"notFoundTemplate"
+);
+
+setWrapperHtml(
+template.innerHTML
+);
+
 }
 
 
