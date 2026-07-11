@@ -1,8 +1,39 @@
 body{
-  overflow-x:hidden;
-  font-family:"Plus Jakarta Sans",sans-serif;
-  background:#f3f4f8;
-  color:#fff;
+overflow-x:hidden;
+
+font-family:"Plus Jakarta Sans",sans-serif;
+
+background:
+linear-gradient(
+180deg,
+#0f0f15 0%,
+#14131d 45%,
+#191724 100%
+);
+
+color:#fff;
+}
+
+body::before{
+content:"";
+position:fixed;
+inset:0;
+background:
+
+radial-gradient(
+circle at top left,
+rgba(139,92,246,.08),
+transparent 35%
+),
+
+radial-gradient(
+circle at bottom right,
+rgba(124,58,237,.06),
+transparent 35%
+);
+
+pointer-events:none;
+z-index:-1;
 }
 
 html, body {
