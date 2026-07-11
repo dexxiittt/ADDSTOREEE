@@ -51,7 +51,10 @@ render(result);
 });
 
 
-// 🔥 TAMBAHKAN INI DI SINI
+/* ============================= */
+/* LOGIC HELPER */
+/* ============================= */
+
 function parseIndoDate(value) {
   if (!value) return null;
 
@@ -214,6 +217,10 @@ expired
 
 }
 
+/* ============================= */
+/* UI HELPER */
+/* ============================= */
+
 function getWrapper(){
 return document.getElementById("wrapper");
 }
@@ -307,9 +314,12 @@ ${statusData.statusGaransi}
 `;
 }
 
-function render(data){
 
-const wrapper=getWrapper();
+/* ============================= */
+/* RENDER */
+/* ============================= */
+
+function render(data){
 
 if(data.length===0){
 renderEmpty();
@@ -322,7 +332,6 @@ data.forEach(item=>{
 
 const now=new Date();
 
-// 🔥 TAMBAHKAN INI DI SINI
 const activatedDate = parseIndoDate(item["activated_at"]);
 
 if(!activatedDate) return;
