@@ -239,11 +239,13 @@ getWrapper().innerHTML+=html;
 }
 
 function renderEmpty(){
-setWrapperHtml(`
-<p class="transaksi-message">
-Belum ada transaksi.
-</p>
-`);
+
+const template=
+document.getElementById("emptyTemplate");
+
+setWrapperHtml(
+template.innerHTML
+);
 }
 
 
