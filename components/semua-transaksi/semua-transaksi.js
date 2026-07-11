@@ -534,4 +534,6 @@ buttonHtml
 );
   
 appendCard(cardHtml);
+});
+
 }
