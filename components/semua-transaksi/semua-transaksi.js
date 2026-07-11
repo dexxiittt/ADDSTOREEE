@@ -275,29 +275,15 @@ template.innerHTML;
 
 alert("4");
 
-wrapper
-.querySelector(".status-item-1")
-.className=
-statusData.statusClass;
+const status1 =
+wrapper.querySelector(".status-item-1");
 
-alert("5");
+status1.classList.add(statusData.statusClass);
 
-wrapper
-.querySelector(".status-item-1")
-.classList.add(statusData.statusClass);
+const status2 =
+wrapper.querySelector(".status-item-2");
 
-alert("6");
-
-wrapper
-.querySelector(".status-item-2")
-.className=
-statusData.statusClass;
-
-alert("7");
-
-wrapper
-.querySelector(".status-item-2")
-.classList.add(statusData.statusClass);
+status2.classList.add(statusData.statusClass);
 
 alert("8");
 
