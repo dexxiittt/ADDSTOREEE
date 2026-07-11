@@ -274,25 +274,5 @@ Hubungi Admin
 
 }
   
-appendCard(`
-<div class="transaksi-card">
-<img src="${item.image_url}" alt="">
-<h3>${item.title}</h3>
-
-<div class="status-row">
-${statusPaket}
-${statusGaransi}
-</div>
-
-${metaHtml}
-
-<div class="note ${noteClass}">
-${autoNote}
-</div>
-
-${buttonHtml}
-
-</div>
-`;
-});
+appendCard(cardHtml);
 }
