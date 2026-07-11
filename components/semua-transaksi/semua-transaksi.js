@@ -31,7 +31,6 @@ return res.text();
   
 .then(text=>{
 const json=JSON.parse(text.substr(47).slice(0,-2));
-alert("🔥 JSON berhasil diparse");
   
 const rows=json.table.rows;
 const headers=json.table.cols.map(c=>c.label);
