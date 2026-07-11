@@ -1,6 +1,7 @@
 /* ============================= */
 /* CONFIG SHEET */
 /* ============================= */
+alert("🔥 JS Loaded");
 
 const sheetID="1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08";
 const sheetName="WARRANTY_DATA";
@@ -8,9 +9,11 @@ const sheetURL=`https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=ou
 
 const params=new URLSearchParams(window.location.search);
 const buyer=params.get("buyer");
+alert("🔥 Buyer = " + buyer);
 
 if(!buyer){
-
+alert("🔥 Buyer kosong");
+  
 renderNotFound();
   
 throw new Error(
