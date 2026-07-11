@@ -206,6 +206,11 @@ color:#fff;
 border:none;
 }
 
+.transaksi-message{
+text-align:center;
+opacity:.6;
+}
+
 /* MOBILE */
 
 @media(max-width:600px){
