@@ -258,42 +258,62 @@ template.innerHTML
 /* ---------- HTML Helper ---------- */
 function generateStatusHtml(statusData){
 
+alert("1");
+  
 const template=
 document.getElementById("statusTemplate");
+
+alert("2");
 
 const wrapper=
 document.createElement("div");
 
+alert("3");
+
 wrapper.innerHTML=
 template.innerHTML;
 
+alert("4");
+
 wrapper
 .querySelector(".status-item-1")
 .className=
 statusData.statusClass;
 
+alert("5");
+
 wrapper
 .querySelector(".status-item-1")
 .classList.add(statusData.statusClass);
+
+alert("6");
 
 wrapper
 .querySelector(".status-item-2")
 .className=
 statusData.statusClass;
 
+alert("7");
+
 wrapper
 .querySelector(".status-item-2")
 .classList.add(statusData.statusClass);
+
+alert("8");
 
 wrapper
 .querySelector(".status-text-1")
 .textContent=
 statusData.statusPaket;
 
+alert("9");
+
 wrapper
 .querySelector(".status-text-2")
 .textContent=
 statusData.statusGaransi;
+
+alert("10");
 
 return wrapper.innerHTML;
 }
