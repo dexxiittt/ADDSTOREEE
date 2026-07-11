@@ -221,8 +221,13 @@ expired
 /* UI HELPER */
 /* ============================= */
 
+/* ---------- DOM Helper ---------- */
 function getWrapper(){
 return document.getElementById("wrapper");
+}
+
+function setWrapperHtml(html){
+getWrapper().innerHTML=html;
 }
 
 function clearWrapper(){
@@ -234,13 +239,31 @@ getWrapper().innerHTML+=html;
 }
 
 function renderEmpty(){
-
-getWrapper().innerHTML=`
+setWrapperHtml(`
 <p class="transaksi-message">
 Belum ada transaksi.
 </p>
-`;
+`);
+}
 
+
+/* ---------- HTML Helper ---------- */
+function generateStatusHtml(statusData){
+return `
+<div class="status-row">
+
+<span class="${statusData.statusClass}">
+<span class="status-dot"></span>
+${statusData.statusPaket}
+</span>
+
+<span class="${statusData.statusClass}">
+<span class="status-dot"></span>
+${statusData.statusGaransi}
+</span>
+
+</div>
+`;
 }
 
 function generateMetaHtml(metaData){
@@ -256,20 +279,8 @@ Berakhir: ${metaData.expired}
 
 function generateNoteHtml(noteClass, autoNote){
 return `
-${noteHtml}
-`;
-}
-
-function generateButtonHtml(item){
-return `
-<div class="button-group">
-<a href="status-pesanan.html?inv=${item.invoice}" class="btn btn-detail">
-Detail Paket
-</a>
-
-<a href="https://wa.me/6281234567890" class="btn btn-wa">
-Hubungi Admin
-</a>
+<div class="note ${noteClass}">
+${autoNote}
 </div>
 `;
 }
@@ -296,20 +307,16 @@ ${buttonHtml}
 
 }
 
-function generateStatusHtml(statusData){
+function generateButtonHtml(item){
 return `
-<div class="status-row">
+<div class="button-group">
+<a href="status-pesanan.html?inv=${item.invoice}" class="btn btn-detail">
+Detail Paket
+</a>
 
-<span class="${statusData.statusClass}">
-<span class="status-dot"></span>
-${statusData.statusPaket}
-</span>
-
-<span class="${statusData.statusClass}">
-<span class="status-dot"></span>
-${statusData.statusGaransi}
-</span>
-
+<a href="https://wa.me/6281234567890" class="btn btn-wa">
+Hubungi Admin
+</a>
 </div>
 `;
 }
@@ -331,7 +338,6 @@ clearWrapper();
 data.forEach(item=>{
 
 const now=new Date();
-
 const activatedDate = parseIndoDate(item["activated_at"]);
 
 if(!activatedDate) return;
