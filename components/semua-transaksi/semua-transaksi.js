@@ -135,22 +135,8 @@ return{
 
 noteClass:"note-active",
 
-autoNote:`
-<span class="note-icon">
-<svg viewBox="0 0 24 24" width="16" height="16">
-<circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.15"/>
-<path d="M7 12.5L10.2 15.5L17 9"
-fill="none"
-stroke="currentColor"
-stroke-width="2"
-stroke-linecap="round"
-stroke-linejoin="round"/>
-</svg>
-</span>
-
-Paket dan Garansi telah aktif.<br>
-Layanan dalam cakupan garansi.
-`
+noteTemplate:
+"noteActiveTemplate"
 
 };
 
@@ -326,12 +312,36 @@ metaData.expired;
 return wrapper.innerHTML;
 }
 
-function generateNoteHtml(noteClass, autoNote){
-return `
-<div class="note ${noteClass}">
-${autoNote}
-</div>
-`;
+function generateNoteHtml(
+noteClass,
+noteTemplate
+){
+
+const template=
+document.getElementById("noteTemplate");
+
+const wrapper=
+document.createElement("div");
+
+wrapper.innerHTML=
+template.innerHTML;
+
+const note=
+wrapper.querySelector(".note");
+
+note.classList.add(noteClass);
+
+const template=
+document.getElementById(
+noteTemplate
+);
+
+wrapper
+.querySelector(".note-content")
+.innerHTML=
+template.innerHTML;
+
+return wrapper.innerHTML;
 }
 
 function generateButtonHtml(item){
@@ -404,7 +414,7 @@ endDate
 
 const{
 noteClass,
-autoNote
+noteTemplate
 }=getNoteData(isActive);
 
 const statusData=
@@ -438,7 +448,7 @@ metaData
 const noteHtml=
 generateNoteHtml(
 noteClass,
-autoNote
+noteTemplate
 );
 
 const buttonHtml=
