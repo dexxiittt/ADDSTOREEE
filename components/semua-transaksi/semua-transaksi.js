@@ -361,6 +361,52 @@ noteHtml,
 buttonHtml
 ){
 
+const template=
+document.getElementById(
+"cardTemplate"
+);
+
+const wrapper=
+document.createElement("div");
+
+wrapper.innerHTML=
+template.innerHTML;
+
+wrapper
+.querySelector(".card-image")
+.src=
+item.image_url;
+
+wrapper
+.querySelector(".card-image")
+.alt=
+item.title;
+
+wrapper
+.querySelector(".card-title")
+.textContent=
+item.title;
+
+wrapper
+.querySelector(".card-status")
+.innerHTML=
+statusHtml;
+
+wrapper
+.querySelector(".card-meta")
+.innerHTML=
+metaHtml;
+
+wrapper
+.querySelector(".card-note")
+.innerHTML=
+noteHtml;
+
+wrapper
+.querySelector(".card-button")
+.innerHTML=
+buttonHtml;
+
 return `
 <div class="transaksi-card">
 <img src="${item.image_url}" alt="">
