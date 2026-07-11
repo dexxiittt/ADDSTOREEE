@@ -87,18 +87,52 @@ function parseIndoDate(value) {
   // fallback
   return new Date(value);
 }
-  
+
+function getWrapper(){
+return document.getElementById("wrapper");
+}
+
+function clearWrapper(){
+getWrapper().innerHTML="";
+}
+
+function renderEmpty(){
+
+getWrapper().innerHTML=`
+<p class="transaksi-message">
+Belum ada transaksi.
+</p>
+`;
+
+}
+
+function generateMetaHtml(item, activated, expired){
+
+return `
+<div class="meta">
+Produk: ${item.title}<br>
+Paket: ${item.package}<br>
+Aktivasi: ${activated}<br>
+Berakhir: ${expired}
+</div>
+`;
+
+}
+
 function render(data){
 
-const wrapper=document.getElementById("wrapper");
+const wrapper=getWrapper();
 
 if(data.length===0){
-wrapper.innerHTML=
-`<p style="text-align:center;opacity:.6;">Belum ada transaksi.</p>`;
+renderEmpty();
 return;
 }
 
-wrapper.innerHTML="";
+clearWrapper();
+
+function appendCard(html){
+getWrapper().innerHTML+=html;
+}
 
 data.forEach(item=>{
 
@@ -125,13 +159,13 @@ else {
 
 const isActive = now <= endDate;
 
-const statusPaket=isActive?
-`<span class="status-active"><span class="status-dot"></span>Paket Aktif</span>`:
-`<span class="status-expired"><span class="status-dot"></span>Paket Berakhir</span>`;
+function generateStatusHtml(isActive){
 
-const statusGaransi=isActive?
-`<span class="status-active"><span class="status-dot"></span>Garansi Aktif</span>`:
-`<span class="status-expired"><span class="status-dot"></span>Garansi Berakhir</span>`;
+return `
+${statusHtml}
+`;
+
+}
 
 let autoNote;
 let noteClass;
@@ -167,7 +201,49 @@ let noteClass;
 const activated=activatedDate.toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"});
 const expired=endDate.toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"});
 
-wrapper.innerHTML+=`
+const statusHtml=
+generateStatusHtml(isActive);
+const metaHtml=
+generateMetaHtml(
+item,
+activated,
+expired
+);
+
+const noteHtml=
+generateNoteHtml(
+noteClass,
+autoNote
+);
+
+const buttonHtml=
+generateButtonHtml(item);
+  
+function generateNoteHtml(noteClass, autoNote){
+
+return `
+${noteHtml}
+`;
+
+}
+
+function generateButtonHtml(item){
+
+return `
+<div class="button-group">
+<a href="status-pesanan.html?inv=${item.invoice}" class="btn btn-detail">
+Detail Paket
+</a>
+
+<a href="https://wa.me/6281234567890" class="btn btn-wa">
+Hubungi Admin
+</a>
+</div>
+`;
+
+}
+  
+appendCard(`
 <div class="transaksi-card">
 <img src="${item.image_url}" alt="">
 <h3>${item.title}</h3>
@@ -177,21 +253,13 @@ ${statusPaket}
 ${statusGaransi}
 </div>
 
-<div class="meta">
-Produk: ${item.title}<br>
-Paket: ${item.package}<br>
-Aktivasi: ${activated}<br>
-Berakhir: ${expired}
-</div>
+${metaHtml}
 
 <div class="note ${noteClass}">
 ${autoNote}
 </div>
 
-<div class="button-group">
-<a href="status-pesanan.html?inv=${item.invoice}" class="btn btn-detail">Detail Paket</a>
-<a href="https://wa.me/6281234567890" class="btn btn-wa">Hubungi Admin</a>
-</div>
+${buttonHtml}
 
 </div>
 `;
