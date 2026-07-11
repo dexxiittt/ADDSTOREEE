@@ -251,32 +251,79 @@ template.innerHTML
 
 /* ---------- HTML Helper ---------- */
 function generateStatusHtml(statusData){
-return `
-<div class="status-row">
 
-<span class="${statusData.statusClass}">
-<span class="status-dot"></span>
-${statusData.statusPaket}
-</span>
+const template=
+document.getElementById("statusTemplate");
 
-<span class="${statusData.statusClass}">
-<span class="status-dot"></span>
-${statusData.statusGaransi}
-</span>
+const wrapper=
+document.createElement("div");
 
-</div>
-`;
+wrapper.innerHTML=
+template.innerHTML;
+
+wrapper
+.querySelector(".status-item-1")
+.className=
+statusData.statusClass;
+
+wrapper
+.querySelector(".status-item-1")
+.classList.add(statusData.statusClass);
+
+wrapper
+.querySelector(".status-item-2")
+.className=
+statusData.statusClass;
+
+wrapper
+.querySelector(".status-item-2")
+.classList.add(statusData.statusClass);
+
+wrapper
+.querySelector(".status-text-1")
+.textContent=
+statusData.statusPaket;
+
+wrapper
+.querySelector(".status-text-2")
+.textContent=
+statusData.statusGaransi;
+
+return wrapper.innerHTML;
 }
 
 function generateMetaHtml(metaData){
-return `
-<div class="meta">
-Produk: ${metaData.title}<br>
-Paket: ${metaData.package}<br>
-Aktivasi: ${metaData.activated}<br>
-Berakhir: ${metaData.expired}
-</div>
-`;
+
+const template=
+document.getElementById("metaTemplate");
+
+const wrapper=
+document.createElement("div");
+
+wrapper.innerHTML=
+template.innerHTML;
+
+wrapper
+.querySelector(".meta-title")
+.textContent=
+metaData.title;
+
+wrapper
+.querySelector(".meta-package")
+.textContent=
+metaData.package;
+
+wrapper
+.querySelector(".meta-activated")
+.textContent=
+metaData.activated;
+
+wrapper
+.querySelector(".meta-expired")
+.textContent=
+metaData.expired;
+
+return wrapper.innerHTML;
 }
 
 function generateNoteHtml(noteClass, autoNote){
