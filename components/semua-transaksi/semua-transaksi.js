@@ -267,6 +267,12 @@ wrapper.querySelector(".status-item-2");
 
 status2.classList.add(statusData.statusClass);
 
+const icon1 =
+wrapper.querySelector(".status-icon-1");
+
+const icon2 =
+wrapper.querySelector(".status-icon-2");
+
 wrapper
 .querySelector(".status-text-1")
 .textContent=
@@ -276,6 +282,24 @@ wrapper
 .querySelector(".status-text-2")
 .textContent=
 statusData.statusGaransi;
+
+if(statusData.statusClass==="status-active"){
+
+icon1.className=
+"status-icon-1 fa-solid fa-circle-check";
+
+icon2.className=
+"status-icon-2 fa-solid fa-circle-check";
+
+}else{
+
+icon1.className=
+"status-icon-1 fa-solid fa-circle-xmark";
+
+icon2.className=
+"status-icon-2 fa-solid fa-circle-xmark";
+
+}
 
 return wrapper.innerHTML;
 }
