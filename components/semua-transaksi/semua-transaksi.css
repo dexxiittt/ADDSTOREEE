@@ -33,7 +33,56 @@ overflow:hidden;
 position:relative;
 }
 
+.package-hero::before{
+content:"";
+position:absolute;
 
+width:420px;
+height:420px;
+
+border-radius:50%;
+
+top:-180px;
+left:-120px;
+
+background:
+radial-gradient(
+circle,
+rgba(255,255,255,.18),
+transparent 70%
+);
+
+pointer-events:none;
+}
+
+.package-hero::after{
+content:"";
+position:absolute;
+
+width:520px;
+height:520px;
+
+border-radius:50%;
+
+right:-180px;
+bottom:-260px;
+
+background:
+radial-gradient(
+circle,
+rgba(255,255,255,.08),
+transparent 72%
+);
+
+pointer-events:none;
+}
+
+.package-hero-content{
+max-width:1000px;
+margin:auto;
+position:relative;
+z-index:2;
+}
 
 .package-hero h1{
 font-family:"Sora",sans-serif;
