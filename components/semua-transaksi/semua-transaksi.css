@@ -228,10 +228,35 @@ transform:scale(1.015);
 /* TITLE */
 
 .transaksi-card h3{
-font-family:'Playfair Display',serif;
-font-size:16px;
-font-weight:600;
-margin:2px 0;
+margin:0;
+font-family:"Sora",sans-serif;
+
+font-size:clamp(20px,2vw,24px);
+font-weight:700;
+line-height:1.35;
+
+letter-spacing:-.4px;
+color:#fff;
+}
+
+.transaksi-card h3::after{
+content:"";
+display:block;
+
+width:46px;
+height:3px;
+
+margin-top:10px;
+border-radius:999px;
+background:
+
+linear-gradient(
+90deg,
+#8b5cf6,
+#a855f7
+);
+
+opacity:.9;
 }
 
 /* STATUS */
@@ -247,28 +272,57 @@ flex-wrap:wrap;
 .status-expired{
 display:inline-flex;
 align-items:center;
-gap:6px;
+justify-content:center;
+
+gap:8px;
+padding:8px 14px;
+border-radius:999px;
+
 font-size:13px;
-font-weight:500;
+font-weight:600;
+
+backdrop-filter:blur(12px);
+-webkit-backdrop-filter:blur(12px);
+
+transition:
+all .3s ease;
 }
 
 /* STATUS COLOR */
 
 .status-active{
-color:#22c55e;
+color:#4ade80;
+
+background:
+rgba(34,197,94,.12);
+
+border:
+1px solid rgba(34,197,94,.28);
 }
 
 .status-expired{
-color:#ef4444;
+color:#fb7185;
+
+background:
+rgba(239,68,68,.10);
+
+border:
+1px solid rgba(239,68,68,.26);
 }
 
 /* STATUS DOT */
 
 .status-dot{
-width:8px;
-height:8px;
+width:10px;
+height:10px;
+
 border-radius:50%;
 display:inline-block;
+
+box-shadow:
+0 0 12px currentColor;
+
+flex-shrink:0;
 }
 
 .status-active .status-dot{
@@ -282,23 +336,69 @@ background:#ef4444;
 /* META TEXT */
 
 .meta{
-font-size:13px;
-line-height:1.6;
-opacity:.85;
-margin-bottom:14px;
+display:flex;
+flex-direction:column;
+
+gap:10px;
+margin:4px 0 14px;
+
+font-family:"Plus Jakarta Sans",sans-serif;
+font-size:14px;
+line-height:1.7;
+
+color:rgba(255,255,255,.78);
+}
+
+.meta b{
+color:#fff;
+font-weight:600;
+}
+
+.meta span{
 color:rgba(255,255,255,.65);
 }
 
 /* NOTE */
 
 .note{
-margin-top:12px;
-padding:14px;
-border-radius:10px;
-font-size:13px;
-line-height:1.6;
-background:#181822;
-border:1px solid rgba(255,255,255,.06);
+position:relative;
+margin-top:8px;
+padding:18px;
+
+border-radius:18px;
+font-size:14px;
+line-height:1.7;
+
+background:
+linear-gradient(
+180deg,
+rgba(255,255,255,.04),
+rgba(255,255,255,.02)
+);
+
+border:
+1px solid rgba(255,255,255,.08);
+
+overflow:hidden;
+}
+
+.note::before{
+content:"";
+position:absolute;
+
+top:0;
+left:0;
+
+width:4px;
+height:100%;
+border-radius:999px;
+
+background:
+linear-gradient(
+180deg,
+#8b5cf6,
+#a855f7
+);
 }
 
 /* ACTIVE NOTE */
@@ -319,51 +419,101 @@ color:#ff9a9a;
 
 .note-icon{
 display:inline-flex;
-margin-right:6px;
-vertical-align:middle;
+align-items:center;
+justify-content:center;
+
+width:26px;
+height:26px;
+
+margin-right:10px;
+border-radius:50%;
+
+background:
+rgba(139,92,246,.14);
+
+color:#a855f7;
+flex-shrink:0;
 }
 
 /* BUTTON GROUP */
 
 .button-group{
 display:flex;
-gap:10px;
+
+gap:14px;
 flex-wrap:wrap;
-margin-top:6px;
+
+margin-top:10px;
+align-items:center;
 }
 
 /* BUTTON */
 
 .btn{
 flex:1;
-min-width:160px;
-text-align:center;
-padding:10px 14px;
-border-radius:8px;
-font-size:13px;
-font-weight:500;
-text-decoration:none;
+min-width:170px;
+padding:14px 18px;
+
 display:inline-flex;
 align-items:center;
 justify-content:center;
 
-  
+gap:8px;
+border-radius:16px;
+
+font-family:"Plus Jakarta Sans",sans-serif;
+font-size:14px;
+font-weight:600;
+
+text-decoration:none;
 border:1px solid rgba(255,255,255,.08);
+
+transition:
+all .3s ease;
+
+cursor:pointer;
 }
 
 /* DETAIL BUTTON */
 
 .btn-detail{
-background:#1c1c26;
-color:#ffffff;
+background:
+linear-gradient(
+180deg,
+#232331,
+#1b1b27
+);
+
+color:#fff;
+box-shadow:
+
+0 8px 20px rgba(0,0,0,.22);
 }
 
 /* WA BUTTON */
 
 .btn-wa{
-background:#25D366;
+background:
+linear-gradient(
+180deg,
+#2dde72,
+#22c55e
+);
+
 color:#fff;
 border:none;
+box-shadow:
+
+0 10px 22px rgba(34,197,94,.28);
+}
+
+.btn:hover{
+transform:translateY(-2px);
+filter:brightness(1.04);
+}
+
+.btn:active{
+transform:scale(.97);
 }
 
 .transaksi-message{
@@ -371,10 +521,56 @@ text-align:center;
 opacity:.6;
 }
 
+
+/* =========================
+   FADE UP ANIMATION
+========================= */
+
+@keyframes fadeUp{
+
+0%{
+opacity:0;
+transform:
+translateY(28px);
+}
+
+100%{
+opacity:1;
+transform:
+translateY(0);
+}
+
+}
+
+.fade-up{
+opacity:0;
+animation:
+
+fadeUp .7s ease forwards;
+animation-delay:var(--delay,0s);
+will-change:
+
+transform,opacity;
+}
+
+.fade-up:nth-child(1){ --delay:.05s; }
+
+.fade-up:nth-child(2){ --delay:.12s; }
+
+.fade-up:nth-child(3){ --delay:.19s; }
+
+.fade-up:nth-child(4){ --delay:.26s; }
+
+.fade-up:nth-child(5){ --delay:.33s; }
+
+.fade-up:nth-child(6){ --delay:.40s; }
+
+.fade-up:nth-child(7){ --delay:.47s; }
+
+.fade-up:nth-child(8){ --delay:.54s; }
+
 /* MOBILE */
-
 @media(max-width:600px){
-
 .transaksi-card{
 padding:20px;
 }
@@ -382,7 +578,6 @@ padding:20px;
 .transaksi-card img{
 height:150px;
 }
-
 }
 
 /* RESET */
