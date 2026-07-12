@@ -387,13 +387,169 @@ line-height:1.7;
 color:rgba(255,255,255,.78);
 }
 
-.meta b{
-color:#fff;
-font-weight:600;
+.meta-item{
+position:relative;
+overflow:hidden;
+
+display:flex;
+align-items:center;
+
+gap:14px;
+padding:14px 16px;
+border-radius:16px;
+   
+background:
+rgba(255,255,255,.03);
+
+border:
+1px solid rgba(255,255,255,.06);
+   
+transition:
+
+transform .3s ease,
+box-shadow .3s ease,
+border-color .3s ease,
+background .3s ease;
 }
 
-.meta span{
-color:rgba(255,255,255,.65);
+.meta-item::before{
+content:"";
+position:absolute;
+
+top:0;
+left:0;
+right:0;
+
+height:1px;
+
+background:
+
+linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,.30),
+rgba(139,92,246,.55),
+rgba(255,255,255,.30),
+transparent
+);
+
+opacity:.85;
+}
+
+.meta-item::after{
+content:"";
+position:absolute;
+
+top:0;
+left:-120%;
+
+width:60%;
+height:100%;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,.08),
+transparent
+);
+
+transform:skewX(-25deg);
+transition:left .8s ease;
+pointer-events:none;
+}
+
+.meta-item:hover{
+transform:
+translateY(-3px);
+
+background:
+linear-gradient(
+180deg,
+rgba(255,255,255,.05),
+rgba(255,255,255,.025)
+);
+
+border-color:
+rgba(139,92,246,.22);
+
+box-shadow:
+0 10px 22px rgba(0,0,0,.20),
+0 0 18px rgba(139,92,246,.10);
+}
+
+.meta-item:hover::after{
+left:160%;
+}
+
+.meta-item:hover .meta-icon{
+transform:
+scale(1.08)
+rotate(-6deg);
+
+box-shadow:
+0 0 18px rgba(139,92,246,.22);
+}
+
+.meta-item:active{
+transform:scale(.985);
+transition-duration:.15s;
+}
+
+.meta-icon{
+width:42px;
+height:42px;
+display:flex;
+
+align-items:center;
+justify-content:center;
+
+border-radius:14px;
+
+background:
+linear-gradient(
+180deg,
+rgba(139,92,246,.18),
+rgba(139,92,246,.08)
+);
+
+color:#a855f7;
+font-size:17px;
+flex-shrink:0;
+
+transition:
+transform .3s ease,
+box-shadow .3s ease;
+}
+
+.meta-label{
+display:block;
+font-family:"Plus Jakarta Sans",sans-serif;
+
+font-size:12px;
+font-weight:600;
+
+letter-spacing:.5px;
+text-transform:uppercase;
+
+color:rgba(255,255,255,.55);
+margin-bottom:3px;
+}
+
+.meta-title,
+.meta-package,
+.meta-activated,
+.meta-expired{
+display:block;
+font-family:"Sora",sans-serif;
+
+margin-top:2px;
+font-size:15px;
+
+font-weight:700;
+
+letter-spacing:-.2px;
+color:#fff;
 }
 
 /* NOTE */
