@@ -33,6 +33,8 @@ overflow:hidden;
 position:relative;
 }
 
+
+
 .package-hero h1{
 font-family:"Sora",sans-serif;
 margin:0 0 12px;
@@ -259,27 +261,65 @@ border:
 1px solid rgba(239,68,68,.26);
 }
 
-/* STATUS DOT */
+/* =========================
+   STATUS ICON PREMIUM
+========================= */
 
-.status-dot{
-width:10px;
-height:10px;
+.status-active i,
+.status-expired i{
+display:flex;
+align-items:center;
+justify-content:center;
+
+width:24px;
+height:24px;
 
 border-radius:50%;
-display:inline-block;
+font-size:13px;
+flex-shrink:0;
+
+transition:
+all .3s ease;
+}
+
+/* ACTIVE */
+
+.status-active i{
+color:#4ade80;
+background:
+
+linear-gradient(
+180deg,
+rgba(34,197,94,.18),
+rgba(34,197,94,.08)
+);
+
+border:
+1px solid rgba(34,197,94,.28);
 
 box-shadow:
-0 0 12px currentColor;
-
-flex-shrink:0;
+0 0 14px rgba(34,197,94,.18),
+inset 0 1px 0 rgba(255,255,255,.18);
 }
 
-.status-active .status-dot{
-background:#22c55e;
-}
+/* EXPIRED */
 
-.status-expired .status-dot{
-background:#ef4444;
+.status-expired i{
+color:#fb7185;
+
+background:
+linear-gradient(
+180deg,
+rgba(239,68,68,.18),
+rgba(239,68,68,.08)
+);
+
+border:
+1px solid rgba(239,68,68,.28);
+
+box-shadow:
+0 0 14px rgba(239,68,68,.16),
+inset 0 1px 0 rgba(255,255,255,.15);
 }
 
 /* META TEXT */
