@@ -825,3 +825,44 @@ if (notFoundButton) {
   });
 
 }
+
+// =============================
+// EVENT LISTENER INFORMASI PENTING (INTEGRASI CSS ANIMASI)
+// =============================
+if (infoMore) {
+  infoMore.addEventListener("click", (e) => {
+    e.preventDefault();
+    
+    // 1. Tambahkan class active ke kartu & ikon (mengaktifkan style ungu di CSS)
+    infoCard.classList.add("active");
+    if (infoIcon) infoIcon.classList.add("active");
+    
+    // 2. Memicu animasi transisi dengan menambahkan class 'open'
+    if (infoContent) {
+      infoContent.classList.add("open");
+    }
+    
+    // 3. Atur visibilitas tombol kontrol
+    if (infoClose) infoClose.style.display = "block";
+    infoMore.style.display = "none"; 
+  });
+}
+
+if (infoClose) {
+  infoClose.addEventListener("click", () => {
+    
+    // 1. Kembalikan warna kartu & ikon ke semula
+    infoCard.classList.remove("active");
+    if (infoIcon) infoIcon.classList.remove("active");
+    
+    // 2. Hapus class 'open' untuk menutup kembali secara smooth
+    if (infoContent) {
+      infoContent.classList.remove("open");
+    }
+    
+    // 3. Kembalikan visibilitas tombol kontrol (Sudah di-fix dari double .style)
+    infoClose.style.display = "none";
+    if (infoMore) infoMore.style.display = "block";
+  });
+}
+
