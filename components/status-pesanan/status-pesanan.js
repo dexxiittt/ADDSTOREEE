@@ -302,6 +302,8 @@ if (discount > 0) {
   
 const durationDays = parseInt(rowData.duration_days) || 0;
 
+const activatedAtRaw = rowData.activated_at || "";
+
 // =============================
 // GENERATE INFORMASI HTML
 // =============================
@@ -321,9 +323,18 @@ infoList.innerHTML = informasiList
 
 let berlakuSampai = "-";
 
-const validUntilRaw = rowData.valid_until;
+if (activatedAtRaw) {
 
-if (validUntilRaw) {
+  const activatedDate = new Date(activatedAtRaw);
+
+  if (!isNaN(activatedDate.getTime())) {
+  
+
+  const expiryDate = new Date(activatedDate);
+
+expiryDate.setDate(
+  expiryDate.getDate() + durationDays
+);
 
   const serverNow = await getServerTime();
 
@@ -334,12 +345,13 @@ if (validUntilRaw) {
     const expDate = new Date(serverNow);
     expDate.setDate(expDate.getDate() + daysToAdd);
 
-    berlakuSampai = expDate.toLocaleDateString("id-ID", {
-      day: "numeric",
-      month: "long",
-      year: "numeric"
-    });
-
+    berlakuSampai = expiryDate.toLocaleDateString("id-ID", {
+  day: "numeric",
+  month: "long",
+  year: "numeric"
+});
+    
+  }
   }
 
   // Jika isinya tanggal langsung
