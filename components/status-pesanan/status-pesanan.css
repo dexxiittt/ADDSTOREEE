@@ -354,6 +354,31 @@ flex-direction:column;
 gap:4px;
 }
 
+.meta-badge{
+display:inline-flex;
+align-items:center;
+
+margin-left:8px;
+padding:3px 8px;
+
+border-radius:999px;
+
+font-size:10px;
+font-weight:700;
+
+letter-spacing:.4px;
+text-transform:none;
+vertical-align:middle;
+}
+
+.package-badge-mini{
+background:rgba(139,92,246,.12);
+
+border:1px solid rgba(139,92,246,.22);
+
+color:#7c3aed;
+}
+
 .meta-group + .meta-group{
 margin-top:18px;
 padding-top:18px;
