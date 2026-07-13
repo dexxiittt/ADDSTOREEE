@@ -164,8 +164,7 @@ left:18px;
 display:flex;
 
 flex-direction:column;
-
-align-items:flex-start;
+align-items:center;
 
 gap:20px;
 
@@ -218,6 +217,8 @@ flex-shrink:0;
 .info-tile-content{
 width:100%;
 flex:1;
+
+text-align:center;
 }
 
 .info-tile-content span{
@@ -371,7 +372,8 @@ line-height:1.5;
 display:flex;
 flex-direction:column;
 
-gap:4px;
+align-items:center;
+gap:8px;
 }
 
 .meta-badge{
