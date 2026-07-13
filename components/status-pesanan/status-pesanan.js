@@ -553,9 +553,11 @@ validUntilDate.setDate(
   validUntilDate.getDate() + durationDays
 );
 
-const expiryTimestamp = validUntilDate.getTime();
-console.log("Expiry Timestamp:", expiryTimestamp);
+const expiryTimestamp = validUntilDate.getTime(); // Deklarasi variabel terlebih dahulu
 
+// Pindahkan console.log ke bawah sini (jika masih butuh untuk debugging)
+console.log("Activated Date:", activatedDate);
+console.log("Expiry Timestamp:", expiryTimestamp);
 console.log("Expiry Date:", validUntilDate);
 
   
