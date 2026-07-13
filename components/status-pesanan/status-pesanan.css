@@ -396,6 +396,14 @@ border:1px solid rgba(34,197,94,.22);
 color:#16a34a;
 }
 
+.activated-badge-mini{
+background:rgba(59,130,246,.12);
+
+border:1px solid rgba(59,130,246,.22);
+
+color:#2563eb;
+}
+
 .meta-group + .meta-group{
 margin-top:18px;
 padding-top:18px;
