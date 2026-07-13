@@ -403,6 +403,12 @@ padding-top:18px;
 border-top:1px solid #eceff5;
 }
 
+.info-tile-content .meta-group:first-child{
+margin-top:0;
+padding-top:0;
+border-top:none;
+}
+
 .meta-group:last-child span{
 color:#8b5cf6;
 }
