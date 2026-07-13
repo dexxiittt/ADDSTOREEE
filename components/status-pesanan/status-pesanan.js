@@ -476,54 +476,39 @@ return new Date(
 }
   
 // =============================
-// VALID UNTIL SYSTEM (PREMIUM VERSION)
+// VALID UNTIL SYSTEM (PREMIUM VERSION) - FIXED DURATION_PACKAGE
 // =============================
 
 let berlakuSampai = "-";
 
 if (activatedAtRaw) {
 
-const activatedDate = parseActivatedDate(activatedAtRaw);
+  const activatedDate = parseActivatedDate(activatedAtRaw);
 
-if (!activatedDate) {
-  return;
+  if (!activatedDate || isNaN(activatedDate.getTime())) {
+    return;
   }
 
-if (activatedDate && !isNaN(activatedDate.getTime())) {
+  packageActivatedDate.textContent = formatIndoDate(activatedDate);
 
-packageActivatedDate.textContent =
-formatIndoDate(activatedDate);
+  // SEKARANG: Langsung ambil data dari kolom duration_package di WARRANTY_DATA
+  const durasiPaket = rowData.duration_package || "0";
 
-}
+  const packageExpiryDate = addPackageDuration(
+    activatedDate,
+    durasiPaket
+  );
 
-const packageExpiryDate =
-addPackageDuration(
-activatedDate,
-packageData?.duration
-);
-
-const packageValidDate =
-formatIndoDate(packageExpiryDate);
-
-packageValidUntil.textContent =
-packageValidDate;
-  
-if (!isNaN(activatedDate.getTime())) {
-
-const expiryDate = new Date(activatedDate);
-
-expiryDate.setDate(
-  expiryDate.getDate() + durationDays
-);
-
- berlakuSampai =
-formatIndoDate(expiryDate);
+  const packageValidDate = formatIndoDate(packageExpiryDate);
+  packageValidUntil.textContent = packageValidDate;
     
-  }
+  const expiryDate = new Date(activatedDate);
+  expiryDate.setDate(expiryDate.getDate() + durationDays);
+  berlakuSampai = formatIndoDate(expiryDate);
 }
 
-warrantyValidUntil.textContent =
-berlakuSampai;
+warrantyValidUntil.textContent = berlakuSampai;
+
   
 const activated_at = rowData[headers.find(h =>
   h.toLowerCase().includes("activated")
@@ -594,8 +579,10 @@ if (durationDays >= 30) {
   durationDisplay = `${durationDays} Hari`;
 }
 
-packageDuration.textContent =
-packageData?.duration || "-";
+// Mengambil durasi paket langsung dari kolom duration_package
+let packageDurationDays = parseInt(rowData.duration_package) || 0;
+packageDuration.textContent = packageDurationDays > 0 ? `${packageDurationDays} Hari` : "-";
+
 
 warrantyDuration.textContent =
 durationDisplay;
