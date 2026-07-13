@@ -317,6 +317,61 @@ infoList.innerHTML = informasiList
 `)
   .join("");
 
+
+function parseActivatedDate(value) {
+
+  if (!value) return null;
+
+  // Format: Date(2026,6,10,21,0,0)
+  if (
+    typeof value === "string" &&
+    value.startsWith("Date(")
+  ) {
+
+    const parts = value
+      .replace("Date(", "")
+      .replace(")", "")
+      .split(",")
+      .map(Number);
+
+    return new Date(
+      parts[0],
+      parts[1],
+      parts[2],
+      parts[3] || 0,
+      parts[4] || 0,
+      parts[5] || 0
+    );
+
+  }
+
+  // Object Date dari Google Sheets
+  if (typeof value === "object") {
+    return new Date(value);
+  }
+
+  // String biasa
+const date = new Date(value);
+
+if (!isNaN(date.getTime())) {
+  return date;
+}
+
+const [datePart, timePart = "00:00:00"] =
+String(value).split(" ");
+
+const [day, month, year] =
+datePart.split("/");
+
+return new Date(
+  Number(year),
+  Number(month) - 1,
+  Number(day),
+  ...timePart.split(":").map(Number)
+);
+
+}
+  
 // =============================
 // VALID UNTIL SYSTEM (PREMIUM VERSION)
 // =============================
@@ -325,8 +380,13 @@ let berlakuSampai = "-";
 
 if (activatedAtRaw) {
 
-  const activatedDate = new Date(activatedAtRaw);
+  const activatedDate = parseActivatedDate(activatedAtRaw);
 
+  if (!activatedDate) {
+  validUntil.textContent = "-";
+  return;
+}
+  
   if (!isNaN(activatedDate.getTime())) {
   
 
@@ -345,7 +405,7 @@ expiryDate.setDate(
     const expDate = new Date(serverNow);
     expDate.setDate(expDate.getDate() + daysToAdd);
 
-    berlakuSampai = expiryDate.toLocaleDateString("id-ID", {
+    berlakuSampai = validUntilDate.toLocaleDateString("id-ID", {
   day: "numeric",
   month: "long",
   year: "numeric"
@@ -499,57 +559,30 @@ if (status.toLowerCase() !== "active") {
   // JIKA SUDAH ACTIVE
   // ==========================
 
-  let activatedDate;
-
-  // HANDLE FORMAT Date(2026,1,26,21,0,0)
-  if (typeof activated_at === "string" && activated_at.startsWith("Date(")) {
-    const parts = activated_at
-      .replace("Date(", "")
-      .replace(")", "")
-      .split(",")
-      .map(Number);
-
-    activatedDate = new Date(
-      parts[0],
-      parts[1],
-      parts[2],
-      parts[3] || 0,
-      parts[4] || 0,
-      parts[5] || 0
-    );
-  }
-
-  // HANDLE OBJECT DATE (gviz)
-  else if (typeof activated_at === "object") {
-    activatedDate = new Date(activated_at);
-  }
-
-  // HANDLE STRING BIASA
-  else {
-    activatedDate = new Date(activated_at);
-
-    if (isNaN(activatedDate.getTime())) {
-      const [datePart, timePart] = activated_at.split(" ");
-      const [day, month, year] = datePart.split("/");
-
-      activatedDate = new Date(
-        Number(year),
-        Number(month) - 1,
-        Number(day),
-        ...timePart.split(":").map(Number)
-      );
-    }
-  }
+  const activatedDate =
+parseActivatedDate(activated_at);
 
   if (!activatedDate || isNaN(activatedDate.getTime())) {
     console.log("Gagal parse tanggal:", activated_at);
     return;
   }
 
-// Total detik = durationDays * 24 jam
-const expiryDate = new Date(activatedDate);
-expiryDate.setDate(expiryDate.getDate() + durationDays);
+  console.log("Activated Date:", activatedDate);
 
+  const expiryTimestamp = expiryDate.getTime();
+
+  console.log("Expiry Timestamp:", expiryTimestamp);
+
+// Tanggal expired berdasarkan aktivasi
+const validUntilDate = new Date(activatedDate);
+
+validUntilDate.setDate(
+  validUntilDate.getDate() + durationDays
+);
+
+console.log("Expiry Date:", expiryDate);
+
+  
   async function startCountdown() {
 
   const serverNow = await getServerTime();
@@ -561,10 +594,8 @@ expiryDate.setDate(expiryDate.getDate() + durationDays);
       serverNow.getTime() + (Date.now() - clientStartTime)
     );
 
-const fullDurationMs = durationDays * 24 * 60 * 60 * 1000;
-const elapsed = now - activatedDate;
-const diff = fullDurationMs - elapsed;
-
+const diff = expiryTimestamp - now.getTime();
+    
 countdownBox.style.display = "block";
 expiredBadge.style.display = "none";
 
