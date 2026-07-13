@@ -396,37 +396,12 @@ expiryDate.setDate(
   expiryDate.getDate() + durationDays
 );
 
-  const serverNow = await getServerTime();
-
-  // Jika isinya angka (misal 30)
-  if (!isNaN(parseInt(validUntilRaw))) {
-
-    const daysToAdd = parseInt(validUntilRaw);
-    const expDate = new Date(serverNow);
-    expDate.setDate(expDate.getDate() + daysToAdd);
-
-    berlakuSampai = validUntilDate.toLocaleDateString("id-ID", {
+    berlakuSampai = expiryDate.toLocaleDateString("id-ID", {
   day: "numeric",
   month: "long",
   year: "numeric"
 });
     
-  }
-  }
-
-  // Jika isinya tanggal langsung
-  else {
-
-    const parsedDate = new Date(validUntilRaw);
-
-    if (!isNaN(parsedDate.getTime())) {
-      berlakuSampai = parsedDate.toLocaleDateString("id-ID", {
-        day: "numeric",
-        month: "long",
-        year: "numeric"
-      });
-    }
-
   }
 }
 
