@@ -571,6 +571,12 @@ console.log("Expiry Date:", validUntilDate);
     );
 
 const diff = expiryTimestamp - now.getTime();
+
+console.log({
+  expiryTimestamp,
+  now: now.getTime(),
+  diff
+});
     
 countdownBox.style.display = "block";
 expiredBadge.style.display = "none";
