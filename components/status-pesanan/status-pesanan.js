@@ -544,8 +544,6 @@ parseActivatedDate(activated_at);
 
   console.log("Activated Date:", activatedDate);
 
-  const expiryTimestamp = expiryDate.getTime();
-
   console.log("Expiry Timestamp:", expiryTimestamp);
 
 // Tanggal expired berdasarkan aktivasi
@@ -555,7 +553,9 @@ validUntilDate.setDate(
   validUntilDate.getDate() + durationDays
 );
 
-console.log("Expiry Date:", expiryDate);
+const expiryTimestamp = validUntilDate.getTime();
+
+console.log("Expiry Date:", validUntilDate);
 
   
   async function startCountdown() {
