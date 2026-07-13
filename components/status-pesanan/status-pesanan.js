@@ -398,27 +398,28 @@ year:"numeric"
 // =============================
 function addPackageDuration(date, duration){
 
-const result = new Date(date);
-const value = parseInt(duration) || 0;
-const text = String(duration).toLowerCase();
+  const result = new Date(date);
+  const value = parseInt(duration) || 0;
+  const text = String(duration).toLowerCase();
 
-if(text.includes("hari")){
+  if (text.includes("bulan")) {
+    
+    result.setMonth(result.getMonth() + value);
 
-result.setDate(result.getDate() + value);
+  } else if (text.includes("tahun")) {
+    
+    result.setFullYear(result.getFullYear() + value);
 
-}else if(text.includes("bulan")){
+  } else {
+    
+    // DEFAULT: Jika mengandung kata "hari" ATAU hanya berupa angka murni, dimasukkan ke hitungan hari
+    result.setDate(result.getDate() + value);
 
-result.setMonth(result.getMonth() + value);
+  }
 
-}else if(text.includes("tahun")){
-
-result.setFullYear(result.getFullYear() + value);
-
+  return result;
 }
 
-return result;
-
-}
   
 function parseActivatedDate(value) {
 
