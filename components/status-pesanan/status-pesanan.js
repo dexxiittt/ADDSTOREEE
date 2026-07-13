@@ -76,6 +76,9 @@ document.getElementById("expiredBadge");
 const detailCard =
 document.getElementById("detailCard");
 
+const packageActivatedDate =
+document.getElementById("packageActivatedDate");
+
 const packageValidUntil =
 document.getElementById("packageValidUntil");
 
@@ -377,6 +380,19 @@ infoList.innerHTML = informasiList
 `)
   .join("");
 
+
+// =============================
+// FORMAT TANGGAL INDONESIA
+// =============================
+function formatIndoDate(date){
+
+return date.toLocaleDateString("id-ID",{
+day:"numeric",
+month:"long",
+year:"numeric"
+});
+
+}
 // =============================
 // PACKAGE DURATION HELPER
 // =============================
@@ -468,6 +484,17 @@ if (activatedAtRaw) {
 
 const activatedDate = parseActivatedDate(activatedAtRaw);
 
+if (!activatedDate) {
+  return;
+  }
+
+if (activatedDate && !isNaN(activatedDate.getTime())) {
+
+packageActivatedDate.textContent =
+formatIndoDate(activatedDate);
+
+}
+
 const packageExpiryDate =
 addPackageDuration(
 activatedDate,
@@ -475,34 +502,21 @@ packageData?.duration
 );
 
 const packageValidDate =
-packageExpiryDate.toLocaleDateString("id-ID",{
-day:"numeric",
-month:"long",
-year:"numeric"
-});
+formatIndoDate(packageExpiryDate);
 
 packageValidUntil.textContent =
 packageValidDate;
-
-  if (!activatedDate) {
-  validUntil.textContent = "-";
-  return;
-}
   
-  if (!isNaN(activatedDate.getTime())) {
-  
+if (!isNaN(activatedDate.getTime())) {
 
-  const expiryDate = new Date(activatedDate);
+const expiryDate = new Date(activatedDate);
 
 expiryDate.setDate(
   expiryDate.getDate() + durationDays
 );
 
-    berlakuSampai = expiryDate.toLocaleDateString("id-ID", {
-  day: "numeric",
-  month: "long",
-  year: "numeric"
-});
+ berlakuSampai =
+formatIndoDate(expiryDate);
     
   }
 }
