@@ -554,6 +554,7 @@ validUntilDate.setDate(
 );
 
 const expiryTimestamp = validUntilDate.getTime();
+console.log("Expiry Timestamp:", expiryTimestamp);
 
 console.log("Expiry Date:", validUntilDate);
 
