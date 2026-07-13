@@ -51,8 +51,11 @@ document.getElementById("metaCard");
 const metaInvoice =
 document.getElementById("metaInvoice");
 
-const metaDuration =
-document.getElementById("metaDuration");
+const packageDuration =
+document.getElementById("packageDuration");
+
+const warrantyDuration =
+document.getElementById("warrantyDuration");
 
 const statusText =
 document.getElementById("statusText");
@@ -73,8 +76,11 @@ document.getElementById("expiredBadge");
 const detailCard =
 document.getElementById("detailCard");
 
-const validUntil =
-document.getElementById("validUntil");
+const packageValidUntil =
+document.getElementById("packageValidUntil");
+
+const warrantyValidUntil =
+document.getElementById("warrantyValidUntil");
 
 const priceInfo =
 document.getElementById("priceInfo");
@@ -161,6 +167,52 @@ const sheetName = "WARRANTY_DATA";
 const sheetURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
 
 // =============================
+// KONFIGURASI SHEET PACKAGE_DETAIL
+// =============================
+const packageSheetName = "PACKAGE_DETAIL";
+const packageSheetURL =
+`https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${packageSheetName}`;
+
+// =============================
+// FETCH PACKAGE_DETAIL
+// =============================
+async function fetchPackageDetail(packageId){
+
+const res = await fetch(packageSheetURL);
+const text = await res.text();
+const json =
+JSON.parse(text.substr(47).slice(0,-2));
+
+const rows = json.table.rows;
+const headers =
+json.table.cols.map(col => col.label.trim());
+
+for(const row of rows){
+
+if(!row.c) continue;
+
+const rowData = {};
+
+headers.forEach((header,index)=>{
+
+rowData[header] =
+row.c[index]?.v ?? "";
+
+});
+
+if(String(rowData.package_id) === String(packageId)){
+
+return rowData;
+
+}
+
+}
+
+return null;
+
+}
+
+// =============================
 // FETCH WARRANTY_DATA
 // =============================
 async function fetchWarrantyData() {
@@ -203,6 +255,14 @@ metaInvoice.textContent = invoice;
 
 const product_id  = rowData.product_id || "-";
 const title       = rowData.title || "-";
+
+const package_id =
+rowData.package_id || "";
+
+const packageData =
+await fetchPackageDetail(package_id);
+
+console.log("PACKAGE DATA:", packageData);
 
 productTitle.textContent = title;
       
@@ -317,7 +377,33 @@ infoList.innerHTML = informasiList
 `)
   .join("");
 
+// =============================
+// PACKAGE DURATION HELPER
+// =============================
+function addPackageDuration(date, duration){
 
+const result = new Date(date);
+const value = parseInt(duration) || 0;
+const text = String(duration).toLowerCase();
+
+if(text.includes("hari")){
+
+result.setDate(result.getDate() + value);
+
+}else if(text.includes("bulan")){
+
+result.setMonth(result.getMonth() + value);
+
+}else if(text.includes("tahun")){
+
+result.setFullYear(result.getFullYear() + value);
+
+}
+
+return result;
+
+}
+  
 function parseActivatedDate(value) {
 
   if (!value) return null;
@@ -380,7 +466,23 @@ let berlakuSampai = "-";
 
 if (activatedAtRaw) {
 
-  const activatedDate = parseActivatedDate(activatedAtRaw);
+const activatedDate = parseActivatedDate(activatedAtRaw);
+
+const packageExpiryDate =
+addPackageDuration(
+activatedDate,
+packageData?.duration
+);
+
+const packageValidDate =
+packageExpiryDate.toLocaleDateString("id-ID",{
+day:"numeric",
+month:"long",
+year:"numeric"
+});
+
+packageValidUntil.textContent =
+packageValidDate;
 
   if (!activatedDate) {
   validUntil.textContent = "-";
@@ -405,8 +507,9 @@ expiryDate.setDate(
   }
 }
 
-validUntil.textContent = berlakuSampai;
-
+warrantyValidUntil.textContent =
+berlakuSampai;
+  
 const activated_at = rowData[headers.find(h =>
   h.toLowerCase().includes("activated")
 )] || "";
@@ -476,7 +579,11 @@ if (durationDays >= 30) {
   durationDisplay = `${durationDays} Hari`;
 }
 
-metaDuration.textContent = durationDisplay;
+packageDuration.textContent =
+packageData?.duration || "-";
+
+warrantyDuration.textContent =
+durationDisplay;
 
 initFadeUp();
 
