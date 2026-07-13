@@ -457,8 +457,13 @@ ${deskripsiMetode}
 
 paymentMethod.innerHTML = metodePembayaran;
 
-if (durationDays >= 30) {
 
+// =============================
+// PERBAIKAN: DEKLARASIKAN VARIABEL DURATION
+// =============================
+let durationDisplay = "-"; // Tambahkan 'let' agar tidak terjadi ReferenceError
+
+if (durationDays >= 30) {
   const months = Math.floor(durationDays / 30);
   const remainingDays = durationDays % 30;
 
@@ -467,196 +472,104 @@ if (durationDays >= 30) {
   } else {
     durationDisplay = `${months} Bulan (${remainingDays} Hari)`;
   }
-
-    } else if (durationDays > 0) {
-
+} else if (durationDays > 0) {
   durationDisplay = `${durationDays} Hari`;
-
 }
 
 metaDuration.textContent = durationDisplay;
 
-// =============================
-// CLEAN COLLAPSIBLE SYSTEM
-// =============================
+initFadeUp();
 
-if (infoMore) {
-  infoMore.addEventListener("click", () => {
-
-    infoContent.classList.add("open");
-    infoIcon.classList.add("active");
-
-    infoMore.style.display = "none";
-    infoClose.style.display = "block";
-
-    // =============================
-    // STAGGER NOTE ANIMATION
-    // =============================
-    const notes = infoContent.querySelectorAll("li");
-
-    notes.forEach((note, index) => {
-      note.classList.remove("show");
-      setTimeout(() => {
-        note.classList.add("show");
-      }, index * 120); // delay ringan per item
-    });
-
-  });
-}
-
-if (infoClose) {
-  infoClose.addEventListener("click", () => {
-
-    infoContent.classList.remove("open");
-    infoIcon.classList.remove("active");
-
-    infoClose.style.display = "none";
-    infoMore.style.display = "block";
-
-  });
-}
-
-      initFadeUp();
-
+// ==========================
+// JIKA SUDAH ACTIVE (COUNTDOWN SYSTEM)
+// ==========================
 if (durationDays > 0) {
-  
-  // ==========================
-  // JIKA BELUM ACTIVE
-  // ==========================
-if (status.toLowerCase() !== "active") {
-  statusText.style.color = "#9ca3af";
-    countdownTimer.innerHTML =
-      `${durationDays} Hari 00:00:00`;
+
+  if (status.toLowerCase() !== "active") {
+    statusText.style.color = "#9ca3af";
+    countdownTimer.innerHTML = `${durationDays} Hari 00:00:00`;
     return;
-}
+  }
 
-  // ==========================
-  // JIKA SUDAH ACTIVE
-  // ==========================
-
-  const activatedDate =
-parseActivatedDate(activated_at);
+  // Gunakan activatedAtRaw yang sudah terbukti berhasil di-parse di atas
+  const activatedDate = parseActivatedDate(activatedAtRaw);
 
   if (!activatedDate || isNaN(activatedDate.getTime())) {
-    console.log("Gagal parse tanggal:", activated_at);
+    console.log("Gagal parse tanggal:", activatedAtRaw);
     return;
   }
 
-  console.log("Activated Date:", activatedDate);
-
-  console.log("Expiry Timestamp:", expiryTimestamp);
-
-// Tanggal expired berdasarkan aktivasi
-const validUntilDate = new Date(activatedDate);
-
-validUntilDate.setDate(
-  validUntilDate.getDate() + durationDays
-);
-
-const expiryTimestamp = validUntilDate.getTime(); // Deklarasi variabel terlebih dahulu
-
-// Pindahkan console.log ke bawah sini (jika masih butuh untuk debugging)
-console.log("Activated Date:", activatedDate);
-console.log("Expiry Timestamp:", expiryTimestamp);
-console.log("Expiry Date:", validUntilDate);
-
-  
+  // Hitung tanggal expired
+  const validUntilDate = new Date(activatedDate);
+  validUntilDate.setDate(validUntilDate.getDate() + durationDays);
+  const expiryTimestamp = validUntilDate.getTime();
+    
   async function startCountdown() {
+    let serverNow;
+    const clientStartTime = Date.now();
 
-  const serverNow = await getServerTime();
-  const clientStartTime = Date.now();
+    // AMAN FROM CRASH: Menggunakan try-catch untuk mengatasi API macet
+    try {
+      serverNow = await getServerTime();
+    } catch (error) {
+      console.warn("Gagal mengambil waktu server. Menggunakan waktu lokal sebagai cadangan.", error);
+      serverNow = new Date(); // Fallback ke waktu lokal device jika API bermasalah
+    }
 
-  function updateCountdown() {
+    function updateCountdown() {
+      const now = new Date(
+        serverNow.getTime() + (Date.now() - clientStartTime)
+      );
 
-    const now = new Date(
-      serverNow.getTime() + (Date.now() - clientStartTime)
-    );
+      const diff = expiryTimestamp - now.getTime();
+      
+      countdownBox.style.display = "block";
+      expiredBadge.style.display = "none";
 
-const diff = expiryTimestamp - now.getTime();
+      if (diff <= 0) {
+        countdownTimer.innerHTML = "";
+        statusText.innerHTML = "Expired";
+        statusText.style.color = "#ef4444";
+        countdownBox.style.display = "none";
+        expiredBadge.style.display = "block";
+        return;
+      }
 
-console.log({
-  expiryTimestamp,
-  now: now.getTime(),
-  diff
-});
-    
-countdownBox.style.display = "block";
-expiredBadge.style.display = "none";
+      const days = Math.floor(diff / 86400000);
+      const hours = Math.floor((diff % 86400000) / 3600000);
+      const minutes = Math.floor((diff % 3600000) / 60000);
+      const seconds = Math.floor((diff % 60000) / 1000);
+      
+      countdownTimer.innerHTML = `
+        <div class="countdown-days">${days} Hari</div>
+        <div class="countdown-time">
+          ${hours.toString().padStart(2,"0")}:${minutes.toString().padStart(2,"0")}:${seconds.toString().padStart(2,"0")}
+        </div>
+      `;
 
-    if (diff <= 0) {
+      // Pengaturan warna status berdasarkan sisa hari
+      if (days > 7) {
+        statusText.style.color = "#22c55e"; // Hijau
+      } else if (days >= 3) {
+        statusText.style.color = "#f97316"; // Jingga
+      } else {
+        statusText.style.color = "#ef4444"; // Merah
+      }
 
-  countdownTimer.innerHTML = "";
-  statusText.innerHTML = "Expired";
-  statusText.style.color = "#ef4444";
+      // Animasi Pulse
+      countdownTimer.classList.remove("pulse-soft", "pulse-strong");
+      if (seconds !== 0) {
+        countdownTimer.classList.add("pulse-soft");
+      } else {
+        countdownTimer.classList.add("pulse-strong");
+      }
+    }
 
-  countdownBox.style.display = "none";
-  expiredBadge.style.display = "block";
-
-  /* if (!document.querySelector(".status-badge-expired")) {
-    const badge = document.createElement("div");
-    badge.className = "status-badge-expired";
-    badge.innerText = "EXPIRED";
-    statusText.parentNode.appendChild(badge);
-  }
-*/
-
-  return;
-}
-
-    const days = Math.floor(diff / 86400000);
-    const hours = Math.floor((diff % 86400000) / 3600000);
-    const minutes = Math.floor((diff % 3600000) / 60000);
-    const seconds = Math.floor((diff % 60000) / 1000);
-    
-    countdownTimer.innerHTML = `
-
-<div class="countdown-days">
-${days} Hari
-</div>
-
-<div class="countdown-time">
-${hours.toString().padStart(2,"0")}:
-${minutes.toString().padStart(2,"0")}:
-${seconds.toString().padStart(2,"0")}
-</div>
-`;
-
-    // PREMIUM BEHAVIOUR COLOR SYSTEM
-if (days > 7) {
-  statusText.style.color = "#22c55e"; // Hijau
-} 
-else if (days >= 3) {
-  statusText.style.color = "#f97316"; // Orange
-} 
-else {
-  statusText.style.color = "#ef4444"; // Merah (0–2 hari)
-}
-
-// ==========================
-// MICRO PULSE
-// ==========================
-
-countdownTimer.classList.remove("pulse-soft", "pulse-strong");
-
-if (seconds !== 0) {
-  countdownTimer.classList.add("pulse-soft");
-}
-
-if (seconds === 0) {
-  countdownTimer.classList.add("pulse-strong");
-}
-
-if (minutes === 0 && seconds === 0) {
-  countdownTimer.classList.add("pulse-strong");
-}
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
   }
 
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
-}
-
-startCountdown();
-
+  startCountdown();
 }
 
       } else {
