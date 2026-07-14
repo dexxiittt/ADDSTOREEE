@@ -68,10 +68,9 @@ body{
   transition:.25s ease;
 }
 
-/* SVG SIZE */
-.invoice-icon svg{
-  width:32px;
-  height:32px;
+/* ICON */
+.invoice-icon i{
+  font-size:30px;
 }
 
 /* hover biar hidup */
