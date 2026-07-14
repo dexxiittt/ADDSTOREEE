@@ -53,10 +53,13 @@ async function checkTransaction() {
     const jsonWarranty = JSON.parse(textWarranty.substr(47).slice(0, -2));
     const rowsWarranty = jsonWarranty.table.rows;
 
-    const transactions = rowsWarranty.filter(row => {
-      const sheetNumber = normalizeNumber(String(row.c[8]?.v || ""));
-      return sheetNumber === buyerInput;
-    });
+    // KODE BARU (SUDAH DIPERBAIKI)
+  const transactions = rowsWarranty.filter(row => {
+  // Mengubah indeks ke 9 untuk membaca Kolom J (buyer_contact)
+  const sheetNumber = normalizeNumber(String(row.c[9]?.v || ""));
+  return sheetNumber === buyerInput;
+});
+
 
     if (transactions.length === 0) {
       showAlert("Tidak ditemukan", "Belum ada transaksi untuk nomor ini.");
