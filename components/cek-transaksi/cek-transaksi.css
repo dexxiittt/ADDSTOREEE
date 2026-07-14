@@ -69,9 +69,8 @@ body{
   transition:.25s ease;
 }
 
-.invoice-icon svg{
-  width:32px;
-  height:32px;
+.invoice-icon i{
+  font-size:30px;
 }
 
 .invoice-box:hover .invoice-icon{
