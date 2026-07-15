@@ -1309,17 +1309,16 @@ grid-template-columns:repeat(3,1fr);
 gap:16px;
 
 margin:26px auto;
-left: 18px;
 }
 
 .status-action-btn{
 position:relative;
 overflow:hidden;
   
-display:flex;
 align-items:center;
 justify-content:center;
 gap:10px;
+left: 18px;
 
 padding:18px 20px;
 
