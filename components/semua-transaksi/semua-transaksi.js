@@ -318,18 +318,30 @@ wrapper
 .textContent=
 statusData.statusGaransi;
 
-if(statusData.statusClass==="status-active"){
+if(
+statusData.statusClassPaket===
+"status-active"
+){
 
 icon1.className=
 "status-icon-1 fa-solid fa-circle-check";
-
-icon2.className=
-"status-icon-2 fa-solid fa-circle-check";
 
 }else{
 
 icon1.className=
 "status-icon-1 fa-solid fa-circle-xmark";
+
+}
+
+if(
+statusData.statusClassGaransi===
+"status-active"
+){
+
+icon2.className=
+"status-icon-2 fa-solid fa-circle-check";
+
+}else{
 
 icon2.className=
 "status-icon-2 fa-solid fa-circle-xmark";
