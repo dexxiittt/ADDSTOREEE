@@ -474,6 +474,12 @@ wrapper
 item.title;
 
 wrapper
+.querySelector(".card-invoice")
+.innerHTML=
+`<i class="fa-solid fa-receipt"></i>
+${item.invoice}`;
+
+wrapper
 .querySelector(".card-title")
 .textContent=
 item.title;
