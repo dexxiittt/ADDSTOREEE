@@ -1308,7 +1308,8 @@ grid-template-columns:repeat(3,1fr);
 
 gap:16px;
 
-margin:26px 18px 36px;
+margin:26px auto;
+left: 18px;
 }
 
 .status-action-btn{
