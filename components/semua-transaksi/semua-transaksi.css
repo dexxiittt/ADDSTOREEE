@@ -896,6 +896,67 @@ transform,opacity;
 
 .fade-up:nth-child(8){ --delay:.54s; }
 
+/* =========================
+   COPY TOAST
+========================= */
+
+.copy-toast{
+position:fixed;
+
+left:50%;
+bottom:28px;
+
+transform:
+translateX(-50%)
+translateY(24px);
+
+display:flex;
+align-items:center;
+gap:10px;
+
+padding:14px 18px;
+
+border-radius:16px;
+
+background:
+linear-gradient(
+180deg,
+#181822,
+#13131b
+);
+
+border:
+1px solid rgba(34,197,94,.28);
+
+box-shadow:
+0 16px 40px rgba(0,0,0,.35),
+0 0 24px rgba(34,197,94,.12);
+
+font-family:"Plus Jakarta Sans",sans-serif;
+font-size:14px;
+font-weight:600;
+
+color:#fff;
+
+opacity:0;
+visibility:hidden;
+
+transition:
+all .35s ease;
+
+z-index:9999;
+}
+
+.copy-toast.show{
+
+opacity:1;
+visibility:visible;
+
+transform:
+translateX(-50%)
+translateY(0);
+
+}
 /* MOBILE */
 @media(max-width:600px){
 .transaksi-card{
