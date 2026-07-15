@@ -1307,7 +1307,7 @@ position:relative;
 left: 18px;
   
 display:grid;
-grid-template-columns:repeat(3,1fr);
+grid-template-columns:repeat(2,1fr);
 
 gap:16px;
 margin:26px auto;
@@ -1405,14 +1405,12 @@ color:#fff;
 transform:
 translateY(-2px)
 scale(1.08);
-}
 
-.status-action-btn:hover i{
-color: #4c1d95;
+color:#4c1d95;
 
 filter:
-drop-shadow(0 0 10px rgba(76, 29, 149, .35))
-drop-shadow(0 0 18px rgba(76, 29, 149, .18));
+drop-shadow(0 0 10px rgba(76,29,149,.35))
+drop-shadow(0 0 18px rgba(76,29,149,.18));
 }
 
 .status-action-btn,
