@@ -945,6 +945,9 @@ transition:
 all .35s ease;
 
 z-index:9999;
+
+backdrop-filter:blur(14px);
+-webkit-backdrop-filter:blur(14px);
 }
 
 .copy-toast.show{
