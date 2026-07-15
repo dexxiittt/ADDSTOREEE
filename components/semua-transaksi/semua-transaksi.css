@@ -300,6 +300,28 @@ transition:
 all .3s ease;
 }
 
+.card-invoice:hover{
+transform:
+translateY(-2px);
+
+box-shadow:
+0 12px 24px
+rgba(139,92,246,.18);
+}
+
+.card-invoice i{
+transition:
+transform .3s ease,
+color .3s ease;
+}
+
+.card-invoice:hover i{
+transform:
+scale(1.08);
+
+color:#ddd6fe;
+}
+
 .invoice-prefix{
 color:#c4b5fd;
 opacity:.75;
