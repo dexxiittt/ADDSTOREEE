@@ -269,6 +269,14 @@ const title       = rowData.title || "-";
 const buyerContact =
 rowData.buyer_contact || "";
 
+if(allTransactionBtn && !buyerContact){
+
+allTransactionBtn.style.opacity = ".55";
+
+allTransactionBtn.style.pointerEvents = "none";
+
+}
+
 const package_id =
 rowData.package_id || "";
 
