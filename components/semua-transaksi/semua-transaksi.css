@@ -259,6 +259,47 @@ linear-gradient(
 opacity:.9;
 }
 
+/* INVOICE PILL */
+
+.card-invoice{
+display:inline-flex;
+align-items:center;
+
+gap:8px;
+
+width:max-content;
+
+margin:2px 0 -8px;
+padding:7px 14px;
+
+border-radius:999px;
+
+font-family:"DM Sans",sans-serif;
+font-size:12px;
+font-weight:700;
+
+letter-spacing:.8px;
+text-transform:uppercase;
+
+color:#ddd6fe;
+
+background:
+linear-gradient(
+180deg,
+rgba(139,92,246,.16),
+rgba(139,92,246,.08)
+);
+
+border:
+1px solid rgba(139,92,246,.28);
+
+box-shadow:
+0 8px 18px rgba(139,92,246,.10);
+
+transition:
+all .3s ease;
+}
+
 /* STATUS */
 
 .status-row{
