@@ -501,6 +501,31 @@ navigator.clipboard.writeText(
 `${item.invoice}`
 );
 
+const toast=
+document.getElementById(
+"copyToast"
+);
+
+const toastText=
+toast.querySelector(
+".copy-toast-text"
+);
+
+toastText.textContent=
+`Invoice INV-${item.invoice} berhasil disalin`;
+
+toast.classList.add(
+"show"
+);
+
+setTimeout(()=>{
+
+toast.classList.remove(
+"show"
+);
+
+},2000);
+
 }
 );
 
