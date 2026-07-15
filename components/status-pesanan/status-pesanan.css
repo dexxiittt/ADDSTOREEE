@@ -1408,12 +1408,13 @@ scale(1.08);
 }
 
 .status-action-btn:hover i{
-color:#8b5cf6;
+color: #4c1d95;
 
 filter:
-drop-shadow(0 0 10px rgba(139,92,246,.35))
-drop-shadow(0 0 18px rgba(139,92,246,.18));
+drop-shadow(0 0 10px rgba(76, 29, 149, .35))
+drop-shadow(0 0 18px rgba(76, 29, 149, .18));
 }
+
 
 /* ============================= */
 /* MOBILE */
