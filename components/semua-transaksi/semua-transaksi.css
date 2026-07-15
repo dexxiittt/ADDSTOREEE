@@ -300,6 +300,20 @@ transition:
 all .3s ease;
 }
 
+.invoice-prefix{
+color:#c4b5fd;
+opacity:.75;
+
+font-weight:700;
+}
+
+.invoice-number{
+color:#fff;
+
+font-weight:800;
+letter-spacing:.8px;
+}
+
 /* STATUS */
 
 .status-row{
