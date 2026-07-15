@@ -298,6 +298,9 @@ rgba(34,197,94,.12);
 
 border:
 1px solid rgba(34,197,94,.28);
+
+box-shadow:
+0 0 12px rgba(34,197,94,.10);
 }
 
 .status-expired{
@@ -308,6 +311,9 @@ rgba(239,68,68,.10);
 
 border:
 1px solid rgba(239,68,68,.26);
+
+box-shadow:
+0 0 12px rgba(239,68,68,.10);
 }
 
 /* =========================
