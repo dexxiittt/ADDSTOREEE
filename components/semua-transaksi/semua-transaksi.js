@@ -163,19 +163,26 @@ noteTemplate:
   
 }
 
-function getStatusData(isActive){
+function getStatusData(
+isPackageActive,
+isWarrantyActive
+){
 
 return{
 
-statusPaket:isActive?
+statusPaket:isPackageActive?
 "Paket Aktif":
 "Paket Berakhir",
 
-statusGaransi:isActive?
+statusGaransi:isWarrantyActive?
 "Garansi Aktif":
 "Garansi Berakhir",
 
-statusClass:isActive?
+statusClassPaket:isPackageActive?
+"status-active":
+"status-expired",
+
+statusClassGaransi:isWarrantyActive?
 "status-active":
 "status-expired"
 
@@ -262,12 +269,16 @@ template.innerHTML;
 const status1 =
 wrapper.querySelector(".status-item-1");
 
-status1.classList.add(statusData.statusClass);
+status1.classList.add(
+statusData.statusClassPaket
+);
 
 const status2 =
 wrapper.querySelector(".status-item-2");
 
-status2.classList.add(statusData.statusClass);
+status2.classList.add(
+statusData.statusClassGaransi
+);
 
 const icon1 =
 wrapper.querySelector(".status-icon-1");
@@ -483,7 +494,13 @@ activatedDate,
 item.valid_until
 );
   
-const isActive=
+const isPackageActiveStatus=
+isPackageActive(
+now,
+packageEndDate
+);
+
+const isWarrantyActive=
 isPackageActive(
 now,
 endDate
@@ -495,7 +512,10 @@ noteTemplate
 }=getNoteData(isActive);
 
 const statusData=
-getStatusData(isActive);
+getStatusData(
+isPackageActiveStatus,
+isWarrantyActive
+);
   
 const activated=
 formatIndoDate(
