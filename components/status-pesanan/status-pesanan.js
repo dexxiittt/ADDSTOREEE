@@ -598,9 +598,18 @@ warrantyDuration.textContent =
 durationDisplay;
 
 if(allTransactionBtn){
+
 allTransactionBtn.addEventListener("click",(e)=>{
 
 e.preventDefault();
+
+if(!buyerContact){
+
+console.warn("Buyer contact tidak tersedia.");
+
+return;
+
+}
 
 window.location.href =
 `semua-transaksi.html?buyer=${encodeURIComponent(buyerContact)}`;
