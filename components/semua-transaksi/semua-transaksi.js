@@ -488,6 +488,22 @@ ${item.invoice}
 </span>
 `;
 
+const invoiceBadge=
+wrapper.querySelector(
+".card-invoice"
+);
+
+invoiceBadge.addEventListener(
+"click",
+()=>{
+
+navigator.clipboard.writeText(
+`${item.invoice}`
+);
+
+}
+);
+
 wrapper
 .querySelector(".card-title")
 .textContent=
