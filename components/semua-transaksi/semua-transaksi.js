@@ -515,11 +515,18 @@ getEndDate(
 activatedDate,
 item.valid_until
 );
+
+
+const packageEndDate=
+getEndDate(
+activatedDate,
+item.duration_package
+);
   
 const isPackageActiveStatus=
 isPackageActive(
 now,
-packageEndDate
+packageEndDate 
 );
 
 const isWarrantyActive=
@@ -550,12 +557,6 @@ activatedDate
 const expired=
 formatIndoDate(
 endDate
-);
-
-const packageEndDate=
-getEndDate(
-activatedDate,
-item.duration_package
 );
 
 const packageExpired=
@@ -602,3 +603,4 @@ appendCard(cardHtml);
 });
 
 }
+
