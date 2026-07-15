@@ -123,6 +123,13 @@ const infoClose =
 document.getElementById("infoClose");
 
 // =============================
+// QUICK ACTION BUTTON
+// =============================
+
+const allTransactionBtn =
+document.getElementById("allTransactionBtn");
+
+// =============================
 // NOT FOUND ELEMENT
 // =============================
 
@@ -258,6 +265,9 @@ metaInvoice.textContent = invoice;
 
 const product_id  = rowData.product_id || "-";
 const title       = rowData.title || "-";
+
+const buyerContact =
+rowData.buyer_contact || "";
 
 const package_id =
 rowData.package_id || "";
@@ -586,6 +596,18 @@ packageDuration.textContent = packageDurationDays > 0 ? `${packageDurationDays} 
 
 warrantyDuration.textContent =
 durationDisplay;
+
+if(allTransactionBtn){
+allTransactionBtn.addEventListener("click",(e)=>{
+
+e.preventDefault();
+
+window.location.href =
+`semua-transaksi.html?buyer=${encodeURIComponent(buyerContact)}`;
+
+});
+
+}
 
 initFadeUp();
 
