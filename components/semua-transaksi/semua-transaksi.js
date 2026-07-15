@@ -186,6 +186,7 @@ statusClass:isActive?
 function getMetaData(
 item,
 activated,
+packageExpired,
 expired
 ){
 
@@ -194,6 +195,7 @@ return{
 title:item.title,
 package:item.package,
 activated,
+packageExpired,
 expired
 
 };
@@ -334,6 +336,11 @@ wrapper
 .querySelector(".meta-expired")
 .textContent=
 metaData.expired;
+
+wrapper
+.querySelector(".meta-package-expired")
+.textContent=
+metaData.packageExpired;
 
 return wrapper.innerHTML;
 }
@@ -500,13 +507,25 @@ formatIndoDate(
 endDate
 );
 
+const packageEndDate=
+getEndDate(
+activatedDate,
+item.duration_package
+);
+
+const packageExpired=
+formatIndoDate(
+packageEndDate
+);
+
 const metaData=
 getMetaData(
 item,
 activated,
+packageExpired,
 expired
 );
-
+  
 const statusHtml=
 generateStatusHtml(statusData);
   
