@@ -1415,7 +1415,15 @@ drop-shadow(0 0 10px rgba(76, 29, 149, .35))
 drop-shadow(0 0 18px rgba(76, 29, 149, .18));
 }
 
+.status-action-btn,
+.info-more,
+.info-close{
+-webkit-tap-highlight-color:transparent;
 
+tap-highlight-color:transparent;
+
+outline:none;
+}
 /* ============================= */
 /* MOBILE */
 /* ============================= */
