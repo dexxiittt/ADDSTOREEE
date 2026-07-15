@@ -473,9 +473,11 @@ wrapper
 .alt=
 item.title;
 
-wrapper
-.querySelector(".card-invoice")
-.innerHTML=
+// --- PERBAIKAN 1: Tambahkan attribute 'data-invoice' untuk menyimpan nomor invoice ---
+const invoiceBadge = wrapper.querySelector(".card-invoice");
+invoiceBadge.setAttribute("data-invoice", item.invoice);
+
+invoiceBadge.innerHTML=
 `
 <i class="fa-solid fa-receipt"></i>
 
@@ -487,47 +489,6 @@ INV-
 ${item.invoice}
 </span>
 `;
-
-const invoiceBadge=
-wrapper.querySelector(
-".card-invoice"
-);
-
-invoiceBadge.addEventListener(
-"click",
-()=>{
-
-navigator.clipboard.writeText(
-`${item.invoice}`
-);
-
-const toast=
-document.getElementById(
-"copyToast"
-);
-
-const toastText=
-toast.querySelector(
-".copy-toast-text"
-);
-
-toastText.textContent=
-`Invoice INV-${item.invoice} berhasil disalin`;
-
-toast.classList.add(
-"show"
-);
-
-setTimeout(()=>{
-
-toast.classList.remove(
-"show"
-);
-
-},2000);
-
-}
-);
 
 wrapper
 .querySelector(".card-title")
@@ -672,3 +633,39 @@ appendCard(cardHtml);
 
 }
 
+/* ============================= */
+/* EVENT DELEGATION UNTUK TOAST */
+/* ============================= */
+
+// Menangkap semua klik di dalam #wrapper
+document.getElementById("wrapper").addEventListener("click", (e) => {
+  // Cari apakah elemen yang di-klik adalah .card-invoice atau bagian di dalamnya (ikon/text)
+  const invoiceBadge = e.target.closest(".card-invoice");
+  if (!invoiceBadge) return;
+
+  // Ambil nomor invoice yang disimpan di data attribute sebelumnya
+  const invoiceNum = invoiceBadge.getAttribute("data-invoice");
+  if (!invoiceNum) return;
+
+  // Salin ke Clipboard
+  navigator.clipboard.writeText(invoiceNum)
+    .then(() => {
+      // Ambil elemen toast dari HTML
+      const toast = document.getElementById("copyToast");
+      const toastText = toast.querySelector(".copy-toast-text");
+
+      // Ubah teks toast secara dinamis
+      toastText.textContent = `Invoice INV-${invoiceNum} berhasil disalin`;
+
+      // Tampilkan toast
+      toast.classList.add("show");
+
+      // Sembunyikan kembali setelah 2 detik
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2000);
+    })
+    .catch((err) => {
+      console.error("Gagal menyalin teks: ", err);
+    });
+});
