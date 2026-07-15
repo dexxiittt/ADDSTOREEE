@@ -1303,22 +1303,23 @@ box-shadow:
 ========================= */
 
 .status-action-buttons{
+position:relative;
+left: 18px;
+  
 display:grid;
 grid-template-columns:repeat(3,1fr);
 
 gap:16px;
-
 margin:26px auto;
 }
 
 .status-action-btn{
-position:relative;
 overflow:hidden;
-  
+
+display:flex;
 align-items:center;
 justify-content:center;
 gap:10px;
-left: 18px;
 
 padding:18px 20px;
 
