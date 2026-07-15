@@ -476,8 +476,17 @@ item.title;
 wrapper
 .querySelector(".card-invoice")
 .innerHTML=
-`<i class="fa-solid fa-receipt"></i>
-${item.invoice}`;
+`
+<i class="fa-solid fa-receipt"></i>
+
+<span class="invoice-prefix">
+INV-
+</span>
+
+<span class="invoice-number">
+${item.invoice}
+</span>
+`;
 
 wrapper
 .querySelector(".card-title")
