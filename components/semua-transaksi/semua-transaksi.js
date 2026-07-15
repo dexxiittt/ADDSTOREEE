@@ -137,9 +137,15 @@ function normalizeNumber(num) {
   return num;
 }
 
-function getNoteData(isActive){
+function getNoteData(
+isPackageActive,
+isWarrantyActive
+){
 
-if(isActive){
+if(
+isPackageActive &&
+isWarrantyActive
+){
 
 return{
 
@@ -147,6 +153,22 @@ noteClass:"note-active",
 
 noteTemplate:
 "noteActiveTemplate"
+
+};
+
+}
+
+if(
+isPackageActive &&
+!isWarrantyActive
+){
+
+return{
+
+noteClass:"note-active",
+
+noteTemplate:
+"noteWarrantyExpiredTemplate"
 
 };
 
@@ -160,7 +182,7 @@ noteTemplate:
 "noteExpiredTemplate"
 
 };
-  
+
 }
 
 function getStatusData(
@@ -509,7 +531,10 @@ endDate
 const{
 noteClass,
 noteTemplate
-}=getNoteData(isActive);
+}=getNoteData(
+isPackageActiveStatus,
+isWarrantyActive
+);
 
 const statusData=
 getStatusData(
