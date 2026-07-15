@@ -539,6 +539,7 @@ margin-bottom:3px;
 .meta-title,
 .meta-package,
 .meta-activated,
+.meta-package-expired,
 .meta-expired{
 display:block;
 font-family:"Sora",sans-serif;
