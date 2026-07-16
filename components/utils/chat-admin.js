@@ -24,6 +24,40 @@ data.warrantyActive
 ? "Aktif ✅"
 : "Tidak Aktif ❌";
 
+let messageText = "";
+
+// Kondisi 1
+if(
+data.packageActive &&
+data.warrantyActive
+){
+
+messageText =
+"Halo admin, paket saya sedang mengalami kendala, bisa tolong bantu saya?";
+
+}
+
+// Kondisi 2
+else if(
+data.packageActive &&
+!data.warrantyActive
+){
+
+messageText =
+"Halo admin, paket saya sedang mengalami kendala, apakah masih dalam cakupan garansi?";
+
+}
+
+// Kondisi 3
+else{
+
+messageText =
+"Saya ingin memesan paket yang sama, bisa tolong bantu saya?";
+
+console.log("Pesan :", messageText);
+
+}
+
 console.log("Nama :", data.buyerName);
 
 console.log("Nomor :", data.buyerPhone);
