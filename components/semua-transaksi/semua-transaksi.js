@@ -362,6 +362,14 @@ document.createElement("div");
 wrapper.innerHTML=
 template.innerHTML;
 
+const buttonWa =
+wrapper.querySelector(".btn-wa");
+
+buttonWa.onclick = function(e){
+e.preventDefault();
+chatAdminTransaksi({});
+};
+  
 wrapper
 .querySelector(".meta-title")
 .textContent=
