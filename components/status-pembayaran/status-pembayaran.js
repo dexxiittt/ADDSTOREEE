@@ -14,6 +14,16 @@ window.onload = async function() {
 /* ============================================================
    CORE FUNCTIONS (LOCAL STORAGE & SHEET FETCHING)
    ============================================================ */
+function checkIsExpired() {
+  const createdAt = localStorage.getItem("invoiceCreatedAt");
+  if (!createdAt) return false;
+
+  const now = new Date().getTime();
+  const oneHour = 60 * 60 * 1000; // 1 jam dalam milidetik
+
+  return (now - parseInt(createdAt)) > oneHour;
+}
+
 function loadFromLocalStorage() {
   const localData = JSON.parse(localStorage.getItem("paymentData"));
   if (!localData) return false;
@@ -191,11 +201,17 @@ function renderProduct(image, title, subtitle, hargaHtml, diskon, hemat, total) 
 }
 
 function renderStatus(status, proses) {
+  // PAKSA JADI EXPIRED JIKA SUDAH LEBIH DARI 1 JAM (Kecuali kalau sudah sukses)
+  if (status !== "success" && checkIsExpired()) {
+    status = "expired";
+  }
+
   switch (status) {
     case "success":
       setSuccessUI(proses);
-      // HAPUS INVOICE LAMA DARI LOCALSTORAGE AGAR TRANSAKSI BERIKUTNYA MEMBUAT INVOICE BARU
+      // HAPUS DATA LAMA DARI LOCALSTORAGE AGAR TRANSAKSI BERIKUTNYA MEMBUAT INVOICE BARU
       localStorage.removeItem("invoiceID");
+      localStorage.removeItem("invoiceCreatedAt");
       break;
     case "expired":
       setExpiredUI();
@@ -232,13 +248,13 @@ function getStatusElements() {
 }
 
 /* ============================================================
-   STATUS UI THEMES (PENDING & SUCCESS)
+   STATUS UI THEMES (PENDING, SUCCESS, & EXPIRED)
    ============================================================ */
 function setPendingUI() {
   const ui = getStatusElements();
 
-  ui.invoiceBox.classList.remove("status-success");
-  ui.statusBox.classList.remove("status-success");
+  ui.invoiceBox.classList.remove("status-success", "status-expired");
+  ui.statusBox.classList.remove("status-success", "status-expired");
   ui.invoiceBox.classList.add("status-pending");
   ui.statusBox.classList.add("status-pending");
 
@@ -262,8 +278,8 @@ function setPendingUI() {
 function setSuccessUI(proses) {
   const ui = getStatusElements();
 
-  ui.invoiceBox.classList.remove("status-pending");
-  ui.statusBox.classList.remove("status-pending");
+  ui.invoiceBox.classList.remove("status-pending", "status-expired");
+  ui.statusBox.classList.remove("status-pending", "status-expired");
   ui.invoiceBox.classList.add("status-success");
   ui.statusBox.classList.add("status-success");
 
@@ -284,7 +300,51 @@ function setSuccessUI(proses) {
   document.getElementById("waButtonIcon").className = "fa-brands fa-whatsapp";
 }
 
-function setExpiredUI() { /* TODO */ }
+function setExpiredUI() {
+  const ui = getStatusElements();
+
+  // Hapus warna lama, ganti ke tema expired (merah)
+  ui.invoiceBox.classList.remove("status-pending", "status-success");
+  ui.statusBox.classList.remove("status-pending", "status-success");
+  ui.invoiceBox.classList.add("status-expired");
+  ui.statusBox.classList.add("status-expired");
+
+  ui.statusBadgeText.innerText = "Invoice Kedaluwarsa";
+  ui.statusTitle.innerText = "Waktu Pembayaran Habis";
+  ui.statusDescription.innerText = "Maaf, batas waktu pembayaran 1 jam telah habis. Invoice ini sudah tidak berlaku lagi.";
+  ui.statusTipText.innerHTML = "Silakan melakukan generate ulang invoice melalui tombol di bawah untuk memperbarui pesanan.";
+  ui.statusBadgeIcon.className = "fa-solid fa-circle-xmark";
+  ui.statusIconFa.className = "fa-solid fa-bell-slash";
+
+  // Mengubah icon section menjadi merah
+  document.getElementById("statusSectionIcon").className = "section-icon icon-red";
+
+  // INFO PENDUKUNG DIUBAH MENJADI TOMBOL GENERATE ULANG
+  document.getElementById("supportTitle").innerText = "Generate Ulang Invoice";
+  document.getElementById("supportDescription").innerHTML = "Untuk melanjutkan pembelian paket, silakan klik tombol di bawah ini untuk membuat invoice baru.";
+  
+  // EDIT TOMBOL WA: Ubah text, matikan fungsi klik, dan beri style disable
+  const waBtn = document.getElementById("waButton") || document.querySelector(".support-action a"); 
+  if (waBtn) {
+    waBtn.href = "javascript:void(0);"; // Matikan link redirect WA
+    waBtn.setAttribute("onclick", "generateUlangInvoice()"); // Alihkan tombol untuk generate ulang
+    waBtn.style.backgroundColor = "#ef4444"; // Ubah tombol jadi warna merah tanda expired
+    waBtn.style.cursor = "pointer";
+    
+    document.getElementById("waButtonText").innerText = "Generate Ulang Invoice Baru ⚡";
+    document.getElementById("waButtonIcon").className = "fa-solid fa-rotate-right";
+  }
+}
+
+function generateUlangInvoice() {
+  // Bersihkan invoice lama agar sistem memicu pembuatan kode baru
+  localStorage.removeItem("invoiceID");
+  localStorage.removeItem("invoiceCreatedAt");
+  
+  // Arahkan kembali ke halaman opsi pembayaran
+  window.location.href = "opsi-pembayaran.html"; 
+}
+
 function setCancelUI() { /* TODO */ }
 function setRefundUI() { /* TODO */ }
 
@@ -358,4 +418,3 @@ function showToast(message, iconClass = "fa-circle-check") {
     toast.classList.remove("show");
   }, 3500);
 }
-
