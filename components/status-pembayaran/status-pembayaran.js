@@ -43,8 +43,10 @@ function loadFromLocalStorage() {
   // STATUS RENDER
   renderStatus(localData.status || "pending");
 
-  // INVOICE & TIME RENDER
-  const invoice = localStorage.getItem("invoiceID");
+  // INVOICE & TIME RENDER (Utamakan ambil dari URL parameter agar tidak 'null' saat di-clear)
+  const params = new URLSearchParams(window.location.search);
+  const invoice = params.get("invoice") || localStorage.getItem("invoiceID");
+  
   const now = new Date();
   const formattedTime = now.toLocaleString("id-ID", {
     day: "numeric",
@@ -187,6 +189,8 @@ function renderStatus(status, proses) {
   switch (status) {
     case "success":
       setSuccessUI(proses);
+      // HAPUS INVOICE LAMA DARI LOCALSTORAGE AGAR TRANSAKSI BERIKUTNYA MEMBUAT INVOICE BARU
+      localStorage.removeItem("invoiceID");
       break;
     case "expired":
       setExpiredUI();
