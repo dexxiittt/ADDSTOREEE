@@ -215,58 +215,8 @@ function renderTestimoni() {
   
   let tampil = dataTampil.slice(0, jumlahTampil);
   tampil.forEach((t, i) => {
-    let avatar = t.nama.charAt(0).toUpperCase();
-    let tombolMenu = "";
-
-    if (currentUser && t.uid === currentUser.uid) {
-      tombolMenu = `
-        <div style="position:absolute;top:12px;right:12px;cursor:pointer;font-size:18px;" onclick="toggleMenu('${t.id}', event)">⋮</div>
-        <div id="menu-${t.id}" class="menu-box" style="display:none;position:absolute;right:10px;top:35px;background:rgba(255,255,255,0.9);backdrop-filter:blur(10px);border-radius:12px;box-shadow:0 12px 30px rgba(0,0,0,0.15);padding:6px;z-index:10;min-width:90px;">
-          <div onclick="editTestimoni('${t.id}','${t.pesan}')" style="padding:8px 12px;cursor:pointer;">Edit</div>
-          <div onclick="hapusTestimoni('${t.id}')" style="padding:8px 12px;color:red;cursor:pointer;">Hapus</div>
-        </div>
-      `;
-    }
-
-    container.innerHTML += `
-      <div class="testimoni-card" style="animation-delay:${i * 0.08}s">
-        ${tombolMenu}
-        <div class="stars" id="stars-${t.id}">
-          ${"⭐".repeat(parseInt(t.rating))}
-        </div>
-        <div id="editStars-${t.id}" style="display:none;font-size:22px;margin-bottom:8px;cursor:pointer;color:#d1d5db;">
-          <span data-value="1">★</span>
-          <span data-value="2">★</span>
-          <span data-value="3">★</span>
-          <span data-value="4">★</span>
-          <span data-value="5">★</span>
-        </div>
-        <p id="text-${t.id}" class="clamp">"${t.pesan}"</p>
-        ${t.pesan.length > 120 ? `
-          <span id="toggle-${t.id}" style="color:#6d28d9;cursor:pointer;font-size:13px;" onclick="toggleText('${t.id}')">
-            Lihat Selengkapnya
-          </span>
-        ` : ""}
-        <textarea id="edit-${t.id}" maxlength="300" style="display:none;width:100%;margin-top:8px;padding:10px;border-radius:8px;border:1px solid #ddd;font-size:14px;">${t.pesan}</textarea>
-        <div id="charCounter-${t.id}" class="char-counter" style="display:none;">
-          Maks: 300 karakter
-        </div>
-        <div id="save-${t.id}" style="display:none;margin-top:8px;">
-          <button onclick="simpanEdit('${t.id}')" style="padding:6px 12px;border:none;background:#6d28d9;color:white;border-radius:6px;cursor:pointer;">Simpan</button>
-        </div>
-        <div class="testimoni-user">
-          <div class="testimoni-avatar" id="avatar-${t.id}">
-            ${avatar}
-          </div>
-          <div>
-            <strong id="nama-${t.id}">${t.nama}</strong>
-            <input id="editNama-${t.id}" style="display:none;margin-top:4px;padding:6px 8px;border-radius:8px;border:1px solid #ddd;font-size:14px;width:120px;" value="${t.nama}">
-            <br>
-            <small>${t.tanggal}</small>
-          </div>
-        </div>
-      </div>
-    `;
+    // Memanggil fungsi template terpisah agar kode tidak menumpuk di sini
+    container.innerHTML += HTMLTemplateTestimoniCard(t, i);
   });
 
   // KONTROL TOMBOL LOAD MORE
@@ -634,4 +584,64 @@ if (pesanInput && mainCounter) {
   });
 
   pesanInput.dispatchEvent(new Event("input"));
+}
+
+// ==========================================
+// TEMPLATE HELPER: KARTU TESTIMONI
+// ==========================================
+function HTMLTemplateTestimoniCard(t, i) {
+  let avatar = t.nama.charAt(0).toUpperCase();
+  let tombolMenu = "";
+
+  // Note: Properti style="display:none;" tetap dipertahankan secara inline 
+  // agar tidak merusak logika fungsi toggle bawaan JavaScript kamu.
+  if (currentUser && t.uid === currentUser.uid) {
+    tombolMenu = `
+      <div class="menu-trigger-btn" onclick="toggleMenu('${t.id}', event)">⋮</div>
+      <div id="menu-${t.id}" class="menu-box" style="display:none;">
+        <div class="menu-item-btn" onclick="editTestimoni('${t.id}','${t.pesan}')">Edit</div>
+        <div class="menu-item-btn delete-action" onclick="hapusTestimoni('${t.id}')">Hapus</div>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="testimoni-card" style="animation-delay:${i * 0.08}s">
+      ${tombolMenu}
+      <div class="stars" id="stars-${t.id}">
+        ${"⭐".repeat(parseInt(t.rating))}
+      </div>
+      <div id="editStars-${t.id}" class="edit-stars-action" style="display:none;">
+        <span data-value="1">★</span>
+        <span data-value="2">★</span>
+        <span data-value="3">★</span>
+        <span data-value="4">★</span>
+        <span data-value="5">★</span>
+      </div>
+      <p id="text-${t.id}" class="clamp">"${t.pesan}"</p>
+      ${t.pesan.length > 120 ? `
+        <span id="toggle-${t.id}" class="btn-toggle-view" onclick="toggleText('${t.id}')">
+          Lihat Selengkapnya
+        </span>
+      ` : ""}
+      <textarea id="edit-${t.id}" maxlength="300" class="edit-textarea-field" style="display:none;">${t.pesan}</textarea>
+      <div id="charCounter-${t.id}" class="char-counter" style="display:none;">
+        Maks: 300 karakter
+      </div>
+      <div id="save-${t.id}" style="display:none;">
+        <button onclick="simpanEdit('${t.id}')" class="btn-save-action">Simpan</button>
+      </div>
+      <div class="testimoni-user">
+        <div class="testimoni-avatar" id="avatar-${t.id}">
+          ${avatar}
+        </div>
+        <div>
+          <strong id="nama-${t.id}">${t.nama}</strong>
+          <input id="editNama-${t.id}" class="edit-nama-field" style="display:none;" value="${t.nama}">
+          <br>
+          <small>${t.tanggal}</small>
+        </div>
+      </div>
+    </div>
+  `;
 }
