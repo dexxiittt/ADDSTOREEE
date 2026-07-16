@@ -372,7 +372,15 @@ e.preventDefault();
 chatAdminTransaksi({
 
 buyerName:item.buyer_name,
-buyerPhone:item.buyer_contact
+buyerPhone:item.buyer_contact,
+
+invoice:item.invoice,
+product:item.title,
+package:item.package,
+
+activatedDate:activated,
+packageExpired:packageExpired,
+warrantyExpired:expired
 
 });
 
