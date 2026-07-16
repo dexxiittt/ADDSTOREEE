@@ -96,14 +96,45 @@ function cekStatus() {
   redirectStatus(invoice);
 }
 
+// 1. UPDATE DI FUNGSI GET INVOICE
 function getInvoice() {
   let invoice = localStorage.getItem("invoiceID");
 
   if (!invoice) {
     invoice = generateInvoice();
     localStorage.setItem("invoiceID", invoice);
+    // SIMPAN WAKTU PEMBUATAN (Timestamp Milidetik)
+    localStorage.setItem("invoiceCreatedAt", new Date().getTime());
   }
   return invoice;
+}
+
+// 2. UPDATE DI FUNGSI VALIDASI (JIKA SUDAH SUCCESS -> BUAT BARU)
+async function validateAndPrepareInvoice() {
+  let invoice = localStorage.getItem("invoiceID");
+  if (invoice) {
+    try {
+      const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/status_payment");
+      const data = await res.json();
+      
+      const statusRow = data.find(x => String(x.invoice).trim() === String(invoice).trim());
+      const status = (statusRow?.status || "").trim().toLowerCase();
+
+      if (status === "success") {
+        const newInvoice = generateInvoice();
+        localStorage.setItem("invoiceID", newInvoice);
+        // UPDATE WAKTU PEMBUATAN UNTUK INVOICE BARU
+        localStorage.setItem("invoiceCreatedAt", new Date().getTime());
+        console.log(`[System] Invoice lama ${invoice} sudah SUCCESS. Berhasil membuat invoice baru: ${newInvoice}`);
+      }
+    } catch (err) {
+      console.error("Gagal memverifikasi status invoice lama:", err);
+    }
+  } else {
+    const newInvoice = generateInvoice();
+    localStorage.setItem("invoiceID", newInvoice);
+    localStorage.setItem("invoiceCreatedAt", new Date().getTime()); // SIMPAN TIMESTAMPS
+  }
 }
 
 function generateInvoice() {
