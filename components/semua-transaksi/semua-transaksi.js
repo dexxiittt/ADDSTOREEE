@@ -380,8 +380,9 @@ package:item.package,
 
 activatedDate:activated,
 packageExpired:packageExpired,
-warrantyExpired:expired
+warrantyExpired:expired, 
 
+packageActive:isPackageActiveStatus
 });
 
 };
