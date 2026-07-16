@@ -366,8 +366,15 @@ const buttonWa =
 wrapper.querySelector(".btn-wa");
 
 buttonWa.onclick = function(e){
+
 e.preventDefault();
-chatAdminTransaksi({});
+
+chatAdminTransaksi({
+
+buyerName:item.buyer_name
+
+});
+
 };
   
 wrapper
