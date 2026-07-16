@@ -54,30 +54,6 @@ else{
 messageText =
 "Saya ingin memesan paket yang sama, bisa tolong bantu saya?";
 
-console.log("Pesan :", messageText);
-
-}
-
-console.log("Nama :", data.buyerName);
-
-console.log("Nomor :", data.buyerPhone);
-
-console.log("Invoice :", data.invoice);
-
-console.log("Produk :", data.product);
-
-console.log("Paket :", data.package);
-
-console.log("Aktivasi :", data.activatedDate);
-
-console.log("Paket Berakhir :", data.packageExpired);
-
-console.log("Garansi Berakhir :", data.warrantyExpired);
-
-console.log("Status Paket :", packageStatus);
-
-console.log("Status Garansi :", warrantyStatus);
-
 }
 
 const message = `🙌 Halo admin, saya ingin meminta bantuan.
@@ -104,3 +80,7 @@ Nomor : ${data.buyerPhone}
 💬 Pesan
 
 ${messageText}`;
+
+console.log(message);
+
+}
