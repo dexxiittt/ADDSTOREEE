@@ -1,6 +1,40 @@
 window.onload = async function() {
 
   // ==========================================
+  // 0. VALIDASI STATUS INVOICE (JIKA SUDAH SUCCESS -> BUAT BARU)
+  // ==========================================
+  async function validateAndPrepareInvoice() {
+    let invoice = localStorage.getItem("invoiceID");
+    if (invoice) {
+      try {
+        // Tarik data status pembayaran dari Google Sheet
+        const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/status_payment");
+        const data = await res.json();
+        
+        // Cari apakah invoice lama ini sudah berstatus "success"
+        const statusRow = data.find(x => String(x.invoice).trim() === String(invoice).trim());
+        const status = (statusRow?.status || "").trim().toLowerCase();
+
+        if (status === "success") {
+          // Jika sudah sukses, paksa generate invoice baru agar tidak duplikat
+          const newInvoice = generateInvoice();
+          localStorage.setItem("invoiceID", newInvoice);
+          console.log(`[System] Invoice lama ${invoice} sudah SUCCESS. Berhasil membuat invoice baru: ${newInvoice}`);
+        }
+      } catch (err) {
+        console.error("Gagal memverifikasi status invoice lama:", err);
+      }
+    } else {
+      // Jika belum ada invoice di localStorage, langsung buat baru
+      const newInvoice = generateInvoice();
+      localStorage.setItem("invoiceID", newInvoice);
+    }
+  }
+
+  // Jalankan validasi invoice terlebih dahulu sebelum merender data
+  await validateAndPrepareInvoice();
+
+  // ==========================================
   // 1. CUSTOMER DATA & RENDERING
   // ==========================================
   const customer = getCustomerData();
@@ -38,7 +72,6 @@ window.onload = async function() {
     fetch(qrSheet)
       .then(res => res.json())
       .then(data => {
-        // ambil baris pertama
         const qr = data[0]?.qr_code;
 
         if (qr) {
@@ -106,7 +139,6 @@ function openQR(el) {
   modal.classList.add("active");
 }
 
-// Fungsi penutup modal QR
 function closeQR() {
   document.getElementById("qrModal").classList.remove("active");
 }
