@@ -20,31 +20,31 @@ function chatAdminTransaksi(data){
     messageText = "Halo admin, paket saya sedang mengalami kendala, apakah masih dalam cakupan garansi?";
   }
   else{
-    messageText = "Saya ingin memesan paket yang sama, bisa tolong bantu saya?";
+    messageText = "Halo admin, Saya ingin memesan paket yang sama, bisa tolong bantu saya?";
   }
 
   const message = `🙌 Halo admin, saya ingin meminta bantuan.
 
-👤 Data Pembeli
+🫐 Data Pembeli
 
-Nama : ${data.buyerName}
-Nomor : ${data.buyerPhone}
+🍎 Nama : ${data.buyerName}
+🍏 Nomor : ${data.buyerPhone}
 
-📦 Detail Pesanan
+🍐 Detail Pesanan
 
-📍INV : ${data.invoice}
-📍Produk : ${data.product}
-📍Paket : ${data.package}
-📍Aktivasi : ${data.activatedDate}
-📍Paket Berakhir : ${data.packageExpired}
-📍Garansi Berakhir : ${data.warrantyExpired}
+🍉 INV : ${data.invoice}
+🥭 Produk : ${data.product}
+🍒 Paket : ${data.package}
+🍍 Aktivasi : ${data.activatedDate}
+🥥 Paket Berakhir : ${data.packageExpired}
+🍅 Garansi Berakhir : ${data.warrantyExpired}
 
-📊 Status
+🌶 Status
 
-✅ Paket : ${packageStatus}
-✅ Garansi : ${warrantyStatus}
+🍒 Paket : ${packageStatus}
+🥥 Garansi : ${warrantyStatus}
 
-💬 Pesan
+🥝 Pesan
 
 ${messageText}`;
 
