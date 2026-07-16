@@ -14,6 +14,7 @@ window.open(
 
 function chatAdminTransaksi(data){
 
-console.log(data);
+console.log("Nama :", data.buyerName);
+console.log("Nomor:", data.buyerPhone);
 
 }
