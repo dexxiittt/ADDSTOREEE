@@ -14,6 +14,16 @@ window.open(
 
 function chatAdminTransaksi(data){
 
+const packageStatus =
+data.packageActive
+? "Aktif ✅"
+: "Tidak Aktif ❌";
+
+const warrantyStatus =
+data.warrantyActive
+? "Aktif ✅"
+: "Tidak Aktif ❌";
+
 console.log("Nama :", data.buyerName);
 
 console.log("Nomor :", data.buyerPhone);
@@ -30,6 +40,8 @@ console.log("Paket Berakhir :", data.packageExpired);
 
 console.log("Garansi Berakhir :", data.warrantyExpired);
 
-console.log("Paket Aktif :", data.packageActive);
+console.log("Status Paket :", packageStatus);
+
+console.log("Status Garansi :", warrantyStatus);
 
 }
