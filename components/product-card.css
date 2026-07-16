@@ -622,12 +622,14 @@
 #preview-card-grid {
   display: grid;
   grid-template-columns: 1fr;
+  align-items: start;
   gap: 28px 22px;
 
   width: 100%;
   max-width: var(--grid-max-width);
   margin: 0 auto;
 }
+
 
 /* RESPONSIVE */
 @media (min-width:1200px){
