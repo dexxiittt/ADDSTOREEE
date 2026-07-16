@@ -10,12 +10,8 @@ const params=new URLSearchParams(window.location.search);
 const buyer=params.get("buyer");
 
 if(!buyer){
-  
-renderNotFound();
-  
-throw new Error(
-"Buyer parameter not found"
-);
+  renderNotFound();
+  throw new Error("Buyer parameter not found");
 }
 
 /* ============================= */
@@ -24,35 +20,30 @@ throw new Error(
 
 fetch(sheetURL)
 .then(res=>{
-
-return res.text();
-
+  return res.text();
 })
-  
 .then(text=>{
-const json=JSON.parse(text.substr(47).slice(0,-2));
-  
-const rows=json.table.rows;
-const headers=json.table.cols.map(c=>c.label);
+  const json=JSON.parse(text.substr(47).slice(0,-2));
+  const rows=json.table.rows;
+  const headers=json.table.cols.map(c=>c.label);
 
-let result=[];
+  let result=[];
 
-rows.forEach(row=>{
-if(!row.c)return;
+  rows.forEach(row=>{
+    if(!row.c)return;
 
-let rowData={};
-headers.forEach((h,i)=>{
-rowData[h]=row.c[i]?.v ?? "";
+    let rowData={};
+    headers.forEach((h,i)=>{
+      rowData[h]=row.c[i]?.v ?? "";
+    });
+
+    if(normalizeNumber(rowData.buyer_contact) === normalizeNumber(buyer)){
+      result.push(rowData);
+    }
+  });
+
+  render(result);
 });
-
-if(normalizeNumber(rowData.buyer_contact) === normalizeNumber(buyer)){
-result.push(rowData);
-}
-});
-
-render(result);
-});
-
 
 /* ============================= */
 /* LOGIC HELPER */
@@ -61,7 +52,6 @@ render(result);
 function parseIndoDate(value) {
   if (!value) return null;
 
-  // Kalau format dari Google = Date(2026,1,28,14,43,0)
   if (typeof value === "string" && value.startsWith("Date(")) {
     const parts = value.match(/\d+/g);
     return new Date(
@@ -74,7 +64,6 @@ function parseIndoDate(value) {
     );
   }
 
-    // Kalau format normal 28/02/2026 14:43:00
   if (typeof value === "string" && value.includes("/")) {
     const [datePart, timePart] = value.split(" ");
     const [day, month, year] = datePart.split("/");
@@ -90,44 +79,23 @@ function parseIndoDate(value) {
     );
   }
 
-  // fallback
   return new Date(value);
 }
 
 function getEndDate(activatedDate, validUntil){
-
-// Kalau valid_until adalah jumlah hari
-if(!isNaN(validUntil)){
-
-const durationDays=
-Number(validUntil)||0;
-
-return new Date(
-activatedDate.getTime()+
-durationDays*24*60*60*1000
-);
-
-}
-
-// Kalau valid_until berupa tanggal
-return parseIndoDate(validUntil);
+  if(!isNaN(validUntil)){
+    const durationDays=Number(validUntil)||0;
+    return new Date(activatedDate.getTime()+durationDays*24*60*60*1000);
+  }
+  return parseIndoDate(validUntil);
 }
 
 function isPackageActive(now, endDate){
-return now <= endDate;
+  return now <= endDate;
 }
 
 function formatIndoDate(date){
-
-return date.toLocaleDateString(
-"id-ID",
-{
-day:"numeric",
-month:"long",
-year:"numeric"
-}
-);
-
+  return date.toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"});
 }
 
 function normalizeNumber(num) {
@@ -137,413 +105,155 @@ function normalizeNumber(num) {
   return num;
 }
 
-function getNoteData(
-isPackageActive,
-isWarrantyActive
-){
-
-if(
-isPackageActive &&
-isWarrantyActive
-){
-
-return{
-
-noteClass:"note-active",
-
-noteTemplate:
-"noteActiveTemplate"
-
-};
-
+function getNoteData(isPackageActive, isWarrantyActive){
+  if(isPackageActive && isWarrantyActive){
+    return{noteClass:"note-active",noteTemplate:"noteActiveTemplate"};
+  }
+  if(isPackageActive && !isWarrantyActive){
+    return{noteClass:"note-active",noteTemplate:"noteWarrantyExpiredTemplate"};
+  }
+  return{noteClass:"note-expired",noteTemplate:"noteExpiredTemplate"};
 }
 
-if(
-isPackageActive &&
-!isWarrantyActive
-){
-
-return{
-
-noteClass:"note-active",
-
-noteTemplate:
-"noteWarrantyExpiredTemplate"
-
-};
-
+function getStatusData(isPackageActive, isWarrantyActive){
+  return{
+    statusPaket:isPackageActive?"Paket Aktif":"Paket Berakhir",
+    statusGaransi:isWarrantyActive?"Garansi Aktif":"Garansi Berakhir",
+    statusClassPaket:isPackageActive?"status-active":"status-expired",
+    statusClassGaransi:isWarrantyActive?"status-active":"status-expired"
+  };
 }
 
-return{
-
-noteClass:"note-expired",
-
-noteTemplate:
-"noteExpiredTemplate"
-
-};
-
-}
-
-function getStatusData(
-isPackageActive,
-isWarrantyActive
-){
-
-return{
-
-statusPaket:isPackageActive?
-"Paket Aktif":
-"Paket Berakhir",
-
-statusGaransi:isWarrantyActive?
-"Garansi Aktif":
-"Garansi Berakhir",
-
-statusClassPaket:isPackageActive?
-"status-active":
-"status-expired",
-
-statusClassGaransi:isWarrantyActive?
-"status-active":
-"status-expired"
-
-};
-
-}
-
-function getMetaData(
-item,
-activated,
-packageExpired,
-expired
-){
-
-return{
-
-title:item.title,
-package:item.package,
-activated,
-packageExpired,
-expired
-
-};
-
+function getMetaData(item, activated, packageExpired, expired){
+  return{title:item.title,package:item.package,activated,packageExpired,expired};
 }
 
 /* ============================= */
 /* UI HELPER */
 /* ============================= */
 
-/* ---------- DOM Helper ---------- */
-function getWrapper(){
-return document.getElementById("wrapper");
-}
-
-function setWrapperHtml(html){
-getWrapper().innerHTML=html;
-}
-
-function clearWrapper(){
-setWrapperHtml("");
-}
-
-function appendCard(html){
-getWrapper().innerHTML+=html;
-}
+function getWrapper(){ return document.getElementById("wrapper"); }
+/* PENTING: Gunakan innerHTML biasa di render awal agar DOM bersih */
+function setWrapperHtml(html){ getWrapper().innerHTML=html; }
+function clearWrapper(){ setWrapperHtml(""); }
+function appendCard(html){ getWrapper().innerHTML+=html; }
 
 function renderEmpty(){
-
-const template=
-document.getElementById("emptyTemplate");
-
-setWrapperHtml(
-template.innerHTML
-);
+  const template=document.getElementById("emptyTemplate");
+  setWrapperHtml(template.innerHTML);
 }
 
 function renderNotFound(){
-
-const template=
-document.getElementById(
-"notFoundTemplate"
-);
-
-setWrapperHtml(
-template.innerHTML
-);
-
+  const template=document.getElementById("notFoundTemplate");
+  setWrapperHtml(template.innerHTML);
 }
 
-
-/* ---------- HTML Helper ---------- */
 function generateStatusHtml(statusData){
-  
-const template=
-document.getElementById("statusTemplate");
+  const template=document.getElementById("statusTemplate");
+  const wrapper=document.createElement("div");
+  wrapper.innerHTML=template.innerHTML;
 
-const wrapper=
-document.createElement("div");
+  const status1 = wrapper.querySelector(".status-item-1");
+  status1.classList.add(statusData.statusClassPaket);
 
-wrapper.innerHTML=
-template.innerHTML;
+  const status2 = wrapper.querySelector(".status-item-2");
+  status2.classList.add(statusData.statusClassGaransi);
 
-const status1 =
-wrapper.querySelector(".status-item-1");
+  const icon1 = wrapper.querySelector(".status-icon-1");
+  const icon2 = wrapper.querySelector(".status-icon-2");
 
-status1.classList.add(
-statusData.statusClassPaket
-);
+  wrapper.querySelector(".status-text-1").textContent=statusData.statusPaket;
+  wrapper.querySelector(".status-text-2").textContent=statusData.statusGaransi;
 
-const status2 =
-wrapper.querySelector(".status-item-2");
+  if(statusData.statusClassPaket==="status-active"){
+    icon1.className="status-icon-1 fa-solid fa-circle-check";
+  }else{
+    icon1.className="status-icon-1 fa-solid fa-circle-xmark";
+  }
 
-status2.classList.add(
-statusData.statusClassGaransi
-);
+  if(statusData.statusClassGaransi==="status-active"){
+    icon2.className="status-icon-2 fa-solid fa-circle-check";
+  }else{
+    icon2.className="status-icon-2 fa-solid fa-circle-xmark";
+  }
 
-const icon1 =
-wrapper.querySelector(".status-icon-1");
-
-const icon2 =
-wrapper.querySelector(".status-icon-2");
-
-wrapper
-.querySelector(".status-text-1")
-.textContent=
-statusData.statusPaket;
-
-wrapper
-.querySelector(".status-text-2")
-.textContent=
-statusData.statusGaransi;
-
-if(
-statusData.statusClassPaket===
-"status-active"
-){
-
-icon1.className=
-"status-icon-1 fa-solid fa-circle-check";
-
-}else{
-
-icon1.className=
-"status-icon-1 fa-solid fa-circle-xmark";
-
+  return wrapper.innerHTML;
 }
 
-if(
-statusData.statusClassGaransi===
-"status-active"
-){
-
-icon2.className=
-"status-icon-2 fa-solid fa-circle-check";
-
-}else{
-
-icon2.className=
-"status-icon-2 fa-solid fa-circle-xmark";
-
-}
-
-return wrapper.innerHTML;
-}
-
+/* FIX 1: Membersihkan sisa-sisa buttonWa yang salah letak di fungsi ini */
 function generateMetaHtml(metaData){
+  const template=document.getElementById("metaTemplate");
+  const wrapper=document.createElement("div");
+  wrapper.innerHTML=template.innerHTML;
+    
+  wrapper.querySelector(".meta-title").textContent=metaData.title;
+  wrapper.querySelector(".meta-package").textContent=metaData.package;
+  wrapper.querySelector(".meta-activated").textContent=metaData.activated;
+  wrapper.querySelector(".meta-expired").textContent=metaData.expired;
+  wrapper.querySelector(".meta-package-expired").textContent=metaData.packageExpired;
 
-const template=
-document.getElementById("metaTemplate");
-
-const wrapper=
-document.createElement("div");
-
-wrapper.innerHTML=
-template.innerHTML;
-
-const buttonWa =
-wrapper.querySelector(".btn-wa");
-
-buttonWa.onclick = function(e){
-
-e.preventDefault();
-
-chatAdminTransaksi({
-
-buyerName:item.buyer_name,
-buyerPhone:item.buyer_contact,
-
-invoice:item.invoice,
-product:item.title,
-package:item.package,
-
-activatedDate:activated,
-packageExpired:packageExpired,
-warrantyExpired:expired,
-
-packageActive:isPackageActiveStatus,
-warrantyActive:isWarrantyActive
-
-});
-
-};
-  
-wrapper
-.querySelector(".meta-title")
-.textContent=
-metaData.title;
-
-wrapper
-.querySelector(".meta-package")
-.textContent=
-metaData.package;
-
-wrapper
-.querySelector(".meta-activated")
-.textContent=
-metaData.activated;
-
-wrapper
-.querySelector(".meta-expired")
-.textContent=
-metaData.expired;
-
-wrapper
-.querySelector(".meta-package-expired")
-.textContent=
-metaData.packageExpired;
-
-return wrapper.innerHTML;
+  return wrapper.innerHTML;
 }
 
-function generateNoteHtml(
-noteClass,
-noteTemplate
-){
+function generateNoteHtml(noteClass, noteTemplate){
+  const template=document.getElementById("noteTemplate");
+  const wrapper=document.createElement("div");
+  wrapper.innerHTML=template.innerHTML;
 
-const template=
-document.getElementById("noteTemplate");
+  const note=wrapper.querySelector(".note");
+  note.classList.add(noteClass);
 
-const wrapper=
-document.createElement("div");
+  const contentTemplate=document.getElementById(noteTemplate);
+  wrapper.querySelector(".note-content").innerHTML=contentTemplate.innerHTML;
 
-wrapper.innerHTML=
-template.innerHTML;
-
-const note=
-wrapper.querySelector(".note");
-
-note.classList.add(noteClass);
-
-const contentTemplate=
-document.getElementById(
-noteTemplate
-);
-
-wrapper
-.querySelector(".note-content")
-.innerHTML=
-contentTemplate.innerHTML;
-
-return wrapper.innerHTML;
+  return wrapper.innerHTML;
 }
 
-function generateButtonHtml(item){
+/* FIX 2: Menaruh data pesanan ke dalam data-attribute tag tombol WA */
+function generateButtonHtml(item, activated, packageExpired, expired, isPackageActiveStatus, isWarrantyActive){
+  const template=document.getElementById("buttonTemplate");
+  const wrapper=document.createElement("div");
+  wrapper.innerHTML=template.innerHTML;
 
-const template=
-document.getElementById(
-"buttonTemplate"
-);
+  wrapper.querySelector(".btn-detail").href=`status-pesanan.html?inv=${item.invoice}`;
 
-const wrapper=
-document.createElement("div");
+  const buttonWa = wrapper.querySelector(".btn-wa");
+  if(buttonWa){
+    buttonWa.setAttribute("data-buyer-name", item.buyer_name || "");
+    buttonWa.setAttribute("data-buyer-phone", item.buyer_contact || "");
+    buttonWa.setAttribute("data-invoice", item.invoice || "");
+    buttonWa.setAttribute("data-product", item.title || "");
+    buttonWa.setAttribute("data-package", item.package || "");
+    buttonWa.setAttribute("data-activated", activated || "");
+    buttonWa.setAttribute("data-package-expired", packageExpired || "");
+    buttonWa.setAttribute("data-warranty-expired", expired || "");
+    buttonWa.setAttribute("data-package-active", isPackageActiveStatus);
+    buttonWa.setAttribute("data-warranty-active", isWarrantyActive);
+  }
 
-wrapper.innerHTML=
-template.innerHTML;
-
-wrapper
-.querySelector(".btn-detail")
-.href=
-`status-pesanan.html?inv=${item.invoice}`;
-
-return wrapper.innerHTML;
-
+  return wrapper.innerHTML;
 }
 
-function generateCardHtml(
-item,
-statusHtml,
-metaHtml,
-noteHtml,
-buttonHtml
-){
+function generateCardHtml(item, statusHtml, metaHtml, noteHtml, buttonHtml){
+  const template=document.getElementById("cardTemplate");
+  const wrapper=document.createElement("div");
+  wrapper.innerHTML=template.innerHTML;
 
-const template=
-document.getElementById(
-"cardTemplate"
-);
+  wrapper.querySelector(".card-image").src=item.image_url;
+  wrapper.querySelector(".card-image").alt=item.title;
 
-const wrapper=
-document.createElement("div");
+  const invoiceBadge = wrapper.querySelector(".card-invoice");
+  invoiceBadge.setAttribute("data-invoice", item.invoice);
 
-wrapper.innerHTML=
-template.innerHTML;
+  invoiceBadge.innerHTML=`<i class="fa-solid fa-receipt"></i> <span class="invoice-prefix">INV-</span> <span class="invoice-number">${item.invoice}</span>`;
 
-wrapper
-.querySelector(".card-image")
-.src=
-item.image_url;
+  wrapper.querySelector(".card-title").textContent=item.title;
+  wrapper.querySelector(".card-status").innerHTML=statusHtml;
+  wrapper.querySelector(".card-meta").innerHTML=metaHtml;
+  wrapper.querySelector(".card-note").innerHTML=noteHtml;
+  wrapper.querySelector(".card-button").innerHTML=buttonHtml;
 
-wrapper
-.querySelector(".card-image")
-.alt=
-item.title;
-
-// --- PERBAIKAN 1: Tambahkan attribute 'data-invoice' untuk menyimpan nomor invoice ---
-const invoiceBadge = wrapper.querySelector(".card-invoice");
-invoiceBadge.setAttribute("data-invoice", item.invoice);
-
-invoiceBadge.innerHTML=
-`
-<i class="fa-solid fa-receipt"></i>
-
-<span class="invoice-prefix">
-INV-
-</span>
-
-<span class="invoice-number">
-${item.invoice}
-</span>
-`;
-
-wrapper
-.querySelector(".card-title")
-.textContent=
-item.title;
-
-wrapper
-.querySelector(".card-status")
-.innerHTML=
-statusHtml;
-
-wrapper
-.querySelector(".card-meta")
-.innerHTML=
-metaHtml;
-
-wrapper
-.querySelector(".card-note")
-.innerHTML=
-noteHtml;
-
-wrapper
-.querySelector(".card-button")
-.innerHTML=
-buttonHtml;
-
-return wrapper.innerHTML;
-
+  return wrapper.innerHTML;
 }
 
 /* ============================= */
@@ -551,148 +261,89 @@ return wrapper.innerHTML;
 /* ============================= */
 
 function render(data){
- 
-if(data.length===0){
-renderEmpty();
-return;
-}
+  if(data.length===0){
+    renderEmpty();
+    return;
+  }
 
-clearWrapper();
+  clearWrapper();
 
-data.forEach(item=>{
+  data.forEach(item=>{
+    const now=new Date();
+    const activatedDate = parseIndoDate(item["activated_at"]);
 
-const now=new Date();
-const activatedDate = parseIndoDate(item["activated_at"]);
+    if(!activatedDate) return;
 
-if(!activatedDate) return;
+    const endDate=getEndDate(activatedDate, item.valid_until);
+    const packageEndDate=getEndDate(activatedDate, item.duration_package);
+      
+    const isPackageActiveStatus=isPackageActive(now, packageEndDate);
+    const isWarrantyActive=isPackageActive(now, endDate);
 
-const endDate=
-getEndDate(
-activatedDate,
-item.valid_until
-);
+    const{noteClass,noteTemplate}=getNoteData(isPackageActiveStatus, isWarrantyActive);
+    const statusData=getStatusData(isPackageActiveStatus, isWarrantyActive);
+      
+    const activated=formatIndoDate(activatedDate);
+    const expired=formatIndoDate(endDate);
+    const packageExpired=formatIndoDate(packageEndDate);
 
+    const metaData=getMetaData(item, activated, packageExpired, expired);
+      
+    const statusHtml=generateStatusHtml(statusData);
+    const metaHtml=generateMetaHtml(metaData);
+    const noteHtml=generateNoteHtml(noteClass, noteTemplate);
+    
+    /* FIX 3: Mengirim parameter tanggal dan status ke generator tombol */
+    const buttonHtml=generateButtonHtml(item, activated, packageExpired, expired, isPackageActiveStatus, isWarrantyActive);
 
-const packageEndDate=
-getEndDate(
-activatedDate,
-item.duration_package
-);
-  
-const isPackageActiveStatus=
-isPackageActive(
-now,
-packageEndDate 
-);
-
-const isWarrantyActive=
-isPackageActive(
-now,
-endDate
-);
-
-const{
-noteClass,
-noteTemplate
-}=getNoteData(
-isPackageActiveStatus,
-isWarrantyActive
-);
-
-const statusData=
-getStatusData(
-isPackageActiveStatus,
-isWarrantyActive
-);
-  
-const activated=
-formatIndoDate(
-activatedDate
-);
-
-const expired=
-formatIndoDate(
-endDate
-);
-
-const packageExpired=
-formatIndoDate(
-packageEndDate
-);
-
-const metaData=
-getMetaData(
-item,
-activated,
-packageExpired,
-expired
-);
-  
-const statusHtml=
-generateStatusHtml(statusData);
-  
-  
-const metaHtml=
-generateMetaHtml(
-metaData
-);
-
-const noteHtml=
-generateNoteHtml(
-noteClass,
-noteTemplate
-);
-
-const buttonHtml=
-generateButtonHtml(item);
-
-const cardHtml=
-generateCardHtml(
-item,
-statusHtml,
-metaHtml,
-noteHtml,
-buttonHtml
-);
-  
-appendCard(cardHtml);
-});
-
+    const cardHtml=generateCardHtml(item, statusHtml, metaHtml, noteHtml, buttonHtml);
+    appendCard(cardHtml);
+  });
 }
 
 /* ============================= */
-/* EVENT DELEGATION UNTUK TOAST */
+/* EVENT DELEGATION UNTUK TOAST & WHATSAPP */
 /* ============================= */
 
-// Menangkap semua klik di dalam #wrapper
 document.getElementById("wrapper").addEventListener("click", (e) => {
-  // Cari apakah elemen yang di-klik adalah .card-invoice atau bagian di dalamnya (ikon/text)
+  // A. Handler Salin Invoice
   const invoiceBadge = e.target.closest(".card-invoice");
-  if (!invoiceBadge) return;
+  if (invoiceBadge) {
+    const invoiceNum = invoiceBadge.getAttribute("data-invoice");
+    if (!invoiceNum) return;
 
-  // Ambil nomor invoice yang disimpan di data attribute sebelumnya
-  const invoiceNum = invoiceBadge.getAttribute("data-invoice");
-  if (!invoiceNum) return;
+    navigator.clipboard.writeText(invoiceNum)
+      .then(() => {
+        const toast = document.getElementById("copyToast");
+        const toastText = toast.querySelector(".copy-toast-text");
+        toastText.textContent = `Invoice INV-${invoiceNum} berhasil disalin`;
+        toast.classList.add("show");
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 2000);
+      })
+      .catch((err) => {
+        console.error("Gagal menyalin teks: ", err);
+      });
+    return;
+  }
 
-  // Salin ke Clipboard
-  navigator.clipboard.writeText(invoiceNum)
-    .then(() => {
-      // Ambil elemen toast dari HTML
-      const toast = document.getElementById("copyToast");
-      const toastText = toast.querySelector(".copy-toast-text");
-
-      // Ubah teks toast secara dinamis
-      toastText.textContent = `Invoice INV-${invoiceNum} berhasil disalin`;
-
-      // Tampilkan toast
-      toast.classList.add("show");
-
-      // Sembunyikan kembali setelah 2 detik
-      setTimeout(() => {
-        toast.classList.remove("show");
-      }, 2000);
-    })
-    .catch((err) => {
-      console.error("Gagal menyalin teks: ", err);
+  // FIX 4: Handler Klik Tombol WhatsApp secara Global (Event Delegation)
+  const buttonWa = e.target.closest(".btn-wa");
+  if (buttonWa) {
+    e.preventDefault();
+    
+    chatAdminTransaksi({
+      buyerName: buttonWa.getAttribute("data-buyer-name"),
+      buyerPhone: buttonWa.getAttribute("data-buyer-phone"),
+      invoice: buttonWa.getAttribute("data-invoice"),
+      product: buttonWa.getAttribute("data-product"),
+      package: buttonWa.getAttribute("data-package"),
+      activatedDate: buttonWa.getAttribute("data-activated"),
+      packageExpired: buttonWa.getAttribute("data-package-expired"),
+      warrantyExpired: buttonWa.getAttribute("data-warranty-expired"),
+      packageActive: buttonWa.getAttribute("data-package-active") === "true",
+      warrantyActive: buttonWa.getAttribute("data-warranty-active") === "true"
     });
+  }
 });
