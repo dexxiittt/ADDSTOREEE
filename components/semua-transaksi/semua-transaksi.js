@@ -371,7 +371,8 @@ e.preventDefault();
 
 chatAdminTransaksi({
 
-buyerName:item.buyer_name
+buyerName:item.buyer_name,
+buyerPhone:item.buyer_contact
 
 });
 
