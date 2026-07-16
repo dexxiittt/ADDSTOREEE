@@ -12,149 +12,72 @@ if (!invoice) {
 // TAMPILKAN LOADING CARD
 // =============================
 const wrapper = document.querySelector(".status-wrapper");
-
-const loadingCard =
-document.getElementById("loadingCard");
-
-const resultWrapper =
-document.getElementById("resultWrapper");
+const loadingCard = document.getElementById("loadingCard");
+const resultWrapper = document.getElementById("resultWrapper");
 
 // =============================
 // CARD 1 ELEMENT
 // =============================
-
-const packageCard =
-document.getElementById("packageCard");
-
-const packageImage =
-document.getElementById("packageImage");
-
-const packageBadge =
-document.getElementById("packageBadge");
-
-const productCategory =
-document.getElementById("productCategory");
-
-const productTitle =
-document.getElementById("productTitle");
-
-const packageNameText =
-document.getElementById("packageName");
+const packageCard = document.getElementById("packageCard");
+const packageImage = document.getElementById("packageImage");
+const packageBadge = document.getElementById("packageBadge");
+const productCategory = document.getElementById("productCategory");
+const productTitle = document.getElementById("productTitle");
+const packageNameText = document.getElementById("packageName");
 
 // =============================
 // CARD 2 ELEMENT
 // =============================
-
-const metaCard =
-document.getElementById("metaCard");
-
-const metaInvoice =
-document.getElementById("metaInvoice");
-
-const packageDuration =
-document.getElementById("packageDuration");
-
-const warrantyDuration =
-document.getElementById("warrantyDuration");
-
-const statusText =
-document.getElementById("statusText");
-
-const countdownBox =
-document.getElementById("countdownBox");
-
-const countdownTimer =
-document.getElementById("countdownTimer");
-
-const expiredBadge =
-document.getElementById("expiredBadge");
+const metaCard = document.getElementById("metaCard");
+const metaInvoice = document.getElementById("metaInvoice");
+const packageDuration = document.getElementById("packageDuration");
+const warrantyDuration = document.getElementById("warrantyDuration");
+const statusText = document.getElementById("statusText");
+const countdownBox = document.getElementById("countdownBox");
+const countdownTimer = document.getElementById("countdownTimer");
+const expiredBadge = document.getElementById("expiredBadge");
 
 // =============================
 // CARD 3 ELEMENT
 // =============================
-
-const detailCard =
-document.getElementById("detailCard");
-
-const packageActivatedDate =
-document.getElementById("packageActivatedDate");
-
-const packageValidUntil =
-document.getElementById("packageValidUntil");
-
-const warrantyValidUntil =
-document.getElementById("warrantyValidUntil");
-
-const priceInfo =
-document.getElementById("priceInfo");
-
-const oldPrice =
-document.getElementById("oldPrice");
-
-const finalPriceText =
-document.getElementById("finalPrice");
-
-const discountBadge =
-document.getElementById("discountBadge");
-
-const paymentMethod =
-document.getElementById("paymentMethod");
+const detailCard = document.getElementById("detailCard");
+const packageActivatedDate = document.getElementById("packageActivatedDate");
+const packageValidUntil = document.getElementById("packageValidUntil");
+const warrantyValidUntil = document.getElementById("warrantyValidUntil");
+const priceInfo = document.getElementById("priceInfo");
+const oldPrice = document.getElementById("oldPrice");
+const finalPriceText = document.getElementById("finalPrice");
+const discountBadge = document.getElementById("discountBadge");
+const paymentMethod = document.getElementById("paymentMethod");
 
 // =============================
 // CARD 4 ELEMENT
 // =============================
-
-const infoCard =
-document.getElementById("infoCard");
-
-const infoIcon =
-document.getElementById("infoIcon");
-
-const infoMore =
-document.getElementById("infoMore");
-
-const infoContent =
-document.getElementById("infoContent");
-
-const infoList =
-document.getElementById("infoList");
-
-const infoClose =
-document.getElementById("infoClose");
+const infoCard = document.getElementById("infoCard");
+const infoIcon = document.getElementById("infoIcon");
+const infoMore = document.getElementById("infoMore");
+const infoContent = document.getElementById("infoContent");
+const infoList = document.getElementById("infoList");
+const infoClose = document.getElementById("infoClose");
 
 // =============================
 // QUICK ACTION BUTTON
 // =============================
-
-const allTransactionBtn =
-document.getElementById("allTransactionBtn");
+const allTransactionBtn = document.getElementById("allTransactionBtn");
 
 // =============================
 // NOT FOUND ELEMENT
 // =============================
-
-const notFoundCard =
-document.getElementById("notFoundCard");
-
-const notFoundInvoice =
-document.getElementById("notFoundInvoice");
-
-const notFoundButton =
-document.getElementById("notFoundButton");
+const notFoundCard = document.getElementById("notFoundCard");
+const notFoundInvoice = document.getElementById("notFoundInvoice");
+const notFoundButton = document.getElementById("notFoundButton");
 
 resultWrapper.style.display = "none";
 
-const loadingText =
-document.getElementById("loadingText");
-
-const loadingTimer =
-document.getElementById("loadingTimer");
-
-const loadingTimerText =
-document.getElementById("loadingTimerText");
-
-const loadingInvoice =
-document.getElementById("loadingInvoice");
+const loadingText = document.getElementById("loadingText");
+const loadingTimer = document.getElementById("loadingTimer");
+const loadingTimerText = document.getElementById("loadingTimerText");
+const loadingInvoice = document.getElementById("loadingInvoice");
 
 loadingInvoice.textContent = invoice;
 
@@ -168,7 +91,7 @@ async function getServerTime() {
   const data = await res.json();
   return new Date(data.serverTime);
 }
-  
+
 // =============================
 // KONFIGURASI SHEET WARRANTY_DATA
 // =============================
@@ -180,46 +103,32 @@ const sheetURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=
 // KONFIGURASI SHEET PACKAGE_DETAIL
 // =============================
 const packageSheetName = "PACKAGE_DETAIL";
-const packageSheetURL =
-`https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${packageSheetName}`;
+const packageSheetURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${packageSheetName}`;
 
 // =============================
 // FETCH PACKAGE_DETAIL
 // =============================
-async function fetchPackageDetail(packageId){
+async function fetchPackageDetail(packageId) {
+  const res = await fetch(packageSheetURL);
+  const text = await res.text();
+  const json = JSON.parse(text.substr(47).slice(0, -2));
 
-const res = await fetch(packageSheetURL);
-const text = await res.text();
-const json =
-JSON.parse(text.substr(47).slice(0,-2));
+  const rows = json.table.rows;
+  const headers = json.table.cols.map(col => col.label.trim());
 
-const rows = json.table.rows;
-const headers =
-json.table.cols.map(col => col.label.trim());
+  for (const row of rows) {
+    if (!row.c) continue;
 
-for(const row of rows){
+    const rowData = {};
+    headers.forEach((header, index) => {
+      rowData[header] = row.c[index]?.v ?? "";
+    });
 
-if(!row.c) continue;
-
-const rowData = {};
-
-headers.forEach((header,index)=>{
-
-rowData[header] =
-row.c[index]?.v ?? "";
-
-});
-
-if(String(rowData.package_id) === String(packageId)){
-
-return rowData;
-
-}
-
-}
-
-return null;
-
+    if (String(rowData.package_id) === String(packageId)) {
+      return rowData;
+    }
+  }
+  return null;
 }
 
 // =============================
@@ -236,504 +145,352 @@ async function fetchWarrantyData() {
 
     rows.forEach(row => {
       if (!row.c) return;
-
       const invoiceCell = row.c[0]?.v;
       if (String(invoiceCell) === String(invoice)) {
         matchedData = row;
       }
     });
 
-    
-// =============================
-// KALAU DATA DITEMUKAN
-// =============================
-    
-if (matchedData) {
+    // =============================
+    // KALAU DATA DITEMUKAN
+    // =============================
+    if (matchedData) {
+      wrapper.style.display = "block";
+      loadingCard.style.display = "none";
+      resultWrapper.style.display = "block";
 
-wrapper.style.display = "block";
-loadingCard.style.display = "none";
-resultWrapper.style.display = "block";
-
-const headers = json.table.cols.map(col => col.label.trim());
-
-const rowData = {};
-headers.forEach((header, index) => {
-  rowData[header.trim()] = matchedData.c[index]?.v ?? "";
-});
-
-metaInvoice.textContent = invoice;
-
-const product_id  = rowData.product_id || "-";
-const title       = rowData.title || "-";
-
-const buyerContact =
-rowData.buyer_contact || "";
-
-if(allTransactionBtn && !buyerContact){
-
-allTransactionBtn.style.opacity = ".55";
-
-allTransactionBtn.style.pointerEvents = "none";
-
-}
-
-const package_id =
-rowData.package_id || "";
-
-const packageData =
-await fetchPackageDetail(package_id);
-
-console.log("PACKAGE DATA:", packageData);
-
-productTitle.textContent = title;
+      const headers = json.table.cols.map(col => col.label.trim());
+      const rowData = {};
       
-const packageName = rowData.package || "-";
-
-packageNameText.textContent = packageName;
-
-const image_url = rowData.image_url || "";
-
-packageImage.src =
-image_url ||
-"https://dummyimage.com/800x400/111827/ffffff&text=Package";
-
-packageImage.alt = title;
-      
-let badge = "Produk Premium";
-const id = product_id.toLowerCase();
-
-if (id.includes("apk")) {
-  badge = "APK Premium";
-} else if (id.includes("sosmed")) {
-  badge = "Layanan Sosial Media";
-} else if (id.includes("topup")) {
-  badge = "Top Up Game";
-}     
-
-packageBadge.textContent = badge;
-      
-const notesRaw = rowData.notes || "";
-
-const status = rowData.status || "-";
-
-statusText.textContent = status;
-
-let informasiList = [];
-
-if (notesRaw && notesRaw.includes("|")) {
-  informasiList = notesRaw
-    .split("|")
-    .map(item => item.trim())
-    .filter(item => item.length > 0);
-} else if (notesRaw) {
-  informasiList = [notesRaw.trim()];
-} else {
-  informasiList = [
-    "Garansi berlaku sesuai durasi dan tanggal aktivasi yang tercatat di sistem.",
-    "Timer merupakan indikator masa layanan dari penjual.",
-    "Garansi tidak dapat diperpanjang sebelum masa aktif sebelumnya berakhir."
-  ];
-}
-      
-// =============================
-// FORMAT HARGA (SAMA SEPERTI PACKAGE)
-// =============================
-
-function parseDiscount(val) {
-  if (!val) return 0;
-
-  // kalau sudah angka kecil (misal 0.2223)
-  if (typeof val === "number") {
-    return val < 1 ? val * 100 : val;
-  }
-
-  const clean = String(val)
-    .replace('%', '')
-    .replace(',', '.')
-    .trim();
-
-  const num = Number(clean) || 0;
-
-  return num < 1 ? num * 100 : num;
-}
-
-const price = Number(rowData.price) || 0;
-const discount = parseDiscount(rowData.discount);
-
-const finalPrice = discount > 0
-  ? Math.round(price - (price * discount / 100))
-  : price;
-  
-oldPrice.textContent =
-`Rp${price.toLocaleString("id-ID")}`;
-  
-finalPriceText.textContent =
-`Rp${finalPrice.toLocaleString("id-ID")}`;
-
-if (discount > 0) {
-
-  discountBadge.textContent =
-  `-${discount.toFixed(2).replace(".", ",")}%`;
-
-} else {
-
-  discountBadge.style.display = "none";
-
-}
-  
-const durationDays = parseInt(rowData.duration_days) || 0;
-
-const activatedAtRaw = rowData.activated_at || "";
-
-// =============================
-// GENERATE INFORMASI HTML
-// =============================
-
-infoList.innerHTML = informasiList
-  .map(item => `
-<li>
-   <i class="fa-solid fa-circle-dot"></i>
-  <span>${item}</span>
-</li>
-`)
-  .join("");
-
-
-// =============================
-// FORMAT TANGGAL INDONESIA
-// =============================
-function formatIndoDate(date){
-
-return date.toLocaleDateString("id-ID",{
-day:"numeric",
-month:"long",
-year:"numeric"
-});
-
-}
-// =============================
-// PACKAGE DURATION HELPER
-// =============================
-function addPackageDuration(date, duration){
-
-  const result = new Date(date);
-  const value = parseInt(duration) || 0;
-  const text = String(duration).toLowerCase();
-
-  if (text.includes("bulan")) {
-    
-    result.setMonth(result.getMonth() + value);
-
-  } else if (text.includes("tahun")) {
-    
-    result.setFullYear(result.getFullYear() + value);
-
-  } else {
-    
-    // DEFAULT: Jika mengandung kata "hari" ATAU hanya berupa angka murni, dimasukkan ke hitungan hari
-    result.setDate(result.getDate() + value);
-
-  }
-
-  return result;
-}
-
-  
-function parseActivatedDate(value) {
-
-  if (!value) return null;
-
-  // Format: Date(2026,6,10,21,0,0)
-  if (
-    typeof value === "string" &&
-    value.startsWith("Date(")
-  ) {
-
-    const parts = value
-      .replace("Date(", "")
-      .replace(")", "")
-      .split(",")
-      .map(Number);
-
-    return new Date(
-      parts[0],
-      parts[1],
-      parts[2],
-      parts[3] || 0,
-      parts[4] || 0,
-      parts[5] || 0
-    );
-
-  }
-
-  // Object Date dari Google Sheets
-  if (typeof value === "object") {
-    return new Date(value);
-  }
-
-  // String biasa
-const date = new Date(value);
-
-if (!isNaN(date.getTime())) {
-  return date;
-}
-
-const [datePart, timePart = "00:00:00"] =
-String(value).split(" ");
-
-const [day, month, year] =
-datePart.split("/");
-
-return new Date(
-  Number(year),
-  Number(month) - 1,
-  Number(day),
-  ...timePart.split(":").map(Number)
-);
-
-}
-  
-// =============================
-// VALID UNTIL SYSTEM (PREMIUM VERSION) - FIXED DURATION_PACKAGE
-// =============================
-
-let berlakuSampai = "-";
-
-if (activatedAtRaw) {
-
-  const activatedDate = parseActivatedDate(activatedAtRaw);
-
-  if (!activatedDate || isNaN(activatedDate.getTime())) {
-    return;
-  }
-
-  packageActivatedDate.textContent = formatIndoDate(activatedDate);
-
-  // SEKARANG: Langsung ambil data dari kolom duration_package di WARRANTY_DATA
-  const durasiPaket = rowData.duration_package || "0";
-
-  const packageExpiryDate = addPackageDuration(
-    activatedDate,
-    durasiPaket
-  );
-
-  const packageValidDate = formatIndoDate(packageExpiryDate);
-  packageValidUntil.textContent = packageValidDate;
-    
-  const expiryDate = new Date(activatedDate);
-  expiryDate.setDate(expiryDate.getDate() + durationDays);
-  berlakuSampai = formatIndoDate(expiryDate);
-}
-
-warrantyValidUntil.textContent = berlakuSampai;
-
-  
-const activated_at = rowData[headers.find(h =>
-  h.toLowerCase().includes("activated")
-)] || "";
-
-const metode = (rowData.metode_pembayaran || "lynk")
-.toLowerCase()
-.trim();
-  
-let namaMetode = "Lynk ID";
-let deskripsiMetode = "Checkout diproses oleh Lynk ID";
-
-switch (metode) {
-
-  case "qr":
-  case "qris":
-    namaMetode = "QRIS";
-    deskripsiMetode = "Checkout melalui QRIS";
-    break;
-
-  case "dana":
-    namaMetode = "DANA";
-    deskripsiMetode = "Checkout melalui DANA";
-    break;
-
-  case "gopay":
-    namaMetode = "GoPay";
-    deskripsiMetode = "Checkout melalui GoPay";
-    break;
-
-  case "ovo":
-    namaMetode = "OVO";
-    deskripsiMetode = "Checkout melalui OVO";
-    break;
-
-  case "shopeepay":
-    namaMetode = "ShopeePay";
-    deskripsiMetode = "Checkout melalui ShopeePay";
-    break;
-
-}
-
-const metodePembayaran = `
-${namaMetode} Verified
-<div style="opacity:.6;font-size:12px;margin-top:4px;">
-${deskripsiMetode}
-</div>
-`;
-
-paymentMethod.innerHTML = metodePembayaran;
-
-
-// =============================
-// PERBAIKAN: DEKLARASIKAN VARIABEL DURATION
-// =============================
-let durationDisplay = "-"; // Tambahkan 'let' agar tidak terjadi ReferenceError
-
-if (durationDays >= 30) {
-  const months = Math.floor(durationDays / 30);
-  const remainingDays = durationDays % 30;
-
-  if (remainingDays === 0) {
-    durationDisplay = `${months} Bulan`;
-  } else {
-    durationDisplay = `${months} Bulan (${remainingDays} Hari)`;
-  }
-} else if (durationDays > 0) {
-  durationDisplay = `${durationDays} Hari`;
-}
-
-// Mengambil durasi paket langsung dari kolom duration_package
-let packageDurationDays = parseInt(rowData.duration_package) || 0;
-packageDuration.textContent = packageDurationDays > 0 ? `${packageDurationDays} Hari` : "-";
-
-
-warrantyDuration.textContent =
-durationDisplay;
-
-if(allTransactionBtn){
-
-allTransactionBtn.addEventListener("click",(e)=>{
-
-e.preventDefault();
-
-if(!buyerContact){
-
-console.warn("Buyer contact tidak tersedia.");
-
-return;
-
-}
-
-window.location.href =
-`semua-transaksi.html?buyer=${encodeURIComponent(buyerContact)}`;
-
-});
-
-}
-
-initFadeUp();
-
-// ==========================
-// JIKA SUDAH ACTIVE (COUNTDOWN SYSTEM)
-// ==========================
-if (durationDays > 0) {
-
-  if (status.toLowerCase() !== "active") {
-    statusText.style.color = "#9ca3af";
-    countdownTimer.innerHTML = `${durationDays} Hari 00:00:00`;
-    return;
-  }
-
-  // Gunakan activatedAtRaw yang sudah terbukti berhasil di-parse di atas
-  const activatedDate = parseActivatedDate(activatedAtRaw);
-
-  if (!activatedDate || isNaN(activatedDate.getTime())) {
-    console.log("Gagal parse tanggal:", activatedAtRaw);
-    return;
-  }
-
-  // Hitung tanggal expired
-  const validUntilDate = new Date(activatedDate);
-  validUntilDate.setDate(validUntilDate.getDate() + durationDays);
-  const expiryTimestamp = validUntilDate.getTime();
-    
-  async function startCountdown() {
-    let serverNow;
-    const clientStartTime = Date.now();
-
-    // AMAN FROM CRASH: Menggunakan try-catch untuk mengatasi API macet
-    try {
-      serverNow = await getServerTime();
-    } catch (error) {
-      console.warn("Gagal mengambil waktu server. Menggunakan waktu lokal sebagai cadangan.", error);
-      serverNow = new Date(); // Fallback ke waktu lokal device jika API bermasalah
-    }
-
-    function updateCountdown() {
-      const now = new Date(
-        serverNow.getTime() + (Date.now() - clientStartTime)
-      );
-
-      const diff = expiryTimestamp - now.getTime();
-      
-      countdownBox.style.display = "block";
-      expiredBadge.style.display = "none";
-
-      if (diff <= 0) {
-        countdownTimer.innerHTML = "";
-        statusText.innerHTML = "Expired";
-        statusText.style.color = "#ef4444";
-        countdownBox.style.display = "none";
-        expiredBadge.style.display = "block";
-        return;
+      headers.forEach((header, index) => {
+        rowData[header.trim()] = matchedData.c[index]?.v ?? "";
+      });
+
+      metaInvoice.textContent = invoice;
+
+      const product_id = rowData.product_id || "-";
+      const title = rowData.title || "-";
+      const buyerContact = rowData.buyer_contact || "";
+
+      if (allTransactionBtn && !buyerContact) {
+        allTransactionBtn.style.opacity = ".55";
+        allTransactionBtn.style.pointerEvents = "none";
       }
 
-      const days = Math.floor(diff / 86400000);
-      const hours = Math.floor((diff % 86400000) / 3600000);
-      const minutes = Math.floor((diff % 3600000) / 60000);
-      const seconds = Math.floor((diff % 60000) / 1000);
-      
-      countdownTimer.innerHTML = `
-        <div class="countdown-days">${days} Hari</div>
-        <div class="countdown-time">
-          ${hours.toString().padStart(2,"0")}:${minutes.toString().padStart(2,"0")}:${seconds.toString().padStart(2,"0")}
+      const package_id = rowData.package_id || "";
+      const packageData = await fetchPackageDetail(package_id);
+      console.log("PACKAGE DATA:", packageData);
+
+      productTitle.textContent = title;
+      const packageName = rowData.package || "-";
+      packageNameText.textContent = packageName;
+
+      const image_url = rowData.image_url || "";
+      packageImage.src = image_url || "https://dummyimage.com/800x400/111827/ffffff&text=Package";
+      packageImage.alt = title;
+
+      let badge = "Produk Premium";
+      const id = product_id.toLowerCase();
+
+      if (id.includes("apk")) {
+        badge = "APK Premium";
+      } else if (id.includes("sosmed")) {
+        badge = "Layanan Sosial Media";
+      } else if (id.includes("topup")) {
+        badge = "Top Up Game";
+      }
+
+      packageBadge.textContent = badge;
+
+      const notesRaw = rowData.notes || "";
+      const status = rowData.status || "-";
+      statusText.textContent = status;
+
+      let informasiList = [];
+
+      if (notesRaw && notesRaw.includes("|")) {
+        informasiList = notesRaw
+          .split("|")
+          .map(item => item.trim())
+          .filter(item => item.length > 0);
+      } else if (notesRaw) {
+        informasiList = [notesRaw.trim()];
+      } else {
+        informasiList = [
+          "Garansi berlaku sesuai durasi dan tanggal aktivasi yang tercatat di sistem.",
+          "Timer merupakan indikator masa layanan dari penjual.",
+          "Garansi tidak dapat diperpanjang sebelum masa aktif sebelumnya berakhir."
+        ];
+      }
+
+      // =============================
+      // FORMAT HARGA (SAMA SEPERTI PACKAGE)
+      // =============================
+      function parseDiscount(val) {
+        if (!val) return 0;
+        if (typeof val === "number") {
+          return val < 1 ? val * 100 : val;
+        }
+        const clean = String(val).replace('%', '').replace(',', '.').trim();
+        const num = Number(clean) || 0;
+        return num < 1 ? num * 100 : num;
+      }
+
+      const price = Number(rowData.price) || 0;
+      const discount = parseDiscount(rowData.discount);
+      const finalPrice = discount > 0 ? Math.round(price - (price * discount / 100)) : price;
+
+      oldPrice.textContent = `Rp${price.toLocaleString("id-ID")}`;
+      finalPriceText.textContent = `Rp${finalPrice.toLocaleString("id-ID")}`;
+
+      if (discount > 0) {
+        discountBadge.textContent = `-${discount.toFixed(2).replace(".", ",")}%`;
+      } else {
+        discountBadge.style.display = "none";
+      }
+
+      const durationDays = parseInt(rowData.duration_days) || 0;
+      const activatedAtRaw = rowData.activated_at || "";
+
+      // =============================
+      // GENERATE INFORMASI HTML
+      // =============================
+      infoList.innerHTML = informasiList
+        .map(item => `
+          <li>
+            <i class="fa-solid fa-circle-dot"></i>
+            <span>${item}</span>
+          </li>
+        `)
+        .join("");
+
+      // =============================
+      // FORMAT TANGGAL INDONESIA
+      // =============================
+      function formatIndoDate(date) {
+        return date.toLocaleDateString("id-ID", {
+          day: "numeric",
+          month: "long",
+          year: "numeric"
+        });
+      }
+
+      // =============================
+      // PACKAGE DURATION HELPER
+      // =============================
+      function addPackageDuration(date, duration) {
+        const result = new Date(date);
+        const value = parseInt(duration) || 0;
+        const text = String(duration).toLowerCase();
+
+        if (text.includes("bulan")) {
+          result.setMonth(result.getMonth() + value);
+        } else if (text.includes("tahun")) {
+          result.setFullYear(result.getFullYear() + value);
+        } else {
+          result.setDate(result.getDate() + value);
+        }
+        return result;
+      }
+
+      function parseActivatedDate(value) {
+        if (!value) return null;
+        if (typeof value === "string" && value.startsWith("Date(")) {
+          const parts = value.replace("Date(", "").replace(")", "").split(",").map(Number);
+          return new Date(parts[0], parts[1], parts[2], parts[3] || 0, parts[4] || 0, parts[5] || 0);
+        }
+        if (typeof value === "object") {
+          return new Date(value);
+        }
+
+        const date = new Date(value);
+        if (!isNaN(date.getTime())) {
+          return date;
+        }
+
+        const [datePart, timePart = "00:00:00"] = String(value).split(" ");
+        const [day, month, year] = datePart.split("/");
+        return new Date(Number(year), Number(month) - 1, Number(day), ...timePart.split(":").map(Number));
+      }
+
+      // =============================
+      // VALID UNTIL SYSTEM (PREMIUM VERSION) - FIXED DURATION_PACKAGE
+      // =============================
+      let berlakuSampai = "-";
+
+      if (activatedAtRaw) {
+        const activatedDate = parseActivatedDate(activatedAtRaw);
+        if (!activatedDate || isNaN(activatedDate.getTime())) {
+          return;
+        }
+
+        packageActivatedDate.textContent = formatIndoDate(activatedDate);
+        const durasiPaket = rowData.duration_package || "0";
+        const packageExpiryDate = addPackageDuration(activatedDate, durasiPaket);
+        const packageValidDate = formatIndoDate(packageExpiryDate);
+        packageValidUntil.textContent = packageValidDate;
+
+        const expiryDate = new Date(activatedDate);
+        expiryDate.setDate(expiryDate.getDate() + durationDays);
+        berlakuSampai = formatIndoDate(expiryDate);
+      }
+
+      warrantyValidUntil.textContent = berlakuSampai;
+
+      const activated_at = rowData[headers.find(h => h.toLowerCase().includes("activated"))] || "";
+      const metode = (rowData.metode_pembayaran || "lynk").toLowerCase().trim();
+
+      let namaMetode = "Lynk ID";
+      let deskripsiMetode = "Checkout diproses oleh Lynk ID";
+
+      switch (metode) {
+        case "qr":
+        case "qris":
+          namaMetode = "QRIS";
+          deskripsiMetode = "Checkout melalui QRIS";
+          break;
+        case "dana":
+          namaMetode = "DANA";
+          deskripsiMetode = "Checkout melalui DANA";
+          break;
+        case "gopay":
+          namaMetode = "GoPay";
+          deskripsiMetode = "Checkout melalui GoPay";
+          break;
+        case "ovo":
+          namaMetode = "OVO";
+          deskripsiMetode = "Checkout melalui OVO";
+          break;
+        case "shopeepay":
+          namaMetode = "ShopeePay";
+          deskripsiMetode = "Checkout melalui ShopeePay";
+          break;
+      }
+
+      const metodePembayaran = `
+        ${namaMetode} Verified
+        <div style="opacity:.6;font-size:12px;margin-top:4px;">
+          ${deskripsiMetode}
         </div>
       `;
+      paymentMethod.innerHTML = metodePembayaran;
 
-      // Pengaturan warna status berdasarkan sisa hari
-      if (days > 7) {
-        statusText.style.color = "#22c55e"; // Hijau
-      } else if (days >= 3) {
-        statusText.style.color = "#f97316"; // Jingga
-      } else {
-        statusText.style.color = "#ef4444"; // Merah
+      // =============================
+      // PERBAIKAN: DEKLARASIKAN VARIABEL DURATION
+      // =============================
+      let durationDisplay = "-";
+
+      if (durationDays >= 30) {
+        const months = Math.floor(durationDays / 30);
+        const remainingDays = durationDays % 30;
+        durationDisplay = remainingDays === 0 ? `${months} Bulan` : `${months} Bulan (${remainingDays} Hari)`;
+      } else if (durationDays > 0) {
+        durationDisplay = `${durationDays} Hari`;
       }
 
-      // Animasi Pulse
-      countdownTimer.classList.remove("pulse-soft", "pulse-strong");
-      if (seconds !== 0) {
-        countdownTimer.classList.add("pulse-soft");
-      } else {
-        countdownTimer.classList.add("pulse-strong");
+      let packageDurationDays = parseInt(rowData.duration_package) || 0;
+      packageDuration.textContent = packageDurationDays > 0 ? `${packageDurationDays} Hari` : "-";
+      warrantyDuration.textContent = durationDisplay;
+
+      if (allTransactionBtn) {
+        allTransactionBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          if (!buyerContact) {
+            console.warn("Buyer contact tidak tersedia.");
+            return;
+          }
+          window.location.href = `semua-transaksi.html?buyer=${encodeURIComponent(buyerContact)}`;
+        });
       }
+
+      initFadeUp();
+
+      // ==========================
+      // JIKA SUDAH ACTIVE (COUNTDOWN SYSTEM)
+      // ==========================
+      if (durationDays > 0) {
+        if (status.toLowerCase() !== "active") {
+          statusText.style.color = "#9ca3af";
+          countdownTimer.innerHTML = `${durationDays} Hari 00:00:00`;
+          return;
+        }
+
+        const activatedDate = parseActivatedDate(activatedAtRaw);
+        if (!activatedDate || isNaN(activatedDate.getTime())) {
+          console.log("Gagal parse tanggal:", activatedAtRaw);
+          return;
+        }
+
+        const validUntilDate = new Date(activatedDate);
+        validUntilDate.setDate(validUntilDate.getDate() + durationDays);
+        const expiryTimestamp = validUntilDate.getTime();
+
+        async function startCountdown() {
+          let serverNow;
+          const clientStartTime = Date.now();
+
+          try {
+            serverNow = await getServerTime();
+          } catch (error) {
+            console.warn("Gagal mengambil waktu server. Menggunakan waktu lokal sebagai cadangan.", error);
+            serverNow = new Date();
+          }
+
+          function updateCountdown() {
+            const now = new Date(serverNow.getTime() + (Date.now() - clientStartTime));
+            const diff = expiryTimestamp - now.getTime();
+
+            countdownBox.style.display = "block";
+            expiredBadge.style.display = "none";
+
+            if (diff <= 0) {
+              countdownTimer.innerHTML = "";
+              statusText.innerHTML = "Expired";
+              statusText.style.color = "#ef4444";
+              countdownBox.style.display = "none";
+              expiredBadge.style.display = "block";
+              return;
+            }
+
+            const days = Math.floor(diff / 86400000);
+            const hours = Math.floor((diff % 86400000) / 3600000);
+            const minutes = Math.floor((diff % 3600000) / 60000);
+            const seconds = Math.floor((diff % 60000) / 1000);
+
+            countdownTimer.innerHTML = `
+              <div class="countdown-days">${days} Hari</div>
+              <div class="countdown-time">
+                ${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}
+              </div>
+            `;
+
+            if (days > 7) {
+              statusText.style.color = "#22c55e";
+            } else if (days >= 3) {
+              statusText.style.color = "#f97316";
+            } else {
+              statusText.style.color = "#ef4444";
+            }
+
+            countdownTimer.classList.remove("pulse-soft", "pulse-strong");
+            if (seconds !== 0) {
+              countdownTimer.classList.add("pulse-soft");
+            } else {
+              countdownTimer.classList.add("pulse-strong");
+            }
+          }
+
+          updateCountdown();
+          setInterval(updateCountdown, 1000);
+        }
+        startCountdown();
+      }
+    } else {
+      notFoundInvoice.textContent = invoice;
+      loadingCard.style.display = "none";
+      resultWrapper.style.display = "none";
+      notFoundCard.style.display = "block";
     }
-
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-  }
-
-  startCountdown();
-}
-
-      } else {
-
-notFoundInvoice.textContent = invoice;
-
-loadingCard.style.display = "none";
-
-resultWrapper.style.display = "block";
-
-resultWrapper.style.display = "none";
-
-notFoundCard.style.display = "block";
-  
-}
-
   } catch (err) {
     console.error("Error ambil warranty_data:", err);
   }
@@ -742,58 +499,41 @@ notFoundCard.style.display = "block";
 // =============================
 // 10 MENIT WAIT SYSTEM (FINAL FIX)
 // =============================
-
 const WAIT_DURATION = 1 * 60 * 1000;
 const storageKey = "invoice_wait_" + invoice;
-
 const storedValue = localStorage.getItem(storageKey);
 
 if (storedValue === "DONE") {
-
-  // Sembunyikan timer & teks loading
   const timerEl = document.getElementById("loadingTimer");
   const waitText = timerEl?.nextElementSibling;
 
   if (timerEl) timerEl.style.display = "none";
   if (waitText) waitText.style.display = "none";
 
-  // Langsung ambil status
   fetchWarrantyData();
-
 } else {
-
   let startTime;
-
   if (!storedValue) {
     startTime = Date.now();
     localStorage.setItem(storageKey, startTime);
   } else {
     startTime = parseInt(storedValue);
   }
-
   startWaitingTimer(startTime);
 }
 
 function startWaitingTimer(startTime) {
-
   const timerEl = document.getElementById("loadingTimer");
   const waitText = timerEl?.nextElementSibling;
 
   function update() {
-
     const elapsed = Date.now() - startTime;
     const remaining = WAIT_DURATION - elapsed;
 
     if (remaining <= 0) {
-
-      // Tandai selesai permanen
       localStorage.setItem(storageKey, "DONE");
-
-      // Sembunyikan timer & teks
       if (timerEl) timerEl.style.display = "none";
       if (waitText) waitText.style.display = "none";
-
-      // Ambil status pesanan
       fetchWarrantyData();
       return;
     }
@@ -802,11 +542,9 @@ function startWaitingTimer(startTime) {
     const seconds = Math.floor((remaining % 60000) / 1000);
 
     if (loadingTimerText) {
-  loadingTimerText.textContent =
-    `${minutes.toString().padStart(2,"0")}:${seconds.toString().padStart(2,"0")}`;
-}
+      loadingTimerText.textContent = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+    }
   }
-
   update();
   setInterval(update, 1000);
 }
@@ -814,26 +552,18 @@ function startWaitingTimer(startTime) {
 // =============================
 // LOADING DOT ANIMATION
 // =============================
-
 if (loadingText) {
-
   let dotCount = 0;
-
   setInterval(() => {
-    dotCount = (dotCount + 1) % 4; // 0–3
-
+    dotCount = (dotCount + 1) % 4;
     let dots = ".".repeat(dotCount);
-
     loadingText.innerHTML = "Memuat Data" + dots;
-
   }, 500);
-
 }
 
 // =============================
 // GLOBAL FADE-UP OBSERVER
 // =============================
-
 const fadeObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -846,23 +576,17 @@ const fadeObserver = new IntersectionObserver((entries) => {
 });
 
 function initFadeUp() {
-  
   const elements = document.querySelectorAll(".fade-up");
-
   elements.forEach((el, index) => {
-    el.style.transitionDelay = `${index * 100}ms`; // stagger ringan
+    el.style.transitionDelay = `${index * 100}ms`;
     fadeObserver.observe(el);
   });
 }
 
 if (notFoundButton) {
-
   notFoundButton.addEventListener("click", () => {
-
     window.location.href = "invoice.html";
-
   });
-
 }
 
 // =============================
@@ -871,37 +595,20 @@ if (notFoundButton) {
 if (infoMore) {
   infoMore.addEventListener("click", (e) => {
     e.preventDefault();
-    
-    // 1. Tambahkan class active ke kartu & ikon (mengaktifkan style ungu di CSS)
     infoCard.classList.add("active");
     if (infoIcon) infoIcon.classList.add("active");
-    
-    // 2. Memicu animasi transisi dengan menambahkan class 'open'
-    if (infoContent) {
-      infoContent.classList.add("open");
-    }
-    
-    // 3. Atur visibilitas tombol kontrol
+    if (infoContent) infoContent.classList.add("open");
     if (infoClose) infoClose.style.display = "block";
-    infoMore.style.display = "none"; 
+    infoMore.style.display = "none";
   });
 }
 
 if (infoClose) {
   infoClose.addEventListener("click", () => {
-    
-    // 1. Kembalikan warna kartu & ikon ke semula
     infoCard.classList.remove("active");
     if (infoIcon) infoIcon.classList.remove("active");
-    
-    // 2. Hapus class 'open' untuk menutup kembali secara smooth
-    if (infoContent) {
-      infoContent.classList.remove("open");
-    }
-    
-    // 3. Kembalikan visibilitas tombol kontrol (Sudah di-fix dari double .style)
+    if (infoContent) infoContent.classList.remove("open");
     infoClose.style.display = "none";
     if (infoMore) infoMore.style.display = "block";
   });
 }
-
