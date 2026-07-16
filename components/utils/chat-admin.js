@@ -1,62 +1,29 @@
 const ADMIN_NUMBER = "6285881500868";
 
 function openWhatsApp(message){
-
-window.open(
-
-`https://wa.me/${ADMIN_NUMBER}?text=${encodeURIComponent(message)}`,
-
-"_blank"
-
-);
-
+  window.open(
+    `https://wa.me/${ADMIN_NUMBER}?text=${encodeURIComponent(message)}`,
+    "_blank"
+  );
 }
 
 function chatAdminTransaksi(data){
+  const packageStatus = data.packageActive ? "Aktif ✅" : "Tidak Aktif ❌";
+  const warrantyStatus = data.warrantyActive ? "Aktif ✅" : "Tidak Aktif ❌";
 
-const packageStatus =
-data.packageActive
-? "Aktif ✅"
-: "Tidak Aktif ❌";
+  let messageText = "";
 
-const warrantyStatus =
-data.warrantyActive
-? "Aktif ✅"
-: "Tidak Aktif ❌";
+  if(data.packageActive && data.warrantyActive){
+    messageText = "Halo admin, paket saya sedang mengalami kendala, bisa tolong bantu saya?";
+  }
+  else if(data.packageActive && !data.warrantyActive){
+    messageText = "Halo admin, paket saya sedang mengalami kendala, apakah masih dalam cakupan garansi?";
+  }
+  else{
+    messageText = "Saya ingin memesan paket yang sama, bisa tolong bantu saya?";
+  }
 
-let messageText = "";
-
-// Kondisi 1
-if(
-data.packageActive &&
-data.warrantyActive
-){
-
-messageText =
-"Halo admin, paket saya sedang mengalami kendala, bisa tolong bantu saya?";
-
-}
-
-// Kondisi 2
-else if(
-data.packageActive &&
-!data.warrantyActive
-){
-
-messageText =
-"Halo admin, paket saya sedang mengalami kendala, apakah masih dalam cakupan garansi?";
-
-}
-
-// Kondisi 3
-else{
-
-messageText =
-"Saya ingin memesan paket yang sama, bisa tolong bantu saya?";
-
-}
-
-const message = `🙌 Halo admin, saya ingin meminta bantuan.
+  const message = `🙌 Halo admin, saya ingin meminta bantuan.
 
 👤 Data Pembeli
 
@@ -81,6 +48,8 @@ Nomor : ${data.buyerPhone}
 
 ${messageText}`;
 
-console.log(message);
-
+  console.log(message);
+  
+  /* FIX BONUS: Panggil fungsi ini agar chat terbuka otomatis di tab baru */
+  openWhatsApp(message);
 }
