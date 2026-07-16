@@ -71,7 +71,7 @@ async function loadFromSheet() {
     const invoiceID = params.get("invoice");
 
     if (!invoiceID) {
-      alert("Invoice tidak ditemukan ❌");
+      showToast("Invoice tidak ditemukan ❌", "fa-circle-xmark");
       return;
     }
 
@@ -82,8 +82,14 @@ async function loadFromSheet() {
     // CARI INVOICE
     const found = data.find(x => x.invoice == invoiceID);
     if (!found) {
-      alert("Invoice tidak ditemukan ❌");
-      return;
+      // Cek apakah invoice ini milik transaksi yang baru saja dibuat di browser ini
+      const localInvoice = localStorage.getItem("invoiceID");
+      if (localInvoice && String(localInvoice).trim() === String(invoiceID).trim()) {
+        showToast("Pesanan sudah dibuat ⚡", "fa-circle-check");
+      } else {
+        showToast("Invoice tidak terdaftar atau telah kedaluwarsa ❌", "fa-circle-xmark");
+      }
+      return; // Stop execution tanpa error keras, UI tetap pakai data local (pending)
     }
 
     // FETCH STATUS_PAYMENT
@@ -151,8 +157,7 @@ async function loadFromSheet() {
 
     renderInvoice(found.invoice, waktu);
   } catch (err) {
-    alert(err.message);
-    console.error(err);
+    console.warn("Gagal sinkronisasi dengan Google Sheet:", err);
   }
 }
 
@@ -329,3 +334,28 @@ function showCopyToast() {
     toast.classList.remove("show");
   }, 2000);
 }
+
+// FUNGSI TOAST CUSTOM UNTUK NOTIFIKASI ELEGAN
+function showToast(message, iconClass = "fa-circle-check") {
+  const toast = document.getElementById("customDynamicToast");
+  const msgEl = document.getElementById("toastMessage");
+  const iconEl = document.getElementById("toastIcon");
+
+  if (!toast || !msgEl || !iconEl) return;
+
+  // Update teks dan ikon secara dinamis
+  msgEl.innerText = message;
+  iconEl.className = `fa-solid ${iconClass}`;
+
+  // Atur warna ikon (Hijau untuk sukses, Merah untuk gagal/warning)
+  iconEl.style.color = iconClass.includes("check") ? "#4ade80" : "#f87171";
+
+  // Munculkan toast dengan menambahkan class "show"
+  toast.classList.add("show");
+
+  // Sembunyikan otomatis setelah 3.5 detik
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 3500);
+}
+
