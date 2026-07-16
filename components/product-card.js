@@ -1,7 +1,6 @@
 /* ===== HELPER FUNCTIONS ===== */
 
 function garBadge(i) {
-
   const noGar = String(i.no_gar).toLowerCase();
   const until = i.until_gar ? String(i.until_gar) : "";
 
@@ -12,7 +11,6 @@ function garBadge(i) {
 
   // Ada garansi
   if (noGar === "no") {
-
     // kalau ada durasi → pisah badge
     if (until) {
       return `
@@ -22,12 +20,12 @@ function garBadge(i) {
         </span>
       `;
     }
-
     return `<em class="badge-gar">Bergaransi</em>`;
   }
 
   return "";
 }
+
 function isNoGar(i) {
   return String(i.no_gar).toLowerCase() === "yes";
 }
@@ -54,8 +52,8 @@ function renderBadges(badgeText) {
     .filter(Boolean)
     .map((label, i) => {
       const key = label.toLowerCase();
-
       let colorClass = "";
+      
       if (key === "hot") colorClass = "badge-hot-red";
       else if (key === "new") colorClass = "badge-hot-green";
       else if (key === "promo") colorClass = "badge-hot-orange";
@@ -75,254 +73,199 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
     if (!r.ok) throw new Error("Fetch gagal");
     return r.json();
   })
-.then(data => {
+  .then(data => {
+    /* ===== GROUPING ===== */
+    const grouped = {};
 
-  /* ===== GROUPING ===== */
-  const grouped = {};
+    data.forEach(p => {
+      if (!grouped[p.product_id]) {
+        grouped[p.product_id] = {
+          title: p.title,
+          items: []
+        };
+      }
+      grouped[p.product_id].items.push(p);
+    });
 
-  data.forEach(p => {
-    if (!grouped[p.product_id]) {
-      grouped[p.product_id] = {
-        title: p.title,
-        items: []
-      };
-    }
-    grouped[p.product_id].items.push(p);
-  });
+    console.log("DATA GROUPED:", grouped);
+    window.PRODUCT_DATA = grouped;
 
-  console.log("DATA GROUPED:", grouped);
+    /* ===== RENDER CARDS ===== */
+    const wrap = document.getElementById("product-cards") || document.getElementById("preview-card-grid");
+    if (!wrap) return;
 
-  window.PRODUCT_DATA = grouped;
+    let html = "";
+    const products = Object.values(grouped);
+    const renderProducts = window.HOMEPAGE_LIMIT ? products.slice(0, window.HOMEPAGE_LIMIT) : products;
 
-  /* =========================
-      (Bagian 3)
-     ========================= */
+    renderProducts.forEach(prod => {
+      const items = prod.items;
+      const primaryItem = items.find(i => i.image_url) || items[0];
 
-  const wrap =
-  document.getElementById("product-cards") ||
-  document.getElementById("preview-card-grid");
+      html += `
+        <div class="glass-card">
+          <div class="product-image">
+            <img src="${primaryItem.image_url}" alt="${prod.title}">
+            ${renderBadges(primaryItem.badge)}
+          </div>
 
-if (!wrap) return;
-  
-  let html = ""; // TAMBAH INI
+          <h3>${prod.title}</h3>
 
-  const products = Object.values(grouped);
+          ${(() => {
+            const sortedItems = [...prod.items];
+            const mainItems = sortedItems.filter(i => i.group === "main");
+            const detailItems = sortedItems.filter(i => i.group === "detail");
 
-const renderProducts = window.HOMEPAGE_LIMIT
-  ? products.slice(0, window.HOMEPAGE_LIMIT)
-  : products;
+            return `
+              ${mainItems.map(i => {
+                let cls = "package-row";
+                const price = Number(String(i.price).replace(/[^\d]/g, "")) || 0;
+                const discount = parseDiscount(i.promo_text);
+                let priceHTML = `<b>${formatPrice(price)}</b>`;
 
-renderProducts.forEach(prod => {
+                if (discount !== null) {
+                  const finalPrice = Math.round(price - (price * discount / 100));
+                  priceHTML = `
+                    <span class="discount-badge">${discount}%</span>
+                    <div class="price-wrap">
+                      <span class="price-old">${formatPrice(price)}</span>
+                      <span class="price-new">${formatPrice(finalPrice)}</span>
+                    </div>
+                  `;
+                }
 
-    const items = prod.items;
+                if (i.is_featured) {
+                  const [color, glow] = i.is_featured.split(":");
+                  cls += ` featured featured-${color}`;
+                  if (glow) cls += ` glow-${glow}`;
+                }
 
-    const primaryItem =
-      items.find(i => i.image_url) || items[0];
+                if (isNoGar(i)) {
+                  cls += " nogar";
+                }
 
-    html += `
-      <div class="glass-card">
+                return `
+                  <a href="package.html?package_id=${i.package_id}" class="${cls}">
+                    <span>
+                      ${i.package} ${i.duration}
+                      ${garBadge(i)}
+                    </span>
+                    <div class="price-line promo-left">
+                      ${priceHTML}
+                    </div>
+                  </a>
+                `;
+              }).join("")}
 
-        <div class="product-image">
-          <img src="${primaryItem.image_url}" alt="${prod.title}">
-          ${renderBadges(primaryItem.badge)}
-        </div>
+              ${detailItems.length ? `<button class="toggle-detail">Selengkapnya...</button>` : ``}
 
-        <h3>${prod.title}</h3>
+              <div class="package-detail">
+                <div class="role-section">
+                  <div class="role-title">Role Access</div>
 
-        ${(() => {
+                  ${detailItems.map(i => {
+                    let cls = "package-row role";
 
-  const sortedItems = [...prod.items];
-  const mainItems = sortedItems.filter(i => i.group === "main");
-  const detailItems = sortedItems.filter(i => i.group === "detail");
+                    if (i.is_featured && !isNoGar(i)) {
+                      const [color, glow] = i.is_featured.split(":");
+                      cls += ` featured featured-${color}`;
+                      if (glow) cls += ` glow-${glow}`;
+                    }
 
-  return `
-  ${mainItems.map(i => {
+                    if (isNoGar(i)) {
+                      cls += " nogar";
+                    }
 
-    let cls = "package-row";
+                    const price = Number(String(i.price).replace(/[^\d]/g, "")) || 0;
+                    const discount = parseDiscount(i.promo_text);
+                    let priceHTML = `<b>${formatPrice(price)}</b>`;
 
-    const price = Number(
-      String(i.price).replace(/[^\d]/g, "")
-    ) || 0;
+                    if (discount !== null) {
+                      const finalPrice = Math.round(price - (price * discount / 100));
+                      priceHTML = `
+                        <div class="price-line promo-left">
+                          <span class="discount-badge">${discount}%</span>
+                          <div class="price-wrap">
+                            <span class="price-old">${formatPrice(price)}</span>
+                            <span class="price-new">${formatPrice(finalPrice)}</span>
+                          </div>
+                        </div>
+                      `;
+                    }
 
-    const discount = parseDiscount(i.promo_text);
+                    return `
+                      <a href="package.html?package_id=${i.package_id}" class="${cls}" onclick="event.stopPropagation();">
+                        <span>
+                          ${i.package} ${i.duration}
+                          ${i.badge_label 
+                            ? `<em class="role-badge">
+                                 ${i.badge_icon ?? ""} ${i.badge_label}
+                                 ${garBadge(i)}
+                               </em>`
+                            : garBadge(i)
+                          }
+                        </span>
+                        ${priceHTML}
+                      </a>
+                    `;
+                  }).join("")}
+                </div>
+              </div>
+            `;
+          })()}
 
-    let priceHTML = `<b>${formatPrice(price)}</b>`;
+          ${(() => {
+            const g = prod.items.find(i => i.guarantee)?.guarantee?.toLowerCase();
+            if (!g) return "";
 
-    if (discount !== null) {
-      const finalPrice = Math.round(price - (price * discount / 100));
-
-      priceHTML = `
-        <span class="discount-badge">${discount}%</span>
-        <div class="price-wrap">
-          <span class="price-old">${formatPrice(price)}</span>
-          <span class="price-new">${formatPrice(finalPrice)}</span>
+            if (g.includes("full")) {
+              return `<div class="note has-guarantee">Full Garansi</div>`;
+            }
+            if (g.includes("mixed")) {
+              return `<div class="note mixed-guarantee">Mixed Garansi</div>`;
+            }
+            if (g.includes("tidak") || g.includes("no")) {
+              return `<div class="note no-guarantee">Tidak Bergaransi</div>`;
+            }
+            return "";
+          })()}
         </div>
       `;
-    }
+    });
+    
+    wrap.innerHTML = html;
 
-                      if (i.is_featured) {
-      const [color, glow] = i.is_featured.split(":");
-      cls += ` featured featured-${color}`;
-      if (glow) cls += ` glow-${glow}`;
-    }
+    /* ===== REVEAL SYSTEM ===== */
+    const cards = document.querySelectorAll(".glass-card");
+    cards.forEach((card, i) => {
+      card.dataset.delay = (i % 4) + 1;
+    });
 
-    if (isNoGar(i)) {
-      cls += " nogar";
-    }
-
-    return `
-      <a href="package.html?package_id=${i.package_id}" class="${cls}">
-        <span>
-          ${i.package} ${i.duration}
-          ${garBadge(i)}
-        </span>
-
-        <div class="price-line promo-left">
-          ${priceHTML}
-        </div>
-      </a>
-    `;
-  }).join("")}
-
-
-  ${detailItems.length
-    ? `<button class="toggle-detail">Selengkapnya...</button>`
-    : ``}
-
-
-  <div class="package-detail">
-
-    <div class="role-section">
-      <div class="role-title">Role Access</div>
-
-      ${detailItems.map(i => {
-
-        let cls = "package-row role";
-
-        if (i.is_featured && !isNoGar(i)) {
-          const [color, glow] = i.is_featured.split(":");
-          cls += ` featured featured-${color}`;
-          if (glow) cls += ` glow-${glow}`;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("reveal");
+          observer.unobserve(entry.target);
         }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: "0px 0px -40px 0px"
+    });
 
-        if (isNoGar(i)) {
-          cls += " nogar";
-        }
-
-        const price = Number(
-          String(i.price).replace(/[^\d]/g, "")
-        ) || 0;
-
-        const discount = parseDiscount(i.promo_text);
-
-        let priceHTML = `<b>${formatPrice(price)}</b>`;
-
-        if (discount !== null) {
-          const finalPrice = Math.round(price - (price * discount / 100));
-
-          priceHTML = `
-            <div class="price-line promo-left">
-              <span class="discount-badge">${discount}%</span>
-              <div class="price-wrap">
-                <span class="price-old">${formatPrice(price)}</span>
-                <span class="price-new">${formatPrice(finalPrice)}</span>
-              </div>
-            </div>
-          `;
-        }
-
-                        return `
-          <a href="package.html?package_id=${i.package_id}"
-             class="${cls}"
-             onclick="event.stopPropagation();">
-
-            <span>
-              ${i.package} ${i.duration}
-              ${
-                i.badge_label
-                  ? `<em class="role-badge">
-                       ${i.badge_icon ?? ""} ${i.badge_label}
-                       ${garBadge(i)}
-                     </em>`
-                  : garBadge(i)
-              }
-            </span>
-
-            ${priceHTML}
-
-          </a>
-        `;
-      }).join("")}
-
-    </div>
-  </div>
-`;
-})()}
-
-      ${(() => {
-
-  // ambil guarantee dari salah satu item yang ada isinya
-  const g = prod.items.find(i => i.guarantee)?.guarantee?.toLowerCase();
-
-  if (!g) return "";
-
-  if (g.includes("full")) {
-    return `<div class="note has-guarantee">Full Garansi</div>`;
-  }
-
-  if (g.includes("mixed")) {
-    return `<div class="note mixed-guarantee">Mixed Garansi</div>`;
-  }
-
-  if (g.includes("tidak") || g.includes("no")) {
-    return `<div class="note no-guarantee">Tidak Bergaransi</div>`;
-  }
-
-  return "";
-
-})()}
-
-</div>
-`;
-  });
-wrap.innerHTML = html;
-
-/* ===== REVEAL SYSTEM ===== */
-const cards = document.querySelectorAll(".glass-card");
-
-cards.forEach((card, i) => {
-  card.dataset.delay = (i % 4) + 1;
-});
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("reveal");
-      observer.unobserve(entry.target);
-    }
-  });
-}, {
-  threshold: 0.12,
-  rootMargin: "0px 0px -40px 0px"
-});
-
-      cards.forEach(card => observer.observe(card));
-})  // tutup
+    cards.forEach(card => observer.observe(card));
+  })
   .catch(err => {
     console.error("Sheet error:", err);
   });
 
-
-
-
+/* ===== EVENT LISTENERS ===== */
 document.addEventListener("click", function(e) {
-
   const btn = e.target.closest(".toggle-detail");
   if (!btn) return;
 
   const card = btn.closest(".glass-card");
   const detail = card.querySelector(".package-detail");
-
   if (!detail) return;
 
   const isOpen = detail.classList.contains("open");
@@ -339,27 +282,20 @@ document.addEventListener("click", function(e) {
   /* buka kalau belum */
   if (!isOpen) {
     detail.classList.add("open");
-
     card.scrollIntoView({
       behavior: "smooth",
       block: "center"
     });
-
     btn.textContent = "Tutup";
   }
-
 });
 
-  
 document.documentElement.style.scrollBehavior = "smooth";
 
 let scrollTimeout;
-
 window.addEventListener("scroll", () => {
   document.body.classList.add("is-scrolling");
-
   clearTimeout(scrollTimeout);
-
   scrollTimeout = setTimeout(() => {
     document.body.classList.remove("is-scrolling");
   }, 120);
