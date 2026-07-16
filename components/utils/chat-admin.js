@@ -79,3 +79,28 @@ console.log("Status Paket :", packageStatus);
 console.log("Status Garansi :", warrantyStatus);
 
 }
+
+const message = `🙌 Halo admin, saya ingin meminta bantuan.
+
+👤 Data Pembeli
+
+Nama : ${data.buyerName}
+Nomor : ${data.buyerPhone}
+
+📦 Detail Pesanan
+
+📍INV : ${data.invoice}
+📍Produk : ${data.product}
+📍Paket : ${data.package}
+📍Aktivasi : ${data.activatedDate}
+📍Paket Berakhir : ${data.packageExpired}
+📍Garansi Berakhir : ${data.warrantyExpired}
+
+📊 Status
+
+✅ Paket : ${packageStatus}
+✅ Garansi : ${warrantyStatus}
+
+💬 Pesan
+
+${messageText}`;
