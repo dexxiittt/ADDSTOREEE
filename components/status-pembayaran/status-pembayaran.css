@@ -1479,6 +1479,35 @@ transform:scale(1);
   transition: color 0.3s ease;
 }
 
+/* ==========================================
+   🔥 KODE TAMBAHAN UNTUK TEMATIK EXPIRED PERFECT
+   ========================================== */
+
+/* 1. Perbaiki warna capsule badge "Invoice Kedaluwarsa" di atas */
+.invoice-box.status-expired .invoice-status {
+  background: #ffffff;
+  border: 1px solid #fca5a5;
+  color: #dc2626;
+}
+
+/* 2. Perbaiki bulatan merah & shadow untuk ikon X di badge atas */
+.invoice-box.status-expired .invoice-status i {
+  background: #ef4444;
+  box-shadow: 0 0 0 6px rgba(239, 68, 68, 0.15), 0 12px 28px rgba(239, 68, 68, 0.3);
+}
+
+/* 3. Mengubah text utama timeline (Pesanan Dibuat & Menunggu Pembayaran) 
+   menjadi merah gelap saat expired agar tidak bertabrakan dengan warna ungu/emas asli */
+.status-expired .progress-item.completed span,
+.status-expired .progress-item.current span {
+  color: #b91c1c !important;
+}
+
+/* 4. Menghilangkan efek animasi berputar jam pasir pada item current saat expired */
+.status-expired .progress-item.current .floating-icon {
+  animation: progressPulse 2s infinite !important;
+  box-shadow: 0 0 0 8px rgba(239, 68, 68, 0.16), 0 12px 26px rgba(239, 68, 68, 0.30) !important;
+}
 
 @media (max-width:768px){
 .container{
