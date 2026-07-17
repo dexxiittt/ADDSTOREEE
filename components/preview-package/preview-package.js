@@ -52,7 +52,26 @@ payBtn?.classList.add("is-loading");
 fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PACKAGE_DETAIL")
   .then(response => response.json())
   .then(rows => {
-    const data = rows.find(item => item.package_id === packageId);
+    
+    // Mengubah final_price menjadi discount secara otomatis
+    const mappedRows = rows.map(item => {
+      const price = Number(String(item.price).replace(/[^\d]/g, "")) || 0;
+      const finalPrice = Number(String(item.final_price).replace(/[^\d]/g, "")) || 0;
+      let discountStr = "0";
+
+      if (finalPrice > 0 && finalPrice < price) {
+        const pct = ((price - finalPrice) / price) * 100;
+        discountStr = pct.toFixed(2); // Menghasilkan string "22.23"
+      }
+
+      return {
+        ...item,
+        discount: discountStr // Dioper sebagai properti 'discount' untuk sistem lama
+      };
+    });
+
+    // Cari data dari hasil mappedRows, bukan dari rows langsung
+    const data = mappedRows.find(item => item.package_id === packageId);
     if (!data) {
       console.error("Package tidak ditemukan.");
       alert("Paket tidak ditemukan.");
