@@ -1517,6 +1517,17 @@ transform:scale(1);
   margin-top: 2px;
 }
 
+/* Style membuat bulatan timeline menjadi merah solid & ikonnya putih */
+.floating-icon.icon-solid-red {
+  background-color: #ef4444 !important;
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.3);
+}
+
+.floating-icon.icon-solid-red i {
+  color: #ffffff !important;
+}
+
 @media (max-width:768px){
 .container{
 margin:20px 16px 50px;
