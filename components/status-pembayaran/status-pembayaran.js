@@ -15,13 +15,23 @@ window.onload = async function() {
    CORE FUNCTIONS (LOCAL STORAGE & SHEET FETCHING)
    ============================================================ */
 function checkIsExpired() {
-  const createdAt = localStorage.getItem("invoiceCreatedAt");
+  // 1. Ambil dari key mandiri atau cari di dalam objek paymentData sebagai fallback jika dibungkus
+  let createdAt = localStorage.getItem("invoiceCreatedAt");
+  if (!createdAt) {
+    const localData = JSON.parse(localStorage.getItem("paymentData") || "{}");
+    createdAt = localData?.createdAt || localData?.invoiceCreatedAt;
+  }
+
   if (!createdAt) return false;
 
   const now = new Date().getTime();
   const oneHour = 60 * 60 * 1000; // 1 jam dalam milidetik
 
-  return (now - parseInt(createdAt)) > oneHour;
+  // 2. Amankan parsing: jika berbentuk teks tanggal gunakan Date.parse, jika angka gunakan parseInt
+  const timeMillis = isNaN(createdAt) ? Date.parse(createdAt) : parseInt(createdAt);
+
+  if (isNaN(timeMillis)) return false;
+  return (now - timeMillis) > oneHour;
 }
 
 function loadFromLocalStorage() {
