@@ -106,17 +106,28 @@ async function loadFromSheet() {
     const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/payment_id");
     const data = await res.json();
 
-    // CARI INVOICE
+        // CARI INVOICE
     const found = data.find(x => x.invoice == invoiceID);
     if (!found) {
       // Cek apakah invoice ini milik transaksi yang baru saja dibuat di browser ini
       const localInvoice = localStorage.getItem("invoiceID");
       if (localInvoice && String(localInvoice).trim() === String(invoiceID).trim()) {
-        showToast("Pesanan sudah dibuat ⚡", "fa-circle-check");
+        // 🔥 FIX: Jika secara waktu sudah kadaluarsa, paksa UI & Toast jadi merah kadaluarsa
+        if (checkIsExpired()) {
+          showToast("Pesanan sudah kadaluarsa ❌", "fa-circle-xmark");
+          setExpiredUI();
+        } else {
+          showToast("Pesanan sudah dibuat ⚡", "fa-circle-check");
+        }
       } else {
-        showToast("Invoice tidak terdaftar atau telah kedaluwarsa ❌", "fa-circle-xmark");
+        if (checkIsExpired()) {
+          showToast("Pesanan sudah kadaluarsa ❌", "fa-circle-xmark");
+          setExpiredUI();
+        } else {
+          showToast("Invoice tidak terdaftar atau telah kedaluwarsa ❌", "fa-circle-xmark");
+        }
       }
-      return; // Stop execution tanpa error keras, UI tetap pakai data local (pending)
+      return; // Stop execution tanpa error keras, UI tetap pakai data local
     }
 
     // FETCH STATUS_PAYMENT
