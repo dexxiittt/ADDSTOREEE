@@ -418,11 +418,29 @@ function setRefundUI() { /* TODO */ }
    PROGRESS TIMELINE TRACKER
    ============================================================ */
 function updateProgress(status, proses) {
+  // 🔥 1. BERSIHKAN TEKS "SESI KADALUARSA" JIKA ADA
+  const extOrder = document.getElementById("expiredTextOrder");
+  const extPayment = document.getElementById("expiredTextPayment");
+  if (extOrder) extOrder.remove();
+  if (extPayment) extPayment.remove();
+
   if (status === "pending") {
-    document.getElementById("stepOrder").className = "progress-item completed";
-    document.getElementById("stepPayment").className = "progress-item current";
-    document.getElementById("stepVerification").className = "progress-item";
-    document.getElementById("stepProcess").className = "progress-item";
+    document.getElementById("stepOrder").className = "progress-item completed";[span_4](start_span)[span_4](end_span)
+    document.getElementById("stepPayment").className = "progress-item current";[span_5](start_span)[span_5](end_span)
+    document.getElementById("stepVerification").className = "progress-item";[span_6](start_span)[span_6](end_span)
+    document.getElementById("stepProcess").className = "progress-item";[span_7](start_span)[span_7](end_span)
+
+    // 🔥 2. KEMBALIKAN IKON ASLI PENDING (Check & Hourglass)
+    const orderIcon = document.querySelector("#stepOrder i");
+    const paymentIcon = document.querySelector("#stepPayment i");
+    if (orderIcon) orderIcon.className = "fa-solid fa-check";
+    if (paymentIcon) paymentIcon.className = "fa-solid fa-hourglass-half";
+
+    // 🔥 3. KEMBALIKAN WARNA LINGKARAN ASLI PENDING (Purple & Gold)
+    const orderBg = document.querySelector("#stepOrder .floating-icon");
+    const paymentBg = document.querySelector("#stepPayment .floating-icon");
+    if (orderBg) orderBg.className = "floating-icon icon-purple"; 
+    if (paymentBg) paymentBg.className = "floating-icon icon-gold";
   } else if (status === "success") {
     document.getElementById("stepOrder").className = "progress-item completed";
     document.getElementById("stepPayment").className = "progress-item completed";
