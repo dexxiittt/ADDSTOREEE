@@ -111,12 +111,14 @@ async function validateAndPrepareInvoice() {
 function generateInvoice() {
   const now = new Date();
   const year = now.getFullYear();
-  const random = Math.floor(10000 + Math.random() * 90000);
+  const month = String(now.getMonth() + 1).padStart(2, "0"); // Bulan (01-12)
+  const date = String(now.getDate()).padStart(2, "0");      // Tanggal (01-31)
   const jam = String(now.getHours()).padStart(2, "0");
   const menit = String(now.getMinutes()).padStart(2, "0");
-  const detik = String(now.getSeconds()).padStart(2, "0");
+  const random = Math.floor(100 + Math.random() * 900);     // 3 digit acak
 
-  return `${year}${random}${jam}${menit}${detik}`;
+  // Hasil susunan: YYYYMMDDHHMMRND (Pas 15 Digit. Contoh: 202607170921123)
+  return `${year}${month}${date}${jam}${menit}${random}`;
 }
 
 function redirectStatus(invoice) {
