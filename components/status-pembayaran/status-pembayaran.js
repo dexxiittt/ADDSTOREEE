@@ -15,23 +15,30 @@ window.onload = async function() {
    CORE FUNCTIONS (LOCAL STORAGE & SHEET FETCHING)
    ============================================================ */
 function checkIsExpired() {
-  // 1. Ambil dari key mandiri atau cari di dalam objek paymentData sebagai fallback jika dibungkus
-  let createdAt = localStorage.getItem("invoiceCreatedAt");
-  if (!createdAt) {
-    const localData = JSON.parse(localStorage.getItem("paymentData") || "{}");
-    createdAt = localData?.createdAt || localData?.invoiceCreatedAt;
-  }
+  const params = new URLSearchParams(window.location.search);
+  const invoice = params.get("invoice") || localStorage.getItem("invoiceID");
+  
+  if (!invoice) return false;
 
-  if (!createdAt) return false;
+  // Bersihkan teks "INV" jika ada agar tersisa angkanya saja
+  const invDigits = invoice.replace("INV", "").trim();
 
+  // Validasi panjang string skema baru (Minimal 12 digit untuk YYYYMMDDHHMM)
+  if (invDigits.length < 12) return false; 
+
+  // Ekstrak waktu asli dari susunan 15 digit (Tanpa detik)
+  const year = parseInt(invDigits.substring(0, 4));
+  const month = parseInt(invDigits.substring(4, 6)) - 1; // Bulan di JS dimulai dari 0
+  const date = parseInt(invDigits.substring(6, 8));
+  const hour = parseInt(invDigits.substring(8, 10));
+  const minute = parseInt(invDigits.substring(10, 12));
+
+  // Konversi menjadi format waktu komputer (milidetik), detik diset ke 0
+  const createdAtTime = new Date(year, month, date, hour, minute, 0).getTime();
   const now = new Date().getTime();
   const oneHour = 60 * 60 * 1000; // 1 jam dalam milidetik
 
-  // 2. Amankan parsing: jika berbentuk teks tanggal gunakan Date.parse, jika angka gunakan parseInt
-  const timeMillis = isNaN(createdAt) ? Date.parse(createdAt) : parseInt(createdAt);
-
-  if (isNaN(timeMillis)) return false;
-  return (now - timeMillis) > oneHour;
+  return (now - createdAtTime) > oneHour;
 }
 
 function loadFromLocalStorage() {
