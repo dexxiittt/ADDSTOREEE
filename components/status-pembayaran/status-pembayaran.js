@@ -411,7 +411,7 @@ function generateUlangInvoice() {
   localStorage.removeItem("invoiceCreatedAt");
   
   // Arahkan kembali ke halaman opsi pembayaran
-  window.location.href = "opsi-pembayaran.html"; 
+  window.location.href = "pembayaran-qr.html"; 
 }
 
 function setCancelUI() { /* TODO */ }
