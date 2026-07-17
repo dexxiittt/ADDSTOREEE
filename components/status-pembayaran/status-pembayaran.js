@@ -318,20 +318,19 @@ function setSuccessUI(proses) {
 }
 
 function setExpiredUI() {
-  const ui = getStatusElements(); //[span_2](start_span)[span_2](end_span)
+  const ui = getStatusElements();
 
   // Hapus warna lama, ganti ke tema expired (merah)
-  ui.invoiceBox.classList.remove("status-pending", "status-success"); //[span_3](start_span)[span_3](end_span)
-  ui.statusBox.classList.remove("status-pending", "status-success"); //[span_4](start_span)[span_4](end_span)
-  ui.invoiceBox.classList.add("status-expired"); //[span_5](start_span)[span_5](end_span)
-  ui.statusBox.classList.add("status-expired"); //[span_6](start_span)[span_6](end_span)
+  ui.invoiceBox.classList.remove("status-pending", "status-success");
+  ui.statusBox.classList.remove("status-pending", "status-success"); 
+  ui.invoiceBox.classList.add("status-expired");
+  ui.statusBox.classList.add("status-expired"); 
 
-  ui.statusBadgeText.innerText = "Invoice Kedaluwarsa"; //[span_7](start_span)[span_7](end_span)
-  ui.statusTitle.innerText = "Waktu Pembayaran Habis"; //[span_8](start_span)[span_8](end_span)
+  ui.statusBadgeText.innerText = "Invoice Kedaluwarsa"; 
+  ui.statusTitle.innerText = "Waktu Pembayaran Habis"; 
   ui.statusDescription.innerText = "Maaf, batas waktu pembayaran 1 jam telah habis. Invoice ini sudah tidak berlaku lagi."; //[span_9](start_span)[span_9](end_span)
   ui.statusTipText.innerHTML = "Silakan melakukan generate ulang invoice melalui tombol di bawah untuk memperbarui pesanan."; //[span_10](start_span)[span_10](end_span)
   
-  // Mengubah icon dari fa-circle-xmark menjadi fa-xmark 🔥
   ui.statusBadgeIcon.className = "fa-solid fa-xmark";
   ui.statusIconFa.className = "fa-solid fa-bell-slash"; //[span_11](start_span)[span_11](end_span)
 
@@ -345,14 +344,12 @@ function setExpiredUI() {
   if (orderIcon) orderIcon.className = "fa-solid fa-xmark";
   if (paymentIcon) paymentIcon.className = "fa-solid fa-xmark";
 
-  // *Opsional: Jika ingin mengubah lingkaran ungu & kuning menjadi merah juga, 
-  // hapus tanda // pada 2 baris di bawah ini:
-  // if (document.querySelector("#stepOrder .floating-icon")) document.querySelector("#stepOrder .floating-icon").className = "floating-icon icon-red";
-  // if (document.querySelector("#stepPayment .floating-icon")) document.querySelector("#stepPayment .floating-icon").className = "floating-icon icon-red";
+  if (document.querySelector("#stepOrder .floating-icon")) document.querySelector("#stepOrder .floating-icon").className = "floating-icon icon-red";
+  if (document.querySelector("#stepPayment .floating-icon")) document.querySelector("#stepPayment .floating-icon").className = "floating-icon icon-red";
 
   // 2. Menambahkan teks merah "sesi kadaluarsa"
-  const stepOrder = document.getElementById("stepOrder"); //[span_12](start_span)[span_12](end_span)
-  const stepPayment = document.getElementById("stepPayment"); //[span_13](start_span)[span_13](end_span)
+  const stepOrder = document.getElementById("stepOrder"); 
+  const stepPayment = document.getElementById("stepPayment");
 
   // Tambah teks di bawah "Pesanan Dibuat"
   if (stepOrder && !document.getElementById("expiredTextOrder")) {
@@ -381,7 +378,7 @@ function setExpiredUI() {
   // ==========================================
 
   // Mengubah icon section menjadi merah
-  document.getElementById("statusSectionIcon").className = "section-icon icon-red"; //[span_14](start_span)[span_14](end_span)
+  document.getElementById("statusSectionIcon").className = "section-icon icon-red";
 
   // INFO PENDUKUNG DIUBAH MENJADI TOMBOL GENERATE ULANG
   document.getElementById("supportTitle").innerText = "Generate Ulang Invoice"; //[span_15](start_span)[span_15](end_span)
