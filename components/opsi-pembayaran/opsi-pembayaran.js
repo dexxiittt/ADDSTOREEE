@@ -17,13 +17,31 @@ function parseDiscount(val) {
 
 /* ==========================================
    2. FETCH SPREADSHEET & RENDER DATA
-   ========================================== */
+   ========================================= */
 const sheetURL = "https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PACKAGE_DETAIL";
 let paymentData = [];
 
 fetch(sheetURL)
   .then(res => res.json())
-  .then(data => {
+  .then(rawData => {
+    
+    // 🛠️ JEMBATAN KONVERSI: Mengubah final_price menjadi discount secara otomatis
+    const data = rawData.map(item => {
+      const price = Number(String(item.price).replace(/[^\d]/g, "")) || 0;
+      const finalPrice = Number(String(item.final_price).replace(/[^\d]/g, "")) || 0;
+      let discountStr = "0";
+
+      if (finalPrice > 0 && finalPrice < price) {
+        const pct = ((price - finalPrice) / price) * 100;
+        discountStr = pct.toFixed(2);
+      }
+
+      return {
+        ...item,
+        discount: discountStr
+      };
+    });
+
     paymentData = data;
     const row = data.find(p => p.package_id == packageId);
 
@@ -32,7 +50,6 @@ fetch(sheetURL)
       return;
     }
 
-    // ✅ SET TEXT
     document.getElementById("paket").innerText = row.title;
     document.getElementById("paket-detail").innerText = "Invite Member • " + row.duration;
 
