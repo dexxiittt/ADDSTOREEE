@@ -345,7 +345,7 @@ function setExpiredUI() {
   ui.statusBadgeIcon.className = "fa-solid fa-xmark";
   ui.statusIconFa.className = "fa-solid fa-bell-slash"; 
 
-  // ==========================================
+    // ==========================================
   // 🔥 KODE BARU: UBAH IKON & TAMBAH TEKS DI TIMELINE
   // ==========================================
   
@@ -355,8 +355,11 @@ function setExpiredUI() {
   if (orderIcon) orderIcon.className = "fa-solid fa-xmark";
   if (paymentIcon) paymentIcon.className = "fa-solid fa-xmark";
 
-  if (document.querySelector("#stepOrder .floating-icon")) document.querySelector("#stepOrder .floating-icon").className = "floating-icon icon-red";
-  if (document.querySelector("#stepPayment .floating-icon")) document.querySelector("#stepPayment .floating-icon").className = "floating-icon icon-red";
+  // Ubah bulatan menjadi MERAH SOLID & IKON PUTIH
+  const orderBg = document.querySelector("#stepOrder .floating-icon");
+  const paymentBg = document.querySelector("#stepPayment .floating-icon");
+  if (orderBg) orderBg.className = "floating-icon icon-solid-red";
+  if (paymentBg) paymentBg.className = "floating-icon icon-solid-red";
 
   // 2. Menambahkan teks merah "sesi kadaluarsa"
   const stepOrder = document.getElementById("stepOrder"); 
@@ -366,7 +369,7 @@ function setExpiredUI() {
   if (stepOrder && !document.getElementById("expiredTextOrder")) {
   const textRedOrder = document.createElement("div");
   textRedOrder.id = "expiredTextOrder";
-  textRedOrder.classList.add("expired-text-timeline"); // 🔥 Menggunakan class dari CSS
+  textRedOrder.classList.add("expired-text-timeline");
   textRedOrder.innerText = "sesi kadaluarsa";
   stepOrder.appendChild(textRedOrder);
 }
@@ -375,7 +378,7 @@ function setExpiredUI() {
 if (stepPayment && !document.getElementById("expiredTextPayment")) {
   const textRedPayment = document.createElement("div");
   textRedPayment.id = "expiredTextPayment";
-  textRedPayment.classList.add("expired-text-timeline"); // 🔥 Menggunakan class dari CSS
+  textRedPayment.classList.add("expired-text-timeline"); 
   textRedPayment.innerText = "sesi kadaluarsa";
   stepPayment.appendChild(textRedPayment);
 }
