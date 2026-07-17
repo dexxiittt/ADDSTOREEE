@@ -73,7 +73,33 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
     if (!r.ok) throw new Error("Fetch gagal");
     return r.json();
   })
-  .then(data => {
+  .then(rawData => { // <-- 1. Ubah variabel parameter ini menjadi rawData
+    
+    // ====================================================================
+    // JEMBATAN KONVERSI: Mengubah final_price dari Sheets menjadi promo_text
+    // ====================================================================
+    const data = rawData.map(i => {
+      // Bersihkan format harga (buang titik/Rp jika ada)
+      const price = Number(String(i.price).replace(/[^\d]/g, "")) || 0;
+      const finalPrice = Number(String(i.final_price).replace(/[^\d]/g, "")) || 0;
+
+      // Jika ada harga final dan harganya lebih murah dari harga awal
+      if (finalPrice > 0 && finalPrice < price) {
+        // Hitung persentase diskonnya secara otomatis di latar belakang
+        const discountPercent = ((price - finalPrice) / price) * 100;
+        
+        // Ubah jadi format string "22,23%" agar match dengan fungsi parseDiscount() bawaanmu
+        const discountString = discountPercent.toFixed(2).replace(".", ",") + "%";
+        
+        return {
+          ...i,
+          promo_text: discountString // Kita injeksikan hasilnya ke promo_text otomatis
+        };
+      }
+      return i;
+    });
+    // ====================================================================
+
     /* ===== GROUPING ===== */
     const grouped = {};
 
