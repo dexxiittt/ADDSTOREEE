@@ -318,38 +318,85 @@ function setSuccessUI(proses) {
 }
 
 function setExpiredUI() {
-  const ui = getStatusElements();
+  const ui = getStatusElements(); //[span_2](start_span)[span_2](end_span)
 
   // Hapus warna lama, ganti ke tema expired (merah)
-  ui.invoiceBox.classList.remove("status-pending", "status-success");
-  ui.statusBox.classList.remove("status-pending", "status-success");
-  ui.invoiceBox.classList.add("status-expired");
-  ui.statusBox.classList.add("status-expired");
+  ui.invoiceBox.classList.remove("status-pending", "status-success"); //[span_3](start_span)[span_3](end_span)
+  ui.statusBox.classList.remove("status-pending", "status-success"); //[span_4](start_span)[span_4](end_span)
+  ui.invoiceBox.classList.add("status-expired"); //[span_5](start_span)[span_5](end_span)
+  ui.statusBox.classList.add("status-expired"); //[span_6](start_span)[span_6](end_span)
 
-  ui.statusBadgeText.innerText = "Invoice Kedaluwarsa";
-  ui.statusTitle.innerText = "Waktu Pembayaran Habis";
-  ui.statusDescription.innerText = "Maaf, batas waktu pembayaran 1 jam telah habis. Invoice ini sudah tidak berlaku lagi.";
-  ui.statusTipText.innerHTML = "Silakan melakukan generate ulang invoice melalui tombol di bawah untuk memperbarui pesanan.";
-  ui.statusBadgeIcon.className = "fa-solid fa-circle-xmark";
-  ui.statusIconFa.className = "fa-solid fa-bell-slash";
+  ui.statusBadgeText.innerText = "Invoice Kedaluwarsa"; //[span_7](start_span)[span_7](end_span)
+  ui.statusTitle.innerText = "Waktu Pembayaran Habis"; //[span_8](start_span)[span_8](end_span)
+  ui.statusDescription.innerText = "Maaf, batas waktu pembayaran 1 jam telah habis. Invoice ini sudah tidak berlaku lagi."; //[span_9](start_span)[span_9](end_span)
+  ui.statusTipText.innerHTML = "Silakan melakukan generate ulang invoice melalui tombol di bawah untuk memperbarui pesanan."; //[span_10](start_span)[span_10](end_span)
+  
+  // Mengubah icon dari fa-circle-xmark menjadi fa-xmark 🔥
+  ui.statusBadgeIcon.className = "fa-solid fa-xmark";
+  ui.statusIconFa.className = "fa-solid fa-bell-slash"; //[span_11](start_span)[span_11](end_span)
+
+  // ==========================================
+  // 🔥 KODE BARU: UBAH IKON & TAMBAH TEKS DI TIMELINE
+  // ==========================================
+  
+  // 1. Mengubah ikon check & hourglass menjadi xmark
+  const orderIcon = document.querySelector("#stepOrder i");
+  const paymentIcon = document.querySelector("#stepPayment i");
+  if (orderIcon) orderIcon.className = "fa-solid fa-xmark";
+  if (paymentIcon) paymentIcon.className = "fa-solid fa-xmark";
+
+  // *Opsional: Jika ingin mengubah lingkaran ungu & kuning menjadi merah juga, 
+  // hapus tanda // pada 2 baris di bawah ini:
+  if (document.querySelector("#stepOrder .floating-icon")) document.querySelector("#stepOrder .floating-icon").className = "floating-icon icon-red";
+  if (document.querySelector("#stepPayment .floating-icon")) document.querySelector("#stepPayment .floating-icon").className = "floating-icon icon-red";
+
+  // 2. Menambahkan teks merah "sesi kadaluarsa"
+  const stepOrder = document.getElementById("stepOrder"); //[span_12](start_span)[span_12](end_span)
+  const stepPayment = document.getElementById("stepPayment"); //[span_13](start_span)[span_13](end_span)
+
+  // Tambah teks di bawah "Pesanan Dibuat"
+  if (stepOrder && !document.getElementById("expiredTextOrder")) {
+    const textRedOrder = document.createElement("div");
+    textRedOrder.id = "expiredTextOrder";
+    textRedOrder.style.color = "#ef4444";
+    textRedOrder.style.fontSize = "11px";
+    textRedOrder.style.fontWeight = "500";
+    textRedOrder.style.marginTop = "2px";
+    textRedOrder.innerText = "sesi kadaluarsa";
+    stepOrder.appendChild(textRedOrder);
+  }
+
+  // Tambah teks di bawah "Menunggu Pembayaran"
+  if (stepPayment && !document.getElementById("expiredTextPayment")) {
+    const textRedPayment = document.createElement("div");
+    textRedPayment.id = "expiredTextPayment";
+    textRedPayment.style.color = "#ef4444";
+    textRedPayment.style.fontSize = "11px";
+    textRedPayment.style.fontWeight = "500";
+    textRedPayment.style.marginTop = "2px";
+    textRedPayment.innerText = "sesi kadaluarsa";
+    stepPayment.appendChild(textRedPayment);
+  }
+  
+  // ==========================================
 
   // Mengubah icon section menjadi merah
-  document.getElementById("statusSectionIcon").className = "section-icon icon-red";
+  document.getElementById("statusSectionIcon").className = "section-icon icon-red"; //[span_14](start_span)[span_14](end_span)
 
   // INFO PENDUKUNG DIUBAH MENJADI TOMBOL GENERATE ULANG
-  document.getElementById("supportTitle").innerText = "Generate Ulang Invoice";
-  document.getElementById("supportDescription").innerHTML = "Untuk melanjutkan pembelian paket, silakan klik tombol di bawah ini untuk membuat invoice baru.";
+  document.getElementById("supportTitle").innerText = "Generate Ulang Invoice"; //[span_15](start_span)[span_15](end_span)
+  document.getElementById("supportDescription").innerHTML = "Untuk melanjutkan pembelian paket, silakan klik tombol di bawah ini untuk membuat invoice baru."; //[span_16](start_span)[span_16](end_span)
   
   // EDIT TOMBOL WA: Ubah text, matikan fungsi klik, dan beri style disable
-  const waBtn = document.getElementById("waButton") || document.querySelector(".support-action a"); 
-  if (waBtn) {
-    waBtn.href = "javascript:void(0);"; // Matikan link redirect WA
-    waBtn.setAttribute("onclick", "generateUlangInvoice()"); // Alihkan tombol untuk generate ulang
-    waBtn.style.backgroundColor = "#ef4444"; // Ubah tombol jadi warna merah tanda expired
-    waBtn.style.cursor = "pointer";
+  const waBtn = document.getElementById("waButton") || document.querySelector(".support-action a"); //[span_17](start_span)[span_17](end_span)
+  if (waBtn) { //[span_18](start_span)[span_18](end_span)
+    waBtn.href = "javascript:void(0);"; // Matikan link redirect WA[span_19](start_span)[span_19](end_span)
+    waBtn.setAttribute("onclick", "generateUlangInvoice()"); // Alihkan tombol untuk generate ulang[span_20](start_span)[span_20](end_span)
+    waBtn.style.backgroundColor = "#ef4444"; // Ubah tombol jadi warna merah tanda expired[span_21](start_span)[span_21](end_span)
+    waBtn.style.cursor = "pointer"; //[span_22](start_span)[span_22](end_span)
     
-    document.getElementById("waButtonText").innerText = "Generate Ulang Invoice Baru ⚡";
-    document.getElementById("waButtonIcon").className = "fa-solid fa-rotate-right";
+    document.getElementById("waButtonText").innerText = "Generate Ulang Invoice Baru ⚡"; //[span_23](start_span)[span_23](end_span)
+    document.getElementById("waButtonIcon").className = "fa-solid fa-rotate-right"; //[span_24](start_span)[span_24](end_span)
   }
 }
 
