@@ -93,6 +93,7 @@ function loadFromLocalStorage() {
 }
 
 async function loadFromSheet() {
+   alert("A");
   try {
     const params = new URLSearchParams(window.location.search);
     const invoiceID = params.get("invoice");
@@ -109,8 +110,11 @@ async function loadFromSheet() {
     const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/payment_id" + cacheBuster);
     const data = await res.json();
 
+alert("B");
+
     const found = data.find(x => String(x.invoice).replace("INV", "").trim() === cleanInvoiceID);
     if (!found) {
+       alert("C");
       const localInvoice = localStorage.getItem("invoiceID");
       if (localInvoice && String(localInvoice).trim() === String(invoiceID).trim()) {
         showToast("Pesanan sudah dibuat ⚡", "fa-circle-check");
@@ -123,6 +127,8 @@ async function loadFromSheet() {
     // FETCH STATUS_PAYMENT
     const statusRes = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/status_payment" + cacheBuster);
     const statusData = await statusRes.json();
+
+alert("D");
 
     const statusRow = statusData.find(x => String(x.invoice).replace("INV", "").trim() === cleanInvoiceID);
     const paymentStatus = (statusRow?.status || "").trim().toLowerCase();
@@ -141,8 +147,10 @@ async function loadFromSheet() {
     const resProduk = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PACKAGE_DETAIL" + cacheBuster);
     const produk = await resProduk.json();
 
-    const detail = produk.find(p => String(p.package_id).trim() === String(found.package_id).trim());
+alert("E");
 
+    const detail = produk.find(p => String(p.package_id).trim() === String(found.package_id).trim());
+alert("F");
     renderCustomer(info[0], info[1], info[2]);
 
     function rp(x) {
