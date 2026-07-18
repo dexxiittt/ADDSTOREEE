@@ -102,40 +102,32 @@ async function loadFromSheet() {
       return;
     }
 
+    // FIX 1: Bersihkan teks "INV" dari URL agar tersisa angkanya saja
+    const cleanInvoiceID = String(invoiceID).replace("INV", "").trim();
+    const cacheBuster = "?t=" + Date.now();
+
     // FETCH PAYMENT_ID
-    const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/payment_id");
+    const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/payment_id" + cacheBuster);
     const data = await res.json();
 
-        // CARI INVOICE
-    const found = data.find(x => x.invoice == invoiceID);
+    // FIX 2: Pencarian invoice dengan normalisasi string
+    const found = data.find(x => String(x.invoice).replace("INV", "").trim() === cleanInvoiceID);
     if (!found) {
-      // Cek apakah invoice ini milik transaksi yang baru saja dibuat di browser ini
       const localInvoice = localStorage.getItem("invoiceID");
       if (localInvoice && String(localInvoice).trim() === String(invoiceID).trim()) {
-        // 🔥 FIX: Jika secara waktu sudah kadaluarsa, paksa UI & Toast jadi merah kadaluarsa
-        if (checkIsExpired()) {
-          showToast("Pesanan sudah kadaluarsa ❌", "fa-circle-xmark");
-          setExpiredUI();
-        } else {
-          showToast("Pesanan sudah dibuat ⚡", "fa-circle-check");
-        }
+        showToast("Pesanan sudah dibuat ⚡", "fa-circle-check");
       } else {
-        if (checkIsExpired()) {
-          showToast("Pesanan sudah kadaluarsa ❌", "fa-circle-xmark");
-          setExpiredUI();
-        } else {
-          showToast("Invoice tidak terdaftar atau telah kedaluwarsa ❌", "fa-circle-xmark");
-        }
+        showToast("Invoice tidak terdaftar atau telah kedaluwarsa ❌", "fa-circle-xmark");
       }
-      return; // Stop execution tanpa error keras, UI tetap pakai data local
+      return; 
     }
 
     // FETCH STATUS_PAYMENT
-    const statusRes = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/status_payment");
+    const statusRes = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/status_payment" + cacheBuster);
     const statusData = await statusRes.json();
 
-    // CARI STATUS INVOICE
-    const statusRow = statusData.find(x => x.invoice == found.invoice);
+    // FIX 3: Pencarian status pembayaran dengan normalisasi string
+    const statusRow = statusData.find(x => String(x.invoice).replace("INV", "").trim() === cleanInvoiceID);
     const paymentStatus = (statusRow?.status || "").trim().toLowerCase();
     const processStatus = (statusRow?.proses || "").trim().toLowerCase();
 
@@ -144,11 +136,11 @@ async function loadFromSheet() {
     window.rawInvoice = found.invoice;
 
     // FETCH PACKAGE_DETAIL
-    const resProduk = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PACKAGE_DETAIL");
+    const resProduk = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PACKAGE_DETAIL" + cacheBuster);
     const produk = await resProduk.json();
 
     // CARI DETAIL PRODUK
-    const detail = produk.find(p => p.package_id == found.package_id);
+    const detail = produk.find(p => String(p.package_id).trim() === String(found.package_id).trim());
 
     // RENDER DATA TERBARU DARI SHEET
     renderCustomer(info[0], info[1], info[2]);
@@ -157,11 +149,14 @@ async function loadFromSheet() {
       return "Rp " + x.toLocaleString("id-ID");
     }
 
-    const harga = parseInt(detail.price);
-    const diskon = parseFloat(detail.discount.replace("%", "").replace(",", "."));
-    const potongan = (harga * diskon) / 100;
-    const total = Math.floor(harga - potongan);
+    // 🔥 FIX 4: LOGIKA BARU MENGGUNAKAN KOLOM final_price (ANTI-CRASH)
+    const harga = parseInt(detail.price) || 0;
+    const total = parseInt(detail.final_price) || 0; // Mengambil langsung nominal dari kolom final_price
     const hemat = harga - total;
+    
+    // Hitung persentase diskon secara dinamis untuk kebutuhan tampilan UI saja
+    const hitungDiskon = harga > 0 ? ((harga - total) / harga * 100).toFixed(2) : "0";
+    const diskonTeks = "-" + hitungDiskon.replace(".00", "") + "%";
 
     const hargaHtml = `
       <div class="price-old">${rp(harga)}</div>
@@ -173,11 +168,12 @@ async function loadFromSheet() {
       detail.title,
       detail.subtitle,
       hargaHtml,
-      "-" + detail.discount,
+      diskonTeks, // Menampilkan teks diskon kalkulasi dinamis (ex: -22.23%)
       rp(hemat),
       rp(total)
     );
 
+    // Sekarang kode tidak akan crash lagi dan bisa sukses membaca status untuk merubah UI jadi HIJAU!
     renderStatus(paymentStatus, processStatus);
 
     const waktu = new Date().toLocaleString("id-ID", {
