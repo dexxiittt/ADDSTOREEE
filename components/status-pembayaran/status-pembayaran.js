@@ -128,6 +128,11 @@ async function loadFromSheet() {
     const paymentStatus = (statusRow?.status || "").trim().toLowerCase();
     const processStatus = (statusRow?.proses || "").trim().toLowerCase();
 
+     alert(
+"STATUS SHEET : " + paymentStatus +
+"\nPROSES : " + processStatus
+);
+
     // SPLIT CUSTOMER INFO
     const info = found.informasi_pelanggan.split("|");
     window.rawInvoice = found.invoice;
@@ -189,8 +194,9 @@ async function loadFromSheet() {
 
     // ============================================================
 
-    renderStatus(paymentStatus, processStatus);
-
+    alert("Memanggil renderStatus()");
+renderStatus(paymentStatus, processStatus);
+     
     const waktu = new Date().toLocaleString("id-ID", {
       day: "numeric",
       month: "long",
@@ -241,6 +247,11 @@ function renderProduct(image, title, subtitle, hargaHtml, diskon, hemat, total) 
 }
 
 function renderStatus(status, proses) {
+   alert(
+"renderStatus()\n" +
+"status = " + status +
+"\nproses = " + proses
+);
   // PAKSA JADI EXPIRED JIKA SUDAH LEBIH DARI 1 JAM (Kecuali kalau sudah sukses)
   if (status !== "success" && checkIsExpired()) {
     status = "expired";
@@ -248,6 +259,8 @@ function renderStatus(status, proses) {
 
   switch (status) {
     case "success":
+alert("MASUK CASE SUCCESS 🥳");
+setSuccessUI(proses);
       setSuccessUI(proses);
       // HAPUS DATA LAMA DARI LOCALSTORAGE AGAR TRANSAKSI BERIKUTNYA MEMBUAT INVOICE BARU
       localStorage.removeItem("invoiceID");
@@ -316,6 +329,7 @@ function setPendingUI() {
 }
 
 function setSuccessUI(proses) {
+   alert("setSuccessUI() terpanggil 🎉");
   const ui = getStatusElements();
 
   ui.invoiceBox.classList.remove("status-pending", "status-expired");
