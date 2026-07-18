@@ -112,10 +112,8 @@ async function loadFromSheet() {
 
 alert("B");
 
-    alert("Jumlah data = " + data.length);
-
-alert("Apakah array? " + Array.isArray(data));
-
+    alert(JSON.stringify(data));
+     
 const found = data.find(
   x => String(x.invoice).replace("INV", "").trim() === cleanInvoiceID
 );
