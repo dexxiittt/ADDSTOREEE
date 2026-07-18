@@ -104,11 +104,13 @@ async function loadFromSheet() {
     }
 
     const cleanInvoiceID = String(invoiceID).replace("INV", "").trim();
-    const cacheBuster = "?t=" + Date.now();
 
     // FETCH PAYMENT_ID
-    const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/payment_id" + cacheBuster);
-    const data = await res.json();
+    const res = await fetch(
+  "https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/payment_id"
+);
+
+const data = await res.json();
 
 alert("B");
 
@@ -131,8 +133,11 @@ alert("Found = " + JSON.stringify(found));
     }
 
     // FETCH STATUS_PAYMENT
-    const statusRes = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/status_payment" + cacheBuster);
-    const statusData = await statusRes.json();
+    const statusRes = await fetch(
+  "https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/status_payment"
+);
+
+const statusData = await statusRes.json();
 
 alert("D");
 
@@ -150,8 +155,11 @@ alert("D");
     window.rawInvoice = found.invoice;
 
     // FETCH PACKAGE_DETAIL
-    const resProduk = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PACKAGE_DETAIL" + cacheBuster);
-    const produk = await resProduk.json();
+    const resProduk = await fetch(
+  "https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PACKAGE_DETAIL"
+);
+
+const produk = await resProduk.json();
 
 alert("E");
 
