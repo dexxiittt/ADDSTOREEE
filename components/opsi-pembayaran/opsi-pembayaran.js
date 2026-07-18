@@ -53,12 +53,18 @@ fetch(sheetURL)
     document.getElementById("paket").innerText = row.title;
     document.getElementById("paket-detail").innerText = "Invite Member • " + row.duration;
 
-    const price = Number(row.price) || 0;
+    const price = Number(String(row.price).replace(/[^\d]/g, "")) || 0;
+    const sheetFinalPrice = Number(String(row.final_price).replace(/[^\d]/g, "")) || 0;
     const discount = parseDiscount(row.discount);
 
-    const final = discount > 0
-      ? Math.round(price - (price * discount / 100))
-      : price;
+    // Kunci harga agar mengambil nilai asli mutlak dari kolom final_price di sheet
+    let final = sheetFinalPrice > 0 ? sheetFinalPrice : (discount > 0 ? Math.round(price - (price * discount / 100)) : price);
+
+    // ==========================================
+    // PENTING: JIKA KAMU PAKAI OPSI SULAP OTOMATIS .999 
+    // Hapus tanda garis miring (//) di baris bawah ini agar web otomatis mengubahnya:
+    // if (discount > 0) { final = Math.round(final / 1000) * 1000 - 1; }
+    // ==========================================
 
     const diskonEl = document.getElementById("paket-diskon");
     const hematEl = document.getElementById("paket-hemat");
