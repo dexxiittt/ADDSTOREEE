@@ -79,21 +79,16 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
     // JEMBATAN KONVERSI: Mengubah final_price dari Sheets menjadi promo_text
     // ====================================================================
     const data = rawData.map(i => {
-      // Bersihkan format harga (buang titik/Rp jika ada)
       const price = Number(String(i.price).replace(/[^\d]/g, "")) || 0;
       const finalPrice = Number(String(i.final_price).replace(/[^\d]/g, "")) || 0;
 
-      // Jika ada harga final dan harganya lebih murah dari harga awal
       if (finalPrice > 0 && finalPrice < price) {
-        // Hitung persentase diskonnya secara otomatis di latar belakang
         const discountPercent = ((price - finalPrice) / price) * 100;
-        
-        // Ubah jadi format string "22,23%" agar match dengan fungsi parseDiscount() bawaanmu
         const discountString = discountPercent.toFixed(2).replace(".", ",") + "%";
         
         return {
           ...i,
-          promo_text: discountString // Kita injeksikan hasilnya ke promo_text otomatis
+          promo_text: discountString
         };
       }
       return i;
@@ -168,10 +163,7 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
                 let priceHTML = `<b>${formatPrice(price)}</b>`;
 
                 if (discount !== null) {
-                  // Ambil langsung harga final asli dari sheet (bersihkan formatnya)
                   const sheetFinalPrice = Number(String(i.final_price).replace(/[^\d]/g, "")) || 0;
-                  
-                  // Jika di sheet ada harganya, pakai itu. Jika tidak, baru hitung pakai rumus persenan
                   const finalPrice = sheetFinalPrice > 0 ? sheetFinalPrice : Math.round(price - (price * discount / 100));
 
                   priceHTML = `
@@ -190,62 +182,40 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
                 }
 
                 if (isNoGar(i)) {
-  cls += " nogar";
-}
+                  cls += " nogar";
+                }
 
-// ==========================================
-// TAMBAHKAN LOGIKA BADGE STATUS (MAIN ITEMS)
-// ==========================================
-let badgeStatusHTML = "";
-if (i.badge_status) {
-  const statusKey = String(i.badge_status).toLowerCase().trim();
-  if (statusKey === "soldout" || statusKey === "sold out") {
-    cls += " soldout";
-    badgeStatusHTML = `<span class="badge-tape tape-blue">Sold Out</span>`;
-  } else if (statusKey === "expired") {
-    cls += " expired";
-    badgeStatusHTML = `<span class="badge-tape tape-red">Expired</span>`;
-  }
-}
+                // Ambil & Hitung Logika Status Solatif (Main Items)
+                let badgeStatusHTML = "";
+                if (i.badge_status) {
+                  const statusKey = String(i.badge_status).toLowerCase().trim();
+                  if (statusKey === "soldout" || statusKey === "sold out") {
+                    cls += " soldout";
+                    badgeStatusHTML = `<span class="badge-tape tape-blue">Sold Out</span>`;
+                  } else if (statusKey === "expired") {
+                    cls += " expired";
+                    badgeStatusHTML = `<span class="badge-tape tape-red">Expired</span>`;
+                  }
+                }
 
-return `
-  <a href="package.html?package_id=${i.package_id}" class="${cls}">
-    ${badgeStatusHTML}
-    <span>
-      ${i.package} ${i.duration}
-      ${i.badge_label 
-        ? `<em class="role-badge">
-             ${i.badge_icon ?? ""} ${i.badge_label}
-             ${garBadge(i)}
-           </em>`
-        : garBadge(i)
-      }
-    </span>
-    <div class="price-line promo-left">
-      ${priceHTML}
-    </div>
-  </a>
-`;
-
-                // KODE BARU (Sudah mendukung badge_label & badge_icon)
-return `
-  <a href="package.html?package_id=${i.package_id}" class="${cls}">
-    <span>
-      ${i.package} ${i.duration}
-      ${i.badge_label 
-        ? `<em class="role-badge">
-             ${i.badge_icon ?? ""} ${i.badge_label}
-             ${garBadge(i)}
-           </em>`
-        : garBadge(i)
-      }
-    </span>
-    <div class="price-line promo-left">
-      ${priceHTML}
-    </div>
-  </a>
-`;
-
+                return `
+                  <a href="package.html?package_id=${i.package_id}" class="${cls}">
+                    ${badgeStatusHTML}
+                    <span>
+                      ${i.package} ${i.duration}
+                      ${i.badge_label 
+                        ? `<em class="role-badge">
+                             ${i.badge_icon ?? ""} ${i.badge_label}
+                             ${garBadge(i)}
+                           </em>`
+                        : garBadge(i)
+                      }
+                    </span>
+                    <div class="price-line promo-left">
+                      ${priceHTML}
+                    </div>
+                  </a>
+                `;
               }).join("")}
 
               ${detailItems.length ? `<button class="toggle-detail">Selengkapnya...</button>` : ``}
@@ -264,47 +234,28 @@ return `
                     }
 
                     if (isNoGar(i)) {
-  cls += " nogar";
-}
+                      cls += " nogar";
+                    }
 
-// ============================================
-// TAMBAHKAN LOGIKA BADGE STATUS (DETAIL ITEMS)
-// ============================================
-let badgeStatusHTML = "";
-if (i.badge_status) {
-  const statusKey = String(i.badge_status).toLowerCase().trim();
-  if (statusKey === "soldout" || statusKey === "sold out") {
-    cls += " soldout";
-    badgeStatusHTML = `<span class="badge-tape tape-blue">Sold Out</span>`;
-  } else if (statusKey === "expired") {
-    cls += " expired";
-    badgeStatusHTML = `<span class="badge-tape tape-red">Expired</span>`;
-  }
-}
+                    // Ambil Logika Status Solatif Terlebih Dahulu (Detail Items)
+                    let badgeStatusHTML = "";
+                    if (i.badge_status) {
+                      const statusKey = String(i.badge_status).toLowerCase().trim();
+                      if (statusKey === "soldout" || statusKey === "sold out") {
+                        cls += " soldout";
+                        badgeStatusHTML = `<span class="badge-tape tape-blue">Sold Out</span>`;
+                      } else if (statusKey === "expired") {
+                        cls += " expired";
+                        badgeStatusHTML = `<span class="badge-tape tape-red">Expired</span>`;
+                      }
+                    }
 
-return `
-  <a href="package.html?package_id=${i.package_id}" class="${cls}" onclick="event.stopPropagation();">
-    ${badgeStatusHTML}
-    <span>
-      ${i.package} ${i.duration}
-      ${i.badge_label 
-        ? `<em class="role-badge">
-             ${i.badge_icon ?? ""} ${i.badge_label}
-             ${garBadge(i)}
-           </em>`
-        : garBadge(i)
-      }
-    </span>
-    ${priceHTML}
-  </a>
-`;
-
+                    // Hitung Harga Paket Setelah Logika Status Ditetapkan
                     const price = Number(String(i.price).replace(/[^\d]/g, "")) || 0;
                     const discount = parseDiscount(i.promo_text);
                     let priceHTML = `<b>${formatPrice(price)}</b>`;
 
                     if (discount !== null) {
-                      // Ambil langsung harga final asli dari sheet
                       const sheetFinalPrice = Number(String(i.final_price).replace(/[^\d]/g, "")) || 0;
                       const finalPrice = sheetFinalPrice > 0 ? sheetFinalPrice : Math.round(price - (price * discount / 100));
 
@@ -321,6 +272,7 @@ return `
 
                     return `
                       <a href="package.html?package_id=${i.package_id}" class="${cls}" onclick="event.stopPropagation();">
+                        ${badgeStatusHTML}
                         <span>
                           ${i.package} ${i.duration}
                           ${i.badge_label 
@@ -340,21 +292,21 @@ return `
             `;
           })()}
 
-${(() => {
-  const g = prod.items.find(i => i.guarantee)?.guarantee?.toLowerCase();
-  if (!g) return "";
+          ${(() => {
+            const g = prod.items.find(i => i.guarantee)?.guarantee?.toLowerCase();
+            if (!g) return "";
 
-  if (g.includes("full")) {
-    return `<div class="note has-guarantee"><i class="fa-solid fa-check"></i> Full Garansi</div>`;
-  }
-  if (g.includes("mixed")) {
-    return `<div class="note mixed-guarantee"><i class="fa-solid fa-circle-half-stroke"></i> Mixed Garansi</div>`;
-  }
-  if (g.includes("tidak") || g.includes("no")) {
-    return `<div class="note no-guarantee"><i class="fa-solid fa-xmark"></i> Tidak Bergaransi</div>`;
-  }
-  return "";
-})()}
+            if (g.includes("full")) {
+              return `<div class="note has-guarantee"><i class="fa-solid fa-check"></i> Full Garansi</div>`;
+            }
+            if (g.includes("mixed")) {
+              return `<div class="note mixed-guarantee"><i class="fa-solid fa-circle-half-stroke"></i> Mixed Garansi</div>`;
+            }
+            if (g.includes("tidak") || g.includes("no")) {
+              return `<div class="note no-guarantee"><i class="fa-solid fa-xmark"></i> Tidak Bergaransi</div>`;
+            }
+            return "";
+          })()}
         </div>
       `;
     });
@@ -396,7 +348,6 @@ document.addEventListener("click", function(e) {
 
   const isOpen = detail.classList.contains("open");
 
-  /* tutup semua */
   document.querySelectorAll(".package-detail.open").forEach(d => {
     d.classList.remove("open");
   });
@@ -405,7 +356,6 @@ document.addEventListener("click", function(e) {
     b.textContent = "Selengkapnya...";
   });
 
-  /* buka kalau belum */
   if (!isOpen) {
     detail.classList.add("open");
     card.scrollIntoView({
