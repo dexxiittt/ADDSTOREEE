@@ -73,7 +73,7 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
     if (!r.ok) throw new Error("Fetch gagal");
     return r.json();
   })
-  .then(rawData => { // <-- 1. Ubah variabel parameter ini menjadi rawData
+  .then(rawData => {
     
     // ====================================================================
     // JEMBATAN KONVERSI: Mengubah final_price dari Sheets menjadi promo_text
@@ -122,6 +122,16 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
 
     let html = "";
     const products = Object.values(grouped);
+
+    // 1. Urutkan kotak/card produk berdasarkan card_order dari Sheet
+    products.sort((a, b) => {
+      const itemA = a.items.find(i => i.card_order !== undefined && i.card_order !== "");
+      const itemB = b.items.find(i => i.card_order !== undefined && i.card_order !== "");
+      const orderA = itemA ? Number(itemA.card_order) : 999;
+      const orderB = itemB ? Number(itemB.card_order) : 999;
+      return orderA - orderB;
+    });
+
     const renderProducts = window.HOMEPAGE_LIMIT ? products.slice(0, window.HOMEPAGE_LIMIT) : products;
 
     renderProducts.forEach(prod => {
@@ -139,8 +149,16 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
 
           ${(() => {
             const sortedItems = [...prod.items];
-            const mainItems = sortedItems.filter(i => i.group === "main");
-            const detailItems = sortedItems.filter(i => i.group === "detail");
+            
+            // 2. Urutkan mainItems di dalam card berdasarkan product_order
+            const mainItems = sortedItems
+              .filter(i => i.group === "main")
+              .sort((a, b) => (Number(a.product_order) || 999) - (Number(b.product_order) || 999));
+              
+            // 3. Urutkan detailItems di dalam card berdasarkan product_order
+            const detailItems = sortedItems
+              .filter(i => i.group === "detail")
+              .sort((a, b) => (Number(a.product_order) || 999) - (Number(b.product_order) || 999));
 
             return `
               ${mainItems.map(i => {
@@ -150,20 +168,20 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
                 let priceHTML = `<b>${formatPrice(price)}</b>`;
 
                 if (discount !== null) {
-  // Ambil langsung harga final asli dari sheet (bersihkan formatnya)
-  const sheetFinalPrice = Number(String(i.final_price).replace(/[^\d]/g, "")) || 0;
-  
-  // Jika di sheet ada harganya, pakai itu. Jika tidak, baru hitung pakai rumus persenan
-  const finalPrice = sheetFinalPrice > 0 ? sheetFinalPrice : Math.round(price - (price * discount / 100));
+                  // Ambil langsung harga final asli dari sheet (bersihkan formatnya)
+                  const sheetFinalPrice = Number(String(i.final_price).replace(/[^\d]/g, "")) || 0;
+                  
+                  // Jika di sheet ada harganya, pakai itu. Jika tidak, baru hitung pakai rumus persenan
+                  const finalPrice = sheetFinalPrice > 0 ? sheetFinalPrice : Math.round(price - (price * discount / 100));
 
-  priceHTML = `
-    <span class="discount-badge">${discount}%</span>
-    <div class="price-wrap">
-      <span class="price-old">${formatPrice(price)}</span>
-      <span class="price-new">${formatPrice(finalPrice)}</span>
-    </div>
-  `;
-}
+                  priceHTML = `
+                    <span class="discount-badge">${discount}%</span>
+                    <div class="price-wrap">
+                      <span class="price-old">${formatPrice(price)}</span>
+                      <span class="price-new">${formatPrice(finalPrice)}</span>
+                    </div>
+                  `;
+                }
 
                 if (i.is_featured) {
                   const [color, glow] = i.is_featured.split(":");
@@ -212,20 +230,20 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
                     let priceHTML = `<b>${formatPrice(price)}</b>`;
 
                     if (discount !== null) {
-  // Ambil langsung harga final asli dari sheet
-  const sheetFinalPrice = Number(String(i.final_price).replace(/[^\d]/g, "")) || 0;
-  const finalPrice = sheetFinalPrice > 0 ? sheetFinalPrice : Math.round(price - (price * discount / 100));
+                      // Ambil langsung harga final asli dari sheet
+                      const sheetFinalPrice = Number(String(i.final_price).replace(/[^\d]/g, "")) || 0;
+                      const finalPrice = sheetFinalPrice > 0 ? sheetFinalPrice : Math.round(price - (price * discount / 100));
 
-  priceHTML = `
-    <div class="price-line promo-left">
-      <span class="discount-badge">${discount}%</span>
-      <div class="price-wrap">
-        <span class="price-old">${formatPrice(price)}</span>
-        <span class="price-new">${formatPrice(finalPrice)}</span>
-      </div>
-    </div>
-  `;
-}
+                      priceHTML = `
+                        <div class="price-line promo-left">
+                          <span class="discount-badge">${discount}%</span>
+                          <div class="price-wrap">
+                            <span class="price-old">${formatPrice(price)}</span>
+                            <span class="price-new">${formatPrice(finalPrice)}</span>
+                          </div>
+                        </div>
+                      `;
+                    }
 
                     return `
                       <a href="package.html?package_id=${i.package_id}" class="${cls}" onclick="event.stopPropagation();">
