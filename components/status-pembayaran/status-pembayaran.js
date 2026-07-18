@@ -113,8 +113,9 @@ async function loadFromSheet() {
 alert("B");
 
     const found = data.find(x => String(x.invoice).replace("INV", "").trim() === cleanInvoiceID);
+
+     alert("C");
     if (!found) {
-       alert("C");
       const localInvoice = localStorage.getItem("invoiceID");
       if (localInvoice && String(localInvoice).trim() === String(invoiceID).trim()) {
         showToast("Pesanan sudah dibuat ⚡", "fa-circle-check");
