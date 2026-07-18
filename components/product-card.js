@@ -190,8 +190,42 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
                 }
 
                 if (isNoGar(i)) {
-                  cls += " nogar";
-                }
+  cls += " nogar";
+}
+
+// ==========================================
+// TAMBAHKAN LOGIKA BADGE STATUS (MAIN ITEMS)
+// ==========================================
+let badgeStatusHTML = "";
+if (i.badge_status) {
+  const statusKey = String(i.badge_status).toLowerCase().trim();
+  if (statusKey === "soldout" || statusKey === "sold out") {
+    cls += " soldout";
+    badgeStatusHTML = `<span class="badge-tape tape-blue">Sold Out</span>`;
+  } else if (statusKey === "expired") {
+    cls += " expired";
+    badgeStatusHTML = `<span class="badge-tape tape-red">Expired</span>`;
+  }
+}
+
+return `
+  <a href="package.html?package_id=${i.package_id}" class="${cls}">
+    ${badgeStatusHTML}
+    <span>
+      ${i.package} ${i.duration}
+      ${i.badge_label 
+        ? `<em class="role-badge">
+             ${i.badge_icon ?? ""} ${i.badge_label}
+             ${garBadge(i)}
+           </em>`
+        : garBadge(i)
+      }
+    </span>
+    <div class="price-line promo-left">
+      ${priceHTML}
+    </div>
+  </a>
+`;
 
                 // KODE BARU (Sudah mendukung badge_label & badge_icon)
 return `
@@ -230,8 +264,40 @@ return `
                     }
 
                     if (isNoGar(i)) {
-                      cls += " nogar";
-                    }
+  cls += " nogar";
+}
+
+// ============================================
+// TAMBAHKAN LOGIKA BADGE STATUS (DETAIL ITEMS)
+// ============================================
+let badgeStatusHTML = "";
+if (i.badge_status) {
+  const statusKey = String(i.badge_status).toLowerCase().trim();
+  if (statusKey === "soldout" || statusKey === "sold out") {
+    cls += " soldout";
+    badgeStatusHTML = `<span class="badge-tape tape-blue">Sold Out</span>`;
+  } else if (statusKey === "expired") {
+    cls += " expired";
+    badgeStatusHTML = `<span class="badge-tape tape-red">Expired</span>`;
+  }
+}
+
+return `
+  <a href="package.html?package_id=${i.package_id}" class="${cls}" onclick="event.stopPropagation();">
+    ${badgeStatusHTML}
+    <span>
+      ${i.package} ${i.duration}
+      ${i.badge_label 
+        ? `<em class="role-badge">
+             ${i.badge_icon ?? ""} ${i.badge_label}
+             ${garBadge(i)}
+           </em>`
+        : garBadge(i)
+      }
+    </span>
+    ${priceHTML}
+  </a>
+`;
 
                     const price = Number(String(i.price).replace(/[^\d]/g, "")) || 0;
                     const discount = parseDiscount(i.promo_text);
