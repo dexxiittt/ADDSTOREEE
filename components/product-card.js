@@ -150,11 +150,11 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
                 let priceHTML = `<b>${formatPrice(price)}</b>`;
 
                 if (discount !== null) {
-  // Ambil langsung harga final asli dari sheet (bersihkan formatnya)
   const sheetFinalPrice = Number(String(i.final_price).replace(/[^\d]/g, "")) || 0;
-  
-  // Jika di sheet ada harganya, pakai itu. Jika tidak, baru hitung pakai rumus persenan
-  const finalPrice = sheetFinalPrice > 0 ? sheetFinalPrice : Math.round(price - (price * discount / 100));
+  let finalPrice = sheetFinalPrice > 0 ? sheetFinalPrice : Math.round(price - (price * discount / 100));
+
+  // SULAP JADI .999 OTOMATIS
+  finalPrice = Math.round(finalPrice / 1000) * 1000 - 1;
 
   priceHTML = `
     <span class="discount-badge">${discount}%</span>
@@ -212,9 +212,11 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
                     let priceHTML = `<b>${formatPrice(price)}</b>`;
 
                     if (discount !== null) {
-  // Ambil langsung harga final asli dari sheet
   const sheetFinalPrice = Number(String(i.final_price).replace(/[^\d]/g, "")) || 0;
-  const finalPrice = sheetFinalPrice > 0 ? sheetFinalPrice : Math.round(price - (price * discount / 100));
+  let finalPrice = sheetFinalPrice > 0 ? sheetFinalPrice : Math.round(price - (price * discount / 100));
+
+  // SULAP JADI .999 OTOMATIS
+  finalPrice = Math.round(finalPrice / 1000) * 1000 - 1;
 
   priceHTML = `
     <div class="price-line promo-left">
