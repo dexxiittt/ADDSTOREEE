@@ -93,7 +93,6 @@ function loadFromLocalStorage() {
 }
 
 async function loadFromSheet() {
-   alert("A");
   try {
     const params = new URLSearchParams(window.location.search);
     const invoiceID = params.get("invoice");
@@ -106,21 +105,12 @@ async function loadFromSheet() {
     const cleanInvoiceID = String(invoiceID).replace("INV", "").trim();
 
     // FETCH PAYMENT_ID
-    const res = await fetch(
-  "https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/payment_id"
-);
-
-const data = await res.json();
-
-alert("B");
-
-    alert(JSON.stringify(data));
+    const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/payment_id");
+    const data = await res.json();
      
-const found = data.find(
-  x => String(x.invoice).replace("INV", "").trim() === cleanInvoiceID
-);
-
-alert("Found = " + JSON.stringify(found));
+    const found = data.find(
+      x => String(x.invoice).replace("INV", "").trim() === cleanInvoiceID
+    );
      
     if (!found) {
       const localInvoice = localStorage.getItem("invoiceID");
@@ -133,38 +123,22 @@ alert("Found = " + JSON.stringify(found));
     }
 
     // FETCH STATUS_PAYMENT
-    const statusRes = await fetch(
-  "https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/status_payment"
-);
-
-const statusData = await statusRes.json();
-
-alert("D");
+    const statusRes = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/status_payment");
+    const statusData = await statusRes.json();
 
     const statusRow = statusData.find(x => String(x.invoice).replace("INV", "").trim() === cleanInvoiceID);
     const paymentStatus = (statusRow?.status || "").trim().toLowerCase();
     const processStatus = (statusRow?.proses || "").trim().toLowerCase();
-
-     alert(
-"STATUS SHEET : " + paymentStatus +
-"\nPROSES : " + processStatus
-);
 
     // SPLIT CUSTOMER INFO
     const info = found.informasi_pelanggan.split("|");
     window.rawInvoice = found.invoice;
 
     // FETCH PACKAGE_DETAIL
-    const resProduk = await fetch(
-  "https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PACKAGE_DETAIL"
-);
-
-const produk = await resProduk.json();
-
-alert("E");
+    const resProduk = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PACKAGE_DETAIL");
+    const produk = await resProduk.json();
 
     const detail = produk.find(p => String(p.package_id).trim() === String(found.package_id).trim());
-alert("F");
     renderCustomer(info[0], info[1], info[2]);
 
     function rp(x) {
@@ -216,8 +190,7 @@ alert("F");
 
     // ============================================================
 
-    alert("Memanggil renderStatus()");
-renderStatus(paymentStatus, processStatus);
+    renderStatus(paymentStatus, processStatus);
      
     const waktu = new Date().toLocaleString("id-ID", {
       day: "numeric",
@@ -234,17 +207,9 @@ renderStatus(paymentStatus, processStatus);
 
     renderInvoice(found.invoice, waktu);
   } catch (err) {
-  alert(
-    "ERROR:\n\n" +
-    err.name +
-    "\n\n" +
-    err.message
-  );
-
-  console.error(err);
+    console.warn("Gagal sinkronisasi dengan Google Sheet:", err);
+  }
 }
-}
-
 
 /* ============================================================
    UI RENDERING FUNCTIONS
@@ -276,11 +241,6 @@ function renderProduct(image, title, subtitle, hargaHtml, diskon, hemat, total) 
 }
 
 function renderStatus(status, proses) {
-   alert(
-"renderStatus()\n" +
-"status = " + status +
-"\nproses = " + proses
-);
   // PAKSA JADI EXPIRED JIKA SUDAH LEBIH DARI 1 JAM (Kecuali kalau sudah sukses)
   if (status !== "success" && checkIsExpired()) {
     status = "expired";
@@ -288,7 +248,6 @@ function renderStatus(status, proses) {
 
   switch (status) {
     case "success":
-alert("MASUK CASE SUCCESS 🥳");
 setSuccessUI(proses);
       setSuccessUI(proses);
       // HAPUS DATA LAMA DARI LOCALSTORAGE AGAR TRANSAKSI BERIKUTNYA MEMBUAT INVOICE BARU
@@ -358,7 +317,6 @@ function setPendingUI() {
 }
 
 function setSuccessUI(proses) {
-   alert("setSuccessUI() terpanggil 🎉");
   const ui = getStatusElements();
 
   ui.invoiceBox.classList.remove("status-pending", "status-expired");
