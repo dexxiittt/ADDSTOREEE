@@ -466,19 +466,49 @@
   );
 }
 
-/* SOLD OUT */
-.package-row.soldout {
-  opacity: 0.45;
-  pointer-events: none;
+/* ====================================================================
+   STATUS OVERLAY (SOLATIF / TAPE BADGE VERSION)
+   ==================================================================== */
+/* Base Row saat Sold Out & Expired */
+.package-row.soldout,
+.package-row.expired {
+  position: relative;
+  pointer-events: none; /* Link tidak bisa diklik[span_2](start_span)[span_2](end_span) */
+}
+
+.package-row.soldout { opacity: 0.55; }
+.package-row.expired { opacity: 0.45; filter: grayscale(1); } /* Efek abu-abu[span_3](start_span)[span_3](end_span) */
+
+/* Efek Coret Hanya untuk Teks & Harga (Biar Solatifnya Gak Ikut Tercoret) */
+.package-row.soldout span, .package-row.soldout .price-wrap, .package-row.soldout b,
+.package-row.expired span, .package-row.expired .price-wrap, .package-row.expired b {
   text-decoration: line-through;
 }
 
-/* EXPIRED */
-.package-row.expired {
-  opacity: 0.35;
-  filter: grayscale(1);
-  pointer-events: none;
+/* KELAS BADGE SOLATIF (TAPE STICKER) */
+.badge-tape {
+  position: absolute;
+  top: 2px;
+  right: 6px;
+  z-index: 5;
+  
+  font-size: 8px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  line-height: 1;
+  
+  padding: 3px 6px;
+  color: #ffffff;
+  border-radius: 3px;
+  
+  transform: rotate(4deg); /* Efek miring estetik khas solatif */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
 }
+
+/* Variasi Warna Solatif */
+.tape-blue { background: #2563eb; } /* Sold Out = Biru */
+.tape-red  { background: #dc2626; } /* Expired = Merah */
 
 /* NOTE GARANSI */
 /* ====================================================================
