@@ -193,17 +193,25 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
                   cls += " nogar";
                 }
 
-                return `
-                  <a href="package.html?package_id=${i.package_id}" class="${cls}">
-                    <span>
-                      ${i.package} ${i.duration}
-                      ${garBadge(i)}
-                    </span>
-                    <div class="price-line promo-left">
-                      ${priceHTML}
-                    </div>
-                  </a>
-                `;
+                // KODE BARU (Sudah mendukung badge_label & badge_icon)
+return `
+  <a href="package.html?package_id=${i.package_id}" class="${cls}">
+    <span>
+      ${i.package} ${i.duration}
+      ${i.badge_label 
+        ? `<em class="role-badge">
+             ${i.badge_icon ?? ""} ${i.badge_label}
+             ${garBadge(i)}
+           </em>`
+        : garBadge(i)
+      }
+    </span>
+    <div class="price-line promo-left">
+      ${priceHTML}
+    </div>
+  </a>
+`;
+
               }).join("")}
 
               ${detailItems.length ? `<button class="toggle-detail">Selengkapnya...</button>` : ``}
