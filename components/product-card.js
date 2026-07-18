@@ -274,21 +274,22 @@ return `
             `;
           })()}
 
-          ${(() => {
-            const g = prod.items.find(i => i.guarantee)?.guarantee?.toLowerCase();
-            if (!g) return "";
+          // GANTI BLOK PENGECEKAN GUARANTEE LAMA DENGAN INI:
+${(() => {
+  const g = prod.items.find(i => i.guarantee)?.guarantee?.toLowerCase();
+  if (!g) return "";
 
-            if (g.includes("full")) {
-              return `<div class="note has-guarantee">Full Garansi</div>`;
-            }
-            if (g.includes("mixed")) {
-              return `<div class="note mixed-guarantee">Mixed Garansi</div>`;
-            }
-            if (g.includes("tidak") || g.includes("no")) {
-              return `<div class="note no-guarantee">Tidak Bergaransi</div>`;
-            }
-            return "";
-          })()}
+  if (g.includes("full")) {
+    return `<div class="note has-guarantee"><i class="fa-solid fa-check"></i> Full Garansi</div>`;
+  }
+  if (g.includes("mixed")) {
+    return `<div class="note mixed-guarantee"><i class="fa-solid fa-circle-half-stroke"></i> Mixed Garansi</div>`;
+  }
+  if (g.includes("tidak") || g.includes("no")) {
+    return `<div class="note no-guarantee"><i class="fa-solid fa-xmark"></i> Tidak Bergaransi</div>`;
+  }
+  return "";
+})()}
         </div>
       `;
     });
