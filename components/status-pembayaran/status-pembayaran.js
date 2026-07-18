@@ -105,91 +105,80 @@ async function loadFromSheet() {
       return;
     }
 
-    // Bersihkan teks "INV" dari parameter URL untuk pencarian yang akurat
+    // 🔥 FIX 1: Bersihkan teks "INV" dari URL agar tersisa angkanya saja
     const cleanInvoiceID = String(invoiceID).replace("INV", "").trim();
 
-    // FETCH PAYMENT_ID
-    const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/payment_id");
+    // ⚡ FIX TAMBAHAN: Pemicu agar OpenSheet selalu mengambil data paling baru (Anti-Cache)
+    const cacheBuster = "?t=" + Date.now();
+
+    // FETCH PAYMENT_ID (Ditambah cache buster)
+    const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/payment_id" + cacheBuster);
     const data = await res.json();
 
-    // Bersihkan kedua sisi string saat mencari invoice di sheet payment_id
+    // 🔥 FIX 2: Bersihkan string kolom invoice di sheet saat pencarian data
     const found = data.find(x => String(x.invoice).replace("INV", "").trim() === cleanInvoiceID);
-    
     if (!found) {
       const localInvoice = localStorage.getItem("invoiceID");
-      const cleanLocalInvoice = localInvoice ? String(localInvoice).replace("INV", "").trim() : "";
-      
-      if (cleanLocalInvoice && cleanLocalInvoice === cleanInvoiceID) {
-        if (checkIsExpired()) {
-          showToast("Pesanan sudah kadaluarsa ❌", "fa-circle-xmark");
-          setExpiredUI();
-        } else {
-          showToast("Pesanan sudah dibuat ⚡", "fa-circle-check");
-        }
+      if (localInvoice && String(localInvoice).trim() === String(invoiceID).trim()) {
+        showToast("Pesanan sudah dibuat ⚡", "fa-circle-check");
       } else {
-        if (checkIsExpired()) {
-          showToast("Pesanan sudah kadaluarsa ❌", "fa-circle-xmark");
-          setExpiredUI();
-        } else {
-          showToast("Invoice tidak terdaftar atau telah kedaluwarsa ❌", "fa-circle-xmark");
-        }
+        showToast("Invoice tidak terdaftar atau telah kedaluwarsa ❌", "fa-circle-xmark");
       }
       return; 
     }
 
-    // FETCH STATUS_PAYMENT
-    const statusRes = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/status_payment");
+    // FETCH STATUS_PAYMENT (Ditambah cache buster)
+    const statusRes = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/status_payment" + cacheBuster);
     const statusData = await statusRes.json();
 
-    // Bersihkan kedua sisi string saat mencari status di sheet status_payment
-    const cleanFoundInvoice = String(found.invoice).replace("INV", "").trim();
-    const statusRow = statusData.find(x => String(x.invoice).replace("INV", "").trim() === cleanFoundInvoice);
-    
+    // 🔥 FIX 3: Bersihkan string kolom invoice saat mencari status pembayaran
+    const statusRow = statusData.find(x => String(x.invoice).replace("INV", "").trim() === cleanInvoiceID);
     const paymentStatus = (statusRow?.status || "").trim().toLowerCase();
     const processStatus = (statusRow?.proses || "").trim().toLowerCase();
 
     // SPLIT CUSTOMER INFO
     const info = found.informasi_pelanggan.split("|");
-    window.rawInvoice = cleanFoundInvoice;
+    window.rawInvoice = found.invoice;
 
-    // FETCH PACKAGE_DETAIL
-    const resProduk = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PACKAGE_DETAIL");
+    // FETCH PACKAGE_DETAIL (Ditambah cache buster)
+    const resProduk = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PACKAGE_DETAIL" + cacheBuster);
     const produk = await resProduk.json();
 
     // CARI DETAIL PRODUK
-    const detail = produk.find(p => String(p.package_id).trim() === String(found.package_id).trim());
+    const detail = produk.find(p => p.package_id == found.package_id);
 
     // RENDER DATA TERBARU DARI SHEET
-    renderCustomer(info[0] || "", info[1] || "", info[2] || "");
+    renderCustomer(info[0], info[1], info[2]);
 
     function rp(x) {
       return "Rp " + x.toLocaleString("id-ID");
     }
 
-    if (detail) {
-      const harga = parseInt(detail.price) || 0;
-      const diskon = parseFloat(detail.discount.replace("%", "").replace(",", ".")) || 0;
-      const potongan = (harga * diskon) / 100;
-      const total = Math.floor(harga - potongan);
-      const hemat = harga - total;
+    const harga = parseInt(detail.price);
+    
+    // 🔥 FIX 4: Bungkus dengan String() agar tidak crash jika format diskon di sheet terbaca sebagai angka murni
+    const discountStr = String(detail.discount || "0");
+    const diskon = parseFloat(discountStr.replace("%", "").replace(",", ".")) || 0;
+    const potongan = (harga * diskon) / 100;
+    const total = Math.floor(harga - potongan);
+    const hemat = harga - total;
 
-      const hargaHtml = `
-        <div class="price-old">${rp(harga)}</div>
-        <div class="price-final">${rp(total)}</div>
-      `;
+    const hargaHtml = `
+      <div class="price-old">${rp(harga)}</div>
+      <div class="price-final">${rp(total)}</div>
+    `;
 
-      renderProduct(
-        detail.image_url,
-        detail.title,
-        detail.subtitle,
-        hargaHtml,
-        "-" + detail.discount,
-        rp(hemat),
-        rp(total)
-      );
-    }
+    renderProduct(
+      detail.image_url,
+      detail.title,
+      detail.subtitle,
+      hargaHtml,
+      "-" + discountStr,
+      rp(hemat),
+      rp(total)
+    );
 
-    // Sekarang ini akan berjalan lancar dan mengubah UI menjadi Sukses (Hijau)
+    // Sekarang status 'success' dari sheet akan terbaca sempurna dan menimpa UI menjadi Hijau!
     renderStatus(paymentStatus, processStatus);
 
     const waktu = new Date().toLocaleString("id-ID", {
@@ -205,7 +194,7 @@ async function loadFromSheet() {
     .replace("pukul", "")
     .trim();
 
-    renderInvoice(cleanFoundInvoice, waktu);
+    renderInvoice(found.invoice, waktu);
   } catch (err) {
     console.warn("Gagal sinkronisasi dengan Google Sheet:", err);
   }
