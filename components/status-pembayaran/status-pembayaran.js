@@ -102,7 +102,6 @@ async function loadFromSheet() {
       return;
     }
 
-    // FIX 1: Bersihkan teks "INV" dari URL agar tersisa angkanya saja
     const cleanInvoiceID = String(invoiceID).replace("INV", "").trim();
     const cacheBuster = "?t=" + Date.now();
 
@@ -110,7 +109,6 @@ async function loadFromSheet() {
     const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/payment_id" + cacheBuster);
     const data = await res.json();
 
-    // FIX 2: Pencarian invoice dengan normalisasi string
     const found = data.find(x => String(x.invoice).replace("INV", "").trim() === cleanInvoiceID);
     if (!found) {
       const localInvoice = localStorage.getItem("invoiceID");
@@ -126,7 +124,6 @@ async function loadFromSheet() {
     const statusRes = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/status_payment" + cacheBuster);
     const statusData = await statusRes.json();
 
-    // FIX 3: Pencarian status pembayaran dengan normalisasi string
     const statusRow = statusData.find(x => String(x.invoice).replace("INV", "").trim() === cleanInvoiceID);
     const paymentStatus = (statusRow?.status || "").trim().toLowerCase();
     const processStatus = (statusRow?.proses || "").trim().toLowerCase();
@@ -139,24 +136,41 @@ async function loadFromSheet() {
     const resProduk = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PACKAGE_DETAIL" + cacheBuster);
     const produk = await resProduk.json();
 
-    // CARI DETAIL PRODUK
     const detail = produk.find(p => String(p.package_id).trim() === String(found.package_id).trim());
 
-    // RENDER DATA TERBARU DARI SHEET
     renderCustomer(info[0], info[1], info[2]);
 
     function rp(x) {
       return "Rp " + x.toLocaleString("id-ID");
     }
 
-    // 🔥 FIX 4: LOGIKA BARU MENGGUNAKAN KOLOM final_price (ANTI-CRASH)
-    const harga = parseInt(detail.price) || 0;
-    const total = parseInt(detail.final_price) || 0; // Mengambil langsung nominal dari kolom final_price
+    // ============================================================
+    // 🔥 ADOPSI LOGIKA RENDERMETA (PEMBERSIH REGEX & JEMBATAN BUSTER)
+    // ============================================================
+    
+    // 1. Bersihkan format angka dari string/format bawaan Google Sheet
+    const harga = Number(String(detail.price).replace(/[^\d]/g, "")) || 0;
+    const sheetFinalPrice = Number(String(detail.final_price).replace(/[^\d]/g, "")) || 0;
+    
+    // 2. Parse diskon teks lama aman dari crash
+    let discountPercent = 0;
+    if (detail.discount) {
+      const discountStr = String(detail.discount).replace("%", "").replace(",", ".").trim();
+      discountPercent = parseFloat(discountStr) || 0;
+    }
+    
+    // 3. LOGIKA JEMBATAN: Utamakan final_price sheet, jika kosong hitung manual pakai Math.round
+    const total = sheetFinalPrice > 0 
+      ? sheetFinalPrice 
+      : (discountPercent > 0 ? Math.round(harga - (harga * discountPercent / 100)) : harga);
+      
     const hemat = harga - total;
     
-    // Hitung persentase diskon secara dinamis untuk kebutuhan tampilan UI saja
-    const hitungDiskon = harga > 0 ? ((harga - total) / harga * 100).toFixed(2) : "0";
-    const diskonTeks = "-" + hitungDiskon.replace(".00", "") + "%";
+    // 4. Kalkulasi ulang badge teks diskon untuk disuapkan ke UI
+    const hitungDiskonDinamis = harga > 0 ? Math.round((harga - total) / harga * 100) : 0;
+    const diskonTeks = discountPercent > 0 
+      ? "-" + String(detail.discount).trim() 
+      : (hitungDiskonDinamis > 0 ? "-" + hitungDiskonDinamis + "%" : "0%");
 
     const hargaHtml = `
       <div class="price-old">${rp(harga)}</div>
@@ -168,12 +182,13 @@ async function loadFromSheet() {
       detail.title,
       detail.subtitle,
       hargaHtml,
-      diskonTeks, // Menampilkan teks diskon kalkulasi dinamis (ex: -22.23%)
+      diskonTeks, 
       rp(hemat),
       rp(total)
     );
 
-    // Sekarang kode tidak akan crash lagi dan bisa sukses membaca status untuk merubah UI jadi HIJAU!
+    // ============================================================
+
     renderStatus(paymentStatus, processStatus);
 
     const waktu = new Date().toLocaleString("id-ID", {
@@ -194,6 +209,7 @@ async function loadFromSheet() {
     console.warn("Gagal sinkronisasi dengan Google Sheet:", err);
   }
 }
+
 
 /* ============================================================
    UI RENDERING FUNCTIONS
