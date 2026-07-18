@@ -182,59 +182,75 @@
   margin: 6px 0;
 }
 
-/* ORANGE */
+/* ====================================================================
+   1. BACKGROUND BASE UNTUK TIAP WARNA
+   ==================================================================== */
 .package-row.featured-orange {
-  background: linear-gradient(
-    90deg,
-    rgba(245,158,11,0.35),
-    rgba(245,158,11,0.12)
-  );
+  background: linear-gradient(90deg, rgba(245,158,11,0.35), rgba(245,158,11,0.12));
 }
-
-/* PURPLE (PAKET MAHAL) */
 .package-row.featured-purple {
-  background: linear-gradient(
-    90deg,
-    rgba(139,92,246,0.42),
-    rgba(139,92,246,0.16)
-  );
+  background: linear-gradient(90deg, rgba(139,92,246,0.42), rgba(139,92,246,0.16));
 }
-
-/* BLUE (REKOMENDASI) */
 .package-row.featured-blue {
-  background: linear-gradient(
-    90deg,
-    rgba(59,130,246,0.38),
-    rgba(59,130,246,0.14)
-  );
+  background: linear-gradient(90deg, rgba(59,130,246,0.38), rgba(59,130,246,0.14));
+}
+.package-row.featured-green {
+  background: linear-gradient(90deg, rgba(34,197,94,0.35), rgba(34,197,94,0.12));
 }
 
-/* GLOW BASE */
-.package-row.featured::before {
-  content: "";
-  position: absolute;
-  inset: -4px;
-  border-radius: inherit;
-  pointer-events: none;
-  opacity: 0;
-}
+/* ====================================================================
+   2. INTENSITAS TRANSPARANSI (OPACITY DEDICATED)
+   ==================================================================== */
+.package-row.glow-soft::before   { opacity: 0.50; } /* Lvl 1: Halus */
+.package-row.glow-glow::before   { opacity: 0.75; } /* Lvl 2: Sedang */
+.package-row.glow-strong::before { opacity: 0.95; } /* Lvl 3: Terang */
 
-/* SOFT */
-.package-row.glow-soft::before {
-  opacity: 0.65;
-}
+/* ====================================================================
+   3. RADIUS & SEBARAN GLOW PER TINGKATAN
+   ==================================================================== */
 
-/* WARNA GLOW */
+/* --- ORANGE --- */
 .package-row.featured-orange.glow-soft::before {
-  box-shadow: 0 0 18px 4px rgba(245,158,11,0.45);
+  box-shadow: 0 0 14px 3px rgba(245, 158, 11, 0.4);
+}
+.package-row.featured-orange.glow-glow::before {
+  box-shadow: 0 0 22px 6px rgba(245, 158, 11, 0.6);
+}
+.package-row.featured-orange.glow-strong::before {
+  box-shadow: 0 0 34px 10px rgba(245, 158, 11, 0.85);
 }
 
+/* --- PURPLE --- */
 .package-row.featured-purple.glow-soft::before {
-  box-shadow: 0 0 22px 6px rgba(139,92,246,0.55);
+  box-shadow: 0 0 16px 4px rgba(139, 92, 246, 0.4);
+}
+.package-row.featured-purple.glow-glow::before {
+  box-shadow: 0 0 24px 7px rgba(139, 92, 246, 0.65);
+}
+.package-row.featured-purple.glow-strong::before {
+  box-shadow: 0 0 36px 11px rgba(139, 92, 246, 0.9);
 }
 
+/* --- BLUE --- */
 .package-row.featured-blue.glow-soft::before {
-  box-shadow: 0 0 20px 5px rgba(59,130,246,0.5);
+  box-shadow: 0 0 14px 3px rgba(59, 130, 246, 0.4);
+}
+.package-row.featured-blue.glow-glow::before {
+  box-shadow: 0 0 22px 6px rgba(59, 130, 246, 0.6);
+}
+.package-row.featured-blue.glow-strong::before {
+  box-shadow: 0 0 34px 10px rgba(59, 130, 246, 0.85);
+}
+
+/* --- GREEN --- */
+.package-row.featured-green.glow-soft::before {
+  box-shadow: 0 0 14px 3px rgba(34, 197, 94, 0.4);
+}
+.package-row.featured-green.glow-glow::before {
+  box-shadow: 0 0 22px 6px rgba(34, 197, 94, 0.6);
+}
+.package-row.featured-green.glow-strong::before {
+  box-shadow: 0 0 34px 10px rgba(34, 197, 94, 0.85);
 }
 
 /* WRAPPER HARGA */
