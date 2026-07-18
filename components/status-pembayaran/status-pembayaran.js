@@ -112,9 +112,16 @@ async function loadFromSheet() {
 
 alert("B");
 
-    const found = data.find(x => String(x.invoice).replace("INV", "").trim() === cleanInvoiceID);
+    alert("Jumlah data = " + data.length);
 
-     alert("C");
+alert("Apakah array? " + Array.isArray(data));
+
+const found = data.find(
+  x => String(x.invoice).replace("INV", "").trim() === cleanInvoiceID
+);
+
+alert("Found = " + JSON.stringify(found));
+     
     if (!found) {
       const localInvoice = localStorage.getItem("invoiceID");
       if (localInvoice && String(localInvoice).trim() === String(invoiceID).trim()) {
@@ -221,8 +228,15 @@ renderStatus(paymentStatus, processStatus);
 
     renderInvoice(found.invoice, waktu);
   } catch (err) {
-    console.warn("Gagal sinkronisasi dengan Google Sheet:", err);
-  }
+  alert(
+    "ERROR:\n\n" +
+    err.name +
+    "\n\n" +
+    err.message
+  );
+
+  console.error(err);
+}
 }
 
 
