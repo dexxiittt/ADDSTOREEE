@@ -92,6 +92,9 @@ function loadFromLocalStorage() {
   return true;
 }
 
+/* ============================================================
+   CORE FUNCTIONS (VERSi FIX SINKRONISASI SHEET)
+   ============================================================ */
 async function loadFromSheet() {
   try {
     const params = new URLSearchParams(window.location.search);
@@ -102,17 +105,21 @@ async function loadFromSheet() {
       return;
     }
 
+    // Bersihkan teks "INV" dari parameter URL untuk pencarian yang akurat
+    const cleanInvoiceID = String(invoiceID).replace("INV", "").trim();
+
     // FETCH PAYMENT_ID
     const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/payment_id");
     const data = await res.json();
 
-        // CARI INVOICE
-    const found = data.find(x => x.invoice == invoiceID);
+    // Bersihkan kedua sisi string saat mencari invoice di sheet payment_id
+    const found = data.find(x => String(x.invoice).replace("INV", "").trim() === cleanInvoiceID);
+    
     if (!found) {
-      // Cek apakah invoice ini milik transaksi yang baru saja dibuat di browser ini
       const localInvoice = localStorage.getItem("invoiceID");
-      if (localInvoice && String(localInvoice).trim() === String(invoiceID).trim()) {
-        // 🔥 FIX: Jika secara waktu sudah kadaluarsa, paksa UI & Toast jadi merah kadaluarsa
+      const cleanLocalInvoice = localInvoice ? String(localInvoice).replace("INV", "").trim() : "";
+      
+      if (cleanLocalInvoice && cleanLocalInvoice === cleanInvoiceID) {
         if (checkIsExpired()) {
           showToast("Pesanan sudah kadaluarsa ❌", "fa-circle-xmark");
           setExpiredUI();
@@ -127,57 +134,62 @@ async function loadFromSheet() {
           showToast("Invoice tidak terdaftar atau telah kedaluwarsa ❌", "fa-circle-xmark");
         }
       }
-      return; // Stop execution tanpa error keras, UI tetap pakai data local
+      return; 
     }
 
     // FETCH STATUS_PAYMENT
     const statusRes = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/status_payment");
     const statusData = await statusRes.json();
 
-    // CARI STATUS INVOICE
-    const statusRow = statusData.find(x => x.invoice == found.invoice);
+    // Bersihkan kedua sisi string saat mencari status di sheet status_payment
+    const cleanFoundInvoice = String(found.invoice).replace("INV", "").trim();
+    const statusRow = statusData.find(x => String(x.invoice).replace("INV", "").trim() === cleanFoundInvoice);
+    
     const paymentStatus = (statusRow?.status || "").trim().toLowerCase();
     const processStatus = (statusRow?.proses || "").trim().toLowerCase();
 
     // SPLIT CUSTOMER INFO
     const info = found.informasi_pelanggan.split("|");
-    window.rawInvoice = found.invoice;
+    window.rawInvoice = cleanFoundInvoice;
 
     // FETCH PACKAGE_DETAIL
     const resProduk = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PACKAGE_DETAIL");
     const produk = await resProduk.json();
 
     // CARI DETAIL PRODUK
-    const detail = produk.find(p => p.package_id == found.package_id);
+    const detail = produk.find(p => String(p.package_id).trim() === String(found.package_id).trim());
 
     // RENDER DATA TERBARU DARI SHEET
-    renderCustomer(info[0], info[1], info[2]);
+    renderCustomer(info[0] || "", info[1] || "", info[2] || "");
 
     function rp(x) {
       return "Rp " + x.toLocaleString("id-ID");
     }
 
-    const harga = parseInt(detail.price);
-    const diskon = parseFloat(detail.discount.replace("%", "").replace(",", "."));
-    const potongan = (harga * diskon) / 100;
-    const total = Math.floor(harga - potongan);
-    const hemat = harga - total;
+    if (detail) {
+      const harga = parseInt(detail.price) || 0;
+      const diskon = parseFloat(detail.discount.replace("%", "").replace(",", ".")) || 0;
+      const potongan = (harga * diskon) / 100;
+      const total = Math.floor(harga - potongan);
+      const hemat = harga - total;
 
-    const hargaHtml = `
-      <div class="price-old">${rp(harga)}</div>
-      <div class="price-final">${rp(total)}</div>
-    `;
+      const hargaHtml = `
+        <div class="price-old">${rp(harga)}</div>
+        <div class="price-final">${rp(total)}</div>
+      `;
 
-    renderProduct(
-      detail.image_url,
-      detail.title,
-      detail.subtitle,
-      hargaHtml,
-      "-" + detail.discount,
-      rp(hemat),
-      rp(total)
-    );
+      renderProduct(
+        detail.image_url,
+        detail.title,
+        detail.subtitle,
+        hargaHtml,
+        "-" + detail.discount,
+        rp(hemat),
+        rp(total)
+      );
+    }
 
+    // Sekarang ini akan berjalan lancar dan mengubah UI menjadi Sukses (Hijau)
     renderStatus(paymentStatus, processStatus);
 
     const waktu = new Date().toLocaleString("id-ID", {
@@ -193,10 +205,18 @@ async function loadFromSheet() {
     .replace("pukul", "")
     .trim();
 
-    renderInvoice(found.invoice, waktu);
+    renderInvoice(cleanFoundInvoice, waktu);
   } catch (err) {
     console.warn("Gagal sinkronisasi dengan Google Sheet:", err);
   }
+}
+
+// Mengamankan fungsi render agar tidak terjadi double prefix seperti "INVINVxxxx"
+function renderInvoice(invoice, time) {
+  const cleanInvoice = String(invoice).replace("INV", "").trim();
+  window.rawInvoice = cleanInvoice;
+  document.getElementById("invoice").innerText = "INV" + cleanInvoice;
+  document.getElementById("time").innerText = time;
 }
 
 /* ============================================================
