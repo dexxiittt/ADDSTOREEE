@@ -213,17 +213,14 @@ function renderMeta(data) {
     guarantee.textContent = data.guarantee;
   }
 
+  // Bersihkan format angka untuk harga awal dan harga final dari sheet
   const price = Number(String(data.price).replace(/[^\d]/g, "")) || 0;
   const sheetFinalPrice = Number(String(data.final_price).replace(/[^\d]/g, "")) || 0;
   const discount = parseDiscount(data.discount);
   
-  let finalPrice = sheetFinalPrice > 0 ? sheetFinalPrice : (discount > 0 ? Math.round(price - (price * discount / 100)) : price);
+  // JEMBATAN: Gunakan final_price dari sheet jika ada. Jika kosong, baru hitung pakai rumus persenan
+  const finalPrice = sheetFinalPrice > 0 ? sheetFinalPrice : (discount > 0 ? Math.round(price - (price * discount / 100)) : price);
   
-  // SULAP JADI .999 OTOMATIS DI HALAMAN DETAIL
-  if (discount > 0) {
-    finalPrice = Math.round(finalPrice / 1000) * 1000 - 1;
-  }
-
   const priceEl = document.getElementById("pkg-price");
 
   if (discount > 0) {
