@@ -274,7 +274,6 @@ return `
             `;
           })()}
 
-          // GANTI BLOK PENGECEKAN GUARANTEE LAMA DENGAN INI:
 ${(() => {
   const g = prod.items.find(i => i.guarantee)?.guarantee?.toLowerCase();
   if (!g) return "";
