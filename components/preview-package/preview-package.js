@@ -213,9 +213,17 @@ function renderMeta(data) {
     guarantee.textContent = data.guarantee;
   }
 
-  const price = Number(data.price) || 0;
+  const price = Number(String(data.price).replace(/[^\d]/g, "")) || 0;
+  const sheetFinalPrice = Number(String(data.final_price).replace(/[^\d]/g, "")) || 0;
   const discount = parseDiscount(data.discount);
-  const finalPrice = discount > 0 ? Math.round(price - (price * discount / 100)) : price;
+  
+  let finalPrice = sheetFinalPrice > 0 ? sheetFinalPrice : (discount > 0 ? Math.round(price - (price * discount / 100)) : price);
+  
+  // SULAP JADI .999 OTOMATIS DI HALAMAN DETAIL
+  if (discount > 0) {
+    finalPrice = Math.round(finalPrice / 1000) * 1000 - 1;
+  }
+
   const priceEl = document.getElementById("pkg-price");
 
   if (discount > 0) {
