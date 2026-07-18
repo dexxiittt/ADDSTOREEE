@@ -150,15 +150,20 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
                 let priceHTML = `<b>${formatPrice(price)}</b>`;
 
                 if (discount !== null) {
-                  const finalPrice = Math.round(price - (price * discount / 100));
-                  priceHTML = `
-                    <span class="discount-badge">${discount}%</span>
-                    <div class="price-wrap">
-                      <span class="price-old">${formatPrice(price)}</span>
-                      <span class="price-new">${formatPrice(finalPrice)}</span>
-                    </div>
-                  `;
-                }
+  // Ambil langsung harga final asli dari sheet (bersihkan formatnya)
+  const sheetFinalPrice = Number(String(i.final_price).replace(/[^\d]/g, "")) || 0;
+  
+  // Jika di sheet ada harganya, pakai itu. Jika tidak, baru hitung pakai rumus persenan
+  const finalPrice = sheetFinalPrice > 0 ? sheetFinalPrice : Math.round(price - (price * discount / 100));
+
+  priceHTML = `
+    <span class="discount-badge">${discount}%</span>
+    <div class="price-wrap">
+      <span class="price-old">${formatPrice(price)}</span>
+      <span class="price-new">${formatPrice(finalPrice)}</span>
+    </div>
+  `;
+}
 
                 if (i.is_featured) {
                   const [color, glow] = i.is_featured.split(":");
@@ -207,17 +212,20 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
                     let priceHTML = `<b>${formatPrice(price)}</b>`;
 
                     if (discount !== null) {
-                      const finalPrice = Math.round(price - (price * discount / 100));
-                      priceHTML = `
-                        <div class="price-line promo-left">
-                          <span class="discount-badge">${discount}%</span>
-                          <div class="price-wrap">
-                            <span class="price-old">${formatPrice(price)}</span>
-                            <span class="price-new">${formatPrice(finalPrice)}</span>
-                          </div>
-                        </div>
-                      `;
-                    }
+  // Ambil langsung harga final asli dari sheet
+  const sheetFinalPrice = Number(String(i.final_price).replace(/[^\d]/g, "")) || 0;
+  const finalPrice = sheetFinalPrice > 0 ? sheetFinalPrice : Math.round(price - (price * discount / 100));
+
+  priceHTML = `
+    <div class="price-line promo-left">
+      <span class="discount-badge">${discount}%</span>
+      <div class="price-wrap">
+        <span class="price-old">${formatPrice(price)}</span>
+        <span class="price-new">${formatPrice(finalPrice)}</span>
+      </div>
+    </div>
+  `;
+}
 
                     return `
                       <a href="package.html?package_id=${i.package_id}" class="${cls}" onclick="event.stopPropagation();">
