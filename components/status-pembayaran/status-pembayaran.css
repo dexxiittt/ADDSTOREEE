@@ -321,21 +321,110 @@ color:#78716c;
 }
 
 .status-total{
+position:relative;
+padding-left:58px;
+overflow:visible;
+
 display:inline-flex;
 align-items:center;
+gap:12px;
 
-margin-top:18px;
-padding:12px 18px;
+margin-top:22px;
+padding:14px 22px;
 
 border-radius:999px;
-background:#ffffff;
-border:1px solid #fde68a;
+
+background:linear-gradient(
+180deg,
+#ffffff,
+#fcfcfc
+);
+
+border:1px solid rgba(255,255,255,.9);
+
+box-shadow:
+0 10px 22px rgba(15,23,42,.08),
+0 3px 8px rgba(15,23,42,.05),
+inset 0 1px 0 rgba(255,255,255,.95);
 
 font-family:"Outfit",sans-serif;
-font-size:18px;
-font-weight:700;
+font-size:21px;
+font-weight:800;
+letter-spacing:-.3px;
 
 color:#111827;
+
+overflow:hidden;
+z-index:2;
+}
+
+.status-total .floating-icon{
+position:absolute;
+
+left:-10px;
+top:50%;
+
+transform:translateY(-50%);
+
+width:48px;
+height:48px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+border-radius:16px;
+
+background:linear-gradient(
+180deg,
+#ecfdf5,
+#d1fae5
+);
+
+border:1px solid rgba(255,255,255,.9);
+
+box-shadow:
+0 12px 24px rgba(34,197,94,.18),
+0 4px 10px rgba(34,197,94,.12);
+
+font-size:20px;
+z-index:5;
+
+transition:
+transform .35s ease,
+box-shadow .35s ease;
+}
+
+/* =========================
+   TOTAL BADGE HOVER
+========================= */
+
+.status-total{
+transition:
+transform .35s ease,
+box-shadow .35s ease,
+border-color .35s ease;
+}
+
+.status-total:hover{
+transform:translateY(-3px);
+
+border-color:#bbf7d0;
+
+box-shadow:
+0 18px 36px rgba(34,197,94,.16),
+0 8px 18px rgba(15,23,42,.08),
+inset 0 1px 0 rgba(255,255,255,.95);
+}
+
+.status-total:hover .floating-icon{
+transform:
+translateY(-50%)
+scale(1.08);
+
+box-shadow:
+0 18px 36px rgba(34,197,94,.26),
+0 6px 16px rgba(34,197,94,.18);
 }
 
 .status-tip{
