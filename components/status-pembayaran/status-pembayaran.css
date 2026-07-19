@@ -611,6 +611,33 @@ transition:left .8s ease;
 z-index:1;
 }
 
+.status-tip-item{
+display:flex;
+align-items:flex-start;
+gap:12px;
+
+margin-bottom:12px;
+}
+
+.status-tip-item:last-child{
+margin-bottom:0;
+}
+
+.status-tip-item i{
+margin-top:8px;
+font-size:7px;
+
+color:#f59e0b;
+flex-shrink:0;
+}
+
+.status-tip-item span{
+flex:1;
+
+line-height:1.8;
+color:#6b7280;
+}
+
 /* =========================
    PAYMENT PROGRESS
 ========================= */
