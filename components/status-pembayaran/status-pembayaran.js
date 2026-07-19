@@ -293,7 +293,7 @@ function getStatusElements() {
 /* ============================================================
    STATUS UI THEMES (PENDING, SUCCESS, & EXPIRED)
    ============================================================ */
-function setPendingUI() {
+function setPendingUI(tipsText) {
   const ui = getStatusElements();
 
   ui.invoiceBox.classList.remove("status-success", "status-expired");
@@ -318,7 +318,7 @@ function setPendingUI() {
   document.getElementById("waButtonIcon").className = "fa-brands fa-whatsapp";
 }
 
-function setSuccessUI(proses) {
+function setSuccessUI(proses, tipsText) {
   const ui = getStatusElements();
 
   ui.invoiceBox.classList.remove("status-pending", "status-expired");
@@ -343,9 +343,9 @@ function setSuccessUI(proses) {
   document.getElementById("waButtonIcon").className = "fa-brands fa-whatsapp";
 }
 
-function setExpiredUI() {
+function setExpiredUI(tipsText) {
   const ui = getStatusElements();
-
+   
   // Hapus warna lama, ganti ke tema expired (merah)
   ui.invoiceBox.classList.remove("status-pending", "status-success");
   ui.statusBox.classList.remove("status-pending", "status-success"); 
