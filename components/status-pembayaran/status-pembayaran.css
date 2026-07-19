@@ -360,13 +360,13 @@ z-index:2;
 .status-total .floating-icon{
 position:absolute;
 
-left:14px;
+left:12px;
 top:50%;
 
 transform:translateY(-50%);
 
-width:48px;
-height:48px;
+width:50px;
+height:50px;
 
 display:flex;
 align-items:center;
@@ -542,9 +542,10 @@ margin-top:2px;
 margin-bottom:2px;
 
 font-family:"Sora",sans-serif;
-font-size:18px;
-font-weight:700;
-letter-spacing:-.2px;
+font-size:20px;
+font-weight:800;
+letter-spacing:-.35px;
+line-height:1.2;
 
 color:#111827;
 transition:color .35s ease;
@@ -555,8 +556,8 @@ position:relative;
 
 flex-shrink:0;
 
-width:52px;
-height:52px;
+width:54px;
+height:54px;
 
 display:flex;
 align-items:center;
