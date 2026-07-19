@@ -307,6 +307,13 @@ function getStatusElements() {
    STATUS UI THEMES (PENDING, SUCCESS, & EXPIRED)
    ============================================================ */
 function setPendingUI(tipsText) {
+  const tips = tipsText.split("|");
+
+alert(
+"Jumlah Tips: " + tips.length +
+"\n\n" +
+tips.join("\n")
+);
   const ui = getStatusElements();
 
   ui.invoiceBox.classList.remove("status-success", "status-expired");
