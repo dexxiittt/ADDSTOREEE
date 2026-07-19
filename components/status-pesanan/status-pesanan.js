@@ -224,7 +224,7 @@ async function fetchWarrantyData() {
       }
 
       // =============================
-      // FORMAT HARGA (SAMA SEPERTI PACKAGE)
+      // FORMAT HARGA DENGAN FINAL PRICE
       // =============================
       function parseDiscount(val) {
         if (!val) return 0;
@@ -236,15 +236,19 @@ async function fetchWarrantyData() {
         return num < 1 ? num * 100 : num;
       }
 
-      const price = Number(rowData.price) || 0;
+      const price = Number(String(rowData.price).replace(/[^\d]/g, "")) || 0;
+      const sheetFinalPrice = Number(String(rowData.final_price).replace(/[^\d]/g, "")) || 0;
       const discount = parseDiscount(rowData.discount);
-      const finalPrice = discount > 0 ? Math.round(price - (price * discount / 100)) : price;
+
+      // Kunci harga agar mengambil nilai asli mutlak dari kolom final_price di sheet
+      const finalPrice = sheetFinalPrice > 0 ? sheetFinalPrice : (discount > 0 ? Math.round(price - (price * discount / 100)) : price);
 
       oldPrice.textContent = `Rp${price.toLocaleString("id-ID")}`;
       finalPriceText.textContent = `Rp${finalPrice.toLocaleString("id-ID")}`;
 
       if (discount > 0) {
         discountBadge.textContent = `-${discount.toFixed(2).replace(".", ",")}%`;
+        discountBadge.style.display = "inline-block";
       } else {
         discountBadge.style.display = "none";
       }
@@ -597,7 +601,7 @@ if (infoMore) {
     e.preventDefault();
     infoCard.classList.add("active");
     if (infoIcon) infoIcon.classList.add("active");
-    if (infoContent) infoContent.classList.add("open");
+    if (infoContent) infoContent.classList.open("open");
     if (infoClose) infoClose.style.display = "block";
     infoMore.style.display = "none";
   });
