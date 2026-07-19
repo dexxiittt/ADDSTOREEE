@@ -224,33 +224,40 @@ async function fetchWarrantyData() {
       }
 
       // =============================
-      // FORMAT HARGA DENGAN FINAL PRICE
+      // FORMAT HARGA DENGAN FINAL PRICE (HITUNG DISKON OTOMATIS)
       // =============================
-      function parseDiscount(val) {
+       function parseDiscount(val) {
         if (!val) return 0;
         if (typeof val === "number") {
-          return val < 1 ? val * 100 : val;
+        return val < 1 ? val * 100 : val;
         }
         const clean = String(val).replace('%', '').replace(',', '.').trim();
         const num = Number(clean) || 0;
-        return num < 1 ? num * 100 : num;
-      }
+         return num < 1 ? num * 100 : num;
+         }
 
-      const price = Number(String(rowData.price).replace(/[^\d]/g, "")) || 0;
-      const sheetFinalPrice = Number(String(rowData.final_price).replace(/[^\d]/g, "")) || 0;
-      const discount = parseDiscount(rowData.discount);
+       const price = Number(String(rowData.price).replace(/[^\d]/g, "")) || 0;
+       const sheetFinalPrice = Number(String(rowData.final_price).replace(/[^\d]/g, "")) || 0;
+       const discountRaw = parseDiscount(rowData.discount);
 
       // Kunci harga agar mengambil nilai asli mutlak dari kolom final_price di sheet
-      const finalPrice = sheetFinalPrice > 0 ? sheetFinalPrice : (discount > 0 ? Math.round(price - (price * discount / 100)) : price);
+      const finalPrice = sheetFinalPrice > 0 ? sheetFinalPrice : (discountRaw > 0 ? Math.round(price - (price * discountRaw / 100)) : price);
+
+      // HITUNG OTOMATIS PERSEN DISKON UNTUK BADGE
+      let displayDiscount = 0;
+      if (price > 0 && finalPrice < price) {
+      displayDiscount = ((price - finalPrice) / price) * 100;
+      }
 
       oldPrice.textContent = `Rp${price.toLocaleString("id-ID")}`;
       finalPriceText.textContent = `Rp${finalPrice.toLocaleString("id-ID")}`;
 
-      if (discount > 0) {
-        discountBadge.textContent = `-${discount.toFixed(2).replace(".", ",")}%`;
-        discountBadge.style.display = "inline-block";
+      // Tampilkan badge diskon berdasarkan hitungan otomatis di atas
+      if (displayDiscount > 0) {
+      discountBadge.textContent = `-${displayDiscount.toFixed(2).replace(".", ",")}%`;
+      discountBadge.style.display = "inline-block"; 
       } else {
-        discountBadge.style.display = "none";
+      discountBadge.style.display = "none";
       }
 
       const durationDays = parseInt(rowData.duration_days) || 0;
