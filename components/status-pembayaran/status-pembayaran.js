@@ -42,6 +42,7 @@ function checkIsExpired() {
 }
 
 function loadFromLocalStorage() {
+  alert("Masuk loadFromLocalStorage()");
   const localData = JSON.parse(localStorage.getItem("paymentData"));
   if (!localData) return false;
 
@@ -68,6 +69,10 @@ function loadFromLocalStorage() {
   );
 
   // STATUS RENDER
+  alert(
+  "loadFromLocalStorage()\n\n" +
+  "status = " + (localData.status || "pending")
+);
   renderStatus(localData.status || "pending");
 
   // INVOICE & TIME RENDER (Utamakan ambil dari URL parameter agar tidak 'null' saat di-clear)
@@ -93,6 +98,7 @@ function loadFromLocalStorage() {
 }
 
 async function loadFromSheet() {
+  alert("Masuk loadFromSheet()");
   try {
     const params = new URLSearchParams(window.location.search);
     const invoiceID = params.get("invoice");
@@ -134,7 +140,11 @@ async function loadFromSheet() {
     const tipsRes = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/statustips_payment");
     const tipsData = await tipsRes.json();
     const globalTips = tipsData[0]; // Mengambil baris pertama data (Baris 2 di Spreadsheet)
-
+    alert(
+  "globalTips\n\n" +
+  JSON.stringify(globalTips)
+);
+     
     // SPLIT CUSTOMER INFO
     const info = found.informasi_pelanggan.split("|");
     window.rawInvoice = found.invoice;
@@ -194,7 +204,12 @@ async function loadFromSheet() {
     );
 
     // ============================================================
-
+    alert(
+  "Sebelum renderStatus()\n\n" +
+  "paymentStatus = " + paymentStatus +
+  "\n\n" +
+  "tips_pending = " + globalTips?.tips_pending
+);
     renderStatus(paymentStatus, processStatus, globalTips);
      
     const waktu = new Date().toLocaleString("id-ID", {
