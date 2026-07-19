@@ -115,12 +115,22 @@ async function loadFromSheet() {
     alert("✅ payment_id selesai");
     const data = await res.json();
     alert("✅ payment_id json selesai");
-     
+
+    alert(
+  "Jumlah data payment_id = " +
+  data.length
+);
     const found = data.find(
       x => String(x.invoice).replace("INV", "").trim() === cleanInvoiceID
     );
+
+     alert(
+  "FOUND = " +
+  (found ? "ADA" : "TIDAK ADA")
+);
      
     if (!found) {
+      alert("🚨 MASUK KE IF !FOUND");
       const localInvoice = localStorage.getItem("invoiceID");
       if (localInvoice && String(localInvoice).trim() === String(invoiceID).trim()) {
         showToast("Pesanan sudah dibuat ⚡", "fa-circle-check");
