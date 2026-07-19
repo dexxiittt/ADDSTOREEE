@@ -429,21 +429,74 @@ box-shadow:
 
 .status-tip{
 position:relative;
-padding:26px 18px 18px;
-overflow:visible;
-   
-margin-top:20px;
-padding:16px;
 
-border-radius:16px;
-background:rgba(255,255,255,.7);
-border:1px dashed #facc15;
+overflow:visible;
+
+margin-top:26px;
+padding:34px 22px 22px;
+
+border-radius:22px;
+
+background:linear-gradient(
+180deg,
+rgba(255,255,255,.96),
+rgba(252,252,252,.98)
+);
+
+border:1px solid rgba(255,255,255,.85);
+
+box-shadow:
+0 10px 24px rgba(15,23,42,.06),
+0 20px 46px rgba(15,23,42,.08),
+inset 0 1px 0 rgba(255,255,255,.95);
 
 font-family:"Plus Jakarta Sans",sans-serif;
 font-size:14px;
+line-height:1.8;
 
-line-height:1.7;
-color:#78716c;
+color:#6b7280;
+
+transition:
+transform .35s ease,
+box-shadow .35s ease,
+border-color .35s ease;
+}
+
+.status-tip::before{
+content:"";
+position:absolute;
+
+top:0;
+left:22px;
+right:22px;
+
+height:1px;
+
+background:linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,.95),
+transparent
+);
+
+pointer-events:none;
+}
+
+.status-tip::after{
+content:"";
+position:absolute;
+
+top:-55px;
+right:-55px;
+
+width:150px;
+height:150px;
+
+border-radius:50%;
+background:rgba(250,204,21,.12);
+
+filter:blur(48px);
+pointer-events:none;
 }
 
 .status-tip-title{
