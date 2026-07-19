@@ -109,6 +109,10 @@ async function loadFromSheet() {
     }
 
     const cleanInvoiceID = String(invoiceID).replace("INV", "").trim();
+    alert(
+  "invoiceID = " + invoiceID +
+  "\n\ncleanInvoiceID = " + cleanInvoiceID
+);
 
     // FETCH PAYMENT_ID
     const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/payment_id");
@@ -119,6 +123,9 @@ async function loadFromSheet() {
     alert(
   "Jumlah data payment_id = " +
   data.length
+);
+    alert(
+  data.map(x => x.invoice).join("\n")
 );
     const found = data.find(
       x => String(x.invoice).replace("INV", "").trim() === cleanInvoiceID
