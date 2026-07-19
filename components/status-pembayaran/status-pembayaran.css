@@ -322,7 +322,6 @@ color:#78716c;
 
 .status-total{
 position:relative;
-padding-left:58px;
 overflow:visible;
 
 display:inline-flex;
@@ -330,7 +329,7 @@ align-items:center;
 gap:12px;
 
 margin-top:22px;
-padding:14px 22px;
+padding:14px 22px 14px 70px;
 
 border-radius:999px;
 
@@ -361,7 +360,7 @@ z-index:2;
 .status-total .floating-icon{
 position:absolute;
 
-left:-10px;
+left:-18px;
 top:50%;
 
 transform:translateY(-50%);
