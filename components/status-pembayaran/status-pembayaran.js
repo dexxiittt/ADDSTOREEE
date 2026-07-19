@@ -109,33 +109,27 @@ async function loadFromSheet() {
     }
 
     const cleanInvoiceID = String(invoiceID).replace("INV", "").trim();
-    alert(
-  "invoiceID = " + invoiceID +
-  "\n\ncleanInvoiceID = " + cleanInvoiceID
-);
 
-    // FETCH PAYMENT_ID
+    // ============================================================
+    // 🔥 STEP 1: FETCH TIPS GLOBAL DI PALING ATAS (Independent / Mandiri)
+    // ============================================================
+    const tipsRes = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/statustips_payment");
+    const tipsData = await tipsRes.json();
+    const globalTips = tipsData[0]; // Mengambil baris pertama data tips
+
+    // ============================================================
+    // STEP 2: FETCH PAYMENT_ID UNTUK CEK VALIDASI INVOICE
+    // ============================================================
     const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/payment_id");
-    alert("✅ payment_id selesai");
     const data = await res.json();
-    alert("✅ payment_id json selesai");
-
-    alert(
-  "Jumlah data payment_id = " +
-  data.length
-);
-    alert(
-  data.map(x => x.invoice).join("\n")
-);
+     
     const found = data.find(
       x => String(x.invoice).replace("INV", "").trim() === cleanInvoiceID
     );
-
-     alert(
-  "FOUND = " +
-  (found ? "ADA" : "TIDAK ADA")
-);
      
+    // ============================================================
+    // 🔥 STEP 3: LOGIKA JIKA INVOICE TIDAK/BELUM KETEMU DI SPREADSHEET
+    // ============================================================
     if (!found) {
       alert("🚨 MASUK KE IF !FOUND");
       const localInvoice = localStorage.getItem("invoiceID");
@@ -144,29 +138,25 @@ async function loadFromSheet() {
       } else {
         showToast("Invoice tidak terdaftar atau telah kedaluwarsa ❌", "fa-circle-xmark");
       }
-      return; 
+
+      // 💡 FIX: Tetap render status & potong teks tips global dari sheet meskipun invoice belum terdaftar!
+      const localData = JSON.parse(localStorage.getItem("paymentData")) || {};
+      const currentStatus = localData.status || "pending";
+      
+      renderStatus(currentStatus, "", globalTips);
+
+      return; // Berhenti di sini agar tidak error membaca info customer dari sheet yang kosong
     }
 
-    // FETCH STATUS_PAYMENT
+    // ============================================================
+    // STEP 4: JIKA INVOICE KETEMU (Proses normal seperti biasa)
+    // ============================================================
     const statusRes = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/status_payment");
-    alert("✅ status_payment selesai");
     const statusData = await statusRes.json();
-    alert("✅ status_payment json selesai");
      
     const statusRow = statusData.find(x => String(x.invoice).replace("INV", "").trim() === cleanInvoiceID);
     const paymentStatus = (statusRow?.status || "").trim().toLowerCase();
     const processStatus = (statusRow?.proses || "").trim().toLowerCase();
-
-    // 🔥 KODE BARU: Ambil data khusus dari sheet statustips_payment
-    const tipsRes = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/statustips_payment");
-    alert("✅ statustips_payment selesai");
-    const tipsData = await tipsRes.json();
-    alert("✅ statustips_payment json selesai");
-    const globalTips = tipsData[0]; // Mengambil baris pertama data (Baris 2 di Spreadsheet)
-    alert(
-  "globalTips\n\n" +
-  JSON.stringify(globalTips)
-);
      
     // SPLIT CUSTOMER INFO
     const info = found.informasi_pelanggan.split("|");
@@ -183,29 +173,22 @@ async function loadFromSheet() {
       return "Rp " + x.toLocaleString("id-ID");
     }
 
-    // ============================================================
-    // 🔥 ADOPSI LOGIKA RENDERMETA (PEMBERSIH REGEX & JEMBATAN BUSTER)
-    // ============================================================
-    
-    // 1. Bersihkan format angka dari string/format bawaan Google Sheet
+    // Pembersih harga & diskon dinamik
     const harga = Number(String(detail.price).replace(/[^\d]/g, "")) || 0;
     const sheetFinalPrice = Number(String(detail.final_price).replace(/[^\d]/g, "")) || 0;
     
-    // 2. Parse diskon teks lama aman dari crash
     let discountPercent = 0;
     if (detail.discount) {
       const discountStr = String(detail.discount).replace("%", "").replace(",", ".").trim();
       discountPercent = parseFloat(discountStr) || 0;
     }
     
-    // 3. LOGIKA JEMBATAN: Utamakan final_price sheet, jika kosong hitung manual pakai Math.round
     const total = sheetFinalPrice > 0 
       ? sheetFinalPrice 
       : (discountPercent > 0 ? Math.round(harga - (harga * discountPercent / 100)) : harga);
       
     const hemat = harga - total;
     
-    // 4. Kalkulasi ulang badge teks diskon untuk disuapkan ke UI
     const hitungDiskonDinamis = harga > 0 ? Math.round((harga - total) / harga * 100) : 0;
     const diskonTeks = discountPercent > 0 
       ? "-" + String(detail.discount).trim() 
@@ -216,37 +199,15 @@ async function loadFromSheet() {
       <div class="price-final">${rp(total)}</div>
     `;
 
-    renderProduct(
-      detail.image_url,
-      detail.title,
-      detail.subtitle,
-      hargaHtml,
-      diskonTeks, 
-      rp(hemat),
-      rp(total)
-    );
+    renderProduct(detail.image_url, detail.title, detail.subtitle, hargaHtml, diskonTeks, rp(hemat), rp(total));
 
-    // ============================================================
-    alert(
-  "Sebelum renderStatus()\n\n" +
-  "paymentStatus = " + paymentStatus +
-  "\n\n" +
-  "tips_pending = " + globalTips?.tips_pending
-);
+    // Render status akhir menggunakan data sinkronisasi penuh dari sheet
     renderStatus(paymentStatus, processStatus, globalTips);
      
     const waktu = new Date().toLocaleString("id-ID", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: false
+      day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false
     })
-    .replace(",", "")
-    .replace("pukul", "")
-    .trim();
+    .replace(",", "").replace("pukul", "").trim();
 
     renderInvoice(found.invoice, waktu);
   } catch (err) {
