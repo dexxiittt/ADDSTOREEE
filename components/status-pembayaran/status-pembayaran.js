@@ -247,6 +247,11 @@ function renderProduct(image, title, subtitle, hargaHtml, diskon, hemat, total) 
 
 // UBAH FUNGSI INI
 function renderStatus(status, proses, tipsObj) {
+   alert(
+"renderStatus()\n\n" +
+"status = " + status + "\n\n" +
+"tipsObj = " + JSON.stringify(tipsObj)
+);
   // PAKSA JADI EXPIRED JIKA SUDAH LEBIH DARI 1 JAM (Kecuali kalau sudah sukses)
   if (status !== "success" && checkIsExpired()) {
     status = "expired";
@@ -283,7 +288,6 @@ function renderStatus(status, proses, tipsObj) {
   }
 }
 
-
 function renderInvoice(invoice, time) {
   window.rawInvoice = invoice;
   document.getElementById("invoice").innerText = "INV" + invoice;
@@ -306,6 +310,10 @@ function getStatusElements() {
 /* ============================================================
    STATUS UI THEMES (PENDING, SUCCESS, & EXPIRED)
    ============================================================ */
+alert(
+"tips_pending:\n\n" +
+tipsObj?.tips_pending
+);
 function setPendingUI(tipsText) {
   alert(
 "Pending Tips:\n\n" +
