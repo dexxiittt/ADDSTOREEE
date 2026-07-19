@@ -429,7 +429,7 @@ box-shadow:
 
 .status-tip{
 position:relative;
-
+padding-left:28px;
 overflow:visible;
 
 margin-top:26px;
@@ -455,11 +455,26 @@ font-size:14px;
 line-height:1.8;
 
 color:#6b7280;
+transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+}
 
-transition:
-transform .35s ease,
-box-shadow .35s ease,
-border-color .35s ease;
+/* =========================
+   STATUS INFO HOVER
+========================= */
+
+.status-tip:hover{
+transform:translateY(-3px);
+
+border-color:#fde68a;
+
+box-shadow:
+0 18px 38px rgba(15,23,42,.10),
+0 8px 18px rgba(250,204,21,.10),
+inset 0 1px 0 rgba(255,255,255,.95);
+}
+
+.status-tip:hover .status-tip-title{
+color:#ca8a04;
 }
 
 .status-tip::before{
@@ -499,6 +514,24 @@ filter:blur(48px);
 pointer-events:none;
 }
 
+.status-tip::marker{
+content:"";
+}
+
+.status-tip .status-tip-accent{
+position:absolute;
+
+left:0;
+top:24px;
+bottom:24px;
+
+width:5px;
+border-radius:999px;
+
+background:linear-gradient( 180deg, #fde68a, #facc15, #f59e0b );
+box-shadow: 0 0 14px rgba(250,204,21,.30);
+}
+
 .status-tip-title{
 display:inline-block;
 
@@ -511,6 +544,7 @@ font-weight:700;
 letter-spacing:-.2px;
 
 color:#111827;
+transition:color .35s ease;
 }
 
 .status-tip .floating-icon{
@@ -533,20 +567,22 @@ z-index:5;
 box-shadow:
 0 12px 24px rgba(250,204,21,.20),
 0 4px 10px rgba(250,204,21,.12);
+
+transition: transform .35s ease, box-shadow .35s ease;
 }
 
 .status-tip .icon-gold{
-background:linear-gradient(
-180deg,
-#fef9c3,
-#fde68a
-);
-
+background:linear-gradient(180deg, #fef9c3, #fde68a );
 color:#ca8a04;
-
 border:1px solid rgba(255,255,255,.9);
 }
 
+.status-tip:hover .floating-icon{
+transform: translateY(-2px) scale(1.08);
+box-shadow:
+0 18px 34px rgba(250,204,21,.28),
+0 8px 18px rgba(250,204,21,.18);
+}
 /* =========================
    PAYMENT PROGRESS
 ========================= */
