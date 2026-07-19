@@ -563,6 +563,8 @@ display:flex;
 align-items:center;
 justify-content:center;
 
+font-size:28px;
+
 border-radius:16px;
 
 z-index:5;
@@ -572,6 +574,10 @@ box-shadow:
 0 4px 10px rgba(250,204,21,.12);
 
 transition: transform .35s ease, box-shadow .35s ease;
+}
+
+.status-tip .floating-icon i{
+line-height:1;
 }
 
 .status-tip .icon-gold{
