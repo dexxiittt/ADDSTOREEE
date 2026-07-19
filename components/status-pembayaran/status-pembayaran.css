@@ -616,7 +616,7 @@ display:flex;
 align-items:flex-start;
 gap:12px;
 
-margin-bottom:12px;
+margin-bottom:8px;
 }
 
 .status-tip-item:last-child{
@@ -634,7 +634,7 @@ flex-shrink:0;
 .status-tip-item span{
 flex:1;
 
-line-height:1.8;
+line-height:1.55;
 color:#6b7280;
 }
 
