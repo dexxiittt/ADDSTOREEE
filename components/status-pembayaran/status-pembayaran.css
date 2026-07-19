@@ -428,6 +428,10 @@ box-shadow:
 }
 
 .status-tip{
+position:relative;
+padding:26px 18px 18px;
+overflow:visible;
+   
 margin-top:20px;
 padding:16px;
 
@@ -440,6 +444,54 @@ font-size:14px;
 
 line-height:1.7;
 color:#78716c;
+}
+
+.status-tip-title{
+display:inline-block;
+
+margin-top:2px;
+margin-bottom:2px;
+
+font-family:"Sora",sans-serif;
+font-size:18px;
+font-weight:700;
+letter-spacing:-.2px;
+
+color:#111827;
+}
+
+.status-tip .floating-icon{
+position:absolute;
+
+top:-18px;
+left:18px;
+
+width:50px;
+height:50px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+border-radius:16px;
+
+z-index:5;
+
+box-shadow:
+0 12px 24px rgba(250,204,21,.20),
+0 4px 10px rgba(250,204,21,.12);
+}
+
+.status-tip .icon-gold{
+background:linear-gradient(
+180deg,
+#fef9c3,
+#fde68a
+);
+
+color:#ca8a04;
+
+border:1px solid rgba(255,255,255,.9);
 }
 
 /* =========================
