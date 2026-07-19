@@ -254,27 +254,35 @@ function renderStatus(status, proses, tipsObj) {
 
   switch (status) {
     case "success":
-      // 🔥 Menggunakan tipsObj dari sheet global
       setSuccessUI(proses, tipsObj?.tips_success);
       localStorage.removeItem("invoiceID");
       localStorage.removeItem("invoiceCreatedAt");
       break;
+      
     case "expired":
-      // 🔥 Menggunakan tipsObj dari sheet global
       setExpiredUI(tipsObj?.tips_expired);
       break;
+      
+    // 🔥 TAMBAHKAN CASE PENDING SECARA EKSPLISIT DI SINI
+    case "pending":
+      setPendingUI(tipsObj?.tips_pending);
+      break;
+      
     case "cancel":
       setCancelUI();
       break;
+      
     case "refund":
       setRefundUI();
       break;
+      
     default:
-      // 🔥 Menggunakan tipsObj dari sheet global
+      // Jaga-jaga jika status string kosong, alihkan ke pending
       setPendingUI(tipsObj?.tips_pending);
       break;
   }
 }
+
 
 function renderInvoice(invoice, time) {
   window.rawInvoice = invoice;
