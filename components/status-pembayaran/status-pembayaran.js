@@ -190,7 +190,7 @@ async function loadFromSheet() {
 
     // ============================================================
 
-    renderStatus(paymentStatus, processStatus);
+    renderStatus(paymentStatus, processStatus, statusRow);
      
     const waktu = new Date().toLocaleString("id-ID", {
       day: "numeric",
@@ -240,7 +240,8 @@ function renderProduct(image, title, subtitle, hargaHtml, diskon, hemat, total) 
   document.getElementById("total3").innerText = total;
 }
 
-function renderStatus(status, proses) {
+// UBAH FUNGSI INI
+function renderStatus(status, proses, statusRow) {
   // PAKSA JADI EXPIRED JIKA SUDAH LEBIH DARI 1 JAM (Kecuali kalau sudah sukses)
   if (status !== "success" && checkIsExpired()) {
     status = "expired";
@@ -248,14 +249,14 @@ function renderStatus(status, proses) {
 
   switch (status) {
     case "success":
-setSuccessUI(proses);
-      setSuccessUI(proses);
-      // HAPUS DATA LAMA DARI LOCALSTORAGE AGAR TRANSAKSI BERIKUTNYA MEMBUAT INVOICE BARU
+      // Tambahkan parameter tips_success dari spreadsheet
+      setSuccessUI(proses, statusRow?.tips_success);
       localStorage.removeItem("invoiceID");
       localStorage.removeItem("invoiceCreatedAt");
       break;
     case "expired":
-      setExpiredUI();
+      // Tambahkan parameter tips_expired dari spreadsheet
+      setExpiredUI(statusRow?.tips_expired);
       break;
     case "cancel":
       setCancelUI();
@@ -264,7 +265,8 @@ setSuccessUI(proses);
       setRefundUI();
       break;
     default:
-      setPendingUI();
+      // Tambahkan parameter tips_pending dari spreadsheet
+      setPendingUI(statusRow?.tips_pending);
       break;
   }
 }
@@ -304,7 +306,7 @@ function setPendingUI() {
   ui.statusBadgeText.innerText = "Menunggu Pembayaran";
   ui.statusTitle.innerText = "Menunggu Pembayaran";
   ui.statusDescription.innerText = "Silakan lakukan pembayaran sesuai nominal yang tertera pada invoice.";
-  ui.statusTipText.innerHTML = "Pastikan nominal pembayaran sesuai agar proses verifikasi oleh admin berjalan lebih cepat.";
+  ui.statusTipText.innerHTML = generateTipsHtml(tipsText, "Pastikan nominal pembayaran sesuai agar proses verifikasi oleh admin berjalan lebih cepat.");
   ui.statusBadgeIcon.className = "fa-solid fa-stopwatch";
   ui.statusIconFa.className = "fa-solid fa-hourglass-half";
 
@@ -329,7 +331,7 @@ function setSuccessUI(proses) {
   ui.statusBadgeText.innerText = "Pembayaran Berhasil";
   ui.statusTitle.innerText = "Pembayaran Berhasil";
   ui.statusDescription.innerText = "Pembayaran telah diterima dan berhasil diverifikasi oleh admin.";
-  ui.statusTipText.innerHTML = "Pesanan sedang diproses oleh admin. Terima kasih telah melakukan pembayaran.";
+  ui.statusTipText.innerHTML = generateTipsHtml(tipsText, "Pesanan sedang diproses oleh admin. Terima kasih telah melakukan pembayaran.");
   ui.statusBadgeIcon.className = "fa-solid fa-check";
   ui.statusIconFa.className = "fa-solid fa-check";
 
@@ -353,8 +355,7 @@ function setExpiredUI() {
   ui.statusBadgeText.innerText = "Invoice Kedaluwarsa"; 
   ui.statusTitle.innerText = "Waktu Pembayaran Habis"; 
   ui.statusDescription.innerText = "Maaf, batas waktu pembayaran 1 jam telah habis. Invoice ini sudah tidak berlaku lagi."; 
-  ui.statusTipText.innerHTML = "Silakan melakukan generate ulang invoice melalui tombol di bawah untuk memperbarui pesanan."; 
-  
+  ui.statusTipText.innerHTML = generateTipsHtml(tipsText, "Silakan melakukan generate ulang invoice melalui tombol di bawah untuk memperbarui pesanan."); 
   ui.statusBadgeIcon.className = "fa-solid fa-xmark";
   ui.statusIconFa.className = "fa-solid fa-bell-slash"; 
 
@@ -499,4 +500,24 @@ function showToast(message, iconClass = "fa-circle-check") {
   setTimeout(() => {
     toast.classList.remove("show");
   }, 3500);
+}
+
+// Tambahkan fungsi baru ini di file JS kamu
+function generateTipsHtml(tipsText, defaultText) {
+  // Jika kolom di spreadsheet kosong/tidak ditemukan, pakai teks bawaan (fallback)
+  if (!tipsText) {
+    return `
+      <div class="status-tip-item">
+        <i class="fa-solid fa-circle"></i>
+        <span>${defaultText}</span>
+      </div>`;
+  }
+  
+  // Pecah teks berdasarkan "|" lalu map menjadi elemen HTML
+  return tipsText.split("|").map(tip => `
+    <div class="status-tip-item">
+      <i class="fa-solid fa-circle"></i>
+      <span>${tip.trim()}</span>
+    </div>
+  `).join("");
 }
