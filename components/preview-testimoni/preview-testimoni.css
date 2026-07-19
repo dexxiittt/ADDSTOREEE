@@ -33,6 +33,11 @@ display:grid;
 grid-template-columns:repeat(2,1fr);
 gap:25px;
 margin-top:35px;
+
+/* --- TAMBAHAN UNTUK EFEK FADE UP OUT --- */
+position: relative;
+-webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 55%, rgba(0, 0, 0, 0) 100%);
+mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 55%, rgba(0, 0, 0, 0) 100%);
 }
 
 .preview-testimoni-btn{
