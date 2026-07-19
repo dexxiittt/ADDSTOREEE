@@ -80,7 +80,7 @@ data.sort((a,b)=>
 );
 
 // ambil 4
-data = data.slice(0,4);
+data = data.slice(0,6);
 
 data.forEach(t=>{
 
