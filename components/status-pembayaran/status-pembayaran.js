@@ -130,6 +130,11 @@ async function loadFromSheet() {
     const paymentStatus = (statusRow?.status || "").trim().toLowerCase();
     const processStatus = (statusRow?.proses || "").trim().toLowerCase();
 
+    // 🔥 KODE BARU: Ambil data khusus dari sheet statustips_payment
+    const tipsRes = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/statustips_payment");
+    const tipsData = await tipsRes.json();
+    const globalTips = tipsData[0]; // Mengambil baris pertama data (Baris 2 di Spreadsheet)
+
     // SPLIT CUSTOMER INFO
     const info = found.informasi_pelanggan.split("|");
     window.rawInvoice = found.invoice;
@@ -190,7 +195,7 @@ async function loadFromSheet() {
 
     // ============================================================
 
-    renderStatus(paymentStatus, processStatus, statusRow);
+    renderStatus(paymentStatus, processStatus, globalTips);
      
     const waktu = new Date().toLocaleString("id-ID", {
       day: "numeric",
@@ -241,7 +246,7 @@ function renderProduct(image, title, subtitle, hargaHtml, diskon, hemat, total) 
 }
 
 // UBAH FUNGSI INI
-function renderStatus(status, proses, statusRow) {
+function renderStatus(status, proses, tipsObj) {
   // PAKSA JADI EXPIRED JIKA SUDAH LEBIH DARI 1 JAM (Kecuali kalau sudah sukses)
   if (status !== "success" && checkIsExpired()) {
     status = "expired";
@@ -249,14 +254,14 @@ function renderStatus(status, proses, statusRow) {
 
   switch (status) {
     case "success":
-      // Tambahkan parameter tips_success dari spreadsheet
-      setSuccessUI(proses, statusRow?.tips_success);
+      // 🔥 Menggunakan tipsObj dari sheet global
+      setSuccessUI(proses, tipsObj?.tips_success);
       localStorage.removeItem("invoiceID");
       localStorage.removeItem("invoiceCreatedAt");
       break;
     case "expired":
-      // Tambahkan parameter tips_expired dari spreadsheet
-      setExpiredUI(statusRow?.tips_expired);
+      // 🔥 Menggunakan tipsObj dari sheet global
+      setExpiredUI(tipsObj?.tips_expired);
       break;
     case "cancel":
       setCancelUI();
@@ -265,8 +270,8 @@ function renderStatus(status, proses, statusRow) {
       setRefundUI();
       break;
     default:
-      // Tambahkan parameter tips_pending dari spreadsheet
-      setPendingUI(statusRow?.tips_pending);
+      // 🔥 Menggunakan tipsObj dari sheet global
+      setPendingUI(tipsObj?.tips_pending);
       break;
   }
 }
