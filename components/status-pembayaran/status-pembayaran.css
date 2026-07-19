@@ -527,6 +527,14 @@ background:linear-gradient( 180deg, #fde68a, #facc15, #f59e0b );
 box-shadow: 0 0 14px rgba(250,204,21,.30);
 }
 
+.status-tip-header{
+display:flex;
+align-items:center;
+gap:14px;
+
+margin-bottom:14px;
+}
+
 .status-tip-title{
 display:inline-block;
 
@@ -543,13 +551,12 @@ transition:color .35s ease;
 }
 
 .status-tip .floating-icon{
-position:absolute;
+position:relative;
 
-top:-18px;
-left:18px;
+flex-shrink:0;
 
-width:50px;
-height:50px;
+width:52px;
+height:52px;
 
 display:flex;
 align-items:center;
