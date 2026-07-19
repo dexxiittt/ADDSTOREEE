@@ -307,12 +307,9 @@ function getStatusElements() {
    STATUS UI THEMES (PENDING, SUCCESS, & EXPIRED)
    ============================================================ */
 function setPendingUI(tipsText) {
-  const tips = tipsText.split("|");
-
-alert(
-"Jumlah Tips: " + tips.length +
-"\n\n" +
-tips.join("\n")
+  alert(
+"Pending Tips:\n\n" +
+tipsText
 );
   const ui = getStatusElements();
 
