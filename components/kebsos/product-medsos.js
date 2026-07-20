@@ -49,7 +49,6 @@ function renderBadges(badgeText) {
 }
 
 /* ===== FETCH & RENDER DATA ===== */
-// Memanggil spreadsheet data khusus ke tab PRODUCT_KEBSOS
 fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRODUCT_KEBSOS")
   .then(r => {
     if (!r.ok) throw new Error("Fetch data gagal");
@@ -72,7 +71,6 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
       let cardCls = "glass-card";
       let cardClickHandler = "";
       let cardTapeHTML = "";
-      // Anchor detail produk mengarah ke halaman berikutnya dengan parameter product_id
       let actionButtonHTML = `<a href="detail-medsos.html?product_id=${item.product_id}" class="btn-detail">Detail produk...</a>`;
 
       // Cek apakah status badgecard_status diisi untuk menonaktifkan card
@@ -84,6 +82,9 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
         actionButtonHTML = `<a href="#" class="btn-detail" onclick="event.preventDefault();">Detail produk...</a>`;
       }
 
+      // Render data note jika tersedia di baris sheet
+      let noteHTML = item.note && item.note.trim() !== "" ? `<p class="product-note">${item.note.trim()}</p>` : "";
+
       html += `
         <div class="${cardCls}" ${cardClickHandler}>
           ${cardTapeHTML}
@@ -94,6 +95,7 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
           </div>
 
           <h3>${item.title}</h3>
+          ${noteHTML}
           
           ${actionButtonHTML}
         </div>
