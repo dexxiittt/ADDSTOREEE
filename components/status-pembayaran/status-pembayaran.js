@@ -253,7 +253,10 @@ function renderStatus(status, proses, tipsObj) {
 
   switch (status) {
     case "success":
-      setSuccessUI(proses, tipsObj?.tips_success);
+      // 🔥 LOGIKA BARU: Tentukan tips berdasarkan status proses
+      const selectedTips = (proses === "done") ? tipsObj?.tips_proses : tipsObj?.tips_success;
+      
+      setSuccessUI(proses, selectedTips);
       localStorage.removeItem("invoiceID");
       localStorage.removeItem("invoiceCreatedAt");
       break;
@@ -262,7 +265,6 @@ function renderStatus(status, proses, tipsObj) {
       setExpiredUI(tipsObj?.tips_expired);
       break;
       
-    // 🔥 TAMBAHKAN CASE PENDING SECARA EKSPLISIT DI SINI
     case "pending":
       setPendingUI(tipsObj?.tips_pending);
       break;
@@ -276,12 +278,10 @@ function renderStatus(status, proses, tipsObj) {
       break;
       
     default:
-      // Jaga-jaga jika status string kosong, alihkan ke pending
       setPendingUI(tipsObj?.tips_pending);
       break;
   }
 }
-
 
 function renderInvoice(invoice, time) {
   window.rawInvoice = invoice;
@@ -343,17 +343,26 @@ function setSuccessUI(proses, tipsText) {
   ui.statusBadgeText.innerText = "Pembayaran Berhasil";
   ui.statusTitle.innerText = "Pembayaran Berhasil";
   ui.statusDescription.innerText = "Pembayaran telah diterima dan berhasil diverifikasi oleh admin.";
-  ui.statusTipText.innerHTML = generateTipsHtml(tipsText, "Pesanan sedang diproses oleh admin. Terima kasih telah melakukan pembayaran.");
+  
+  // 🔥 LOGIKA BARU: Sesuaikan konten teks tips & support berdasarkan status proses
+  if (proses === "done") {
+    ui.statusTipText.innerHTML = generateTipsHtml(tipsText, "Pesanan telah selesai diproses. Terima kasih telah berbelanja!");
+    document.getElementById("supportTitle").innerText = "Pesanan Selesai ✨";
+    document.getElementById("supportDescription").innerHTML = "Pesanan kamu telah selesai diproses sepenuhnya oleh admin. Terima kasih telah berbelanja di <b>Addstoreapp</b>.";
+  } else {
+    ui.statusTipText.innerHTML = generateTipsHtml(tipsText, "Pesanan sedang diproses oleh admin. Terima kasih telah melakukan pembayaran.");
+    document.getElementById("supportTitle").innerText = "Pesanan Sedang Diproses";
+    document.getElementById("supportDescription").innerHTML = "Pembayaran telah berhasil diverifikasi. Pesanan kamu sedang diproses oleh admin.";
+  }
+
   ui.statusBadgeIcon.className = "fa-solid fa-check";
   ui.statusIconFa.className = "fa-solid fa-check";
 
   document.getElementById("statusSectionIcon").className = "section-icon icon-green";
-
-  document.getElementById("supportTitle").innerText = "Pesanan Sedang Diproses";
-  document.getElementById("supportDescription").innerHTML = "Pembayaran telah berhasil diverifikasi. Pesanan kamu sedang diproses oleh admin.";
   document.getElementById("waButtonText").innerText = "Hubungi Admin";
   document.getElementById("waButtonIcon").className = "fa-brands fa-whatsapp";
 }
+
 
 function setExpiredUI(tipsText) {
   const ui = getStatusElements();
