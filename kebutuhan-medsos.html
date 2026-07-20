@@ -1,56 +1,85 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
+
 <head>
-<title>Kebutuhan Medsos</title>
-<style>
-body{
-  font-family:'Plus Jakarta Sans',sans-serif;
-  background:#f3f4f8;
-  margin:0;
-}
-
-/* HERO */
-.package-hero{
-width:100%;
-min-height:280px;
-
-background:linear-gradient(135deg,#493d84,#6d28d9);
-
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-
-text-align:center;
-
-padding:40px 20px;
-color:white;
-}
-
-.package-hero h1{
-  font-family:'Playfair Display',serif;
-  font-size:50px;
-  margin-bottom:6px;
-  color:white;
-}
-
-.package-hero p{
-  opacity:.85;
-  font-size:24px;
-  color:white;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kebutuhan medsos</title>
   
-</style>
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600&family=Poppins:wght@400;600;800&family=DM+Sans:wght@500;600&display=swap" rel="stylesheet">
+  
+  <!-- Path disesuaikan ke folder components/kebsos/ -->
+  <link rel="stylesheet" href="components/kebsos/product-medsos.css">
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #f3f4f8;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    :root {
+      --card-min-width: 320px;
+      --grid-max-width: 880px;
+    }
+
+    /* HERO */
+    .package-hero {
+      width: 100%;
+      min-height: 280px;
+      background: linear-gradient(135deg, #493d84, #6d28d9);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 40px 20px;
+      color: #fff;
+    }
+
+    .package-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 50px;
+      margin-bottom: 6px;
+      color: #fff;
+    }
+
+    .package-hero p {
+      opacity: .85;
+      font-size: 24px;
+      color: #fff;
+    }
+  </style>
 </head>
-<body>
 
-  <div class="package-hero">
-    <h1>Kebutuhan Medsos </h1>
-    <p>Temukan kebutuhan Media Sosial mu dengan Harga Terbaik.</p>
-  </div>
+<body class="package-page">
 
-<script>
+  <div id="navbar-placeholder"></div>
+  <script src="components/navbar.js"></script>
+
+  <section class="invoice-wrapper">
+    <!-- HERO -->
+    <div class="package-hero">
+      <h1>Kebutuhan Medsos</h1>
+      <p>Optimalkan performa dan interaksi sosial mediamu dengan layanan terbaik.</p>
+    </div>
+  </section>
+
+  <section class="category-content">
+    <div id="medsos" class="category-panel active">
+      <div id="product-cards"></div>
+    </div>
+  </section>
+
+  <!-- Path script disesuaikan ke folder components/kebsos/ -->
+  <script src="components/kebsos/product-medsos.js"></script>
   
-</script>
+  <div id="footer-container"></div>
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="components/footer.js"></script>
 </body>
+
 </html>
