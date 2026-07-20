@@ -100,28 +100,58 @@
 .badge-hot-green { background: #22c55e; }
 .badge-hot-orange { background: #f59e0b; }
 
-/* TOMBOL DETAIL PRODUK */
+/* ====================================================================
+   TOMBOL DETAIL PRODUK (DISULAP JADI BADGE PREMIUM)
+   ==================================================================== */
 .btn-detail {
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* Jarak antara ikon box dan tulisan */
   width: 100%;
-  padding: 10px 0;
+  padding: 12px 0;
   margin-top: 14px;
-  background: transparent;
+  
+  /* Background awal: Biru Premium */
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: #ffffff !important;
   border: none;
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 50px; /* Membuat bentuk kapsul/badge */
+  
   font-family: 'Poppins', sans-serif;
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 600;
-  color: #2563eb;
   text-align: center;
   text-decoration: none;
   cursor: pointer;
-  transition: opacity .25s ease, transform .25s ease;
+  
+  box-shadow: 0 4px 12px rgba(29, 78, 216, 0.25);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
+/* Efek Hover Premium (Glow & Sedikit Terang) */
 .btn-detail:hover {
-  opacity: 0.85;
-  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(29, 78, 216, 0.45);
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+/* Efek Klik / Active (Mengangkat ke Atas & Berubah Ungu) */
+.btn-detail:active {
+  background: linear-gradient(135deg, #8b5cf6, #6d28d9) !important; /* Berubah Ungu */
+  box-shadow: 0 12px 26px rgba(109, 40, 217, 0.5);
+  transform: translateY(-6px) scale(1.02); /* Efek sedikit mengangkat saat ditekan */
+}
+
+/* Ukuran Ikon FA di Dalam Tombol */
+.btn-detail i {
+  font-size: 13px;
+  transition: transform 0.3s ease;
+}
+
+/* Sedikit animasi goyang pada ikon saat tombol di-hover */
+.btn-detail:hover i {
+  transform: scale(1.1);
 }
 
 /* LAYOUT CONTAINER & GRID */
