@@ -1813,6 +1813,25 @@ transform:scale(1);
   color: #ffffff !important;
 }
 
+/* ==========================================
+   EXPIRED - Samakan shadow merah pada semua ikon X
+   ========================================== */
+
+.status-expired .progress-item.completed .floating-icon.icon-solid-red,
+.status-expired .progress-item.current .floating-icon.icon-solid-red{
+  background:#ef4444 !important;
+  border-color:#ef4444 !important;
+
+  box-shadow:
+    0 0 0 8px rgba(239,68,68,.16),
+    0 12px 26px rgba(239,68,68,.30) !important;
+}
+
+.status-expired .progress-item.completed .floating-icon.icon-solid-red i,
+.status-expired .progress-item.current .floating-icon.icon-solid-red i{
+  color:#fff !important;
+}
+
 @media (max-width:768px){
 .container{
 margin:20px 16px 50px;
