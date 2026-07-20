@@ -71,16 +71,24 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
       let cardCls = "glass-card";
       let cardClickHandler = "";
       let cardTapeHTML = "";
-      let actionButtonHTML = `<a href="detail-medsos.html?product_id=${item.product_id}" class="btn-detail">Detail produk...</a>`;
-
+      let actionButtonHTML = `
+  <a href="detail-medsos.html?product_id=${item.product_id}" class="btn-detail">
+    <i class="fa-solid fa-box-archive"></i> Detail produk...
+  </a>
+`;
       // Cek apakah status badgecard_status diisi untuk menonaktifkan card
       if (item.badgecard_status && item.badgecard_status.trim() !== "") {
-        const statusText = item.badgecard_status.trim();
-        cardCls += " card-disabled";
-        cardTapeHTML = `<div class="badge-card-tape"><span>${statusText}</span></div>`;
-        cardClickHandler = `onclick="showDisabledToast(event, '${statusText.replace(/'/g, "\\'")}')"`;
-        actionButtonHTML = `<a href="#" class="btn-detail" onclick="event.preventDefault();">Detail produk...</a>`;
-      }
+  const statusText = item.badgecard_status.trim();
+  cardCls += " card-disabled";
+  cardTapeHTML = `<div class="badge-card-tape"><span>${statusText}</span></div>`;
+  cardClickHandler = `onclick="showDisabledToast(event, '${statusText.replace(/'/g, "\\'")}')"`;
+  
+  actionButtonHTML = `
+    <a href="#" class="btn-detail" onclick="event.preventDefault();">
+      <i class="fa-solid fa-box-archive"></i> Detail produk...
+    </a>
+  `;
+}
 
       // Render data note jika tersedia di baris sheet
       let noteHTML = item.note && item.note.trim() !== "" ? `<p class="product-note">${item.note.trim()}</p>` : "";
