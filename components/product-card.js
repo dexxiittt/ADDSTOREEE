@@ -1,11 +1,10 @@
 /* ===== HELPER FUNCTIONS ===== */
 
-// Fungsi untuk memunculkan Toast Premium dari bawah
+// Fungsi untuk memunculkan Toast Premium dari bawah (Tetap dipertahankan)
 function showDisabledToast(event, statusText) {
   event.preventDefault();
   event.stopPropagation();
   
-  // Buat container toast jika belum ada
   let toastContainer = document.getElementById('custom-toast-container');
   if (!toastContainer) {
     toastContainer = document.createElement('div');
@@ -13,7 +12,6 @@ function showDisabledToast(event, statusText) {
     document.body.appendChild(toastContainer);
   }
   
-  // Set isi toast (Menggunakan icon xmark dari FontAwesome)
   toastContainer.innerHTML = `
     <div class="premium-toast animate-toast">
       <div class="toast-icon"><i class="fa-solid fa-xmark"></i></div>
@@ -21,7 +19,6 @@ function showDisabledToast(event, statusText) {
     </div>
   `;
   
-  // Hapus toast setelah beberapa detik dengan animasi smooth
   setTimeout(() => {
     const toast = toastContainer.querySelector('.premium-toast');
     if (toast) {
@@ -149,8 +146,26 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
       const items = prod.items;
       const primaryItem = items.find(i => i.image_url) || items[0];
 
+      // ====================================================================
+      // BARU: Cek status dari baris awal/item yang memiliki badgecard_status
+      // ====================================================================
+      let cardCls = "glass-card";
+      let cardClickHandler = "";
+      let cardTapeHTML = "";
+      
+      const targetStatus = items.find(i => i.badgecard_status && i.badgecard_status.trim() !== "");
+      if (targetStatus) {
+        const statusText = targetStatus.badgecard_status.trim();
+        cardCls += " card-disabled";
+        cardTapeHTML = `<div class="badge-card-tape"><span>${statusText}</span></div>`;
+        cardClickHandler = `onclick="showDisabledToast(event, '${statusText.replace(/'/g, "\\'")}')"`;
+      }
+      // ====================================================================
+
       html += `
-        <div class="glass-card">
+        <div class="${cardCls}" ${cardClickHandler}>
+          ${cardTapeHTML}
+          
           <div class="product-image">
             <img src="${primaryItem.image_url}" alt="${prod.title}">
             ${renderBadges(primaryItem.badge)}
@@ -211,20 +226,8 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
                   }
                 }
 
-                // ==========================================
-                // BARU: Logika Deteksi badgecard_status (Disable/Custom Solatif)
-                // ==========================================
-                let isDisabled = false;
-                let clickHandler = "";
-                if (i.badgecard_status && i.badgecard_status.trim() !== "") {
-                  isDisabled = true;
-                  cls += " pkg-disabled";
-                  badgeStatusHTML += `<span class="badge-card-tape">${i.badgecard_status}</span>`;
-                  clickHandler = `onclick="showDisabledToast(event, '${i.badgecard_status.replace(/'/g, "\\'")}')"`;
-                }
-
                 return `
-                  <a href="${isDisabled ? 'javascript:void(0);' : `package.html?package_id=${i.package_id}`}" class="${cls}" ${clickHandler}>
+                  <a href="package.html?package_id=${i.package_id}" class="${cls}">
                     ${badgeStatusHTML}
                     <span>
                       ${i.package} ${i.duration}
@@ -274,18 +277,6 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
                       }
                     }
 
-                    // ==========================================
-                    // BARU: Logika Deteksi badgecard_status untuk Detail Items
-                    // ==========================================
-                    let isDisabled = false;
-                    let clickHandler = `onclick="event.stopPropagation();"`;
-                    if (i.badgecard_status && i.badgecard_status.trim() !== "") {
-                      isDisabled = true;
-                      cls += " pkg-disabled";
-                      badgeStatusHTML += `<span class="badge-card-tape">${i.badgecard_status}</span>`;
-                      clickHandler = `onclick="showDisabledToast(event, '${i.badgecard_status.replace(/'/g, "\\'")}')"`;
-                    }
-
                     const price = Number(String(i.price).replace(/[^\d]/g, "")) || 0;
                     const discount = parseDiscount(i.promo_text);
                     let priceHTML = `<b>${formatPrice(price)}</b>`;
@@ -306,7 +297,7 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
                     }
 
                     return `
-                      <a href="${isDisabled ? 'javascript:void(0);' : `package.html?package_id=${i.package_id}`}" class="${cls}" ${clickHandler}>
+                      <a href="package.html?package_id=${i.package_id}" class="${cls}" onclick="event.stopPropagation();">
                         ${badgeStatusHTML}
                         <span>
                           ${i.package} ${i.duration}
@@ -363,7 +354,10 @@ document.addEventListener("click", function(e) {
   const btn = e.target.closest(".toggle-detail");
   if (!btn) return;
 
+  // Gagalkan event bawaan jika card dalam keadaan disabled
   const card = btn.closest(".glass-card");
+  if (card.classList.contains("card-disabled")) return;
+
   const detail = card.querySelector(".package-detail");
   if (!detail) return;
 
