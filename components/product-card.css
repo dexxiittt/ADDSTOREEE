@@ -647,7 +647,7 @@
 }
 
 /* ==========================================================================
-   PREMIUM WHOLE CARD DISABLED & CORNER SOLATIF
+   1. PREMIUM WHOLE CARD DISABLED & CORNER SOLATIF (NEW SYSTEM)
    ========================================================================== */
 
 /* Pastikan elemen Glass Card utama memiliki context container */
@@ -709,6 +709,109 @@
   
   /* Efek eksklusif tambahan */
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+/* ==========================================================================
+   2. PREMIUM BOTTOM TOAST NOTIFICATION (RESTORED)
+   ========================================================================== */
+
+#custom-toast-container {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999999;
+  pointer-events: none;
+  width: max-content;
+  max-width: 90vw;
+}
+
+.premium-toast {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(18, 18, 18, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 12px 22px;
+  border-radius: 50px;
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.6), 
+    inset 0 1px 2px rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+/* Lingkaran Ikon Xmark Red Accent */
+.toast-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: #ffffff !important;
+  border-radius: 50%;
+  font-size: 12px;
+  box-shadow: 0 2px 6px rgba(239, 68, 68, 0.4);
+}
+
+.toast-text {
+  color: #e5e7eb !important;
+}
+
+/* Animasi Slide Up In & Out */
+@keyframes slideUpIn {
+  0% {
+    transform: translateY(60px) scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-toast {
+  animation: slideUpIn 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.premium-toast.fade-out {
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  transition: transform 0.35s ease, opacity 0.35s ease;
+}
+
+/* ==========================================================================
+   3. BACKWARD COMPATIBILITY: ROW PACKAGE DISABLED (LEGACY OPTIONAL)
+   ========================================================================== */
+
+/* Tetap dipertahankan jika sistem baris paket eceran sewaktu-waktu membutuhkan kelas ini */
+.package-row.pkg-disabled {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.03) !important;
+  border-color: rgba(255, 255, 255, 0.04) !important;
+  cursor: not-allowed !important;
+  filter: grayscale(100%) contrast(85%);
+  opacity: 0.55;
+  pointer-events: auto !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: none !important;
+}
+
+.package-row.pkg-disabled *,
+.package-row.pkg-disabled span,
+.package-row.pkg-disabled div,
+.package-row.pkg-disabled b {
+  color: rgba(255, 255, 255, 0.4) !important;
+  background: transparent !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
 }
 
 /* ====================================================================
