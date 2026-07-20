@@ -453,16 +453,28 @@ function updateProgress(status, proses) {
     document.getElementById("stepVerification").className = "progress-item";
     document.getElementById("stepProcess").className = "progress-item";
   } else if (status === "success") {
+    
+    // 🔥 1. HAPUS TEKS "SESI KADALUARSA" JIKA TERLANJUR ADA
+    const expiredTextOrder = document.getElementById("expiredTextOrder");
+    const expiredTextPayment = document.getElementById("expiredTextPayment");
+    if (expiredTextOrder) expiredTextOrder.remove();
+    if (expiredTextPayment) expiredTextPayment.remove();
+
     document.getElementById("stepOrder").className = "progress-item completed";
     document.getElementById("stepPayment").className = "progress-item completed";
     document.getElementById("stepVerification").className = "progress-item completed";
     document.getElementById("stepProcess").className = "progress-item current";
 
+    // 🔥 2. PASTI KAN IKON & BG WARNA MERAH DIKEMBALIKAN KE UNGU/HIJAU SUKSES
     document.querySelector("#stepOrder i").className = "fa-solid fa-check";
+    document.querySelector("#stepOrder .floating-icon").className = "floating-icon icon-purple"; // <-- Reset lingkaran 1 jadi ungu
+    
     document.querySelector("#stepPayment i").className = "fa-solid fa-check";
     document.querySelector("#stepPayment .floating-icon").className = "floating-icon icon-purple";
+    
     document.querySelector("#stepVerification i").className = "fa-solid fa-check";
     document.querySelector("#stepVerification .floating-icon").className = "floating-icon icon-purple";
+    
     document.querySelector("#stepProcess i").className = "fa-solid fa-box-open";
     document.querySelector("#stepProcess .floating-icon").className = "floating-icon icon-green";
 
