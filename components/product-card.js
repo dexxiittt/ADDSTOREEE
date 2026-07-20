@@ -1,17 +1,45 @@
 /* ===== HELPER FUNCTIONS ===== */
 
+// Fungsi untuk memunculkan Toast Premium dari bawah
+function showDisabledToast(event, statusText) {
+  event.preventDefault();
+  event.stopPropagation();
+  
+  // Buat container toast jika belum ada
+  let toastContainer = document.getElementById('custom-toast-container');
+  if (!toastContainer) {
+    toastContainer = document.createElement('div');
+    toastContainer.id = 'custom-toast-container';
+    document.body.appendChild(toastContainer);
+  }
+  
+  // Set isi toast (Menggunakan icon xmark dari FontAwesome)
+  toastContainer.innerHTML = `
+    <div class="premium-toast animate-toast">
+      <div class="toast-icon"><i class="fa-solid fa-xmark"></i></div>
+      <span class="toast-text">Produk sedang tidak bisa diakses (${statusText})</span>
+    </div>
+  `;
+  
+  // Hapus toast setelah beberapa detik dengan animasi smooth
+  setTimeout(() => {
+    const toast = toastContainer.querySelector('.premium-toast');
+    if (toast) {
+      toast.classList.add('fade-out');
+      setTimeout(() => { toastContainer.innerHTML = ''; }, 400);
+    }
+  }, 3000);
+}
+
 function garBadge(i) {
   const noGar = String(i.no_gar).toLowerCase();
   const until = i.until_gar ? String(i.until_gar) : "";
 
-  // Tidak ada garansi
   if (noGar === "yes") {
     return `<em class="badge-nogar">NoGar</em>`;
   }
 
-  // Ada garansi
   if (noGar === "no") {
-    // kalau ada durasi → pisah badge
     if (until) {
       return `
         <span class="badge-wrap">
@@ -22,7 +50,6 @@ function garBadge(i) {
     }
     return `<em class="badge-gar">Bergaransi</em>`;
   }
-
   return "";
 }
 
@@ -32,10 +59,8 @@ function isNoGar(i) {
 
 function parseDiscount(promo) {
   if (!promo) return null;
-
   const normalized = promo.replace(",", ".");
   const m = normalized.match(/(\d+(?:\.\d+)?)\s*%/);
-
   return m ? parseFloat(m[1]) : null;
 }
 
@@ -45,7 +70,6 @@ function formatPrice(n) {
 
 function renderBadges(badgeText) {
   if (!badgeText) return "";
-
   return badgeText
     .split(":")
     .map(b => b.trim())
@@ -53,7 +77,6 @@ function renderBadges(badgeText) {
     .map((label, i) => {
       const key = label.toLowerCase();
       let colorClass = "";
-      
       if (key === "hot") colorClass = "badge-hot-red";
       else if (key === "new") colorClass = "badge-hot-green";
       else if (key === "promo") colorClass = "badge-hot-orange";
@@ -75,9 +98,6 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
   })
   .then(rawData => {
     
-    // ====================================================================
-    // JEMBATAN KONVERSI: Mengubah final_price dari Sheets menjadi promo_text
-    // ====================================================================
     const data = rawData.map(i => {
       const price = Number(String(i.price).replace(/[^\d]/g, "")) || 0;
       const finalPrice = Number(String(i.final_price).replace(/[^\d]/g, "")) || 0;
@@ -93,11 +113,9 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
       }
       return i;
     });
-    // ====================================================================
 
     /* ===== GROUPING ===== */
     const grouped = {};
-
     data.forEach(p => {
       if (!grouped[p.product_id]) {
         grouped[p.product_id] = {
@@ -108,7 +126,6 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
       grouped[p.product_id].items.push(p);
     });
 
-    console.log("DATA GROUPED:", grouped);
     window.PRODUCT_DATA = grouped;
 
     /* ===== RENDER CARDS ===== */
@@ -118,7 +135,6 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
     let html = "";
     const products = Object.values(grouped);
 
-    // 1. Urutkan kotak/card produk berdasarkan card_order dari Sheet
     products.sort((a, b) => {
       const itemA = a.items.find(i => i.card_order !== undefined && i.card_order !== "");
       const itemB = b.items.find(i => i.card_order !== undefined && i.card_order !== "");
@@ -145,12 +161,10 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
           ${(() => {
             const sortedItems = [...prod.items];
             
-            // 2. Urutkan mainItems di dalam card berdasarkan product_order
             const mainItems = sortedItems
               .filter(i => i.group === "main")
               .sort((a, b) => (Number(a.product_order) || 999) - (Number(b.product_order) || 999));
               
-            // 3. Urutkan detailItems di dalam card berdasarkan product_order
             const detailItems = sortedItems
               .filter(i => i.group === "detail")
               .sort((a, b) => (Number(a.product_order) || 999) - (Number(b.product_order) || 999));
@@ -185,7 +199,6 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
                   cls += " nogar";
                 }
 
-                // Ambil & Hitung Logika Status Solatif (Main Items)
                 let badgeStatusHTML = "";
                 if (i.badge_status) {
                   const statusKey = String(i.badge_status).toLowerCase().trim();
@@ -198,8 +211,20 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
                   }
                 }
 
+                // ==========================================
+                // BARU: Logika Deteksi badgecard_status (Disable/Custom Solatif)
+                // ==========================================
+                let isDisabled = false;
+                let clickHandler = "";
+                if (i.badgecard_status && i.badgecard_status.trim() !== "") {
+                  isDisabled = true;
+                  cls += " pkg-disabled";
+                  badgeStatusHTML += `<span class="badge-card-tape">${i.badgecard_status}</span>`;
+                  clickHandler = `onclick="showDisabledToast(event, '${i.badgecard_status.replace(/'/g, "\\'")}')"`;
+                }
+
                 return `
-                  <a href="package.html?package_id=${i.package_id}" class="${cls}">
+                  <a href="${isDisabled ? 'javascript:void(0);' : `package.html?package_id=${i.package_id}`}" class="${cls}" ${clickHandler}>
                     ${badgeStatusHTML}
                     <span>
                       ${i.package} ${i.duration}
@@ -237,7 +262,6 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
                       cls += " nogar";
                     }
 
-                    // Ambil Logika Status Solatif Terlebih Dahulu (Detail Items)
                     let badgeStatusHTML = "";
                     if (i.badge_status) {
                       const statusKey = String(i.badge_status).toLowerCase().trim();
@@ -250,7 +274,18 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
                       }
                     }
 
-                    // Hitung Harga Paket Setelah Logika Status Ditetapkan
+                    // ==========================================
+                    // BARU: Logika Deteksi badgecard_status untuk Detail Items
+                    // ==========================================
+                    let isDisabled = false;
+                    let clickHandler = `onclick="event.stopPropagation();"`;
+                    if (i.badgecard_status && i.badgecard_status.trim() !== "") {
+                      isDisabled = true;
+                      cls += " pkg-disabled";
+                      badgeStatusHTML += `<span class="badge-card-tape">${i.badgecard_status}</span>`;
+                      clickHandler = `onclick="showDisabledToast(event, '${i.badgecard_status.replace(/'/g, "\\'")}')"`;
+                    }
+
                     const price = Number(String(i.price).replace(/[^\d]/g, "")) || 0;
                     const discount = parseDiscount(i.promo_text);
                     let priceHTML = `<b>${formatPrice(price)}</b>`;
@@ -271,7 +306,7 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
                     }
 
                     return `
-                      <a href="package.html?package_id=${i.package_id}" class="${cls}" onclick="event.stopPropagation();">
+                      <a href="${isDisabled ? 'javascript:void(0);' : `package.html?package_id=${i.package_id}`}" class="${cls}" ${clickHandler}>
                         ${badgeStatusHTML}
                         <span>
                           ${i.package} ${i.duration}
@@ -295,16 +330,9 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
           ${(() => {
             const g = prod.items.find(i => i.guarantee)?.guarantee?.toLowerCase();
             if (!g) return "";
-
-            if (g.includes("full")) {
-              return `<div class="note has-guarantee"><i class="fa-solid fa-check"></i> Full Garansi</div>`;
-            }
-            if (g.includes("mixed")) {
-              return `<div class="note mixed-guarantee"><i class="fa-solid fa-circle-half-stroke"></i> Mixed Garansi</div>`;
-            }
-            if (g.includes("tidak") || g.includes("no")) {
-              return `<div class="note no-guarantee"><i class="fa-solid fa-xmark"></i> Tidak Bergaransi</div>`;
-            }
+            if (g.includes("full")) return `<div class="note has-guarantee"><i class="fa-solid fa-check"></i> Full Garansi</div>`;
+            if (g.includes("mixed")) return `<div class="note mixed-guarantee"><i class="fa-solid fa-circle-half-stroke"></i> Mixed Garansi</div>`;
+            if (g.includes("tidak") || g.includes("no")) return `<div class="note no-guarantee"><i class="fa-solid fa-xmark"></i> Tidak Bergaransi</div>`;
             return "";
           })()}
         </div>
@@ -315,9 +343,7 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
 
     /* ===== REVEAL SYSTEM ===== */
     const cards = document.querySelectorAll(".glass-card");
-    cards.forEach((card, i) => {
-      card.dataset.delay = (i % 4) + 1;
-    });
+    cards.forEach((card, i) => { card.dataset.delay = (i % 4) + 1; });
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -326,16 +352,11 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
           observer.unobserve(entry.target);
         }
       });
-    }, {
-      threshold: 0.12,
-      rootMargin: "0px 0px -40px 0px"
-    });
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
 
     cards.forEach(card => observer.observe(card));
   })
-  .catch(err => {
-    console.error("Sheet error:", err);
-  });
+  .catch(err => { console.error("Sheet error:", err); });
 
 /* ===== EVENT LISTENERS ===== */
 document.addEventListener("click", function(e) {
@@ -347,32 +368,20 @@ document.addEventListener("click", function(e) {
   if (!detail) return;
 
   const isOpen = detail.classList.contains("open");
-
-  document.querySelectorAll(".package-detail.open").forEach(d => {
-    d.classList.remove("open");
-  });
-
-  document.querySelectorAll(".toggle-detail").forEach(b => {
-    b.textContent = "Selengkapnya...";
-  });
+  document.querySelectorAll(".package-detail.open").forEach(d => { d.classList.remove("open"); });
+  document.querySelectorAll(".toggle-detail").forEach(b => { b.textContent = "Selengkapnya..."; });
 
   if (!isOpen) {
     detail.classList.add("open");
-    card.scrollIntoView({
-      behavior: "smooth",
-      block: "center"
-    });
+    card.scrollIntoView({ behavior: "smooth", block: "center" });
     btn.textContent = "Tutup";
   }
 });
 
 document.documentElement.style.scrollBehavior = "smooth";
-
 let scrollTimeout;
 window.addEventListener("scroll", () => {
   document.body.classList.add("is-scrolling");
   clearTimeout(scrollTimeout);
-  scrollTimeout = setTimeout(() => {
-    document.body.classList.remove("is-scrolling");
-  }, 120);
+  scrollTimeout = setTimeout(() => { document.body.classList.remove("is-scrolling"); }, 120);
 });
