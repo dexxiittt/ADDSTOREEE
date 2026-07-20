@@ -1,1 +1,251 @@
+/* CARD UTAMA */
+.glass-card {
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+  border-radius: 20px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 
+    0 12px 30px rgba(0,0,0,.08),
+    0 4px 12px rgba(0,0,0,.05);
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .35s ease, transform .35s ease;
+  will-change: transform, opacity;
+}
 
+/* HOVER EFFECT */
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 52px rgba(0,0,0,.25);
+}
+
+/* ANIMASI MASUK */
+.glass-card.reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.glass-card[data-delay="1"] { transition-delay: .05s; }
+.glass-card[data-delay="2"] { transition-delay: .1s; }
+.glass-card[data-delay="3"] { transition-delay: .15s; }
+.glass-card[data-delay="4"] { transition-delay: .2s; }
+
+.glass-card h3 {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  margin: 12px 0;
+  color: #1f2937;
+  transition: transform .35s cubic-bezier(.22,1,.36,1), color .25s ease;
+}
+
+.glass-card:hover h3 {
+  transform: translateY(-1px) scale(1.02);
+}
+
+/* WRAPPER IMAGE */
+.product-image {
+  position: relative;
+  width: 100%;
+  margin-bottom: 14px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(255,255,255,0.35), rgba(255,255,255,0.12));
+}
+
+/* IMAGE */
+.product-image img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  display: block;
+  transform: scale(0.98);
+  transition: transform .45s cubic-bezier(.22,1,.36,1);
+}
+
+.glass-card:hover .product-image img {
+  transform: scale(1.04);
+}
+
+/* BADGE LAYOVER */
+.badge-hot {
+  position: absolute;
+  right: 10px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  color: white;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+  z-index: 10;
+}
+
+.badge-line-0 { top: 10px; }
+.badge-line-1 { top: 34px; }
+.badge-line-2 { top: 58px; }
+.badge-line-3 { top: 82px; }
+
+.badge-hot-red { background: #ef4444; }
+.badge-hot-green { background: #22c55e; }
+.badge-hot-orange { background: #f59e0b; }
+
+/* TOMBOL DETAIL PRODUK */
+.btn-detail {
+  display: block;
+  width: 100%;
+  padding: 10px 0;
+  margin-top: 14px;
+  background: transparent;
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #2563eb;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+.btn-detail:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+/* LAYOUT CONTAINER & GRID */
+.category-content {
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 20px 120px;
+}
+
+#product-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px 22px;
+  width: 100%;
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+}
+
+/* STATE CARD DISABLED (BADGECARD STATUS) */
+.glass-card.card-disabled {
+  background: rgba(26, 26, 26, 0.45) !important;
+  filter: grayscale(100%) brightness(0.75) contrast(90%);
+  cursor: not-allowed !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.glass-card.card-disabled * {
+  pointer-events: none !important;
+  user-select: none;
+}
+
+.badge-card-tape {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+  z-index: 50;
+  pointer-events: none;
+}
+
+.badge-card-tape span {
+  position: absolute;
+  display: block;
+  width: 170px;
+  padding: 5px 0;
+  background: linear-gradient(135deg, #374151, #1f2937);
+  color: #f3f4f6 !important;
+  font-family: 'Poppins', sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  right: -42px;
+  top: 24px;
+  transform: rotate(45deg);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+/* PREMIUM TOAST NOTIFICATION */
+#custom-toast-container {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999999;
+  pointer-events: none;
+  width: max-content;
+  max-width: 90vw;
+}
+
+.premium-toast {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(18, 18, 18, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 12px 22px;
+  border-radius: 50px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+.toast-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: #ffffff !important;
+  border-radius: 50%;
+  font-size: 12px;
+}
+
+@keyframes slideUpIn {
+  0% { transform: translateY(60px) scale(0.9); opacity: 0; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.animate-toast {
+  animation: slideUpIn 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.premium-toast.fade-out {
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  transition: transform 0.35s ease, opacity 0.35s ease;
+}
+
+/* RESPONSIVE RESPONSIVENESS */
+@media (min-width: 769px) {
+  #product-cards { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1200px) {
+  #product-cards { max-width: 1100px; gap: 36px 28px; }
+  .glass-card { padding: 22px; border-radius: 22px; border: 1px solid rgba(255, 255, 255, 0.5); }
+  .glass-card:hover { transform: translateY(-8px) scale(1.02); }
+  .product-image img { height: 150px; }
+}
+
+@media (max-width: 768px) {
+  #product-cards { max-width: 520px; gap: 32px 24px; }
+  .glass-card { padding: 18px; }
+}
