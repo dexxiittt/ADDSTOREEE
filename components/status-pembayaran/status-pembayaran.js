@@ -182,10 +182,17 @@ async function loadFromSheet() {
       
     const hemat = harga - total;
     
-    const hitungDiskonDinamis = harga > 0 ? Math.round((harga - total) / harga * 100) : 0;
+    // Hitung nilai mentahnya terlebih dahulu
+    const diskonPersenRaw = harga > 0 ? ((harga - total) / harga * 100) : 0;
+
+    // Ambil 2 angka di belakang koma, lalu ubah kembali ke Float 
+    // agar jika hasilnya angka bulat (contoh: 50%) tidak dipaksa jadi 50.00%
+    const hitungDiskonDinamis = parseFloat(diskonPersenRaw.toFixed(2));
+
     const diskonTeks = discountPercent > 0 
-      ? "-" + String(detail.discount).trim() 
-      : (hitungDiskonDinamis > 0 ? "-" + hitungDiskonDinamis + "%" : "0%");
+    ? "-" + String(detail.discount).trim() 
+    : (hitungDiskonDinamis > 0 ? "-" + hitungDiskonDinamis + "%" : "0%");
+
 
     const hargaHtml = `
       <div class="price-old">${rp(harga)}</div>
