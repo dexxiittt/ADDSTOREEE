@@ -638,7 +638,6 @@
 #preview-card-grid {
   display: grid;
   grid-template-columns: 1fr;
-  align-items: start;
   gap: 28px 22px;
 
   width: 100%;
