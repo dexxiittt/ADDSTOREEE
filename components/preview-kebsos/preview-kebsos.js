@@ -10,6 +10,29 @@ if (!targetProductId) {
   window.location.href = "kebutuhan-medsos.html";
 }
 
+/* ===== HELPER RENDER BADGE ===== */
+function renderBadges(badgeText) {
+  if (!badgeText) return "";
+  return badgeText
+    .split(":")
+    .map(b => b.trim())
+    .filter(Boolean)
+    .map((label, i) => {
+      const key = label.toLowerCase();
+      let colorClass = "";
+      if (key === "hot") colorClass = "badge-hot-red";
+      else if (key === "new") colorClass = "badge-hot-green";
+      else if (key === "promo") colorClass = "badge-hot-orange";
+
+      return `
+        <span class="badge-hot badge-line-${i} ${colorClass}">
+          ${label}
+        </span>
+      `;
+    })
+    .join("");
+}
+
 /* ===== FETCH DATA DARI TAB KEBSOS_PREVIEW ===== */
 fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/KEBSOS_PREVIEW")
   .then(res => {
@@ -17,15 +40,13 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/KEB
     return res.json();
   })
   .then(rows => {
-    /* ====================================================================
-       LOGIKA FORWARD-FILL: Mengisi sel kosong jika di sheet hanya ditulis 
-       di baris pertama untuk product_id, title, subtitle, image_url & category
-       ==================================================================== */
+    /* Logika Forward-Fill (Termasuk Badge) */
     let currentProductId = "";
     let currentTitle = "";
     let currentSubtitle = "";
     let currentImageUrl = "";
     let currentCategory = "";
+    let currentBadge = "";
 
     const parsedData = rows.map(r => {
       if (r.product_id && r.product_id.trim() !== "") currentProductId = r.product_id.trim();
@@ -33,6 +54,7 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/KEB
       if (r.subtitle && r.subtitle.trim() !== "") currentSubtitle = r.subtitle.trim();
       if (r.image_url && r.image_url.trim() !== "") currentImageUrl = r.image_url.trim();
       if (r.category && r.category.trim() !== "") currentCategory = r.category.trim();
+      if (r.badge && r.badge.trim() !== "") currentBadge = r.badge.trim();
 
       return {
         ...r,
@@ -40,11 +62,11 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/KEB
         title: currentTitle,
         subtitle: currentSubtitle,
         image_url: currentImageUrl,
-        category: currentCategory
+        category: currentCategory,
+        badge: currentBadge
       };
     });
 
-    // Filter produk yang sesuai dengan parameter URL (misal: "instagram")
     const filteredProducts = parsedData.filter(
       item => item.product_id.toLowerCase() === targetProductId.toLowerCase()
     );
@@ -64,20 +86,24 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/KEB
 
 /* ===== RENDER PAGE CONTENT ===== */
 function renderPage(items) {
-  // Sembunyikan Skeleton & Tampilkan Konten
   if (skeletonWrap) skeletonWrap.style.display = "none";
   if (kebsosContent) kebsosContent.style.display = "flex";
 
   const primaryItem = items[0];
 
-  // Render Card 1 (Info Header)
-  document.getElementById("kebsos-image").src = primaryItem.image_url;
+  // Render Gambar + Badge di Card 1
+  const imgWrap = document.querySelector(".info-card .image-wrapper");
+  if (imgWrap) {
+    imgWrap.innerHTML = `
+      <img id="kebsos-image" src="${primaryItem.image_url}" alt="${primaryItem.title}">
+      ${renderBadges(primaryItem.badge)}
+    `;
+  }
+
   document.getElementById("kebsos-title").textContent = primaryItem.title;
   document.getElementById("kebsos-subtitle").textContent = primaryItem.subtitle;
 
-  // Dapatkan daftar kategori unik (e.g. FOLLOWERS, LIKE, VIEW, INSIGHT)
   const uniqueCategories = [...new Set(items.map(i => i.category))].filter(Boolean);
-
   renderCategoryButtons(uniqueCategories, items);
 }
 
@@ -102,7 +128,6 @@ function renderCategoryButtons(categories, allItems) {
     ctaWrap.appendChild(btn);
   });
 
-  // Default tampilkan list dari kategori pertama
   if (categories.length > 0) {
     renderPackageList(categories[0], allItems);
   }
@@ -125,7 +150,6 @@ function renderPackageList(selectedCategory, allItems) {
       </div>
     `;
 
-    // Jika ada harga diskon
     if (finalPrice > 0 && finalPrice < price) {
       const discountPercent = Math.round(((price - finalPrice) / price) * 100);
       priceHTML = `
@@ -145,6 +169,5 @@ function renderPackageList(selectedCategory, allItems) {
     `;
   }).join("");
 
-  // Reset scroll ke atas saat kategori berganti
   scrollBox.scrollTop = 0;
 }
