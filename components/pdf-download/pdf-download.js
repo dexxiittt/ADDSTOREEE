@@ -11,7 +11,6 @@
 function loadImageBase64(url) {
   return new Promise((resolve) => {
     if (!url) {
-      // Fallback pixel transparan jika logo/QR tidak diset
       resolve("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=");
       return;
     }
@@ -32,7 +31,7 @@ function loadImageBase64(url) {
   });
 }
 
-// 2. Fungsi Otomatis Injeksi Box Card Download PDF ke DOM
+// 2. Fungsi Injeksi Box Card Download PDF ke DOM
 function injectPDFCard() {
   if (document.getElementById("pdfDownloadBox")) return;
 
@@ -54,31 +53,57 @@ function injectPDFCard() {
     </div>
   `;
 
-  // Cari tombol 'Hubungi Admin' / area support untuk menaruh box tepat di bawahnya
   const waBtn = document.getElementById("waButton");
   let targetElement = null;
 
   if (waBtn) {
-    targetElement = waBtn.closest(".support-card") || waBtn.closest(".support-action") || waBtn.parentElement;
+    targetElement = waBtn.closest(".support-card") || waBtn.closest(".support-action") || waBtn.closest(".wa-box") || waBtn.parentElement;
   }
 
   if (targetElement) {
     targetElement.insertAdjacentHTML("afterend", cardHTML);
   } else {
-    // Fallback jika tombol waButton tidak ditemukan
     const container = document.querySelector(".invoice-box") || document.body;
     container.insertAdjacentHTML("beforeend", cardHTML);
   }
 }
 
-// Jalankan injeksi saat halaman selesai dimuat
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", injectPDFCard);
-} else {
-  injectPDFCard();
+// 3. Cek apakah status pembayaran SUKSES sebelum memunculkan Card PDF
+function checkAndInjectPDF() {
+  const statusBadgeText = document.getElementById("statusBadgeText");
+  const invoiceBox = document.getElementById("invoiceBox");
+
+  const isSuccessText = statusBadgeText && statusBadgeText.innerText.toLowerCase().includes("berhasil");
+  const isSuccessClass = invoiceBox && invoiceBox.classList.contains("status-success");
+
+  if (isSuccessText || isSuccessClass) {
+    injectPDFCard();
+  } else {
+    // Jika bukan status success (misal pending / expired), hapus box jika sempat muncul
+    const existingBox = document.getElementById("pdfDownloadBox");
+    if (existingBox) existingBox.remove();
+  }
 }
 
-// 3. Fungsi Utama Download PDF
+// Pantau perubahan status secara otomatis saat data sheet dimuat
+document.addEventListener("DOMContentLoaded", () => {
+  checkAndInjectPDF();
+
+  const statusBadgeText = document.getElementById("statusBadgeText");
+  const invoiceBox = document.getElementById("invoiceBox");
+
+  if (statusBadgeText) {
+    const observer = new MutationObserver(checkAndInjectPDF);
+    observer.observe(statusBadgeText, { childList: true, characterData: true, subtree: true });
+  }
+
+  if (invoiceBox) {
+    const observer = new MutationObserver(checkAndInjectPDF);
+    observer.observe(invoiceBox, { attributes: true, attributeFilter: ["class"] });
+  }
+});
+
+// 4. Fungsi Utama Download PDF
 async function downloadPDF() {
   const btn = document.getElementById("downloadBtn");
   const originalText = btn.innerHTML;
@@ -94,7 +119,6 @@ async function downloadPDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    // Ambil data dari elemen HTML dengan pemindai aman (fallback string kosong)
     const invoice = document.getElementById("invoice")?.innerText || "";
     const nama = document.getElementById("nama")?.innerText || "";
     const wa = document.getElementById("wa")?.innerText || "";
@@ -106,23 +130,19 @@ async function downloadPDF() {
     const diskon = document.getElementById("diskon")?.innerText || "";
     const hemat = document.getElementById("hemat")?.innerText || "";
 
-    // Convert gambar (menggunakan variabel global atau fallback)
     const logoBase64 = await loadImageBase64(window.logoURL);
     const qrBase64 = await loadImageBase64(window.qrURL);
 
     // ================= HEADER =================
-    doc.setFillColor(124, 58, 237); // Ungu
+    doc.setFillColor(124, 58, 237);
     doc.rect(0, 0, 210, 30, "F");
 
-    // LOGO
     doc.addImage(logoBase64, "PNG", 180, 6, 20, 20);
 
-    // TITLE
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(16);
     doc.text("INVOICE PEMBAYARAN", 20, 18);
 
-    // Reset warna
     doc.setTextColor(0, 0, 0);
 
     // ================= INFO INVOICE =================
@@ -130,7 +150,6 @@ async function downloadPDF() {
     doc.text("Invoice: " + invoice, 20, 40);
     doc.text("Tanggal: " + waktu, 20, 47);
 
-    // Garis pembatas
     doc.setDrawColor(220);
     doc.line(20, 52, 190, 52);
 
@@ -147,41 +166,35 @@ async function downloadPDF() {
     doc.setDrawColor(230);
     doc.setFillColor(249, 250, 251);
 
-    // Box detail
     doc.roundedRect(20, 95, 170, 85, 3, 3, "FD");
 
     let y = 105;
 
-    // Judul Detail
     doc.setFontSize(12);
     doc.setFont(undefined, "bold");
     doc.text("Detail Pesanan", 25, y);
 
     y += 10;
 
-    // Nama Produk
     doc.setFontSize(12);
     doc.setFont(undefined, "normal");
     doc.text(paket, 25, y);
 
     y += 6;
 
-    // Sub info
     doc.setFontSize(10);
     doc.setTextColor(120);
     doc.text("Private • 1 Bulan", 25, y);
 
     y += 10;
 
-    // Reset warna
     doc.setTextColor(0);
 
-    // ===== Subtotal =====
+    // Subtotal
     doc.setFontSize(11);
     doc.text("Subtotal", 25, y);
     doc.text(harga, 160, y, { align: "right" });
 
-    // Coret rapi pada harga lama
     const textWidth = doc.getTextWidth(harga);
     const xRight = 169;
     const padding = Math.min(6, textWidth * 0.1);
@@ -194,13 +207,12 @@ async function downloadPDF() {
 
     y += 6;
 
-    // Garis tipis
     doc.setDrawColor(220);
     doc.line(25, y, 185, y);
 
     y += 8;
 
-    // ===== Diskon =====
+    // Diskon
     doc.text("Diskon", 25, y);
     doc.setTextColor(220, 38, 38);
     doc.text(diskon, 160, y, { align: "right" });
@@ -211,7 +223,7 @@ async function downloadPDF() {
 
     y += 8;
 
-    // ===== Hemat =====
+    // Hemat
     doc.setTextColor(0);
     doc.text("Hemat", 25, y);
     doc.setTextColor(22, 163, 74);
@@ -223,7 +235,7 @@ async function downloadPDF() {
 
     y += 10;
 
-    // ===== Total =====
+    // Total
     doc.setTextColor(0);
     doc.setFont(undefined, "bold");
     doc.text("Total Bayar", 25, y);
@@ -233,18 +245,14 @@ async function downloadPDF() {
     doc.setDrawColor(230);
     doc.setFillColor(255, 255, 255);
 
-    // Box QR
     doc.roundedRect(135, 195, 55, 65, 4, 4, "FD");
 
-    // QR
     doc.addImage(qrBase64, "PNG", 142, 202, 40, 40);
 
-    // Teks bawah QR
     doc.setFontSize(9);
     doc.setTextColor(100);
     doc.text("Scan untuk verifikasi", 162, 255, { align: "center" });
 
-    // Reset warna
     doc.setTextColor(0, 0, 0);
 
     // ================= STATUS BADGE =================
@@ -255,7 +263,6 @@ async function downloadPDF() {
     doc.setFontSize(11);
     doc.text("LUNAS", 25, 203);
 
-    // Reset warna
     doc.setTextColor(0, 0, 0);
 
     // ================= FOOTER =================
@@ -264,14 +271,12 @@ async function downloadPDF() {
     doc.text("Terima kasih telah melakukan pembayaran", 20, 220);
     doc.text("Invoice ini sah dan tidak memerlukan tanda tangan", 20, 226);
 
-    // Save File PDF
     doc.save("Invoice_" + invoice + ".pdf");
   } catch (err) {
     console.error(err);
     alert("Gagal generate PDF ❌");
   }
 
-  // Loading OFF
   btn.innerHTML = originalText;
   btn.disabled = false;
 }
