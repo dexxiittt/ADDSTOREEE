@@ -251,7 +251,7 @@ body {
   }
 
   .invoice-box {
-    margin: -40px 16px 30px; /* Card digeser agak kebawah di layar HP */
+    margin: 50px 16px 30px; /* Card digeser agak kebawah di layar HP */
     padding: 25px 18px;
   }
 
@@ -284,7 +284,7 @@ body {
   }
 
   .invoice-box {
-    margin: -30px 20px 40px;
+    margin: 50px 20px 40px;
     padding: 35px;
   }
 
@@ -296,7 +296,7 @@ body {
 @media (min-width: 1200px) {
   .invoice-box {
     max-width: 900px;
-    margin: -60px auto 50px;
+    margin: 50px auto 50px;
     padding: 60px;
   }
 
