@@ -38,7 +38,7 @@ body {
   position: relative;
   background: #f9fafb;
   max-width: 800px;
-  margin: -50px auto 40px; /* -50px membuat posisi card pas menumpuk elegan di bagian bawah hero */
+  margin: 50px auto 40px; /* -50px membuat posisi card pas menumpuk elegan di bagian bawah hero */
   border: 1px solid #e5e7eb;
   border-radius: 16px;
   padding: 50px;
