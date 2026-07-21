@@ -48,10 +48,35 @@ function showDisabledToast(event, statusText) {
   }, 3000);
 }
 
+// Helper untuk animasi reveal kartu
+function applyRevealAnimation(container) {
+  const cards = container.querySelectorAll(".glass-card");
+  cards.forEach((card, i) => { card.dataset.delay = (i % 4) + 1; });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("reveal");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  cards.forEach(card => observer.observe(card));
+}
+
+/* ===== CACHE MEMORI SUPAYA SMOOTH BEBAS RELOAD ===== */
+let cachedPremiumHTML = "";
+
 /* ===== LOAD KEBUTUHAN MEDSOS CARDS ===== */
 function loadMedsosCards() {
   const wrap = document.getElementById("preview-card-grid");
   if (!wrap) return;
+
+  // Simpan HTML APK Premium bawaan sebelum diganti
+  if (!cachedPremiumHTML && wrap.children.length > 0) {
+    cachedPremiumHTML = wrap.innerHTML;
+  }
 
   wrap.innerHTML = `<div style="text-align:center; padding: 40px; color: #888; grid-column: 1/-1;">Memuat data Kebutuhan Medsos...</div>`;
 
@@ -111,21 +136,7 @@ function loadMedsosCards() {
       });
 
       wrap.innerHTML = html;
-
-      // Reveal animation
-      const cards = wrap.querySelectorAll(".glass-card");
-      cards.forEach((card, i) => { card.dataset.delay = (i % 4) + 1; });
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("reveal");
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.12 });
-
-      cards.forEach(card => observer.observe(card));
+      applyRevealAnimation(wrap);
     })
     .catch(err => {
       console.error("Error loading Medsos:", err);
@@ -133,11 +144,31 @@ function loadMedsosCards() {
     });
 }
 
+/* ===== LOAD APK PREMIUM (DARI CACHE MEMORI) ===== */
+function loadPremiumCards() {
+  const wrap = document.getElementById("preview-card-grid");
+  if (!wrap) return;
+
+  // Jika sudah ada di cache memori, langsung tampilkan tanpa re-fetch/reload!
+  if (cachedPremiumHTML) {
+    wrap.innerHTML = cachedPremiumHTML;
+    applyRevealAnimation(wrap);
+  }
+}
+
 /* ===== TAB SWITCHER LOGIC ===== */
 function initPreviewCategory() {
   const tabs = document.querySelectorAll(".preview-tabs button");
   const previewTitle = document.querySelector(".preview-title");
   const previewBtn = document.querySelector(".preview-button");
+
+  // Simpan HTML awal (APK Premium) saat pertama kali di-load
+  setTimeout(() => {
+    const wrap = document.getElementById("preview-card-grid");
+    if (wrap && wrap.children.length > 0 && !cachedPremiumHTML) {
+      cachedPremiumHTML = wrap.innerHTML;
+    }
+  }, 1000);
 
   tabs.forEach(tab => {
     tab.onclick = () => {
@@ -153,18 +184,16 @@ function initPreviewCategory() {
           previewBtn.childNodes[0].nodeValue = "Lihat Semua Medsos ";
         }
         loadMedsosCards();
+
       } else if (category === "premium") {
         if (previewTitle) previewTitle.textContent = "Aplikasi Premium Populer";
         if (previewBtn) {
           previewBtn.href = "semua-aplikasi.html";
           previewBtn.childNodes[0].nodeValue = "Lihat Semua Aplikasi ";
         }
-        // Muat ulang produk APK Premium menggunakan function/data bawaan product-card.js jika ada
-        if (typeof renderProductCards === "function") {
-          renderProductCards();
-        } else {
-          location.reload(); // Fallback re-fetch jika diperlukan
-        }
+        // Panggil fungsi pemuat memori tanpa reload!
+        loadPremiumCards();
+
       } else if (category === "game") {
         if (previewTitle) previewTitle.textContent = "Topup Game Populer";
         if (previewBtn) {
@@ -173,6 +202,9 @@ function initPreviewCategory() {
         }
         const wrap = document.getElementById("preview-card-grid");
         if (wrap) {
+          if (!cachedPremiumHTML && wrap.children.length > 0) {
+            cachedPremiumHTML = wrap.innerHTML;
+          }
           wrap.innerHTML = `<div style="text-align:center; padding: 40px; color: #888; grid-column: 1/-1;">Layanan Topup Game segera hadir!</div>`;
         }
       }
