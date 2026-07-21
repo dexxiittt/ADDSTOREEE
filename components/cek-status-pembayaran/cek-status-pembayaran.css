@@ -17,7 +17,7 @@ body {
 
 .package-hero h1 {
   font-family: "Sora", sans-serif;
-  margin: 18px 0 12px;
+  margin: 0 0 12px;
   font-size: clamp(32px, 5vw, 46px);
   font-weight: 700;
   letter-spacing: -0.6px;
@@ -26,7 +26,7 @@ body {
 
 .package-hero p {
   font-family: "Plus Jakarta Sans", sans-serif;
-  margin: 18px 0 12px;
+  margin: 0;
   font-size: clamp(15px, 2.5vw, 19px);
   line-height: 1.6;
   font-weight: 400;
