@@ -2,143 +2,122 @@
 <html lang="id">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,800;1,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,800;1,800&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="components/section-trust.css">
+  <link rel="stylesheet" href="components/product-card.css">
+  <!-- TAMBAHKAN CSS KEBUTUHAN MEDSOS DI SINI -->
+  <link rel="stylesheet" href="components/kebsos/product-medsos.css">
+  <link rel="stylesheet" href="components/preview-category/preview-category.css">
+  <link rel="stylesheet" href="components/preview-testimoni/preview-testimoni.css">
+  <link rel="stylesheet" href="components/preview-index.css">
 
-<link rel="stylesheet" href="components/section-trust.css">
-<link rel="stylesheet" href="components/product-card.css">
-<link rel="stylesheet" href="components/preview-category/preview-category.css">
-<link rel="stylesheet" href="components/preview-testimoni/preview-testimoni.css">
-<link rel="stylesheet" href="components/preview-index.css">
-
-<link rel="stylesheet" href="components/premium-cta.css">
-<link rel="stylesheet" href="components/footer.css">
-<title>Preview</title>
-
+  <link rel="stylesheet" href="components/premium-cta.css">
+  <link rel="stylesheet" href="components/footer.css">
+  <title>Preview</title>
 </head>
-  
+
 <body>
-<div id="navbar-placeholder"></div>
-<script src="components/navbar.js"></script>
-  
-<section class="hero">
-<div class="container">
-<div class="floating-icons">
+  <div id="navbar-placeholder"></div>
+  <script src="components/navbar.js"></script>
 
-  <div class="floating-icon shield icon-green">
-    <i class="fa-solid fa-shield-halved"></i>
-  </div>
+  <section class="hero">
+    <div class="container">
+      <div class="floating-icons">
+        <div class="floating-icon shield icon-green">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <div class="floating-icon diamond icon-blue">
+          <i class="fa-solid fa-gem"></i>
+        </div>
+        <div class="floating-icon bolt icon-gold">
+          <i class="fa-solid fa-bolt"></i>
+        </div>
+      </div>
 
-  <div class="floating-icon diamond icon-blue">
-    <i class="fa-solid fa-gem"></i>
-  </div>
+      <h1 class="hero-title">
+        <span>Aplikasi Premium</span>
+        <span>Kebutuhan Medsos</span>
+        <span>Topup Game</span>
+      </h1>
 
-  <div class="floating-icon bolt icon-gold">
-    <i class="fa-solid fa-bolt"></i>
-  </div>
+      <div class="trust">
+        <i class="fa-solid fa-circle-check"></i>
+        <span>Aman & Terpercaya</span>
+      </div>
 
-</div>
+      <p class="desc">
+        Dapatkan akses premium ke aplikasi favoritmu, kebutuhan media sosial, dan top up game dengan harga terjangkau, layanan aman, dan support 24/7.
+      </p>
 
-<h1 class="hero-title">
-<span>Aplikasi Premium</span>
-<span>Kebutuhan Medsos</span>
-<span>Topup Game</span>
-</h1>
+      <div class="stats">
+        <div class="stat">
+          <h2>100+</h2>
+          <p>Pelanggan</p>
+        </div>
+        <div class="stat">
+          <h2>50+</h2>
+          <p>Kategori</p>
+        </div>
+        <div class="stat">
+          <h2>24/7</h2>
+          <p>Support</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<div class="trust">
-<i class="fa-solid fa-circle-check"></i>
-<span>Aman & Terpercaya</span>
-</div>
-
-<p class="desc">
-Dapatkan akses premium ke aplikasi favoritmu,
-kebutuhan media sosial,
-dan top up game dengan harga terjangkau,
-layanan aman,
-dan support 24/7.
-</p>
-
-<div class="stats">
-
-<div class="stat">
-<h2>100+</h2>
-<p>Pelanggan</p>
-</div>
-
-<div class="stat">
-<h2>50+</h2>
-<p>Kategori</p>
-</div>
-
-<div class="stat">
-<h2>24/7</h2>
-<p>Support</p>
-</div>
-
-</div>
-</div>
-</section>
-
-<section class="preview-content">
-
+  <section class="preview-content">
     <div id="trust-section"></div>
-
     <div id="preview-testimoni"></div>
-
     <div id="preview-category"></div>
+  </section>
 
-</section>
-  
-<div id="premium-cta"></div>
-<div id="footer-container"></div>
-  
-<script src="components/section-trust.js"></script>
+  <div id="premium-cta"></div>
+  <div id="footer-container"></div>
 
-<script>
-window.HOMEPAGE_LIMIT = 4;
+  <script src="components/section-trust.js"></script>
 
-fetch("components/preview-testimoni/preview-testimoni.html")
-.then(r => r.text())
-.then(html => {
+  <script>
+    window.HOMEPAGE_LIMIT = 4;
 
-    document.getElementById("preview-testimoni").innerHTML = html;
+    fetch("components/preview-testimoni/preview-testimoni.html")
+      .then(r => r.text())
+      .then(html => {
+        document.getElementById("preview-testimoni").innerHTML = html;
+        const script = document.createElement("script");
+        script.type = "module";
+        script.src = "components/preview-testimoni/preview-testimoni.js";
+        document.body.appendChild(script);
+      });
 
-    const script = document.createElement("script");
-    script.type = "module";
-    script.src = "components/preview-testimoni/preview-testimoni.js";
+    fetch("components/preview-category/preview-category.html")
+      .then(r => r.text())
+      .then(html => {
+        document.getElementById("preview-category").innerHTML = html;
 
-    document.body.appendChild(script);
+        // Muat product-card.js setelah container ada
+        const productScript = document.createElement("script");
+        productScript.src = "components/product-card.js";
+        productScript.onload = () => {
+          if (typeof initPreviewCategory === "function") {
+            initPreviewCategory();
+          }
+        };
+        document.body.appendChild(productScript);
+      });
+  </script>
 
-});
-  
-fetch("components/preview-category/preview-category.html")
-.then(r => r.text())
-.then(html => {
-    document.getElementById("preview-category").innerHTML = html;
-
-    // Muat product-card.js setelah container sudah ada
-    const productScript = document.createElement("script");
-    productScript.src = "components/product-card.js";
-
-    productScript.onload = () => {
-        initPreviewCategory();
-    };
-
-    document.body.appendChild(productScript);
-});
-</script>
-
-<script src="components/preview-category/preview-category.js"></script>
-<script type="module" src="components/preview-testimoni/preview-testimoni.js"></script>
-
-<script src="components/premium-cta.js"></script>
-<script src="components/footer.js"></script>
+  <script src="components/preview-category/preview-category.js"></script>
+  <script type="module" src="components/preview-testimoni/preview-testimoni.js"></script>
+  <script src="components/premium-cta.js"></script>
+  <script src="components/footer.js"></script>
 </body>
+
 </html>
