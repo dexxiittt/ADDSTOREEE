@@ -383,25 +383,26 @@ Kirim bukti pembayaran ke admin agar proses verifikasi dapat segera dilakukan.
 
 </div>
 
-<!-- JS DI BAGIAN BAWAH HTML -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- DYNAMIC TOAST UNTUK NOTIFIKASI SYSTEM -->
+  <div id="customDynamicToast" class="dynamic-toast">
+    <i id="toastIcon" class="fa-solid fa-circle-check"></i>
+    <span id="toastMessage">Pesanan sudah dibuat ⚡</span>
+  </div>
 
-<!-- PEMANGGILAN UTILS CHAT ADMIN BARU -->
-<script src="components/utils/chat-admin.js"></script>
+  <div id="copyToast" class="copy-toast">
+    <i class="fa-solid fa-check"></i>
+    <span>Invoice berhasil disalin</span>
+  </div>
 
-<!-- SCRIPT UTAMA STATUS PEMBAYARAN -->
-<script src="components/status-pembayaran/status-pembayaran.js?=v6"></script>
+  <!-- LIBRARY DEPENDENCIES (Urutan penting agar PDF berjalan lancar) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-<!-- DYNAMIC TOAST UNTUK NOTIFIKASI SYSTEM -->
-<div id="customDynamicToast" class="dynamic-toast">
-  <i id="toastIcon" class="fa-solid fa-circle-check"></i>
-  <span id="toastMessage">Pesanan sudah dibuat ⚡</span>
-</div>
+  <!-- UTILS & COMPONENTS -->
+  <script src="components/utils/chat-admin.js"></script>
+  <script src="components/pdf-download/pdf-download.js"></script>
 
-<div id="copyToast" class="copy-toast">
-  <i class="fa-solid fa-check"></i>
-  <span>Invoice berhasil disalin</span>
-</div>
+  <!-- SCRIPT UTAMA STATUS PEMBAYARAN -->
+  <script src="components/status-pembayaran/status-pembayaran.js?v=6"></script>
 </body>
 </html>
 
