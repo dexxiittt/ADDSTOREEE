@@ -104,24 +104,6 @@ a {
               0 0 25px rgba(139, 92, 246, 0.25); /* Glow ungu lembut */
 }
 
-/* 3. EFEK KILATAN CAHAYA (SHINE/GLOSS) SAAT CARD DI-HOVER */
-.glass-card::before {
-  content: "";
-  position: absolute;
-  top: 0; 
-  left: -100%;
-  width: 60%; 
-  height: 100%;
-  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.12), transparent);
-  transition: left 0.75s ease;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.glass-card:hover::before {
-  left: 140%;
-}
-
 /* ==========================================
    CARD 1: INFO PRODUK
    ========================================== */
