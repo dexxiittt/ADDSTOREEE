@@ -328,6 +328,36 @@ a {
 .sk-btn-row { height: 40px; margin-bottom: 16px; }
 .sk-list { height: 200px; }
 
+/* ====================================================================
+   BADGE PROMO/NEW/HOT PADA GAMBAR CARD PREVIEW
+   ==================================================================== */
+.info-card .image-wrapper {
+  position: relative; /* Wajib agar badge berada di dalam batas gambar */
+}
+
+.badge-hot {
+  position: absolute;
+  right: 10px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  color: white;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+  z-index: 10;
+}
+
+/* Posisi Bertingkat */
+.badge-line-0 { top: 10px; }
+.badge-line-1 { top: 34px; }
+.badge-line-2 { top: 58px; }
+.badge-line-3 { top: 82px; }
+
+/* Variasi Warna Badge */
+.badge-hot-red { background: #ef4444; }
+.badge-hot-green { background: #22c55e; }
+.badge-hot-orange { background: #f59e0b; }
+
 /* RESPONSIVE DESKTOP */
 @media (min-width: 600px) {
   .cta-cat-btn {
