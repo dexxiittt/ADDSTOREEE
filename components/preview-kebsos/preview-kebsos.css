@@ -128,6 +128,7 @@ a {
   background: rgba(255,255,255,0.05);
 
   overflow: hidden;
+  position: relative;
 }
 
 .info-card img {
@@ -331,9 +332,6 @@ a {
 /* ====================================================================
    BADGE PROMO/NEW/HOT PADA GAMBAR CARD PREVIEW
    ==================================================================== */
-.info-card .image-wrapper {
-  position: relative; /* Wajib agar badge berada di dalam batas gambar */
-}
 
 .badge-hot {
   position: absolute;
