@@ -1,1 +1,308 @@
+/* ==========================================
+   ROOT & BASE SETUP
+   ========================================== */
+:root {
+  --bg-main: #0b0f19;
+  --glass-bg: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+  --glass-border: rgba(255,255,255,.08);
+  --text-main: #ffffff;
+  --text-soft: rgba(255,255,255,.72);
+  --accent-purple: #8b5cf6;
+  --accent-purple-dark: #6d28d9;
+  --price-green: #22c55e;
+  --radius-xl: 24px;
+  --radius-lg: 16px;
+  --radius-md: 12px;
+}
 
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* HILANGKAN AREA KLIK BIRU/HIGHLIGHT DI HP */
+  -webkit-tap-highlight-color: transparent !important;
+  user-select: none;
+}
+
+body.kebsos-page {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  background: linear-gradient(180deg, var(--bg-main), #090d17);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* HERO */
+.kebsos-hero {
+  width: 100%;
+  padding: 70px 20px 40px;
+  text-align: center;
+  background: linear-gradient(135deg, #8d3cff, #6516ad);
+}
+
+.kebsos-hero h1 {
+  font-family: "Sora", sans-serif;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.kebsos-hero p {
+  font-size: clamp(14px, 1.8vw, 18px);
+  color: rgba(255,255,255,.85);
+}
+
+/* LAYOUT CONTAINER */
+.kebsos-stage {
+  width: 100%;
+  padding: 24px 16px 80px;
+}
+
+.kebsos-shell {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.kebsos-content-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* GLASS CARD GENERAL */
+.glass-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: 20px;
+  box-shadow: 0 18px 45px rgba(0,0,0,.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  overflow: hidden;
+}
+
+/* ==========================================
+   CARD 1: INFO PRODUK
+   ========================================== */
+.info-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.info-card .image-wrapper {
+  width: 100%;
+  max-height: 220px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 16px;
+  background: rgba(255,255,255,0.05);
+}
+
+.info-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.info-card h2 {
+  font-family: "Sora", sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+  text-shadow: 0 0 12px rgba(255,255,255,0.5);
+}
+
+.info-card p {
+  font-size: 15px;
+  color: var(--text-soft);
+}
+
+/* ==========================================
+   CARD 2: KATEGORI & PACKAGE LIST
+   ========================================== */
+.select-card .card-header h3 {
+  font-family: "Sora", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.select-card .card-header i {
+  color: var(--accent-purple);
+}
+
+/* CATEGORY CTA BUTTONS */
+.category-cta-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.cta-cat-btn {
+  flex: 1 1 calc(50% - 10px);
+  min-width: 120px;
+  padding: 12px 14px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius-md);
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.cta-cat-btn:hover {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(139,92,246,0.4);
+}
+
+/* ACTIVE CTA BUTTON */
+.cta-cat-btn.active {
+  background: linear-gradient(135deg, var(--accent-purple), var(--accent-purple-dark));
+  border-color: transparent;
+  box-shadow: 0 6px 18px rgba(139, 92, 246, 0.4);
+}
+
+/* SCROLL AREA UNTUK LIST PAKET (~5 ITEM TAMPIL) */
+.scroll-box-wrapper {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-lg);
+  padding: 8px;
+}
+
+.package-scroll-box {
+  max-height: 380px; /* Pas menampung sekitar 5 item sebelum scroll */
+  overflow-y: auto;
+  padding-right: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* KUSTOM SCROLLBAR PERINGKAT ELEGANT */
+.package-scroll-box::-webkit-scrollbar {
+  width: 5px;
+}
+
+.package-scroll-box::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 10px;
+}
+
+.package-scroll-box::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.5);
+  border-radius: 10px;
+}
+
+/* PACKAGE ITEM CARD (KLIK TERANGKAT & SHADOW UNGU) */
+.package-item-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.package-item-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(139, 92, 246, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+/* EFEK KLIK / ACTIVE (TERANGKAT SMOOTH + UNGU SHADOW) */
+.package-item-card:active {
+  transform: translateY(-5px) scale(1.01) !important;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(109, 40, 217, 0.35)) !important;
+  border-color: #8b5cf6 !important;
+  box-shadow: 0 10px 24px rgba(139, 92, 246, 0.5) !important;
+}
+
+.pkg-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #fff;
+}
+
+/* HARGA WRAPPER */
+.pkg-price-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pkg-price-old {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.45);
+  text-decoration: line-through;
+}
+
+.pkg-price-new {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--price-green);
+}
+
+.pkg-discount-badge {
+  padding: 2px 6px;
+  background: #ef4444;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 999px;
+}
+
+/* SKELETON ANIMATION */
+.skeleton {
+  background: linear-gradient(90deg, rgba(255,255,255,0.06) 25%, rgba(255,255,255,0.12) 37%, rgba(255,255,255,0.06) 63%);
+  background-size: 400% 100%;
+  animation: skeleton-loading 1.4s ease infinite;
+  border-radius: 12px;
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+
+.sk-image { height: 180px; margin-bottom: 16px; }
+.sk-title { height: 24px; width: 50%; margin: 0 auto 10px; }
+.sk-text { height: 16px; width: 70%; margin: 0 auto 20px; }
+.sk-btn-row { height: 40px; margin-bottom: 16px; }
+.sk-list { height: 200px; }
+
+/* RESPONSIVE DESKTOP */
+@media (min-width: 600px) {
+  .cta-cat-btn {
+    flex: 1 1 calc(25% - 10px);
+  }
+}
