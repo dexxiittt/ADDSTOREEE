@@ -1,1 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pilihan Layanan Medsos</title>
+
+  <!-- Icons & Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="components/preview-kebsos/preview-kebsos.css">
+</head>
+
+<body class="kebsos-page">
+
+  <div id="navbar-placeholder"></div>
+  <script src="components/navbar.js"></script>
+
+  <!-- HERO SECTION -->
+  <section class="kebsos-hero">
+    <h1>Pilihan Paket</h1>
+    <p>Pilih kategori dan paket layanan sosial mediamu</p>
+  </section>
+
+  <!-- MAIN STAGE -->
+  <section class="kebsos-stage">
+    <div class="kebsos-shell">
+
+      <!-- SKELETON LOADING -->
+      <div id="skeleton-wrap" class="glass-card skeleton-box">
+        <div class="skeleton sk-image"></div>
+        <div class="skeleton sk-title"></div>
+        <div class="skeleton sk-text"></div>
+        <div class="skeleton sk-btn-row"></div>
+        <div class="skeleton sk-list"></div>
+      </div>
+
+      <!-- CONTAINER UTAMA SETELAH FETCH -->
+      <div id="kebsos-content" class="kebsos-content-wrap" style="display: none;">
+        
+        <!-- CARD 1: INFO PRODUK (Gambar, Title, Subtitle) -->
+        <div class="glass-card info-card">
+          <div class="image-wrapper">
+            <img id="kebsos-image" src="" alt="Layanan Medsos">
+          </div>
+          <h2 id="kebsos-title"></h2>
+          <p id="kebsos-subtitle"></p>
+        </div>
+
+        <!-- CARD 2: KATEGORI & LIST PAKET SCROLLABLE -->
+        <div class="glass-card select-card">
+          <div class="card-header">
+            <h3><i class="fa-solid fa-layer-group"></i> Pilih Kategori</h3>
+          </div>
+
+          <!-- CTA BUTTONS (Kategori otomatis tergenerate dari sheet) -->
+          <div id="category-cta-wrap" class="category-cta-container"></div>
+
+          <!-- DETAIL BOX SCROLL AREA (Menampung list paket) -->
+          <div class="scroll-box-wrapper">
+            <div id="package-scroll-box" class="package-scroll-box"></div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <script src="components/preview-kebsos/preview-kebsos.js"></script>
+
+  <div id="footer-container"></div>
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="components/footer.js"></script>
+</body>
+
+</html>
