@@ -14,11 +14,14 @@
     // Jika invoice belum ada (misal masih proses loading sheet), batalkan dulu
     if (!rawInvoice) return;
 
-    // 2. Buat URL tujuan scan QR (otomatis menyesuaikan domain website kamu)
-    const baseUrl = window.location.origin;
-    const targetUrl = `${baseUrl}/status-pesanan.html?inv=${rawInvoice}`;
+    // 2. Bikin Base URL yang Presisi (Aman untuk GitHub Pages / Sub-folder)
+    const currentUrl = window.location.href.split('?')[0].split('#')[0];
+    const baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/') + 1);
+    
+    // Hasil gabungan alamat halaman target status-pesanan
+    const targetUrl = `${baseUrl}status-pesanan.html?inv=${rawInvoice}`;
 
-    // 3. Generate QR Code berkualitas tinggi via API
+    // 3. Generate QR Code via API
     const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(targetUrl)}`;
 
     // 4. Simpan ke variabel global agar otomatis dibaca oleh pdf-download.js
@@ -32,7 +35,7 @@
     generateVerificationQR();
   }
 
-  // Pantau perubahan pada elemen #invoice (jika teks invoice diisi secara asynchronous via Fetch API)
+  // Pantau perubahan pada elemen #invoice jika diisi via Fetch API
   document.addEventListener("DOMContentLoaded", () => {
     const invoiceEl = document.getElementById("invoice");
     if (invoiceEl) {
@@ -43,4 +46,3 @@
     }
   });
 })();
-
