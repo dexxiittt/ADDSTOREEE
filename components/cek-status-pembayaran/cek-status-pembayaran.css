@@ -1,1 +1,309 @@
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: #f3f4f8;
+  margin: 0;
+}
 
+/* HERO SECTION */
+.package-hero {
+  width: 100%;
+  padding: 90px 20px;
+  text-align: center;
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed 45%, #6d28d9);
+  box-shadow: 0 18px 40px rgba(124, 58, 237, 0.22);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.package-hero h1 {
+  font-family: "Sora", sans-serif;
+  margin: 0 0 12px;
+  font-size: clamp(32px, 5vw, 46px);
+  font-weight: 700;
+  letter-spacing: -0.6px;
+  color: #ffffff;
+}
+
+.package-hero p {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  margin: 0;
+  font-size: clamp(15px, 2.5vw, 19px);
+  line-height: 1.6;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+/* CARD UTAMA INPUT INVOICE */
+.invoice-box {
+  position: relative;
+  background: #f9fafb;
+  max-width: 800px;
+  margin: -30px auto 40px;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 50px;
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.05),
+    0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+
+.invoice-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 6px 20px rgba(0, 0, 0, 0.07),
+    0 12px 28px rgba(0, 0, 0, 0.1);
+}
+
+/* ICON WRAPPER */
+.invoice-icon {
+  width: 65px;
+  height: 65px;
+  margin: 0 auto 15px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(124, 58, 237, 0.08);
+  color: #7c3aed;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.invoice-icon i {
+  font-size: 30px;
+}
+
+.invoice-box:hover .invoice-icon {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(124, 58, 237, 0.25);
+}
+
+/* TEKS PADA CARD */
+.invoice-box h2 {
+  font-family: "Sora", sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: #111827;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.invoice-box p {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  font-weight: 500;
+  color: #6b7280;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+/* INPUT CONTAINER */
+.invoice-input-wrap {
+  display: flex;
+  gap: 10px;
+  padding: 6px;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.05),
+    0 6px 14px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.invoice-input-wrap:focus-within {
+  transform: translateY(-1px);
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.06),
+    0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.invoice-input-wrap input {
+  flex: 1;
+  padding: 14px 16px;
+  border: none;
+  outline: none;
+  font-family: "Manrope", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 8px;
+  background: transparent;
+  color: #1f2937;
+}
+
+.invoice-input-wrap button {
+  background: #7c3aed;
+  color: #ffffff;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 8px;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(124, 58, 237, 0.25);
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+  white-space: nowrap;
+}
+
+.invoice-input-wrap button:hover {
+  background: #6d28d9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(124, 58, 237, 0.35);
+}
+
+.invoice-input-wrap button:disabled {
+  background: #a78bfa;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ALERT MODAL OVERLAY */
+.alert-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 999;
+}
+
+.alert-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.alert-box {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  width: 90%;
+  max-width: 340px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  transform: scale(0.9);
+  transition: transform 0.25s ease;
+}
+
+.alert-overlay.active .alert-box {
+  transform: scale(1);
+}
+
+.alert-title {
+  font-family: "Sora", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  margin-bottom: 8px;
+  color: #111827;
+}
+
+.alert-message {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: 500;
+  color: #6b7280;
+  margin-bottom: 20px;
+}
+
+.alert-box button {
+  width: 100%;
+  border: none;
+  background: #7c3aed;
+  color: #ffffff;
+  padding: 11px;
+  border-radius: 10px;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.alert-box button:hover {
+  background: #6d28d9;
+}
+
+/* RESPONSIVE LAYOUT */
+@media (max-width: 480px) {
+  .package-hero {
+    padding: 50px 16px 70px;
+  }
+
+  .package-hero h1 {
+    font-size: 26px;
+  }
+
+  .package-hero p {
+    font-size: 14px;
+  }
+
+  .invoice-box {
+    margin: -30px 16px 30px;
+    padding: 25px 18px;
+  }
+
+  .invoice-box h2 {
+    font-size: 20px;
+  }
+
+  .invoice-box p {
+    font-size: 13px;
+  }
+
+  .invoice-input-wrap {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .invoice-input-wrap input {
+    font-size: 14px;
+  }
+
+  .invoice-input-wrap button {
+    width: 100%;
+    padding: 12px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .invoice-box {
+    margin: -30px 20px 40px;
+    padding: 35px;
+  }
+
+  .package-hero h1 {
+    font-size: 32px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .invoice-box {
+    max-width: 900px;
+    padding: 60px;
+  }
+
+  .package-hero {
+    padding: 80px 20px 100px;
+  }
+
+  .package-hero h1 {
+    font-size: 44px;
+  }
+
+  .package-hero p {
+    font-size: 19px;
+  }
+}
