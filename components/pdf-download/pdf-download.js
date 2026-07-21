@@ -68,38 +68,44 @@ function injectPDFCard() {
   }
 }
 
-// 3. Cek apakah status pembayaran SUKSES sebelum memunculkan Card PDF
+// 3. Cek apakah tahapan 'Pesanan Diproses' SUDAH DONE (Langkah ke-4 centang/completed)
 function checkAndInjectPDF() {
-  const statusBadgeText = document.getElementById("statusBadgeText");
-  const invoiceBox = document.getElementById("invoiceBox");
+  const stepProcess = document.getElementById("stepProcess");
+  const supportTitle = document.getElementById("supportTitle");
 
-  const isSuccessText = statusBadgeText && statusBadgeText.innerText.toLowerCase().includes("berhasil");
-  const isSuccessClass = invoiceBox && invoiceBox.classList.contains("status-success");
+  // A. Cek apakah elemen timeline step 4 (Pesanan Diproses) sudah berstatus 'completed'
+  const isProcessDone = stepProcess && stepProcess.classList.contains("completed");
+  
+  // B. Sebagai cadangan, cek apakah judul status support bernilai "Pesanan Selesai"
+  const isTitleDone = supportTitle && supportTitle.innerText.toLowerCase().includes("selesai");
 
-  if (isSuccessText || isSuccessClass) {
+  // Box HANYA MUNCUL jika proses sudah DONE (Sudah centang)
+  if (isProcessDone || isTitleDone) {
     injectPDFCard();
   } else {
-    // Jika bukan status success (misal pending / expired), hapus box jika sempat muncul
+    // Jika masih diproses (kuning/pending), pastikan box PDF dihapus/sembunyi
     const existingBox = document.getElementById("pdfDownloadBox");
     if (existingBox) existingBox.remove();
   }
 }
 
-// Pantau perubahan status secara otomatis saat data sheet dimuat
+// Pantau perubahan pada elemen timeline secara otomatis
 document.addEventListener("DOMContentLoaded", () => {
   checkAndInjectPDF();
 
-  const statusBadgeText = document.getElementById("statusBadgeText");
-  const invoiceBox = document.getElementById("invoiceBox");
+  const stepProcess = document.getElementById("stepProcess");
+  const supportTitle = document.getElementById("supportTitle");
 
-  if (statusBadgeText) {
+  // Amati jika ada perubahan class pada step 4 (Pesanan Diproses)
+  if (stepProcess) {
     const observer = new MutationObserver(checkAndInjectPDF);
-    observer.observe(statusBadgeText, { childList: true, characterData: true, subtree: true });
+    observer.observe(stepProcess, { attributes: true, attributeFilter: ["class"] });
   }
 
-  if (invoiceBox) {
+  // Amati jika teks judul berubah menjadi "Pesanan Selesai"
+  if (supportTitle) {
     const observer = new MutationObserver(checkAndInjectPDF);
-    observer.observe(invoiceBox, { attributes: true, attributeFilter: ["class"] });
+    observer.observe(supportTitle, { childList: true, characterData: true, subtree: true });
   }
 });
 
