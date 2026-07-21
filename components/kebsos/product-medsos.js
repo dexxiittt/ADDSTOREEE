@@ -71,11 +71,13 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
       let cardCls = "glass-card";
       let cardClickHandler = "";
       let cardTapeHTML = "";
-      let actionButtonHTML = `
-  <a href="detail-medsos.html?product_id=${item.product_id}" class="btn-detail">
+      // CARI BAGIAN INI (sekitar baris 60 & 70):
+let actionButtonHTML = `
+  <a href="preview-kebsos.html?product_id=${item.product_id}" class="btn-detail">
     <i class="fa-solid fa-box-archive"></i> Detail produk...
   </a>
 `;
+
       // Cek apakah status badgecard_status diisi untuk menonaktifkan card
       if (item.badgecard_status && item.badgecard_status.trim() !== "") {
   const statusText = item.badgecard_status.trim();
