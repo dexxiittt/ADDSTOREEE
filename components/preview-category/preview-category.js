@@ -180,6 +180,7 @@ function initPreviewCategory() {
       if (category === "medsos") {
         if (previewTitle) previewTitle.textContent = "Kebutuhan Medsos Populer";
         if (previewBtn) {
+          previewBtn.style.display = "flex"; // Tampilkan tombol untuk Medsos
           previewBtn.href = "kebutuhan-medsos.html";
           previewBtn.childNodes[0].nodeValue = "Lihat Semua Medsos ";
         }
@@ -188,17 +189,16 @@ function initPreviewCategory() {
       } else if (category === "premium") {
         if (previewTitle) previewTitle.textContent = "Aplikasi Premium Populer";
         if (previewBtn) {
+          previewBtn.style.display = "flex"; // Tampilkan tombol untuk APK Premium
           previewBtn.href = "semua-aplikasi.html";
           previewBtn.childNodes[0].nodeValue = "Lihat Semua Aplikasi ";
         }
-        // Panggil fungsi pemuat memori tanpa reload!
         loadPremiumCards();
 
       } else if (category === "game") {
         if (previewTitle) previewTitle.textContent = "Topup Game Populer";
         if (previewBtn) {
-          previewBtn.href = "topup-game.html";
-          previewBtn.childNodes[0].nodeValue = "Lihat Semua Game ";
+          previewBtn.style.display = "none"; // SEMBUNYIKAN TOMBOL JIKA PRODUK KOSONG / SEGERA HADIR
         }
         const wrap = document.getElementById("preview-card-grid");
         if (wrap) {
