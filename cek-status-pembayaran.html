@@ -1,1 +1,69 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cek Status Pembayaran</title>
 
+  <!-- Font Awesome Icons -->
+  <link 
+    rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  >
+
+  <!-- Google Fonts -->
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;700;800&display=swap" 
+    rel="stylesheet"
+  >
+
+  <!-- CSS Cek Status Pembayaran -->
+  <link rel="stylesheet" href="components/cek-status-pembayaran/cek-status-pembayaran.css">
+</head>
+<body class="package-page">
+
+  <!-- NAVBAR PLACEHOLDER -->
+  <div id="navbar-placeholder"></div>
+  <script src="components/navbar.js"></script>
+
+  <section class="invoice-wrapper">
+    <!-- HERO SECTION -->
+    <div class="package-hero">
+      <h1>Cek Status Pembayaran</h1>
+      <p>Lacak histori dan status bukti pembayaran pesanan Anda</p>
+    </div>
+
+    <!-- CARD INPUT INVOICE -->
+    <div class="invoice-box">
+      <div class="invoice-icon">
+        <i class="fa-solid fa-receipt"></i>
+      </div>
+
+      <h2>Masukkan Invoice Anda</h2>
+      <p>Masukkan nomor invoice untuk melihat status pembayaran yang telah diverifikasi</p>
+
+      <div class="invoice-input-wrap">
+        <input 
+          type="text" 
+          placeholder="Masukkan nomor INV (contoh: 202607212325339)"
+          id="invoiceInput"
+          autocomplete="off"
+        >
+        <button id="btnCek">🔍 Cek Status</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ALERT MODAL -->
+  <div id="customAlert" class="alert-overlay">
+    <div class="alert-box">
+      <div class="alert-title" id="alertTitle">Judul</div>
+      <div class="alert-message" id="alertMessage">Pesan</div>
+      <button onclick="closeAlert()">OK</button>
+    </div>
+  </div>
+
+  <!-- JS Cek Status Pembayaran -->
+  <script src="components/cek-status-pembayaran/cek-status-pembayaran.js"></script>
+</body>
+</html>
