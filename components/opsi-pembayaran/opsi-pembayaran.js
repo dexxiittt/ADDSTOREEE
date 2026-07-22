@@ -51,7 +51,13 @@ fetch(sheetURL)
     }
 
     document.getElementById("paket").innerText = row.title;
-    document.getElementById("paket-detail").innerText = "Invite Member • " + row.duration;
+    
+    // FIX UTAMA: Gabungkan subtitle dan duration secara dinamis dari spreadsheet
+    const fullDetail = (row.subtitle && row.duration) 
+      ? `${row.subtitle} • ${row.duration}` 
+      : (row.subtitle || row.duration || "");
+
+    document.getElementById("paket-detail").innerText = fullDetail;
 
     const price = Number(String(row.price).replace(/[^\d]/g, "")) || 0;
     const sheetFinalPrice = Number(String(row.final_price).replace(/[^\d]/g, "")) || 0;
@@ -59,12 +65,6 @@ fetch(sheetURL)
 
     // Kunci harga agar mengambil nilai asli mutlak dari kolom final_price di sheet
     let final = sheetFinalPrice > 0 ? sheetFinalPrice : (discount > 0 ? Math.round(price - (price * discount / 100)) : price);
-
-    // ==========================================
-    // PENTING: JIKA KAMU PAKAI OPSI SULAP OTOMATIS .999 
-    // Hapus tanda garis miring (//) di baris bawah ini agar web otomatis mengubahnya:
-    // if (discount > 0) { final = Math.round(final / 1000) * 1000 - 1; }
-    // ==========================================
 
     const diskonEl = document.getElementById("paket-diskon");
     const hematEl = document.getElementById("paket-hemat");
@@ -94,7 +94,7 @@ fetch(sheetURL)
 
     document.getElementById("paket-total").innerText = "Rp " + final.toLocaleString("id-ID");
 
-    // ✅ SET IMAGE
+    // SET IMAGE
     const paketImg = document.getElementById("paket-img");
     if (row.image_url) {
       paketImg.src = row.image_url;
