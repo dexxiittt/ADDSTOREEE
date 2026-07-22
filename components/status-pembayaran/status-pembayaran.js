@@ -221,7 +221,9 @@ alert("LEWAT RENDER PRODUCT");
 );
 
     // Render status akhir menggunakan data sinkronisasi penuh dari sheet
+    alert("SEBELUM renderStatus SHEET");
     renderStatus(paymentStatus, processStatus, globalTips);
+    alert("SESUDAH renderStatus SHEET");
      
     const waktu = new Date().toLocaleString("id-ID", {
       day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false
