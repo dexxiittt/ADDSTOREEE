@@ -249,6 +249,13 @@ function renderProduct(image, title, subtitle, hargaHtml, diskon, hemat, total) 
 }
 
 function renderStatus(status, proses, tipsObj) {
+
+    alert(
+  "renderStatus()\n" +
+  "status = " + status +
+  "\nproses = " + proses
+);
+   
   // PAKSA JADI EXPIRED JIKA SUDAH LEBIH DARI 1 JAM (Kecuali kalau sudah sukses)
   if (status !== "success" && checkIsExpired()) {
     status = "expired";
@@ -334,6 +341,9 @@ function setPendingUI(tipsText) {
 }
 
 function setSuccessUI(proses, tipsText) {
+
+ alert("MASUK CASE SUCCESS");
+   
   const ui = getStatusElements();
 
   ui.invoiceBox.classList.remove("status-pending", "status-expired");
