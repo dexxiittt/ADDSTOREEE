@@ -130,6 +130,8 @@ async function downloadPDF() {
     const wa = document.getElementById("wa")?.innerText || "";
     const email = document.getElementById("email")?.innerText || "";
     const paket = document.getElementById("paket")?.innerText || "";
+    // 🔥 FIX: Ambil detail paket secara dinamis dari DOM
+    const paketDetail = document.getElementById("paketDetail")?.innerText || ""; 
     const total = document.getElementById("total2")?.innerText || document.getElementById("total")?.innerText || "";
     const waktu = document.getElementById("time")?.innerText || "";
     const harga = document.getElementById("harga")?.innerText || "";
@@ -190,7 +192,8 @@ async function downloadPDF() {
 
     doc.setFontSize(10);
     doc.setTextColor(120);
-    doc.text("Private • 1 Bulan", 25, y);
+    // 🔥 FIX: Cetak teks dinamis dari DOM, bukan "Private • 1 Bulan"
+    doc.text(paketDetail, 25, y); 
 
     y += 10;
 
@@ -286,3 +289,10 @@ async function downloadPDF() {
   btn.innerHTML = originalText;
   btn.disabled = false;
 }
+
+
+
+
+
+    
+    
