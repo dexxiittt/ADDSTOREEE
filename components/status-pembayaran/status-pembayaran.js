@@ -105,7 +105,7 @@ async function loadFromSheet() {
     const cleanInvoiceID = String(invoiceID).replace("INV", "").trim();
 
     // ============================================================
-    // 🔥 STEP 1: FETCH TIPS GLOBAL DI PALING ATAS (Independent / Mandiri)
+    // STEP 1: FETCH TIPS GLOBAL DI PALING ATAS (Independent / Mandiri)
     // ============================================================
     const tipsRes = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/statustips_payment");
     const tipsData = await tipsRes.json();
@@ -122,7 +122,7 @@ async function loadFromSheet() {
     );
      
     // ============================================================
-    // 🔥 STEP 3: LOGIKA JIKA INVOICE TIDAK/BELUM KETEMU DI SPREADSHEET
+    // STEP 3: LOGIKA JIKA INVOICE TIDAK/BELUM KETEMU DI SPREADSHEET
     // ============================================================
     if (!found) {
       const localInvoice = localStorage.getItem("invoiceID");
@@ -193,13 +193,12 @@ async function loadFromSheet() {
     ? "-" + String(detail.discount).trim() 
     : (hitungDiskonDinamis > 0 ? "-" + hitungDiskonDinamis + "%" : "0%");
 
+     // Gabungkan subtitle dan duration dari Google Sheet PACKAGE_DETAIL
+    const fullSubtitle = (detail.subtitle && detail.duration) 
+      ? `${detail.subtitle} • ${detail.duration}` 
+      : (detail.subtitle || detail.duration || "");
 
-    const hargaHtml = `
-      <div class="price-old">${rp(harga)}</div>
-      <div class="price-final">${rp(total)}</div>
-    `;
-
-    renderProduct(detail.image_url, detail.title, detail.subtitle, hargaHtml, diskonTeks, rp(hemat), rp(total));
+    renderProduct(detail.image_url, detail.title, fullSubtitle, hargaHtml, diskonTeks, rp(hemat), rp(total));
 
     // Render status akhir menggunakan data sinkronisasi penuh dari sheet
     renderStatus(paymentStatus, processStatus, globalTips);
@@ -244,7 +243,6 @@ function renderProduct(image, title, subtitle, hargaHtml, diskon, hemat, total) 
   document.getElementById("total3").innerText = total;
 }
 
-// UBAH FUNGSI INI
 function renderStatus(status, proses, tipsObj) {
   // PAKSA JADI EXPIRED JIKA SUDAH LEBIH DARI 1 JAM (Kecuali kalau sudah sukses)
   if (status !== "success" && checkIsExpired()) {
@@ -253,7 +251,7 @@ function renderStatus(status, proses, tipsObj) {
 
   switch (status) {
     case "success":
-      // 🔥 LOGIKA BARU: Tentukan tips berdasarkan status proses
+      // LOGIKA BARU: Tentukan tips berdasarkan status proses
       const selectedTips = (proses === "done") ? tipsObj?.tips_proses : tipsObj?.tips_success;
       
       setSuccessUI(proses, selectedTips);
@@ -344,7 +342,7 @@ function setSuccessUI(proses, tipsText) {
   ui.statusTitle.innerText = "Pembayaran Berhasil";
   ui.statusDescription.innerText = "Pembayaran telah diterima dan berhasil diverifikasi oleh admin.";
   
-  // 🔥 LOGIKA BARU: Sesuaikan konten teks tips & support berdasarkan status proses
+  // LOGIKA BARU: Sesuaikan konten teks tips & support berdasarkan status proses
   if (proses === "done") {
     ui.statusTipText.innerHTML = generateTipsHtml(tipsText, "Pesanan telah selesai diproses. Terima kasih telah berbelanja!");
     document.getElementById("supportTitle").innerText = "Pesanan Selesai ✨";
@@ -381,7 +379,7 @@ function setExpiredUI(tipsText) {
   ui.statusIconFa.className = "fa-solid fa-bell-slash"; 
 
     // ==========================================
-  // 🔥 KODE BARU: UBAH IKON & TAMBAH TEKS DI TIMELINE
+  // KODE BARU: UBAH IKON & TAMBAH TEKS DI TIMELINE
   // ==========================================
   
   // 1. Mengubah ikon check & hourglass menjadi xmark
@@ -463,7 +461,7 @@ function updateProgress(status, proses) {
     document.getElementById("stepProcess").className = "progress-item";
   } else if (status === "success") {
     
-    // 🔥 1. HAPUS TEKS "SESI KADALUARSA" JIKA TERLANJUR ADA
+    // 1. HAPUS TEKS "SESI KADALUARSA" JIKA TERLANJUR ADA
     const expiredTextOrder = document.getElementById("expiredTextOrder");
     const expiredTextPayment = document.getElementById("expiredTextPayment");
     if (expiredTextOrder) expiredTextOrder.remove();
@@ -474,7 +472,7 @@ function updateProgress(status, proses) {
     document.getElementById("stepVerification").className = "progress-item completed";
     document.getElementById("stepProcess").className = "progress-item current";
 
-    // 🔥 2. PASTI KAN IKON & BG WARNA MERAH DIKEMBALIKAN KE UNGU/HIJAU SUKSES
+    // 2. PASTI KAN IKON & BG WARNA MERAH DIKEMBALIKAN KE UNGU/HIJAU SUKSES
     document.querySelector("#stepOrder i").className = "fa-solid fa-check";
     document.querySelector("#stepOrder .floating-icon").className = "floating-icon icon-purple"; // <-- Reset lingkaran 1 jadi ungu
     
