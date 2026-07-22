@@ -57,6 +57,14 @@ function loadFromLocalStorage() {
     <div class="price-final">${localData.total}</div>
   `;
 
+   alert(
+  "IMAGE = " + detail.image_url +
+  "\nTITLE = " + detail.title +
+  "\nSUBTITLE = " + fullSubtitle +
+  "\nDISKON = " + diskonTeks +
+  "\nTOTAL = " + rp(total)
+);
+
   renderProduct(
     localData.image,
     localData.paket,
@@ -67,6 +75,11 @@ function loadFromLocalStorage() {
     localData.total
   );
 
+alert(
+  "STATUS = " + paymentStatus +
+  "\nPROSES = " + processStatus
+);
+   
   // STATUS RENDER
   renderStatus(localData.status || "pending");
 
