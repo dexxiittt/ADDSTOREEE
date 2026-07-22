@@ -269,10 +269,25 @@ alert("MASUK renderProduct()");
   alert("LEWAT harga");
    
   document.getElementById("diskon").innerText = diskon;
+
+  alert("LEWAT diskon");
+   
   document.getElementById("hemat").innerText = hemat;
+
+   alert("LEWAT hemat");
+   
   document.getElementById("total").innerText = total;
+
+  alert("LEWAT total");
+   
   document.getElementById("total2").innerText = total;
+
+  alert("LEWAT total2");
+   
   document.getElementById("total3").innerText = total;
+
+  alert("LEWAT total3");
+   
 }
 
 function renderStatus(status, proses, tipsObj) {
