@@ -166,6 +166,10 @@ async function loadFromSheet() {
       return "Rp " + x.toLocaleString("id-ID");
     }
 
+    // ==========================================
+    // POTONGAN KODE DI DALAM loadFromSheet()
+    // ==========================================
+
     // Pembersih harga & diskon dinamik
     const harga = Number(String(detail.price).replace(/[^\d]/g, "")) || 0;
     const sheetFinalPrice = Number(String(detail.final_price).replace(/[^\d]/g, "")) || 0;
@@ -184,22 +188,24 @@ async function loadFromSheet() {
     
     // Hitung nilai mentahnya terlebih dahulu
     const diskonPersenRaw = harga > 0 ? ((harga - total) / harga * 100) : 0;
-
-    // Ambil 2 angka di belakang koma, lalu ubah kembali ke Float 
-    // agar jika hasilnya angka bulat (contoh: 50%) tidak dipaksa jadi 50.00%
     const hitungDiskonDinamis = parseFloat(diskonPersenRaw.toFixed(2));
 
     const diskonTeks = discountPercent > 0 
     ? "-" + String(detail.discount).trim() 
     : (hitungDiskonDinamis > 0 ? "-" + hitungDiskonDinamis + "%" : "0%");
 
+    // Gabungkan subtitle dan duration dari Google Sheet PACKAGE_DETAIL
+    const fullSubtitle = (detail.subtitle && detail.duration) 
+      ? `${detail.subtitle} • ${detail.duration}` 
+      : (detail.subtitle || detail.duration || "");
 
     const hargaHtml = `
       <div class="price-old">${rp(harga)}</div>
       <div class="price-final">${rp(total)}</div>
     `;
 
-    renderProduct(detail.image_url, detail.title, detail.subtitle, hargaHtml, diskonTeks, rp(hemat), rp(total));
+    // Sekarang hargaHtml sudah terdefinisi dan aman dipanggil
+    renderProduct(detail.image_url, detail.title, fullSubtitle, hargaHtml, diskonTeks, rp(hemat), rp(total));
 
     // Render status akhir menggunakan data sinkronisasi penuh dari sheet
     renderStatus(paymentStatus, processStatus, globalTips);
