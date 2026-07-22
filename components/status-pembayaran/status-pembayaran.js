@@ -56,7 +56,7 @@ function loadFromLocalStorage() {
     <div class="price-old">Rp ${hargaLama}</div>
     <div class="price-final">${localData.total}</div>
   `;
-
+   
   renderProduct(
     localData.image,
     localData.paket,
@@ -203,7 +203,20 @@ async function loadFromSheet() {
       ? `${detail.subtitle} • ${detail.duration}` 
       : (detail.subtitle || detail.duration || "");
 
+     alert(
+  "IMAGE = " + detail.image_url +
+  "\nTITLE = " + detail.title +
+  "\nSUBTITLE = " + fullSubtitle +
+  "\nDISKON = " + diskonTeks +
+  "\nTOTAL = " + rp(total)
+);
+
     renderProduct(detail.image_url, detail.title, fullSubtitle, hargaHtml, diskonTeks, rp(hemat), rp(total));
+
+   alert(
+  "STATUS = " + paymentStatus +
+  "\nPROSES = " + processStatus
+);
 
     // Render status akhir menggunakan data sinkronisasi penuh dari sheet
     renderStatus(paymentStatus, processStatus, globalTips);
