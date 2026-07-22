@@ -213,6 +213,8 @@ async function loadFromSheet() {
 
     renderProduct(detail.image_url, detail.title, fullSubtitle, hargaHtml, diskonTeks, rp(hemat), rp(total));
 
+alert("LEWAT RENDER PRODUCT");
+     
    alert(
   "STATUS = " + paymentStatus +
   "\nPROSES = " + processStatus
