@@ -151,6 +151,11 @@ async function loadFromSheet() {
     const paymentStatus = (statusRow?.status || "").trim().toLowerCase();
     const processStatus = (statusRow?.proses || "").trim().toLowerCase();
      
+    alert(
+  "STATUS = " + paymentStatus +
+  "\nPROSES = " + processStatus
+);
+     
     // SPLIT CUSTOMER INFO
     const info = found.informasi_pelanggan.split("|");
     window.rawInvoice = found.invoice;
