@@ -244,6 +244,9 @@ function renderCustomer(nama, wa, email) {
 }
 
 function renderProduct(image, title, subtitle, hargaHtml, diskon, hemat, total) {
+
+alert("MASUK renderProduct()");
+   
   const img = document.getElementById("productImage");
   if (img) {
     if (image) {
@@ -254,8 +257,17 @@ function renderProduct(image, title, subtitle, hargaHtml, diskon, hemat, total) 
   }
 
   document.getElementById("paket").innerText = title;
+
+  alert("LEWAT paket");
+   
   document.getElementById("paketDetail").innerText = subtitle;
+
+  alert("LEWAT paketDetail");
+   
   document.getElementById("harga").innerHTML = hargaHtml;
+
+  alert("LEWAT harga");
+   
   document.getElementById("diskon").innerText = diskon;
   document.getElementById("hemat").innerText = hemat;
   document.getElementById("total").innerText = total;
