@@ -64,7 +64,7 @@ ${messageText}`;
    FUNGSI 2: CHAT KONFIRMASI PEMBAYARAN QRIS
    ============================================================ */
 function chatAdmin() {
-  // Ambil data pendukung dari LocalStorage / Window
+  // Ambil data langsung dari LocalStorage (Bisa untuk status Pending)
   const localData = JSON.parse(localStorage.getItem("paymentData")) || {};
   const packageId = window.rawPackageId || localData.packageId || localData.package_id || "-";
 
@@ -77,7 +77,7 @@ function chatAdmin() {
   const detail = document.getElementById("paketDetail").innerText;
   const total = document.getElementById("total").innerText;
 
-  // Format Pesan Baru (Ditambahkan Paket ID)
+  // Format Pesan Pembayaran
   const pesan = `Halo Admin, saya sudah melakukan pembayaran QRIS.
 
 📌 Detail Pembayaran:
@@ -95,6 +95,5 @@ Email: ${email}
 
 Mohon dicek ya 🙏`;
 
-  // Kirim ke WhatsApp Admin menggunakan helper
   openWhatsApp(pesan);
 }
