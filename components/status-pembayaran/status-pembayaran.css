@@ -1832,6 +1832,51 @@ transform:scale(1);
   color:#fff !important;
 }
 
+/* =========================
+   TOGGLE TIPS BUTTON
+========================= */
+.toggle-tips-btn {
+  background: transparent;
+  border: none;
+  color: #ca8a04; /* Warna emas/kuning menyesuaikan tema Informasi */
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  padding: 4px 0;
+  transition: color 0.2s ease;
+
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.toggle-tips-btn:focus,
+.toggle-tips-btn:active {
+  outline: none;
+  box-shadow: none;
+}
+
+.toggle-tips-btn:hover {
+  color: #a16207;
+  text-decoration: underline;
+}
+
+.toggle-tips-btn i {
+  font-size: 11px;
+  transition: transform 0.3s ease;
+}
+
+.extra-tips-container {
+  margin-top: 8px;
+}
+
 @media (max-width:768px){
 .container{
 margin:20px 16px 50px;
