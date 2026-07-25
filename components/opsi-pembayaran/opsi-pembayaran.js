@@ -193,6 +193,7 @@ telInput.addEventListener("blur", () => {
    ========================================== */
 function handlePayment() {
   const data = {
+    packageId: packageId, // 🔥 TAMBAHKAN BARIS INI
     nama: namaInput.value,
     telepon: telInput.value,
     email: gmailInput.value,
