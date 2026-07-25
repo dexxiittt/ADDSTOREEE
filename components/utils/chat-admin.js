@@ -61,10 +61,14 @@ ${messageText}`;
 }
 
 /* ============================================================
-   FUNGSI 2: CHAT KONFIRMASI PEMBAYARAN QRIS (BERDASARKAN DOM ELEMEN)
+   FUNGSI 2: CHAT KONFIRMASI PEMBAYARAN QRIS
    ============================================================ */
 function chatAdmin() {
-  // Ambil data langsung dari tampilan DOM & variabel global status-pembayaran
+  // Ambil data pendukung dari LocalStorage / Window
+  const localData = JSON.parse(localStorage.getItem("paymentData")) || {};
+  const packageId = window.rawPackageId || localData.packageId || localData.package_id || "-";
+
+  // Ambil data dari DOM
   const invoice = window.rawInvoice || (document.getElementById("invoice") ? document.getElementById("invoice").innerText.replace("INV", "") : "");
   const nama = document.getElementById("nama").innerText;
   const wa = document.getElementById("wa").innerText;
@@ -73,7 +77,7 @@ function chatAdmin() {
   const detail = document.getElementById("paketDetail").innerText;
   const total = document.getElementById("total").innerText;
 
-  // Format Pesan Konfirmasi Pembayaran
+  // Format Pesan Baru (Ditambahkan Paket ID)
   const pesan = `Halo Admin, saya sudah melakukan pembayaran QRIS.
 
 📌 Detail Pembayaran:
@@ -83,6 +87,7 @@ No WA: ${wa}
 Email: ${email}
 
 📦 Paket: ${paket}
+🗃️ Paket id: ${packageId}
 📝 Detail: ${detail}
 💰 Total: ${total}
 
@@ -90,6 +95,6 @@ Email: ${email}
 
 Mohon dicek ya 🙏`;
 
-  // Kirim ke WhatsApp Admin menggunakan helper terpadu
+  // Kirim ke WhatsApp Admin menggunakan helper
   openWhatsApp(pesan);
 }
