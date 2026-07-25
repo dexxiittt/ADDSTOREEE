@@ -2,7 +2,6 @@
    GLOBAL VARIABLES & INITIALIZATION
    ============================================================ */
 window.rawInvoice = "";
-window.rawInvoice = "";
 window.rawPackageId = "";
 
 window.onload = async function() {
@@ -158,7 +157,7 @@ async function loadFromSheet() {
     // SPLIT CUSTOMER INFO
     const info = found.informasi_pelanggan.split("|");
     window.rawInvoice = found.invoice;
-    window.rawPackageId = found.package_id || "";
+    window.rawPackageId = found.package_id || window.rawPackageId || "";
 
     // FETCH PACKAGE_DETAIL
     const resProduk = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PACKAGE_DETAIL");
