@@ -541,22 +541,73 @@ function showToast(message, iconClass = "fa-circle-check") {
   }, 3500);
 }
 
-// Tambahkan fungsi baru ini di file JS kamu
+// FUNGSI UNTUK GENERATE TIPS (DENGAN LOGIKA TOGGLE BUTTON)
 function generateTipsHtml(tipsText, defaultText) {
-  // Jika kolom di spreadsheet kosong/tidak ditemukan, pakai teks bawaan (fallback)
+  let items = [];
+
   if (!tipsText) {
+    items = [defaultText];
+  } else {
+    items = tipsText
+      .split("|")
+      .map(tip => tip.trim())
+      .filter(tip => tip.length > 0);
+  }
+
+  // JIKA HANYA 1 POIN: Tampilkan langsung tanpa tombol toggle
+  if (items.length <= 1) {
     return `
       <div class="status-tip-item">
         <i class="fa-solid fa-circle"></i>
-        <span>${defaultText}</span>
+        <span>${items[0] || defaultText}</span>
       </div>`;
   }
-  
-  // Pecah teks berdasarkan "|" lalu map menjadi elemen HTML
-  return tipsText.split("|").map(tip => `
+
+  // JIKA LEBIH DARI 1 POIN: Poin pertama ditampilkan, sisanya disembunyikan
+  const firstItemHtml = `
     <div class="status-tip-item">
       <i class="fa-solid fa-circle"></i>
-      <span>${tip.trim()}</span>
+      <span>${items[0]}</span>
+    </div>`;
+
+  const remainingItemsHtml = items
+    .slice(1)
+    .map(
+      tip => `
+    <div class="status-tip-item">
+      <i class="fa-solid fa-circle"></i>
+      <span>${tip}</span>
+    </div>`
+    )
+    .join("");
+
+  return `
+    ${firstItemHtml}
+    <div class="extra-tips-container" id="extraTipsContainer" style="display: none;">
+      ${remainingItemsHtml}
     </div>
-  `).join("");
+    <button type="button" class="toggle-tips-btn" onclick="toggleTips(this)">
+      <span>Selengkapnya...</span> <i class="fa-solid fa-chevron-down"></i>
+    </button>
+  `;
+}
+
+// FUNGSI UNTUK HANDLE KLIK TOMBOL SELENGKAPNYA / SEMBUNYIKAN
+function toggleTips(btn) {
+  const container = document.getElementById("extraTipsContainer");
+  if (!container) return;
+
+  const isHidden = container.style.display === "none";
+  const label = btn.querySelector("span");
+  const icon = btn.querySelector("i");
+
+  if (isHidden) {
+    container.style.display = "block";
+    if (label) label.innerText = "Sembunyikan";
+    if (icon) icon.className = "fa-solid fa-chevron-up";
+  } else {
+    container.style.display = "none";
+    if (label) label.innerText = "Selengkapnya...";
+    if (icon) icon.className = "fa-solid fa-chevron-down";
+  }
 }
