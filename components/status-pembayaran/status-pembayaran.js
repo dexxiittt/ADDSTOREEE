@@ -2,6 +2,8 @@
    GLOBAL VARIABLES & INITIALIZATION
    ============================================================ */
 window.rawInvoice = "";
+window.rawInvoice = "";
+window.rawPackageId = "";
 
 window.onload = async function() {
   // STEP 1: Load data dari LocalStorage
@@ -45,6 +47,8 @@ function loadFromLocalStorage() {
   const localData = JSON.parse(localStorage.getItem("paymentData"));
   if (!localData) return false;
 
+   window.rawPackageId = localData.packageId || localData.package_id || "";
+   
   // CUSTOMER RENDER
   renderCustomer(localData.nama, localData.telepon, localData.email);
 
@@ -154,6 +158,7 @@ async function loadFromSheet() {
     // SPLIT CUSTOMER INFO
     const info = found.informasi_pelanggan.split("|");
     window.rawInvoice = found.invoice;
+    window.rawPackageId = found.package_id || "";
 
     // FETCH PACKAGE_DETAIL
     const resProduk = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PACKAGE_DETAIL");
