@@ -193,7 +193,7 @@ telInput.addEventListener("blur", () => {
    ========================================== */
 function handlePayment() {
   const data = {
-    packageId: packageId, // 🔥 TAMBAHKAN BARIS INI
+    packageId: packageId, // 🔥 PENTING: Menyimpan package_id dari URL ke LocalStorage
     nama: namaInput.value,
     telepon: telInput.value,
     email: gmailInput.value,
