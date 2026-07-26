@@ -33,26 +33,26 @@ function chatAdminTransaksi(data) {
 
   const message = `🙌 Halo admin, saya ingin meminta bantuan.
 
-🫐 Data Pembeli
+👤 Data Pembeli
 
-🍎 Nama : ${data.buyerName}
-🍏 Nomor : ${data.buyerPhone}
+✨ Nama : ${data.buyerName}
+📱 Nomor : ${data.buyerPhone}
 
-🍐 Detail Pesanan
+📝 Detail Pesanan
 
-🍉 INV : ${data.invoice}
-🥭 Produk : ${data.product}
-🍒 Paket : ${data.package}
-🍍 Aktivasi : ${data.activatedDate}
-🥥 Paket Berakhir : ${data.packageExpired}
-🍅 Garansi Berakhir : ${data.warrantyExpired}
+📌 INV : ${data.invoice}
+📌 Produk : ${data.product}
+📌 Paket : ${data.package}
+📌 Aktivasi : ${data.activatedDate}
+📌 Paket Berakhir : ${data.packageExpired}
+📌 Garansi Berakhir : ${data.warrantyExpired}
 
-🌶 Status
+📊 Status
 
-🍒 Paket : ${packageStatus}
-🥥 Garansi : ${warrantyStatus}
+Paket : ${packageStatus}
+Garansi : ${warrantyStatus}
 
-🥝 Pesan
+💬 Pesan
 
 ${messageText}`;
 
