@@ -77,8 +77,8 @@ async function bayarSekarang() {
   const amount = parseInt(amountStr, 10) || 1000;
 
   try {
-    // 1. Panggil Backend Vercel milikmu
-    const response = await fetch('https://midtrans-backend-693f12c2i-dexxiittts-projects.vercel.app/api/create-payment', {
+    // Panggil Backend Vercel milikmu langsung ke endpoint /api
+    const response = await fetch('https://midtrans-backend-xi.vercel.app/api', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -91,7 +91,7 @@ async function bayarSekarang() {
 
     const data = await response.json();
 
-    // 2. Jika token berhasil didapat dari Vercel, buka Pop-up Snap Midtrans
+    // Jika token berhasil didapat dari Vercel, buka Pop-up Snap Midtrans
     if (data.token) {
       window.snap.pay(data.token, {
         onSuccess: function(result) {
@@ -111,7 +111,7 @@ async function bayarSekarang() {
       });
     } else {
       alert("Gagal mendapatkan token pembayaran dari server.");
-      console.error("Response error:", data);
+      console.error("Response error dari Vercel:", data);
     }
   } catch (error) {
     console.error("Error panggil Vercel:", error);
