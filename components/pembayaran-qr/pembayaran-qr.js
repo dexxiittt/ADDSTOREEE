@@ -222,9 +222,6 @@ function closeQR() {
 // ==========================================
 // FUNGSI PREMIUM CUSTOM ALERT
 // ==========================================
-// ==========================================
-// FUNGSI PREMIUM CUSTOM ALERT (RINGKAS)
-// ==========================================
 function showAlert(message, title = "Informasi", type = "info", callback = null) {
   const modal = document.getElementById("customAlertModal");
   const iconBox = document.getElementById("customAlertIcon");
