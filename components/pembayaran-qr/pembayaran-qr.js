@@ -72,27 +72,31 @@ async function bayarSekarang() {
 
   if (!customer) return;
 
-  // Mengubah format string total (contoh: "Rp 1.000" -> 1000)
+  // 1. AMBIL ELEMEN TOMBOL & MATIKAN SEMENTARA (PREVENT SPAM CLICK)
+  const btnBayar = document.querySelector('.btn-midtrans');
+  if (btnBayar) {
+    btnBayar.disabled = true;
+    btnBayar.style.opacity = '0.6';
+    btnBayar.innerText = 'Memproses...';
+  }
+
   const amountStr = String(customer.total || "").replace(/[^0-9]/g, '');
   const amount = parseInt(amountStr, 10) || 1000;
 
   try {
- 
-    // KODE BARU (Diberi akhiran timestamp unik)
-const uniqueOrderId = `${invoiceID}-${Date.now().toString().slice(-4)}`;
+    const uniqueOrderId = `${invoiceID}-${Date.now().toString().slice(-4)}`;
 
-const response = await fetch('https://midtrans-backend-xi.vercel.app/api', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    orderId: uniqueOrderId, // <--- Dijamin selalu unik di mata Midtrans
-    amount: amount
-  })
-});
+    const response = await fetch('https://midtrans-backend-xi.vercel.app/api', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        orderId: uniqueOrderId,
+        amount: amount
+      })
+    });
     
     const data = await response.json();
 
-    // Jika token berhasil didapat dari Vercel, buka Pop-up Snap Midtrans
     if (data.token) {
       window.snap.pay(data.token, {
         onSuccess: function(result) {
@@ -105,18 +109,30 @@ const response = await fetch('https://midtrans-backend-xi.vercel.app/api', {
         },
         onError: function(result) {
           alert("Pembayaran gagal! Silakan coba beberapa saat lagi.");
+          resetButton(btnBayar); // Kembalikan tombol jika error
         },
         onClose: function() {
-          console.log("User menutup halaman pembayaran tanpa menyelesaikan transaksi.");
+          console.log("User menutup halaman pembayaran.");
+          resetButton(btnBayar); // Kembalikan tombol jika ditutup
         }
       });
     } else {
       alert("Gagal mendapatkan token pembayaran dari server.");
-      console.error("Response error dari Vercel:", data);
+      resetButton(btnBayar);
     }
   } catch (error) {
     console.error("Error panggil Vercel:", error);
     alert("Gagal terhubung ke server pembayaran Vercel.");
+    resetButton(btnBayar);
+  }
+}
+
+// HELPER KEMBALIKAN TOMBOL KETIKA BATAL / ERROR
+function resetButton(btn) {
+  if (btn) {
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    btn.innerHTML = '<i class="fa-solid fa-bolt"></i> Tap untuk Pembayaran';
   }
 }
 
