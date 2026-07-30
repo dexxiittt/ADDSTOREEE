@@ -979,6 +979,43 @@ transition:transform .25s ease;
 transform:scale(1);
 }
 
+/* =========================
+   MIDTRANS PAYMENT BUTTON
+========================= */
+
+.btn-midtrans {
+  background: linear-gradient(
+    135deg,
+    #7c3aed,
+    #4f46e5 50%,
+    #2563eb
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  box-shadow: 0 16px 36px rgba(124, 58, 237, 0.35);
+}
+
+.btn-midtrans i {
+  font-size: 17px;
+  color: #fde047; /* Warna kilat kuning emas */
+  transition: transform 0.25s ease;
+}
+
+.btn-midtrans:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 22px 45px rgba(124, 58, 237, 0.45);
+}
+
+.btn-midtrans:hover i {
+  transform: scale(1.2) rotate(10deg);
+}
+
+.btn-midtrans:active {
+  transform: scale(0.98);
+}
 
 @media (max-width:768px){
 .paket-banner img{
