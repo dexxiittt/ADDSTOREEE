@@ -77,18 +77,19 @@ async function bayarSekarang() {
   const amount = parseInt(amountStr, 10) || 1000;
 
   try {
-    // Panggil Backend Vercel milikmu langsung ke endpoint /api
-    const response = await fetch('https://midtrans-backend-xi.vercel.app/api', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        orderId: invoiceID,
-        amount: amount
-      })
-    });
+ 
+    // KODE BARU (Diberi akhiran timestamp unik)
+const uniqueOrderId = `${invoiceID}-${Date.now().toString().slice(-4)}`;
 
+const response = await fetch('https://midtrans-backend-xi.vercel.app/api', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    orderId: uniqueOrderId, // <--- Dijamin selalu unik di mata Midtrans
+    amount: amount
+  })
+});
+    
     const data = await response.json();
 
     // Jika token berhasil didapat dari Vercel, buka Pop-up Snap Midtrans
