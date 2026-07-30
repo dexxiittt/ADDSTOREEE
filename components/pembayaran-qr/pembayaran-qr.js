@@ -1,36 +1,14 @@
 window.onload = async function() {
 
   // Jalankan validasi invoice terlebih dahulu sebelum merender data
-  // (Memanggil fungsi validateAndPrepareInvoice yang ada di bawah)
   await validateAndPrepareInvoice();
 
   // ==========================================
   // 1. CUSTOMER DATA & RENDERING
   // ==========================================
   const customer = getCustomerData();
-  renderCustomer(customer);
-
-  function getCustomerData() {
-    const customer = JSON.parse(localStorage.getItem("paymentData"));
-
-    if (!customer) {
-      alert("Data tidak ditemukan, kembali ke halaman sebelumnya");
-      window.location.href = "opsi-pembayaran.html";
-    }
-    return customer;
-  }
-
-  function renderCustomer(customer) {
-    document.getElementById("nama").innerText = customer.nama;
-    document.getElementById("telepon").innerText = customer.telepon;
-    document.getElementById("email").innerText = customer.email;
-    document.getElementById("paket").innerText = customer.paket;
-    document.getElementById("paketDetail").innerText = customer.paketDetail;
-    document.getElementById("total").innerText = customer.total;
-    document.getElementById("paket-harga").innerHTML = customer.paketHarga;
-    document.getElementById("paket-diskon").innerText = customer.diskon;
-    document.getElementById("paket-hemat").innerText = customer.hemat;
-    document.getElementById("paket-img").src = customer.image;
+  if (customer) {
+    renderCustomer(customer);
   }
 
   // ==========================================
@@ -59,27 +37,107 @@ window.onload = async function() {
 };
 
 // ==========================================
-// 3. INVOICE & STATUS CHECK
+// HELPER CUSTOMER DATA (GLOBAL SCOPE)
+// ==========================================
+function getCustomerData() {
+  const customer = JSON.parse(localStorage.getItem("paymentData"));
+
+  if (!customer) {
+    alert("Data tidak ditemukan, kembali ke halaman sebelumnya");
+    window.location.href = "opsi-pembayaran.html";
+    return null;
+  }
+  return customer;
+}
+
+function renderCustomer(customer) {
+  document.getElementById("nama").innerText = customer.nama || "-";
+  document.getElementById("telepon").innerText = customer.telepon || "-";
+  document.getElementById("email").innerText = customer.email || "-";
+  document.getElementById("paket").innerText = customer.paket || "-";
+  document.getElementById("paketDetail").innerText = customer.paketDetail || "-";
+  document.getElementById("total").innerText = customer.total || "-";
+  document.getElementById("paket-harga").innerHTML = customer.paketHarga || "-";
+  document.getElementById("paket-diskon").innerText = customer.diskon || "-";
+  document.getElementById("paket-hemat").innerText = customer.hemat || "-";
+  document.getElementById("paket-img").src = customer.image || "";
+}
+
+// ==========================================
+// 3. FUNGSI UTAMA MIDTRANS PEMBAYARAN
+// ==========================================
+async function bayarSekarang() {
+  const invoiceID = getInvoice();
+  const customer = getCustomerData();
+
+  if (!customer) return;
+
+  // Mengubah format string total (contoh: "Rp 1.000" -> 1000)
+  const amountStr = String(customer.total || "").replace(/[^0-9]/g, '');
+  const amount = parseInt(amountStr, 10) || 1000;
+
+  try {
+    // 1. Panggil Backend Vercel milikmu
+    const response = await fetch('https://midtrans-backend-693f12c2i-dexxiittts-projects.vercel.app/api/create-payment', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        orderId: invoiceID,
+        amount: amount
+      })
+    });
+
+    const data = await response.json();
+
+    // 2. Jika token berhasil didapat dari Vercel, buka Pop-up Snap Midtrans
+    if (data.token) {
+      window.snap.pay(data.token, {
+        onSuccess: function(result) {
+          alert("Pembayaran Berhasil!");
+          window.location.href = "status-pembayaran.html?invoice=" + invoiceID;
+        },
+        onPending: function(result) {
+          alert("Menunggu pembayaran... Silakan selesaikan transaksi Anda.");
+          window.location.href = "status-pembayaran.html?invoice=" + invoiceID;
+        },
+        onError: function(result) {
+          alert("Pembayaran gagal! Silakan coba beberapa saat lagi.");
+        },
+        onClose: function() {
+          console.log("User menutup halaman pembayaran tanpa menyelesaikan transaksi.");
+        }
+      });
+    } else {
+      alert("Gagal mendapatkan token pembayaran dari server.");
+      console.error("Response error:", data);
+    }
+  } catch (error) {
+    console.error("Error panggil Vercel:", error);
+    alert("Gagal terhubung ke server pembayaran Vercel.");
+  }
+}
+
+// ==========================================
+// 4. INVOICE & STATUS CHECK
 // ==========================================
 function cekStatus() {
   const invoice = getInvoice();
   redirectStatus(invoice);
 }
 
-// 1. UPDATE DI FUNGSI GET INVOICE
 function getInvoice() {
   let invoice = localStorage.getItem("invoiceID");
 
   if (!invoice) {
     invoice = generateInvoice();
     localStorage.setItem("invoiceID", invoice);
-    // SIMPAN WAKTU PEMBUATAN (Timestamp Milidetik)
     localStorage.setItem("invoiceCreatedAt", new Date().getTime());
   }
   return invoice;
 }
 
-// 2. UPDATE DI FUNGSI VALIDASI (JIKA SUDAH SUCCESS -> BUAT BARU)
 async function validateAndPrepareInvoice() {
   let invoice = localStorage.getItem("invoiceID");
   if (invoice) {
@@ -93,7 +151,6 @@ async function validateAndPrepareInvoice() {
       if (status === "success") {
         const newInvoice = generateInvoice();
         localStorage.setItem("invoiceID", newInvoice);
-        // UPDATE WAKTU PEMBUATAN UNTUK INVOICE BARU
         localStorage.setItem("invoiceCreatedAt", new Date().getTime());
         console.log(`[System] Invoice lama ${invoice} sudah SUCCESS. Berhasil membuat invoice baru: ${newInvoice}`);
       }
@@ -101,7 +158,6 @@ async function validateAndPrepareInvoice() {
       console.error("Gagal memverifikasi status invoice lama:", err);
     }
   } else {
-    // Jika belum ada invoice sama sekali, buat baru dan pasang timestamp awal
     const newInvoice = generateInvoice();
     localStorage.setItem("invoiceID", newInvoice);
     localStorage.setItem("invoiceCreatedAt", new Date().getTime()); 
@@ -111,13 +167,12 @@ async function validateAndPrepareInvoice() {
 function generateInvoice() {
   const now = new Date();
   const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, "0"); // Bulan (01-12)
-  const date = String(now.getDate()).padStart(2, "0");      // Tanggal (01-31)
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const date = String(now.getDate()).padStart(2, "0");
   const jam = String(now.getHours()).padStart(2, "0");
   const menit = String(now.getMinutes()).padStart(2, "0");
-  const random = Math.floor(100 + Math.random() * 900);     // 3 digit acak
+  const random = Math.floor(100 + Math.random() * 900);
 
-  // Hasil susunan: YYYYMMDDHHMMRND (Pas 15 Digit. Contoh: 202607170921123)
   return `${year}${month}${date}${jam}${menit}${random}`;
 }
 
@@ -126,14 +181,14 @@ function redirectStatus(invoice) {
 }
 
 // ==========================================
-// 4. NAVIGATION
+// 5. NAVIGATION
 // ==========================================
 function kembaliProduk() {
   window.location.href = "preview-index.html";
 }
 
 // ==========================================
-// 5. QR MODAL INTERACTION
+// 6. QR MODAL INTERACTION
 // ==========================================
 function openQR(el) {
   const modal = document.getElementById("qrModal");
