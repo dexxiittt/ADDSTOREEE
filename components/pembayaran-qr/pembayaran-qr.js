@@ -43,8 +43,9 @@ function getCustomerData() {
   const customer = JSON.parse(localStorage.getItem("paymentData"));
 
   if (!customer) {
-    alert("Data tidak ditemukan, kembali ke halaman sebelumnya");
-    window.location.href = "opsi-pembayaran.html";
+    showAlert("Data tidak ditemukan, kembali ke halaman sebelumnya.", "Pemberitahuan", "warning", function() {
+      window.location.href = "opsi-pembayaran.html";
+    });
     return null;
   }
   return customer;
@@ -100,29 +101,34 @@ async function bayarSekarang() {
     if (data.token) {
       window.snap.pay(data.token, {
         onSuccess: function(result) {
-          alert("Pembayaran Berhasil!");
-          window.location.href = "status-pembayaran.html?invoice=" + invoiceID;
+          // PAKAI CUSTOM ALERT UNTUK SUKSES
+          showAlert("Pembayaran berhasil diterima!", "Berhasil 🎉", "success", function() {
+            window.location.href = "status-pembayaran.html?invoice=" + invoiceID;
+          });
         },
         onPending: function(result) {
-          alert("Menunggu pembayaran... Silakan selesaikan transaksi Anda.");
-          window.location.href = "status-pembayaran.html?invoice=" + invoiceID;
+          // PAKAI CUSTOM ALERT UNTUK PENDING
+          showAlert("Menunggu pembayaran... Silakan selesaikan transaksi Anda.", "Pending", "info", function() {
+            window.location.href = "status-pembayaran.html?invoice=" + invoiceID;
+          });
         },
         onError: function(result) {
-          alert("Pembayaran gagal! Silakan coba beberapa saat lagi.");
-          resetButton(btnBayar); // Kembalikan tombol jika error
+          // PAKAI CUSTOM ALERT UNTUK ERROR
+          showAlert("Pembayaran gagal! Silakan coba beberapa saat lagi.", "Gagal", "warning");
+          resetButton(btnBayar);
         },
         onClose: function() {
           console.log("User menutup halaman pembayaran.");
-          resetButton(btnBayar); // Kembalikan tombol jika ditutup
+          resetButton(btnBayar);
         }
       });
     } else {
-      alert("Gagal mendapatkan token pembayaran dari server.");
+      showAlert("Gagal mendapatkan token pembayaran dari server.", "Error", "warning");
       resetButton(btnBayar);
     }
   } catch (error) {
     console.error("Error panggil Vercel:", error);
-    alert("Gagal terhubung ke server pembayaran Vercel.");
+    showAlert("Gagal terhubung ke server pembayaran Vercel.", "Error Server", "warning");
     resetButton(btnBayar);
   }
 }
@@ -220,13 +226,15 @@ function closeQR() {
 }
 
 // ==========================================
-// FUNGSI PREMIUM CUSTOM ALERT
+// FUNGSI PREMIUM CUSTOM ALERT (RINGKAS)
 // ==========================================
 function showAlert(message, title = "Informasi", type = "info", callback = null) {
   const modal = document.getElementById("customAlertModal");
   const iconBox = document.getElementById("customAlertIcon");
   const iconI = document.getElementById("customAlertIconI");
   const btnOk = document.getElementById("btnAlertOk");
+
+  if (!modal) return;
 
   // Update Judul & Pesan
   document.getElementById("customAlertTitle").innerText = title;
