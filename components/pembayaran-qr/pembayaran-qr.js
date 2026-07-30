@@ -218,3 +218,48 @@ function openQR(el) {
 function closeQR() {
   document.getElementById("qrModal").classList.remove("active");
 }
+
+// ==========================================
+// FUNGSI PREMIUM CUSTOM ALERT
+// ==========================================
+function showAlert(message, title = "Informasi", type = "info", callback = null) {
+  // Hapus alert lama jika ada
+  const existingAlert = document.getElementById("customAlertModal");
+  if (existingAlert) existingAlert.remove();
+
+  // Tentukan ikon FontAwesome berdasarkan tipe ('info', 'success', 'warning')
+  let iconClass = "fa-circle-info";
+  if (type === "success") iconClass = "fa-circle-check";
+  if (type === "warning") iconClass = "fa-triangle-exclamation";
+
+  // Buat struktur HTML Alert secara otomatis
+  const backdrop = document.createElement("div");
+  backdrop.id = "customAlertModal";
+  backdrop.className = "custom-alert-backdrop";
+
+  backdrop.innerHTML = `
+    <div class="custom-alert-box">
+      <div class="custom-alert-icon ${type}">
+        <i class="fa-solid ${iconClass}"></i>
+      </div>
+      <div class="custom-alert-title">${title}</div>
+      <div class="custom-alert-message">${message}</div>
+      <button class="btn-alert-ok" id="btnAlertOk">Mengerti</button>
+    </div>
+  `;
+
+  document.body.appendChild(backdrop);
+
+  // Animasi Muncul
+  setTimeout(() => backdrop.classList.add("active"), 10);
+
+  // Event Tombol OK
+  document.getElementById("btnAlertOk").onclick = function() {
+    backdrop.classList.remove("active");
+    setTimeout(() => {
+      backdrop.remove();
+      // Jalankan fungsi callback setelah alert ditutup (jika ada)
+      if (callback && typeof callback === "function") callback();
+    }, 250);
+  };
+}
