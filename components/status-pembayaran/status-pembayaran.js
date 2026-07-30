@@ -463,44 +463,104 @@ function setCancelUI() { /* TODO */ }
 function setRefundUI() { /* TODO */ }
 
 /* ============================================================
-   PROGRESS TIMELINE TRACKER
+   PROGRESS TIMELINE TRACKER (UPGRADED)
    ============================================================ */
 function updateProgress(status, proses) {
+  // Reset teks expired jika ada
+  const expiredTextOrder = document.getElementById("expiredTextOrder");
+  const expiredTextPayment = document.getElementById("expiredTextPayment");
+  if (expiredTextOrder) expiredTextOrder.remove();
+  if (expiredTextPayment) expiredTextPayment.remove();
+
   if (status === "pending") {
+    // --------------------------------------------------------
+    // TAHAP 0: PENDING (BELUM BAYAR)
+    // --------------------------------------------------------
     document.getElementById("stepOrder").className = "progress-item completed";
     document.getElementById("stepPayment").className = "progress-item current";
     document.getElementById("stepVerification").className = "progress-item";
     document.getElementById("stepProcess").className = "progress-item";
+
+    document.querySelector("#stepOrder i").className = "fa-solid fa-check";
+    document.querySelector("#stepOrder .floating-icon").className = "floating-icon icon-purple";
+
+    document.querySelector("#stepPayment i").className = "fa-solid fa-hourglass-half";
+    document.querySelector("#stepPayment .floating-icon").className = "floating-icon icon-gold";
+
   } else if (status === "success") {
     
-    // 🔥 1. HAPUS TEKS "SESI KADALUARSA" JIKA TERLANJUR ADA
-    const expiredTextOrder = document.getElementById("expiredTextOrder");
-    const expiredTextPayment = document.getElementById("expiredTextPayment");
-    if (expiredTextOrder) expiredTextOrder.remove();
-    if (expiredTextPayment) expiredTextPayment.remove();
+    const cleanProses = (proses || "").trim().toLowerCase();
 
-    document.getElementById("stepOrder").className = "progress-item completed";
-    document.getElementById("stepPayment").className = "progress-item completed";
-    document.getElementById("stepVerification").className = "progress-item completed";
-    document.getElementById("stepProcess").className = "progress-item current";
-
-    // 🔥 2. PASTI KAN IKON & BG WARNA MERAH DIKEMBALIKAN KE UNGU/HIJAU SUKSES
-    document.querySelector("#stepOrder i").className = "fa-solid fa-check";
-    document.querySelector("#stepOrder .floating-icon").className = "floating-icon icon-purple"; // <-- Reset lingkaran 1 jadi ungu
-    
-    document.querySelector("#stepPayment i").className = "fa-solid fa-check";
-    document.querySelector("#stepPayment .floating-icon").className = "floating-icon icon-purple";
-    
-    document.querySelector("#stepVerification i").className = "fa-solid fa-check";
-    document.querySelector("#stepVerification .floating-icon").className = "floating-icon icon-purple";
-    
-    document.querySelector("#stepProcess i").className = "fa-solid fa-box-open";
-    document.querySelector("#stepProcess .floating-icon").className = "floating-icon icon-green";
-
-    if (proses === "done") {
+    if (cleanProses === "done") {
+      // --------------------------------------------------------
+      // TAHAP 3: PEMBAYARAN SUKSES & PROSES DONE (SEMUA CENTANG UNGU)
+      // --------------------------------------------------------
+      document.getElementById("stepOrder").className = "progress-item completed";
+      document.getElementById("stepPayment").className = "progress-item completed";
+      document.getElementById("stepVerification").className = "progress-item completed";
       document.getElementById("stepProcess").className = "progress-item completed";
+
+      // Step 1: Pesanan Dibuat -> Centang Ungu
+      document.querySelector("#stepOrder i").className = "fa-solid fa-check";
+      document.querySelector("#stepOrder .floating-icon").className = "floating-icon icon-purple";
+
+      // Step 2: Menunggu Pembayaran -> Centang Ungu
+      document.querySelector("#stepPayment i").className = "fa-solid fa-check";
+      document.querySelector("#stepPayment .floating-icon").className = "floating-icon icon-purple";
+
+      // Step 3: Verifikasi Admin -> Centang Ungu
+      document.querySelector("#stepVerification i").className = "fa-solid fa-check";
+      document.querySelector("#stepVerification .floating-icon").className = "floating-icon icon-purple";
+
+      // Step 4: Proses Pesanan -> Centang Ungu
       document.querySelector("#stepProcess i").className = "fa-solid fa-check";
       document.querySelector("#stepProcess .floating-icon").className = "floating-icon icon-purple";
+
+    } else if (cleanProses === "process" || cleanProses === "proses") {
+      // --------------------------------------------------------
+      // TAHAP 2: VERIFIKASI ADMIN SELESAI (DALAM PROSES)
+      // --------------------------------------------------------
+      document.getElementById("stepOrder").className = "progress-item completed";
+      document.getElementById("stepPayment").className = "progress-item completed";
+      document.getElementById("stepVerification").className = "progress-item completed";
+      document.getElementById("stepProcess").className = "progress-item current";
+
+      document.querySelector("#stepOrder i").className = "fa-solid fa-check";
+      document.querySelector("#stepOrder .floating-icon").className = "floating-icon icon-purple";
+
+      document.querySelector("#stepPayment i").className = "fa-solid fa-check";
+      document.querySelector("#stepPayment .floating-icon").className = "floating-icon icon-purple";
+
+      document.querySelector("#stepVerification i").className = "fa-solid fa-check";
+      document.querySelector("#stepVerification .floating-icon").className = "floating-icon icon-purple";
+
+      document.querySelector("#stepProcess i").className = "fa-solid fa-box-open";
+      document.querySelector("#stepProcess .floating-icon").className = "floating-icon icon-green";
+
+    } else {
+      // --------------------------------------------------------
+      // TAHAP 1: SUDAH BAYAR MIDTRANS (MENUNGGU VERIFIKASI ADMIN)
+      // --------------------------------------------------------
+      document.getElementById("stepOrder").className = "progress-item completed";
+      document.getElementById("stepPayment").className = "progress-item completed";
+      document.getElementById("stepVerification").className = "progress-item current";
+      document.getElementById("stepProcess").className = "progress-item";
+
+      // Step 1: Pesanan Dibuat -> Centang Ungu
+      document.querySelector("#stepOrder i").className = "fa-solid fa-check";
+      document.querySelector("#stepOrder .floating-icon").className = "floating-icon icon-purple";
+
+      // Step 2: Menunggu Pembayaran -> Centang Ungu (SUDAH DIBAYAR)
+      document.querySelector("#stepPayment i").className = "fa-solid fa-check";
+      document.querySelector("#stepPayment .floating-icon").className = "floating-icon icon-purple";
+
+      // Step 3: Verifikasi Admin -> Jam Pasir Kuning (SEDANG DIVERIFIKASI)
+      document.querySelector("#stepVerification i").className = "fa-solid fa-hourglass-half";
+      document.querySelector("#stepVerification .floating-icon").className = "floating-icon icon-gold";
+
+      // Step 4: Proses Pesanan -> Default Kosong
+      document.querySelector("#stepProcess i").className = "fa-solid fa-box-open";
+      document.querySelector("#stepProcess .floating-icon").className = "floating-icon";
     }
   }
 }
