@@ -21,23 +21,18 @@ function checkIsExpired() {
   
   if (!invoice) return false;
 
-  // Bersihkan teks "INV" jika ada agar tersisa angkanya saja
   const invDigits = invoice.replace("INV", "").trim();
-
-  // Validasi panjang string skema baru (Minimal 12 digit untuk YYYYMMDDHHMM)
   if (invDigits.length < 12) return false; 
 
-  // Ekstrak waktu asli dari susunan 15 digit (Tanpa detik)
   const year = parseInt(invDigits.substring(0, 4));
-  const month = parseInt(invDigits.substring(4, 6)) - 1; // Bulan di JS dimulai dari 0
+  const month = parseInt(invDigits.substring(4, 6)) - 1;
   const date = parseInt(invDigits.substring(6, 8));
   const hour = parseInt(invDigits.substring(8, 10));
   const minute = parseInt(invDigits.substring(10, 12));
 
-  // Konversi menjadi format waktu komputer (milidetik), detik diset ke 0
   const createdAtTime = new Date(year, month, date, hour, minute, 0).getTime();
   const now = new Date().getTime();
-  const oneHour = 60 * 60 * 1000; // 1 jam dalam milidetik
+  const oneHour = 60 * 60 * 1000;
 
   return (now - createdAtTime) > oneHour;
 }
@@ -46,13 +41,11 @@ function loadFromLocalStorage() {
   const localData = JSON.parse(localStorage.getItem("paymentData"));
   if (!localData) return false;
 
-   window.rawPackageId = localData.packageId || localData.package_id || "";
+  window.rawPackageId = localData.packageId || localData.package_id || "";
    
-  // CUSTOMER RENDER
   renderCustomer(localData.nama, localData.telepon, localData.email);
 
-  // PRODUCT RENDER (Ambil harga lama Rp xxx)
-  const matches = localData.paketHarga.match(/Rp\s?[\d\.]+/g);
+  const matches = (localData.paketHarga || "").match(/Rp\s?[\d\.]+/g);
   const hargaLama = matches ? matches[0].replace("Rp ", "") : "0";
 
   const hargaHtml = `
@@ -70,10 +63,8 @@ function loadFromLocalStorage() {
     localData.total
   );
 
-  // STATUS RENDER
   renderStatus(localData.status || "pending");
 
-  // INVOICE & TIME RENDER (Utamakan ambil dari URL parameter agar tidak 'null' saat di-clear)
   const params = new URLSearchParams(window.location.search);
   const invoice = params.get("invoice") || localStorage.getItem("invoiceID");
   
@@ -107,111 +98,83 @@ async function loadFromSheet() {
 
     const cleanInvoiceID = String(invoiceID).replace("INV", "").trim();
 
-    // ============================================================
-    // 🔥 STEP 1: FETCH TIPS GLOBAL DI PALING ATAS (Independent / Mandiri)
-    // ============================================================
+    // 1. FETCH TIPS GLOBAL
     const tipsRes = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/statustips_payment");
     const tipsData = await tipsRes.json();
-    const globalTips = tipsData[0]; // Mengambil baris pertama data tips
+    const globalTips = tipsData[0];
 
-    // ============================================================
-    // STEP 2: FETCH PAYMENT_ID UNTUK CEK VALIDASI INVOICE
-    // ============================================================
-    const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/payment_id");
-    const data = await res.json();
-     
-    const found = data.find(
-      x => String(x.invoice).replace("INV", "").trim() === cleanInvoiceID
-    );
-     
-    // ============================================================
-    // 🔥 STEP 3: LOGIKA JIKA INVOICE TIDAK/BELUM KETEMU DI SPREADSHEET
-    // ============================================================
-    if (!found) {
-      const localInvoice = localStorage.getItem("invoiceID");
-      if (localInvoice && String(localInvoice).trim() === String(invoiceID).trim()) {
-        showToast("Pesanan sudah dibuat ⚡", "fa-circle-check");
-      } else {
-        showToast("Invoice tidak terdaftar atau telah kedaluwarsa ❌", "fa-circle-xmark");
-      }
-
-      // 💡 FIX: Tetap render status & potong teks tips global dari sheet meskipun invoice belum terdaftar!
-      const localData = JSON.parse(localStorage.getItem("paymentData")) || {};
-      const currentStatus = localData.status || "pending";
-      
-      renderStatus(currentStatus, "", globalTips);
-
-      return; // Berhenti di sini agar tidak error membaca info customer dari sheet yang kosong
-    }
-
-    // ============================================================
-    // STEP 4: JIKA INVOICE KETEMU (Proses normal seperti biasa)
-    // ============================================================
+    // 2. FETCH STATUS_PAYMENT (BACA STATUS PEMBAYARAN LANGSUNG)
     const statusRes = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/status_payment");
     const statusData = await statusRes.json();
-     
     const statusRow = statusData.find(x => String(x.invoice).replace("INV", "").trim() === cleanInvoiceID);
+    
     const paymentStatus = (statusRow?.status || "").trim().toLowerCase();
     const processStatus = (statusRow?.proses || "").trim().toLowerCase();
-     
-    // SPLIT CUSTOMER INFO
-    const info = found.informasi_pelanggan.split("|");
+
+    // 3. FETCH PAYMENT_ID UNTUK DETAIL PESANAN
+    const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/payment_id");
+    const data = await res.json();
+    const found = data.find(x => String(x.invoice).replace("INV", "").trim() === cleanInvoiceID);
+
+    // JIKA INVOICE BELUM/TIDAK KETEMU DI TAB payment_id
+    if (!found) {
+      const localData = JSON.parse(localStorage.getItem("paymentData")) || {};
+      const currentStatus = paymentStatus || localData.status || "pending";
+      
+      // Tetap render status centang ungu jika status_payment sudah 'success'
+      renderStatus(currentStatus, processStatus, globalTips);
+      return;
+    }
+
+    // JIKA INVOICE KETEMU DI TAB payment_id
+    const info = (found.informasi_pelanggan || "").split("|");
     window.rawInvoice = found.invoice;
     window.rawPackageId = found.package_id || window.rawPackageId || "";
 
-    // FETCH PACKAGE_DETAIL
     const resProduk = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PACKAGE_DETAIL");
     const produk = await resProduk.json();
 
     const detail = produk.find(p => String(p.package_id).trim() === String(found.package_id).trim());
-    renderCustomer(info[0], info[1], info[2]);
+    if (detail && info.length >= 3) {
+      renderCustomer(info[0], info[1], info[2]);
 
-    function rp(x) {
-      return "Rp " + x.toLocaleString("id-ID");
-    }
+      function rp(x) {
+        return "Rp " + x.toLocaleString("id-ID");
+      }
 
-    // ==========================================
-    // POTONGAN KODE DI DALAM loadFromSheet()
-    // ==========================================
-
-    // Pembersih harga & diskon dinamik
-    const harga = Number(String(detail.price).replace(/[^\d]/g, "")) || 0;
-    const sheetFinalPrice = Number(String(detail.final_price).replace(/[^\d]/g, "")) || 0;
-    
-    let discountPercent = 0;
-    if (detail.discount) {
-      const discountStr = String(detail.discount).replace("%", "").replace(",", ".").trim();
-      discountPercent = parseFloat(discountStr) || 0;
-    }
-    
-    const total = sheetFinalPrice > 0 
-      ? sheetFinalPrice 
-      : (discountPercent > 0 ? Math.round(harga - (harga * discountPercent / 100)) : harga);
+      const harga = Number(String(detail.price).replace(/[^\d]/g, "")) || 0;
+      const sheetFinalPrice = Number(String(detail.final_price).replace(/[^\d]/g, "")) || 0;
       
-    const hemat = harga - total;
-    
-    // Hitung nilai mentahnya terlebih dahulu
-    const diskonPersenRaw = harga > 0 ? ((harga - total) / harga * 100) : 0;
-    const hitungDiskonDinamis = parseFloat(diskonPersenRaw.toFixed(2));
+      let discountPercent = 0;
+      if (detail.discount) {
+        const discountStr = String(detail.discount).replace("%", "").replace(",", ".").trim();
+        discountPercent = parseFloat(discountStr) || 0;
+      }
+      
+      const total = sheetFinalPrice > 0 
+        ? sheetFinalPrice 
+        : (discountPercent > 0 ? Math.round(harga - (harga * discountPercent / 100)) : harga);
+        
+      const hemat = harga - total;
+      const diskonPersenRaw = harga > 0 ? ((harga - total) / harga * 100) : 0;
+      const hitungDiskonDinamis = parseFloat(diskonPersenRaw.toFixed(2));
 
-    const diskonTeks = discountPercent > 0 
-    ? "-" + String(detail.discount).trim() 
-    : (hitungDiskonDinamis > 0 ? "-" + hitungDiskonDinamis + "%" : "0%");
+      const diskonTeks = discountPercent > 0 
+      ? "-" + String(detail.discount).trim() 
+      : (hitungDiskonDinamis > 0 ? "-" + hitungDiskonDinamis + "%" : "0%");
 
-    // Gabungkan subtitle dan duration dari Google Sheet PACKAGE_DETAIL
-    const fullSubtitle = (detail.subtitle && detail.duration) 
-      ? `${detail.subtitle} • ${detail.duration}` 
-      : (detail.subtitle || detail.duration || "");
+      const fullSubtitle = (detail.subtitle && detail.duration) 
+        ? `${detail.subtitle} • ${detail.duration}` 
+        : (detail.subtitle || detail.duration || "");
 
-    const hargaHtml = `
-      <div class="price-old">${rp(harga)}</div>
-      <div class="price-final">${rp(total)}</div>
-    `;
+      const hargaHtml = `
+        <div class="price-old">${rp(harga)}</div>
+        <div class="price-final">${rp(total)}</div>
+      `;
 
-    // Sekarang hargaHtml sudah terdefinisi dan aman dipanggil
-    renderProduct(detail.image_url, detail.title, fullSubtitle, hargaHtml, diskonTeks, rp(hemat), rp(total));
+      renderProduct(detail.image_url, detail.title, fullSubtitle, hargaHtml, diskonTeks, rp(hemat), rp(total));
+    }
 
-    // Render status akhir menggunakan data sinkronisasi penuh dari sheet
     renderStatus(paymentStatus, processStatus, globalTips);
      
     const waktu = new Date().toLocaleString("id-ID", {
@@ -229,9 +192,9 @@ async function loadFromSheet() {
    UI RENDERING FUNCTIONS
    ============================================================ */
 function renderCustomer(nama, wa, email) {
-  document.getElementById("nama").innerText = nama;
-  document.getElementById("wa").innerText = wa;
-  document.getElementById("email").innerText = email;
+  document.getElementById("nama").innerText = nama || "-";
+  document.getElementById("wa").innerText = wa || "-";
+  document.getElementById("email").innerText = email || "-";
 }
 
 function renderProduct(image, title, subtitle, hargaHtml, diskon, hemat, total) {
@@ -244,28 +207,24 @@ function renderProduct(image, title, subtitle, hargaHtml, diskon, hemat, total) 
     }
   }
 
-  document.getElementById("paket").innerText = title;
-  document.getElementById("paketDetail").innerText = subtitle;
-  document.getElementById("harga").innerHTML = hargaHtml;
-  document.getElementById("diskon").innerText = diskon;
-  document.getElementById("hemat").innerText = hemat;
-  document.getElementById("total").innerText = total;
-  document.getElementById("total2").innerText = total;
-  document.getElementById("total3").innerText = total;
+  document.getElementById("paket").innerText = title || "-";
+  document.getElementById("paketDetail").innerText = subtitle || "-";
+  document.getElementById("harga").innerHTML = hargaHtml || "-";
+  document.getElementById("diskon").innerText = diskon || "-";
+  document.getElementById("hemat").innerText = hemat || "-";
+  document.getElementById("total").innerText = total || "-";
+  document.getElementById("total2").innerText = total || "-";
+  document.getElementById("total3").innerText = total || "-";
 }
 
-// UBAH FUNGSI INI
 function renderStatus(status, proses, tipsObj) {
-  // PAKSA JADI EXPIRED JIKA SUDAH LEBIH DARI 1 JAM (Kecuali kalau sudah sukses)
   if (status !== "success" && checkIsExpired()) {
     status = "expired";
   }
 
   switch (status) {
     case "success":
-      // 🔥 LOGIKA BARU: Tentukan tips berdasarkan status proses
       const selectedTips = (proses === "done") ? tipsObj?.tips_proses : tipsObj?.tips_success;
-      
       setSuccessUI(proses, selectedTips);
       localStorage.removeItem("invoiceID");
       localStorage.removeItem("invoiceCreatedAt");
@@ -354,7 +313,6 @@ function setSuccessUI(proses, tipsText) {
   ui.statusTitle.innerText = "Pembayaran Berhasil";
   ui.statusDescription.innerText = "Pembayaran telah diterima dan berhasil diverifikasi oleh admin.";
   
-  // 🔥 LOGIKA BARU: Sesuaikan konten teks tips & support berdasarkan status proses
   if (proses === "done") {
     ui.statusTipText.innerHTML = generateTipsHtml(tipsText, "Pesanan telah selesai diproses. Terima kasih telah berbelanja!");
     document.getElementById("supportTitle").innerText = "Pesanan Selesai ✨";
@@ -373,11 +331,9 @@ function setSuccessUI(proses, tipsText) {
   document.getElementById("waButtonIcon").className = "fa-brands fa-whatsapp";
 }
 
-
 function setExpiredUI(tipsText) {
   const ui = getStatusElements();
    
-  // Hapus warna lama, ganti ke tema expired (merah)
   ui.invoiceBox.classList.remove("status-pending", "status-success");
   ui.statusBox.classList.remove("status-pending", "status-success"); 
   ui.invoiceBox.classList.add("status-expired");
@@ -390,58 +346,44 @@ function setExpiredUI(tipsText) {
   ui.statusBadgeIcon.className = "fa-solid fa-xmark";
   ui.statusIconFa.className = "fa-solid fa-bell-slash"; 
 
-    // ==========================================
-  // 🔥 KODE BARU: UBAH IKON & TAMBAH TEKS DI TIMELINE
-  // ==========================================
-  
-  // 1. Mengubah ikon check & hourglass menjadi xmark
   const orderIcon = document.querySelector("#stepOrder i");
   const paymentIcon = document.querySelector("#stepPayment i");
   if (orderIcon) orderIcon.className = "fa-solid fa-xmark";
   if (paymentIcon) paymentIcon.className = "fa-solid fa-xmark";
 
-  // Ubah bulatan menjadi MERAH SOLID & IKON PUTIH
   const orderBg = document.querySelector("#stepOrder .floating-icon");
   const paymentBg = document.querySelector("#stepPayment .floating-icon");
   if (orderBg) orderBg.className = "floating-icon icon-solid-red";
   if (paymentBg) paymentBg.className = "floating-icon icon-solid-red";
 
-  // 2. Menambahkan teks merah "sesi kadaluarsa"
   const stepOrder = document.getElementById("stepOrder"); 
   const stepPayment = document.getElementById("stepPayment");
 
-  // Tambah teks di bawah "Pesanan Dibuat"
   if (stepOrder && !document.getElementById("expiredTextOrder")) {
-  const textRedOrder = document.createElement("div");
-  textRedOrder.id = "expiredTextOrder";
-  textRedOrder.classList.add("expired-text-timeline");
-  textRedOrder.innerText = "sesi kadaluarsa";
-  stepOrder.appendChild(textRedOrder);
-}
+    const textRedOrder = document.createElement("div");
+    textRedOrder.id = "expiredTextOrder";
+    textRedOrder.classList.add("expired-text-timeline");
+    textRedOrder.innerText = "sesi kadaluarsa";
+    stepOrder.appendChild(textRedOrder);
+  }
 
-// Tambah teks di bawah "Menunggu Pembayaran"
-if (stepPayment && !document.getElementById("expiredTextPayment")) {
-  const textRedPayment = document.createElement("div");
-  textRedPayment.id = "expiredTextPayment";
-  textRedPayment.classList.add("expired-text-timeline"); 
-  textRedPayment.innerText = "sesi kadaluarsa";
-  stepPayment.appendChild(textRedPayment);
-}
-  
-  // ==========================================
+  if (stepPayment && !document.getElementById("expiredTextPayment")) {
+    const textRedPayment = document.createElement("div");
+    textRedPayment.id = "expiredTextPayment";
+    textRedPayment.classList.add("expired-text-timeline"); 
+    textRedPayment.innerText = "sesi kadaluarsa";
+    stepPayment.appendChild(textRedPayment);
+  }
 
-  // Mengubah icon section menjadi merah
   document.getElementById("statusSectionIcon").className = "section-icon icon-red";
 
-  // INFO PENDUKUNG DIUBAH MENJADI TOMBOL GENERATE ULANG
   document.getElementById("supportTitle").innerText = "Generate Ulang Invoice"; 
   document.getElementById("supportDescription").innerHTML = "Untuk melanjutkan pembelian paket, silakan klik tombol di bawah ini untuk membuat invoice baru."; 
   
-  // EDIT TOMBOL WA: Ubah text, matikan fungsi klik, dan beri style disable
   const waBtn = document.getElementById("waButton") || document.querySelector(".support-action a"); 
   if (waBtn) { 
-    waBtn.href = "javascript:void(0);"; // Matikan link redirect WA
-    waBtn.setAttribute("onclick", "generateUlangInvoice()"); // Alihkan tombol untuk generate ulang
+    waBtn.href = "javascript:void(0);";
+    waBtn.setAttribute("onclick", "generateUlangInvoice()");
     waBtn.style.backgroundColor = "#ef4444"; 
     waBtn.style.cursor = "pointer"; 
     
@@ -451,11 +393,8 @@ if (stepPayment && !document.getElementById("expiredTextPayment")) {
 }
 
 function generateUlangInvoice() {
-  // Bersihkan invoice lama agar sistem memicu pembuatan kode baru
   localStorage.removeItem("invoiceID");
   localStorage.removeItem("invoiceCreatedAt");
-  
-  // Arahkan kembali ke halaman opsi pembayaran
   window.location.href = "pembayaran-qr.html"; 
 }
 
@@ -463,19 +402,15 @@ function setCancelUI() { /* TODO */ }
 function setRefundUI() { /* TODO */ }
 
 /* ============================================================
-   PROGRESS TIMELINE TRACKER (UPGRADED)
+   PROGRESS TIMELINE TRACKER
    ============================================================ */
 function updateProgress(status, proses) {
-  // Reset teks expired jika ada
   const expiredTextOrder = document.getElementById("expiredTextOrder");
   const expiredTextPayment = document.getElementById("expiredTextPayment");
   if (expiredTextOrder) expiredTextOrder.remove();
   if (expiredTextPayment) expiredTextPayment.remove();
 
   if (status === "pending") {
-    // --------------------------------------------------------
-    // TAHAP 0: PENDING (BELUM BAYAR)
-    // --------------------------------------------------------
     document.getElementById("stepOrder").className = "progress-item completed";
     document.getElementById("stepPayment").className = "progress-item current";
     document.getElementById("stepVerification").className = "progress-item";
@@ -488,38 +423,27 @@ function updateProgress(status, proses) {
     document.querySelector("#stepPayment .floating-icon").className = "floating-icon icon-gold";
 
   } else if (status === "success") {
-    
     const cleanProses = (proses || "").trim().toLowerCase();
 
     if (cleanProses === "done") {
-      // --------------------------------------------------------
-      // TAHAP 3: PEMBAYARAN SUKSES & PROSES DONE (SEMUA CENTANG UNGU)
-      // --------------------------------------------------------
       document.getElementById("stepOrder").className = "progress-item completed";
       document.getElementById("stepPayment").className = "progress-item completed";
       document.getElementById("stepVerification").className = "progress-item completed";
       document.getElementById("stepProcess").className = "progress-item completed";
 
-      // Step 1: Pesanan Dibuat -> Centang Ungu
       document.querySelector("#stepOrder i").className = "fa-solid fa-check";
       document.querySelector("#stepOrder .floating-icon").className = "floating-icon icon-purple";
 
-      // Step 2: Menunggu Pembayaran -> Centang Ungu
       document.querySelector("#stepPayment i").className = "fa-solid fa-check";
       document.querySelector("#stepPayment .floating-icon").className = "floating-icon icon-purple";
 
-      // Step 3: Verifikasi Admin -> Centang Ungu
       document.querySelector("#stepVerification i").className = "fa-solid fa-check";
       document.querySelector("#stepVerification .floating-icon").className = "floating-icon icon-purple";
 
-      // Step 4: Proses Pesanan -> Centang Ungu
       document.querySelector("#stepProcess i").className = "fa-solid fa-check";
       document.querySelector("#stepProcess .floating-icon").className = "floating-icon icon-purple";
 
     } else if (cleanProses === "process" || cleanProses === "proses") {
-      // --------------------------------------------------------
-      // TAHAP 2: VERIFIKASI ADMIN SELESAI (DALAM PROSES)
-      // --------------------------------------------------------
       document.getElementById("stepOrder").className = "progress-item completed";
       document.getElementById("stepPayment").className = "progress-item completed";
       document.getElementById("stepVerification").className = "progress-item completed";
@@ -538,27 +462,20 @@ function updateProgress(status, proses) {
       document.querySelector("#stepProcess .floating-icon").className = "floating-icon icon-green";
 
     } else {
-      // --------------------------------------------------------
-      // TAHAP 1: SUDAH BAYAR MIDTRANS (MENUNGGU VERIFIKASI ADMIN)
-      // --------------------------------------------------------
       document.getElementById("stepOrder").className = "progress-item completed";
       document.getElementById("stepPayment").className = "progress-item completed";
       document.getElementById("stepVerification").className = "progress-item current";
       document.getElementById("stepProcess").className = "progress-item";
 
-      // Step 1: Pesanan Dibuat -> Centang Ungu
       document.querySelector("#stepOrder i").className = "fa-solid fa-check";
       document.querySelector("#stepOrder .floating-icon").className = "floating-icon icon-purple";
 
-      // Step 2: Menunggu Pembayaran -> Centang Ungu (SUDAH DIBAYAR)
       document.querySelector("#stepPayment i").className = "fa-solid fa-check";
       document.querySelector("#stepPayment .floating-icon").className = "floating-icon icon-purple";
 
-      // Step 3: Verifikasi Admin -> Jam Pasir Kuning (SEDANG DIVERIFIKASI)
       document.querySelector("#stepVerification i").className = "fa-solid fa-hourglass-half";
       document.querySelector("#stepVerification .floating-icon").className = "floating-icon icon-gold";
 
-      // Step 4: Proses Pesanan -> Default Kosong
       document.querySelector("#stepProcess i").className = "fa-solid fa-box-open";
       document.querySelector("#stepProcess .floating-icon").className = "floating-icon";
     }
@@ -575,13 +492,14 @@ function copyInvoice() {
 
 function showCopyToast() {
   const toast = document.getElementById("copyToast");
-  toast.classList.add("show");
-  setTimeout(() => {
-    toast.classList.remove("show");
-  }, 2000);
+  if (toast) {
+    toast.classList.add("show");
+    setTimeout(() => {
+      toast.classList.remove("show");
+    }, 2000);
+  }
 }
 
-// FUNGSI TOAST CUSTOM UNTUK NOTIFIKASI ELEGAN
 function showToast(message, iconClass = "fa-circle-check") {
   const toast = document.getElementById("customDynamicToast");
   const msgEl = document.getElementById("toastMessage");
@@ -589,23 +507,16 @@ function showToast(message, iconClass = "fa-circle-check") {
 
   if (!toast || !msgEl || !iconEl) return;
 
-  // Update teks dan ikon secara dinamis
   msgEl.innerText = message;
   iconEl.className = `fa-solid ${iconClass}`;
-
-  // Atur warna ikon (Hijau untuk sukses, Merah untuk gagal/warning)
   iconEl.style.color = iconClass.includes("check") ? "#4ade80" : "#f87171";
 
-  // Munculkan toast dengan menambahkan class "show"
   toast.classList.add("show");
-
-  // Sembunyikan otomatis setelah 3.5 detik
   setTimeout(() => {
     toast.classList.remove("show");
   }, 3500);
 }
 
-// FUNGSI UNTUK GENERATE TIPS (DENGAN LOGIKA TOGGLE BUTTON)
 function generateTipsHtml(tipsText, defaultText) {
   let items = [];
 
@@ -618,7 +529,6 @@ function generateTipsHtml(tipsText, defaultText) {
       .filter(tip => tip.length > 0);
   }
 
-  // JIKA HANYA 1 POIN: Tampilkan langsung tanpa tombol toggle
   if (items.length <= 1) {
     return `
       <div class="status-tip-item">
@@ -627,7 +537,6 @@ function generateTipsHtml(tipsText, defaultText) {
       </div>`;
   }
 
-  // JIKA LEBIH DARI 1 POIN: Poin pertama ditampilkan, sisanya disembunyikan
   const firstItemHtml = `
     <div class="status-tip-item">
       <i class="fa-solid fa-circle"></i>
@@ -656,7 +565,6 @@ function generateTipsHtml(tipsText, defaultText) {
   `;
 }
 
-// FUNGSI UNTUK HANDLE KLIK TOMBOL SELENGKAPNYA / SEMBUNYIKAN
 function toggleTips(btn) {
   const container = document.getElementById("extraTipsContainer");
   if (!container) return;
