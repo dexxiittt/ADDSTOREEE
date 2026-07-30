@@ -14,6 +14,11 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     
 <link rel="stylesheet" href="components/pembayaran-qr/pembayaran-qr.css">
 
+<!-- Midtrans Snap SDK (Sandbox) -->
+<script type="text/javascript"
+  src="https://app.sandbox.midtrans.com/snap/snap.js"
+  data-client-key="SB-Mid-client-XXXXXXXXXXXX"></script>
+
 <link rel="stylesheet" href="components/footer.css">
 
 </head>
@@ -140,37 +145,41 @@ Admin akan mengirim akun melalui Whatsapp
 </div>
 </div>
 
-
 <!-- CONTAINER QR -->
 <div class="container">
 
-<h3>Scan QR Code</h3>
-<p class="qr-sub">
-Gunakan dompet digital atau mobile banking anda
-</p>
+  <h3>Scan QR Code</h3>
+  <p class="qr-sub">
+    Gunakan dompet digital atau mobile banking anda
+  </p>
 
-<div class="qr-box">
-<div class="qr-badge">
-
-<div class="floating-icon icon-purple">
-<i class="fa-solid fa-mobile-screen-button"></i>
-</div>
-
-<span>Scan untuk Membayar</span>
-
-</div>
-<img id="qr-img" src="" alt="QR Code" onclick="openQR(this)">
-</div>
+  <div class="qr-box">
+    <div class="qr-badge">
+      <div class="floating-icon icon-purple">
+        <i class="fa-solid fa-mobile-screen-button"></i>
+      </div>
+      <span>Scan untuk Membayar</span>
+    </div>
+    <img id="qr-img" src="" alt="QR Code" onclick="openQR(this)">
+  </div>
     
-<button class="btn-primary" onclick="cekStatus()">
-Cek Status Pembayaran
-</button>
+  <!-- TOMBOL BARU: TAP UNTUK PEMBAYARAN -->
+  <button class="btn-primary btn-midtrans" onclick="bayarSekarang()">
+    <i class="fa-solid fa-bolt"></i>
+    <span>Tap untuk Pembayaran</span>
+  </button>
 
-<button class="btn-secondary" onclick="kembaliProduk()">
-Kembali ke Produk
-</button>
+  <!-- TOMBOL CEK STATUS (DIBUAT SEKUNDER AGAR RAPI) -->
+  <button class="btn-secondary" onclick="cekStatus()">
+    <i class="fa-solid fa-rotate-right" style="margin-right: 6px;"></i> Cek Status Pembayaran
+  </button>
+
+  <!-- TOMBOL KEMBALI -->
+  <button class="btn-secondary" onclick="kembaliProduk()">
+    Kembali ke Produk
+  </button>
+
 </div>
-
 
 <!-- QR MODAL -->
 <div id="qrModal" class="qr-modal" onclick="closeQR()">
