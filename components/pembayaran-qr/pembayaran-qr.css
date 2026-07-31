@@ -856,6 +856,52 @@ color:#8b5cf6;
 font-size:13px;
 }
 
+.payment-methods{
+display:flex;
+flex-wrap:wrap;
+
+gap:10px;
+
+margin-top:18px;
+}
+
+.payment-chip{
+display:flex;
+align-items:center;
+gap:8px;
+
+padding:10px 14px;
+
+background:#ffffff;
+border-radius:999px;
+border:1px solid rgba(226,232,240,.9);
+
+font-size:13px;
+font-weight:600;
+
+color:#475569;
+box-shadow:
+0 6px 18px rgba(15,23,42,.05);
+
+transition:.25s;
+}
+
+.payment-chip i{
+font-size:14px;
+
+color:#8b5cf6;
+}
+
+.payment-chip:hover{
+transform:translateY(-2px);
+
+border-color:#c4b5fd;
+background:#faf7ff;
+
+box-shadow:
+0 10px 22px rgba(99,102,241,.12);
+}
+
 .payment-header,
 .payment-icon,
 .payment-content,
