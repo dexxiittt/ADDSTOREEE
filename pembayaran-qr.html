@@ -132,54 +132,62 @@
   </div>
 
   <!-- CONTAINER ACTION PEMBAYARAN -->
-  <div class="container">
+<div class="container">
 
-    <h3>Tap Tombol Pembayaran Dibawah</h3>
-    <p class="qr-sub">
-      Pilih metode pembayaran yang di ingginkan
-    </p>
+  <h3>Tap Tombol Pembayaran Dibawah</h3>
 
-    <div class="payment-card">
+  <p class="qr-sub">
+    Pilih metode pembayaran yang diinginkan
+  </p>
 
-  <div class="payment-icon">
-    <i class="fa-solid fa-mobile-screen-button"></i>
-  </div>
+  <div class="payment-card">
 
-  <div class="payment-content">
-    <div class="payment-title">
-      Pembayaran Aman & Terenkripsi
+    <div class="payment-icon">
+      <i class="fa-solid fa-mobile-screen-button"></i>
     </div>
 
-    <div class="payment-desc">
-      Lanjutkan pembayaran melalui Midtrans. Pilih metode pembayaran yang diinginkan setelah menekan tombol di bawah.
+    <div class="payment-content">
+
+      <div class="payment-title">
+        Pembayaran Aman & Terenkripsi
+      </div>
+
+      <div class="payment-desc">
+        Lanjutkan pembayaran melalui Midtrans. Pilih metode pembayaran yang diinginkan setelah menekan tombol di bawah.
+      </div>
+
     </div>
+
+    <div class="payment-badge">
+      <i class="fa-solid fa-shield-halved"></i>
+      <span>100% Secure</span>
+    </div>
+
+    <!-- ACTION -->
+    <div class="payment-actions">
+
+      <button class="btn-primary btn-midtrans"
+              onclick="bayarSekarang()">
+        <i class="fa-solid fa-bolt"></i>
+        <span>Tap untuk Pembayaran</span>
+      </button>
+
+      <button class="btn-secondary"
+              onclick="cekStatus()">
+        <i class="fa-solid fa-rotate-right"></i>
+        Cek Status Pembayaran
+      </button>
+
+      <button class="btn-secondary"
+              onclick="kembaliProduk()">
+        Kembali ke Produk
+      </button>
+
+    </div>
+
   </div>
 
-  <div class="payment-badge">
-    <i class="fa-solid fa-shield-halved"></i>
-    <span>100% Secure</span>
-  </div>
 </div>
-      
-</div>
-
-    <!-- TOMBOL BARU: TAP UNTUK PEMBAYARAN -->
-    <button class="btn-primary btn-midtrans" onclick="bayarSekarang()">
-      <i class="fa-solid fa-bolt"></i>
-      <span>Tap untuk Pembayaran</span>
-    </button>
-
-    <!-- TOMBOL CEK STATUS -->
-    <button class="btn-secondary" onclick="cekStatus()">
-      <i class="fa-solid fa-rotate-right" style="margin-right: 6px;"></i> Cek Status Pembayaran
-    </button>
-
-    <!-- TOMBOL KEMBALI -->
-    <button class="btn-secondary" onclick="kembaliProduk()">
-      Kembali ke Produk
-    </button>
-
-  </div>
 
   <!-- CUSTOM ALERT MODAL -->
   <div id="customAlertModal" class="custom-alert-backdrop">
