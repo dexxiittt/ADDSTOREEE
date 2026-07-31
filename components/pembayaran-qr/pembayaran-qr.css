@@ -681,9 +681,7 @@ margin-bottom:30px;
 position:relative;
 overflow:hidden;
    
-display:flex; 
-align-items:center; 
-gap:18px;
+display:block;
 
 padding:22px;
 margin:30px 0;
@@ -766,6 +764,14 @@ font-family:"Plus Jakarta Sans",sans-serif;
 font-size:14px;
 line-height:1.7;
 color:#6b7280;
+}
+
+.payment-header{
+display:flex;
+align-items:center;
+gap:18px;
+
+padding-right:120px;
 }
 
 .payment-card:hover{
