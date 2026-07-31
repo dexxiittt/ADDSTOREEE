@@ -786,15 +786,19 @@ transition:.25s;
 
 .payment-badge{
 position:absolute;
-   
+
 top:18px;
 right:18px;
 
-display:flex;
+display:inline-flex;
 align-items:center;
 gap:8px;
 
+width:fit-content;
+margin-left:auto;
+
 padding:8px 14px;
+
 border-radius:999px;
 background:rgba(139,92,246,.08);
 
@@ -804,7 +808,7 @@ backdrop-filter:blur(10px);
 font-family:"Plus Jakarta Sans",sans-serif;
 font-size:12px;
 font-weight:700;
-   
+
 color:#7c3aed;
 }
 
@@ -831,24 +835,37 @@ gap:14px;
 }
 
 .payment-action-title{
+display:flex;
+align-items:center;
+gap:8px;
+
 font-size:12px;
 font-weight:700;
 
 letter-spacing:1px;
-
 text-transform:uppercase;
+
 color:#9ca3af;
 
 margin-bottom:6px;
 }
 
+.payment-action-title i{
+color:#8b5cf6;
+
+font-size:13px;
+}
+
+.payment-header,
 .payment-icon,
 .payment-content,
-.payment-badge{
+.payment-badge,
+.payment-actions{
 
 position:relative;
-   
+
 z-index:2;
+
 }
 
 .payment-actions .btn-primary,
