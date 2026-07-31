@@ -5,10 +5,10 @@ window.rawInvoice = "";
 window.rawPackageId = "";
 
 window.onload = async function() {
-  // STEP 1: Load data dari LocalStorage
+  // STEP 1: Load data awal dari LocalStorage
   loadFromLocalStorage();
 
-  // STEP 2: Sinkronisasi data dari OpenSheet
+  // STEP 2: Sinkronisasi data real-time dari Google Sheet via OpenSheet
   await loadFromSheet();
 };
 
@@ -63,7 +63,7 @@ function loadFromLocalStorage() {
     localData.total
   );
 
-  renderStatus(localData.status || "pending");
+  renderStatus(false, false, false, localData.status || "pending");
 
   const params = new URLSearchParams(window.location.search);
   const invoice = params.get("invoice") || localStorage.getItem("invoiceID");
@@ -106,22 +106,22 @@ async function loadFromSheet() {
     // 2. FETCH STATUS_PAYMENT
     const statusRes = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/status_payment");
     const statusData = await statusRes.json();
-    const statusRow = statusData.find(x => String(x.invoice).replace("INV", "").trim() === cleanInvoiceID);
+    const statusRow = statusData.find(x => String(x.invoice || "").replace("INV", "").trim() === cleanInvoiceID);
 
     // 3. FETCH PAYMENT_ID
     const res = await fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/payment_id");
     const data = await res.json();
-    const found = data.find(x => String(x.invoice).replace("INV", "").trim() === cleanInvoiceID);
+    const found = data.find(x => String(x.invoice || "").replace("INV", "").trim() === cleanInvoiceID);
 
     // --- EVALUASI LOGIKA ALUR ---
     
-    // 1. Cek apakah Invoice terisi di kedua sheet
+    // Step 2: Cek apakah Invoice terisi di kedua sheet (status_payment & payment_id)
     const isPaymentFilled = Boolean(
-      statusRow && statusRow.invoice &&
-      found && found.invoice
+      statusRow && String(statusRow.invoice || "").trim() !== "" &&
+      found && String(found.invoice || "").trim() !== ""
     );
 
-    // 2. Cek syarat Verifikasi Admin
+    // Step 3: Cek syarat Verifikasi Admin
     const paymentStatusRow = (statusRow?.status || "").trim().toLowerCase();
     const paymentStatusFound = (found?.status || "").trim().toLowerCase();
     const packageId = (found?.package_id || "").trim();
@@ -135,7 +135,7 @@ async function loadFromSheet() {
       infoPelanggan !== ""
     );
 
-    // 3. Cek syarat Pesanan Diproses / Selesai
+    // Step 4: Cek syarat Pesanan Diproses / Selesai
     const processStatus = (statusRow?.proses || "").trim().toLowerCase();
     const isProcessDone = Boolean(isAdminVerified && processStatus === "done");
 
@@ -149,13 +149,15 @@ async function loadFromSheet() {
       const produk = await resProduk.json();
 
       const detail = produk.find(p => String(p.package_id).trim() === String(found.package_id).trim());
-      if (detail && info.length >= 3) {
-        renderCustomer(info[0], info[1], info[2]);
+      if (detail) {
+        if (info.length >= 3) {
+          renderCustomer(info[0], info[1], info[2]);
+        }
 
         function rp(x) { return "Rp " + x.toLocaleString("id-ID"); }
 
-        const harga = Number(String(detail.price).replace(/[^\d]/g, "")) || 0;
-        const sheetFinalPrice = Number(String(detail.final_price).replace(/[^\d]/g, "")) || 0;
+        const harga = Number(String(detail.price || "0").replace(/[^\d]/g, "")) || 0;
+        const sheetFinalPrice = Number(String(detail.final_price || "0").replace(/[^\d]/g, "")) || 0;
         
         let discountPercent = 0;
         if (detail.discount) {
@@ -187,7 +189,7 @@ async function loadFromSheet() {
       }
     }
 
-    // Update Tampilan UI berdasarkan hasil evaluasi
+    // Update Tampilan UI berdasarkan hasil evaluasi alur
     renderStatus(isPaymentFilled, isAdminVerified, isProcessDone, processStatus, globalTips);
 
     const waktu = new Date().toLocaleString("id-ID", {
@@ -215,6 +217,7 @@ function renderProduct(image, title, subtitle, hargaHtml, diskon, hemat, total) 
   if (img) {
     if (image) {
       img.src = image;
+      document.getElementById("productImageBox").style.display = "block";
     } else {
       document.getElementById("productImageBox").style.display = "none";
     }
@@ -249,41 +252,10 @@ function renderStatus(isPaymentFilled, isAdminVerified, isProcessDone, processSt
     setSuccessUI("process", tipsObj?.tips_success);
   } else if (isPaymentFilled) {
     setPendingUI(tipsObj?.tips_pending);
-    // Penyesuaian teks banner saat pembayaran masuk tapi belum diverifikasi admin
     document.getElementById("statusTitle").innerText = "Verifikasi Admin";
     document.getElementById("statusDescription").innerText = "Pembayaran sedang dicek dan diverifikasi oleh admin.";
   } else {
     setPendingUI(tipsObj?.tips_pending);
-  }
-}
-
-  switch (status) {
-    case "success":
-      const selectedTips = (proses === "done") ? tipsObj?.tips_proses : tipsObj?.tips_success;
-      setSuccessUI(proses, selectedTips);
-      localStorage.removeItem("invoiceID");
-      localStorage.removeItem("invoiceCreatedAt");
-      break;
-      
-    case "expired":
-      setExpiredUI(tipsObj?.tips_expired);
-      break;
-      
-    case "pending":
-      setPendingUI(tipsObj?.tips_pending);
-      break;
-      
-    case "cancel":
-      setCancelUI();
-      break;
-      
-    case "refund":
-      setRefundUI();
-      break;
-      
-    default:
-      setPendingUI(tipsObj?.tips_pending);
-      break;
   }
 }
 
@@ -317,8 +289,6 @@ function setPendingUI(tipsText) {
   ui.invoiceBox.classList.add("status-pending");
   ui.statusBox.classList.add("status-pending");
 
-  updateProgress("pending");
-
   ui.statusBadgeText.innerText = "Menunggu Pembayaran";
   ui.statusTitle.innerText = "Menunggu Pembayaran";
   ui.statusDescription.innerText = "Silakan lakukan pembayaran sesuai nominal yang tertera pada invoice.";
@@ -341,8 +311,6 @@ function setSuccessUI(proses, tipsText) {
   ui.statusBox.classList.remove("status-pending", "status-expired");
   ui.invoiceBox.classList.add("status-success");
   ui.statusBox.classList.add("status-success");
-
-  updateProgress("success", proses);
 
   ui.statusBadgeText.innerText = "Pembayaran Berhasil";
   ui.statusTitle.innerText = "Pembayaran Berhasil";
