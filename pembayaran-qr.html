@@ -2,206 +2,178 @@
 <html lang="id">
 
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pembayaran Midtrans</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
 
-<title>Pembayaran QRIS</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+      
+  <link rel="stylesheet" href="components/pembayaran-qr/pembayaran-qr.css">
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    
-<link rel="stylesheet" href="components/pembayaran-qr/pembayaran-qr.css">
+  <!-- Midtrans Snap SDK (Sandbox) -->
+  <script type="text/javascript"
+    src="https://app.sandbox.midtrans.com/snap/snap.js"
+    data-client-key="SB-Mid-client-XXXXXXXXXXXX"></script>
 
-<!-- Midtrans Snap SDK (Sandbox) -->
-<script type="text/javascript"
-  src="https://app.sandbox.midtrans.com/snap/snap.js"
-  data-client-key="SB-Mid-client-XXXXXXXXXXXX"></script>
-
-<link rel="stylesheet" href="components/footer.css">
-
+  <link rel="stylesheet" href="components/footer.css">
 </head>
 
 <body>
-<!-- NAVBAR -->
-<div id="navbar-placeholder"></div>
+  <!-- NAVBAR -->
+  <div id="navbar-placeholder"></div>
   <script src="components/navbar.js"></script>
 
-<!-- HERO -->
-<div class="package-hero">
+  <!-- HERO -->
+  <div class="package-hero">
     <div class="package-hero-content">
-        <h1>Pembayaran QRIS</h1>
-        <p>Periksa detail pesanan kamu</p>
+      <h1>Pembayaran Midtrans</h1>
+      <p>Periksa detail pesanan kamu</p>
     </div>
-</div>
-
-<!-- CONTAINER -->
-<div class="container">
-
-<h3>Detail Pesanan</h3>
-<div class="paket-banner">
-  <img id="paket-img" src="" alt="paket">
-</div>
-
-<div class="detail-grid">
-
-  <div class="detail-card">
-    <div class="detail-label">Nama</div>
-    <div class="detail-value" id="nama"></div>
   </div>
 
-  <div class="detail-card">
-    <div class="detail-label">Nomor WhatsApp</div>
-    <div class="detail-value" id="telepon"></div>
-  </div>
+  <!-- CONTAINER DETAIL PESANAN -->
+  <div class="container">
 
-  <div class="detail-card">
-    <div class="detail-label">Email</div>
-    <div class="detail-value" id="email"></div>
-  </div>
+    <h3>Detail Pesanan</h3>
+    <div class="paket-banner">
+      <img id="paket-img" src="" alt="paket">
+    </div>
 
-</div>
-
-<h3>Order Summary</h3>
-
-<div class="summary-box">
-
-<div class="summary-title">Order Summary</div>
-
-<div class="summary-item">
-<div>
-<div class="paket-title" id="paket"></div>
-<div class="paket-sub" id="paketDetail"></div>
-</div>
-</div>
-
-<div class="summary-row">
-<span>Subtotal</span>
-<div id="paket-harga" class="price-box"></div>
-</div>
-
-<div class="summary-row">
-<span>Diskon</span>
-<span id="paket-diskon"></span>
-</div>
-
-<div class="summary-row">
-<span>Hemat</span>
-<span id="paket-hemat"></span>
-</div>
-
-<div class="summary-total">
-<span>Total Bayar</span>
-<span id="total"></span>
-</div>
-</div>
-</div>
-
-<!-- CONTAINER CARA PEMBAYARAN -->
-<div class="container">
-
-<h3>Cara Pembayaran</h3>
-
-<div class="info-box">
-
-<div class="info-title">
-
-<div class="floating-icon icon-purple">
-<i class="fa-solid fa-credit-card"></i>
-</div>
-
-<div>
-Cara Pembayaran
-</div>
-
-</div>
-
-<div class="info-list">
-<p>
-<span class="floating-icon icon-purple">
-<i class="fa-solid fa-check"></i>
-</span>
-
-Silahkan scan QR Code yang ada di bawah ini
-</p>
-
-<p>
-<span class="floating-icon icon-purple">
-<i class="fa-solid fa-check"></i>
-</span>
-
-Bayar sesuai nominal yang tertera
-</p>
-
-<p>
-<span class="floating-icon icon-purple">
-<i class="fa-solid fa-check"></i>
-</span>
-
-Admin akan mengirim akun melalui Whatsapp
-</p>
-</div>
-</div>
-</div>
-
-<!-- CONTAINER QR -->
-<div class="container">
-
-  <h3>Scan QR Code</h3>
-  <p class="qr-sub">
-    Gunakan dompet digital atau mobile banking anda
-  </p>
-
-  <div class="qr-box">
-    <div class="qr-badge">
-      <div class="floating-icon icon-purple">
-        <i class="fa-solid fa-mobile-screen-button"></i>
+    <div class="detail-grid">
+      <div class="detail-card">
+        <div class="detail-label">Nama</div>
+        <div class="detail-value" id="nama"></div>
       </div>
-      <span>Scan untuk Membayar</span>
+
+      <div class="detail-card">
+        <div class="detail-label">Nomor WhatsApp</div>
+        <div class="detail-value" id="telepon"></div>
+      </div>
+
+      <div class="detail-card">
+        <div class="detail-label">Email</div>
+        <div class="detail-value" id="email"></div>
+      </div>
     </div>
-    <img id="qr-img" src="" alt="QR Code" onclick="openQR(this)">
-  </div>
-    
-  <!-- TOMBOL BARU: TAP UNTUK PEMBAYARAN -->
-  <button class="btn-primary btn-midtrans" onclick="bayarSekarang()">
-    <i class="fa-solid fa-bolt"></i>
-    <span>Tap untuk Pembayaran</span>
-  </button>
 
-  <!-- TOMBOL CEK STATUS (DIBUAT SEKUNDER AGAR RAPI) -->
-  <button class="btn-secondary" onclick="cekStatus()">
-    <i class="fa-solid fa-rotate-right" style="margin-right: 6px;"></i> Cek Status Pembayaran
-  </button>
+    <h3>Order Summary</h3>
 
-  <!-- TOMBOL KEMBALI -->
-  <button class="btn-secondary" onclick="kembaliProduk()">
-    Kembali ke Produk
-  </button>
+    <div class="summary-box">
+      <div class="summary-title">Order Summary</div>
 
-</div>
+      <div class="summary-item">
+        <div>
+          <div class="paket-title" id="paket"></div>
+          <div class="paket-sub" id="paketDetail"></div>
+        </div>
+      </div>
 
-<!-- QR MODAL -->
-<div id="qrModal" class="qr-modal" onclick="closeQR()">
-  <img id="qrModalImg" src="">
-</div>
+      <div class="summary-row">
+        <span>Subtotal</span>
+        <div id="paket-harga" class="price-box"></div>
+      </div>
 
-<!-- CUSTOM ALERT MODAL -->
-<div id="customAlertModal" class="custom-alert-backdrop">
-  <div class="custom-alert-box">
-    <div id="customAlertIcon" class="custom-alert-icon info">
-      <i id="customAlertIconI" class="fa-solid fa-circle-info"></i>
+      <div class="summary-row">
+        <span>Diskon</span>
+        <span id="paket-diskon"></span>
+      </div>
+
+      <div class="summary-row">
+        <span>Hemat</span>
+        <span id="paket-hemat"></span>
+      </div>
+
+      <div class="summary-total">
+        <span>Total Bayar</span>
+        <span id="total"></span>
+      </div>
     </div>
-    <div id="customAlertTitle" class="custom-alert-title">Informasi</div>
-    <div id="customAlertMessage" class="custom-alert-message">Pesan alert...</div>
-    <button class="btn-alert-ok" id="btnAlertOk">Mengerti</button>
   </div>
-</div>
 
-<script src="components/pembayaran-qr/pembayaran-qr.js"></script>
+  <!-- CONTAINER CARA PEMBAYARAN -->
+  <div class="container">
+    <h3>Cara Pembayaran</h3>
 
-<!-- FOOTER -->
+    <div class="info-box">
+      <div class="info-title">
+        <div class="floating-icon icon-purple">
+          <i class="fa-solid fa-credit-card"></i>
+        </div>
+        <div>
+          Cara Pembayaran
+        </div>
+      </div>
+
+      <div class="info-list">
+        <p>
+          <span class="floating-icon icon-purple">
+            <i class="fa-solid fa-check"></i>
+          </span>
+          Silahkan klik tombol pembayaran di bawah ini
+        </p>
+
+        <p>
+          <span class="floating-icon icon-purple">
+            <i class="fa-solid fa-check"></i>
+          </span>
+          Bayar sesuai nominal yang tertera
+        </p>
+
+        <p>
+          <span class="floating-icon icon-purple">
+            <i class="fa-solid fa-check"></i>
+          </span>
+          Admin akan mengirim akun melalui Whatsapp
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTAINER ACTION PEMBAYARAN -->
+  <div class="container">
+
+    <h3>Tap Tombol Pembayaran Dibawah</h3>
+    <p class="qr-sub">
+      Pilih metode pembayaran yang di ingginkan
+    </p>
+
+    <!-- TOMBOL BARU: TAP UNTUK PEMBAYARAN -->
+    <button class="btn-primary btn-midtrans" onclick="bayarSekarang()">
+      <i class="fa-solid fa-bolt"></i>
+      <span>Tap untuk Pembayaran</span>
+    </button>
+
+    <!-- TOMBOL CEK STATUS -->
+    <button class="btn-secondary" onclick="cekStatus()">
+      <i class="fa-solid fa-rotate-right" style="margin-right: 6px;"></i> Cek Status Pembayaran
+    </button>
+
+    <!-- TOMBOL KEMBALI -->
+    <button class="btn-secondary" onclick="kembaliProduk()">
+      Kembali ke Produk
+    </button>
+
+  </div>
+
+  <!-- CUSTOM ALERT MODAL -->
+  <div id="customAlertModal" class="custom-alert-backdrop">
+    <div class="custom-alert-box">
+      <div id="customAlertIcon" class="custom-alert-icon info">
+        <i id="customAlertIconI" class="fa-solid fa-circle-info"></i>
+      </div>
+      <div id="customAlertTitle" class="custom-alert-title">Informasi</div>
+      <div id="customAlertMessage" class="custom-alert-message">Pesan alert...</div>
+      <button class="btn-alert-ok" id="btnAlertOk">Mengerti</button>
+    </div>
+  </div>
+
+  <script src="components/pembayaran-qr/pembayaran-qr.js"></script>
+
+  <!-- FOOTER -->
   <div id="footer-container"></div>
   <script src="components/footer.js"></script>
 </body>
+
 </html>
