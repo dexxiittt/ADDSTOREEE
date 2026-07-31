@@ -11,29 +11,6 @@ window.onload = async function() {
     renderCustomer(customer);
   }
 
-  // ==========================================
-  // 2. FETCH & LOAD QR CODE
-  // ==========================================
-  async function loadQRCode() {
-    const qrSheet = "https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/qr_id";
-
-    fetch(qrSheet)
-      .then(res => res.json())
-      .then(data => {
-        const qr = data[0]?.qr_code;
-
-        if (qr) {
-          document.getElementById("qr-img").src = qr;
-        } else {
-          document.getElementById("qr-img").src = "https://via.placeholder.com/220?text=QR+Not+Found";
-        }
-      })
-      .catch(() => {
-        document.getElementById("qr-img").src = "https://via.placeholder.com/220?text=Error";
-      });
-  }
-
-  await loadQRCode();
 };
 
 // ==========================================
@@ -65,7 +42,7 @@ function renderCustomer(customer) {
 }
 
 // ==========================================
-// 3. FUNGSI UTAMA MIDTRANS PEMBAYARAN
+// 2. FUNGSI UTAMA MIDTRANS PEMBAYARAN
 // ==========================================
 async function bayarSekarang() {
   const invoiceID = getInvoice();
@@ -153,7 +130,7 @@ function resetButton(btn) {
 }
 
 // ==========================================
-// 4. INVOICE & STATUS CHECK
+// 3. INVOICE & STATUS CHECK
 // ==========================================
 function cekStatus() {
   const invoice = getInvoice();
@@ -214,29 +191,14 @@ function redirectStatus(invoice) {
 }
 
 // ==========================================
-// 5. NAVIGATION
+// 4. NAVIGATION
 // ==========================================
 function kembaliProduk() {
   window.location.href = "preview-index.html";
 }
 
 // ==========================================
-// 6. QR MODAL INTERACTION
-// ==========================================
-function openQR(el) {
-  const modal = document.getElementById("qrModal");
-  const img = document.getElementById("qrModalImg");
-
-  img.src = el.src;
-  modal.classList.add("active");
-}
-
-function closeQR() {
-  document.getElementById("qrModal").classList.remove("active");
-}
-
-// ==========================================
-// FUNGSI PREMIUM CUSTOM ALERT (RINGKAS)
+// 5. FUNGSI PREMIUM CUSTOM ALERT
 // ==========================================
 function showAlert(message, title = "Informasi", type = "info", callback = null) {
   const modal = document.getElementById("customAlertModal");
