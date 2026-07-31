@@ -674,6 +674,155 @@ margin-bottom:30px;
 }
 
 /* =========================
+  PAYMENT CARD
+========================= */
+
+.payment-card{
+position:relative;
+overflow:hidden;
+   
+display:flex; 
+align-items:center; 
+gap:18px;
+
+padding:22px;
+margin:30px 0;
+border-radius:22px;
+
+background:linear-gradient( 180deg, rgba(255,255,255,.96), rgba(250,251,255,.98) );
+backdrop-filter:blur(14px);
+-webkit-backdrop-filter:blur(14px);
+   
+border:1px solid rgba(255,255,255,.65);
+
+box-shadow: 0 18px 45px rgba(15,23,42,.08), 0 1px 0 rgba(255,255,255,.85) inset;
+transition:.25s;
+}
+
+.payment-card::before{
+content:"";
+position:absolute;
+
+top:-70px;
+right:-70px;
+
+width:180px;
+height:180px;
+
+border-radius:50%;
+
+background:radial-gradient( circle, rgba(139,92,246,.22), transparent 72% );
+pointer-events:none;
+z-index:0;
+}
+
+.payment-card::after{
+content:"";
+position:absolute;
+
+left:-80px;
+bottom:-80px;
+
+width:200px;
+height:200px;
+
+border-radius:50%;
+
+background:radial-gradient( circle, rgba(99,102,241,.10), transparent 74%);
+pointer-events:none;
+z-index:0;
+}
+
+.payment-icon{
+position:relative;
+z-index:2;
+   
+width:58px;
+height:58px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+border-radius:18px;
+background:linear-gradient( 135deg, #8b5cf6, #6366f1);
+color:white;
+
+font-size:23px;
+box-shadow: 0 12px 26px rgba(99,102,241,.28);
+flex-shrink:0;
+}
+
+.payment-title{
+font-family:"Sora",sans-serif;
+font-size:17px;
+font-weight:700;
+color:#111827;
+margin-bottom:6px;
+}
+
+.payment-desc{
+font-family:"Plus Jakarta Sans",sans-serif;
+font-size:14px;
+line-height:1.7;
+color:#6b7280;
+}
+
+.payment-card:hover{
+transform: translateY(-5px) scale(1.01);
+box-shadow: 0 28px 55px rgba(99,102,241,.12), 0 2px 0 rgba(255,255,255,.9) inset;
+}
+
+.payment-card:hover .payment-icon{
+transform:rotate(-6deg);
+transition:.25s;
+}
+
+.payment-badge{
+position:absolute;
+   
+top:18px;
+right:18px;
+
+display:flex;
+align-items:center;
+gap:8px;
+
+padding:8px 14px;
+border-radius:999px;
+background:rgba(139,92,246,.08);
+
+border:1px solid rgba(139,92,246,.16);
+backdrop-filter:blur(10px);
+
+font-family:"Plus Jakarta Sans",sans-serif;
+font-size:12px;
+font-weight:700;
+   
+color:#7c3aed;
+}
+
+.payment-badge i{
+font-size:13px;
+color:#8b5cf6;
+}
+
+.payment-card:hover .payment-badge{
+background:rgba(139,92,246,.12);
+border-color:rgba(139,92,246,.28);
+transition:.25s;
+}
+
+.payment-icon,
+.payment-content,
+.payment-badge{
+
+position:relative;
+   
+z-index:2;
+}
+
+/* =========================
    PRIMARY BUTTON
 ========================= */
 
