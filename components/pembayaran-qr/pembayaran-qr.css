@@ -813,6 +813,29 @@ border-color:rgba(139,92,246,.28);
 transition:.25s;
 }
 
+.payment-actions{
+margin-top:26px;
+padding-top:22px;
+   
+border-top:1px solid rgba(226,232,240,.9);
+
+display:flex;
+flex-direction:column;
+gap:14px;
+}
+
+.payment-action-title{
+font-size:12px;
+font-weight:700;
+
+letter-spacing:1px;
+
+text-transform:uppercase;
+color:#9ca3af;
+
+margin-bottom:6px;
+}
+
 .payment-icon,
 .payment-content,
 .payment-badge{
@@ -820,6 +843,13 @@ transition:.25s;
 position:relative;
    
 z-index:2;
+}
+
+.payment-actions .btn-primary,
+.payment-actions .btn-secondary{
+
+margin:0;
+
 }
 
 /* =========================
