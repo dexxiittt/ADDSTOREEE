@@ -8,7 +8,7 @@ window.onload = async function() {
   // STEP 1: Load data awal dari LocalStorage
   loadFromLocalStorage();
 
-  // STEP 2: Sinkronisasi data real-time dari Google Sheet via OpenSheet
+  // STEP 2: Sinkronisasi data dari OpenSheet (Google Sheet)
   await loadFromSheet();
 };
 
@@ -63,7 +63,8 @@ function loadFromLocalStorage() {
     localData.total
   );
 
-  renderStatus(false, false, false, localData.status || "pending");
+  // Tampilan awal sebelum sheet ter-fetch
+  renderStatus(false, false, false, localData.status || "pending", null);
 
   const params = new URLSearchParams(window.location.search);
   const invoice = params.get("invoice") || localStorage.getItem("invoiceID");
@@ -86,6 +87,9 @@ function loadFromLocalStorage() {
   return true;
 }
 
+/* ============================================================
+   POIN 1: loadFromSheet() - Menghasilkan 3 Boolean Alur
+   ============================================================ */
 async function loadFromSheet() {
   try {
     const params = new URLSearchParams(window.location.search);
@@ -113,35 +117,33 @@ async function loadFromSheet() {
     const data = await res.json();
     const found = data.find(x => String(x.invoice || "").replace("INV", "").trim() === cleanInvoiceID);
 
-    // --- EVALUASI LOGIKA ALUR ---
+    // --- LOGIKA EVALUASI 3 BOOLEAN ---
     
-    // Step 2: Cek apakah Invoice terisi di kedua sheet (status_payment & payment_id)
+    // STEP 2 Condition: Kolom invoice terisi di status_payment DAN payment_id
     const isPaymentFilled = Boolean(
-      statusRow && String(statusRow.invoice || "").trim() !== "" &&
-      found && String(found.invoice || "").trim() !== ""
+      statusRow?.invoice &&
+      found?.invoice
     );
 
-    // Step 3: Cek syarat Verifikasi Admin
-    const paymentStatusRow = (statusRow?.status || "").trim().toLowerCase();
-    const paymentStatusFound = (found?.status || "").trim().toLowerCase();
-    const packageId = (found?.package_id || "").trim();
-    const infoPelanggan = (found?.informasi_pelanggan || "").trim();
-
+    // STEP 3 Condition: status = success di kedua sheet, package_id & informasi_pelanggan terisi
     const isAdminVerified = Boolean(
       isPaymentFilled &&
-      paymentStatusRow === "success" &&
-      paymentStatusFound === "success" &&
-      packageId !== "" &&
-      infoPelanggan !== ""
+      String(statusRow?.status || "").trim().toLowerCase() === "success" &&
+      String(found?.status || "").trim().toLowerCase() === "success" &&
+      String(found?.package_id || "").trim() !== "" &&
+      String(found?.informasi_pelanggan || "").trim() !== ""
     );
 
-    // Step 4: Cek syarat Pesanan Diproses / Selesai
-    const processStatus = (statusRow?.proses || "").trim().toLowerCase();
-    const isProcessDone = Boolean(isAdminVerified && processStatus === "done");
+    // STEP 4 Condition: proses = done pada sheet status_payment
+    const processStatus = String(statusRow?.proses || "").trim().toLowerCase();
+    const isProcessDone = Boolean(
+      isAdminVerified &&
+      processStatus === "done"
+    );
 
     // Process render detail produk jika data di payment_id ketemu
     if (found) {
-      const info = infoPelanggan.split("|");
+      const info = (found.informasi_pelanggan || "").split("|");
       window.rawInvoice = found.invoice;
       window.rawPackageId = found.package_id || window.rawPackageId || "";
 
@@ -189,7 +191,7 @@ async function loadFromSheet() {
       }
     }
 
-    // Update Tampilan UI berdasarkan hasil evaluasi alur
+    // Pass ketiga boolean ke renderStatus()
     renderStatus(isPaymentFilled, isAdminVerified, isProcessDone, processStatus, globalTips);
 
     const waktu = new Date().toLocaleString("id-ID", {
@@ -217,9 +219,13 @@ function renderProduct(image, title, subtitle, hargaHtml, diskon, hemat, total) 
   if (img) {
     if (image) {
       img.src = image;
-      document.getElementById("productImageBox").style.display = "block";
+      if (document.getElementById("productImageBox")) {
+        document.getElementById("productImageBox").style.display = "block";
+      }
     } else {
-      document.getElementById("productImageBox").style.display = "none";
+      if (document.getElementById("productImageBox")) {
+        document.getElementById("productImageBox").style.display = "none";
+      }
     }
   }
 
@@ -233,17 +239,20 @@ function renderProduct(image, title, subtitle, hargaHtml, diskon, hemat, total) 
   document.getElementById("total3").innerText = total || "-";
 }
 
+/* ============================================================
+   POIN 2: renderStatus() - Mengontrol Banner UI & Timeline
+   ============================================================ */
 function renderStatus(isPaymentFilled, isAdminVerified, isProcessDone, processStatus, tipsObj) {
-  // 1. Jika belum verifikasi admin dan waktu sudah > 1 jam, tampilkan UI Expired
+  // 1. Cek Expired jika belum terverifikasi admin
   if (!isAdminVerified && checkIsExpired()) {
     setExpiredUI(tipsObj?.tips_expired);
     return;
   }
 
-  // 2. Update status icon dan warna pada progress tracker (Step 1-4)
+  // 2. Kontrol timeline menggunakan ketiga boolean
   updateProgress(isPaymentFilled, isAdminVerified, isProcessDone, processStatus);
 
-  // 3. Update Banner Status Utama di bagian atas
+  // 3. Kontrol Banner UI Utama
   if (isProcessDone) {
     setSuccessUI("done", tipsObj?.tips_proses);
     localStorage.removeItem("invoiceID");
@@ -279,8 +288,9 @@ function getStatusElements() {
 }
 
 /* ============================================================
-   STATUS UI THEMES (PENDING, SUCCESS, & EXPIRED)
+   STATUS UI THEMES (POIN 4 & 5: updateProgress HILANG DARI SINI)
    ============================================================ */
+// POIN 4: setPendingUI TANPA updateProgress("pending")
 function setPendingUI(tipsText) {
   const ui = getStatusElements();
 
@@ -304,6 +314,7 @@ function setPendingUI(tipsText) {
   document.getElementById("waButtonIcon").className = "fa-brands fa-whatsapp";
 }
 
+// POIN 5: setSuccessUI TANPA updateProgress("success", proses)
 function setSuccessUI(proses, tipsText) {
   const ui = getStatusElements();
 
@@ -319,7 +330,7 @@ function setSuccessUI(proses, tipsText) {
   if (proses === "done") {
     ui.statusTipText.innerHTML = generateTipsHtml(tipsText, "Pesanan telah selesai diproses. Terima kasih telah berbelanja!");
     document.getElementById("supportTitle").innerText = "Pesanan Selesai ✨";
-    document.getElementById("supportDescription").innerHTML = "Pesanan kamu telah selesai diproses sepenuhnya oleh admin. Terima kasih telah berbelanja di <b>Addstoreapp</b>.";
+    document.getElementById("supportDescription").innerHTML = "Pesanan kamu telah selesai diproses fully oleh admin. Terima kasih telah berbelanja di <b>Addstoreapp</b>.";
   } else {
     ui.statusTipText.innerHTML = generateTipsHtml(tipsText, "Pesanan sedang diproses oleh admin. Terima kasih telah melakukan pembayaran.");
     document.getElementById("supportTitle").innerText = "Pesanan Sedang Diproses";
@@ -405,21 +416,20 @@ function setCancelUI() { /* TODO */ }
 function setRefundUI() { /* TODO */ }
 
 /* ============================================================
-   PROGRESS TIMELINE TRACKER
+   POIN 3: updateProgress() - Evaluasi Timeline Berdasarkan Boolean
    ============================================================ */
 function updateProgress(isPaymentFilled, isAdminVerified, isProcessDone, processStatus) {
-  // Bersihkan teks expired jika ada dari penangan sebelumnya
   const expiredTextOrder = document.getElementById("expiredTextOrder");
   const expiredTextPayment = document.getElementById("expiredTextPayment");
   if (expiredTextOrder) expiredTextOrder.remove();
   if (expiredTextPayment) expiredTextPayment.remove();
 
-  // STEP 1: Pesanan Dibuat (Selalu Selesai / Centang Ungu)
+  // STEP 1: Pesanan Dibuat (Selalu Completed / Centang Ungu)
   document.getElementById("stepOrder").className = "progress-item completed";
   document.querySelector("#stepOrder i").className = "fa-solid fa-check";
   document.querySelector("#stepOrder .floating-icon").className = "floating-icon icon-purple";
 
-  // STEP 2: Menunggu Pembayaran
+  // STEP 2: Menunggu Pembayaran (Centang Ungu jika Invoice Terisi di kedua sheet)
   if (isPaymentFilled) {
     document.getElementById("stepPayment").className = "progress-item completed";
     document.querySelector("#stepPayment i").className = "fa-solid fa-check";
@@ -430,7 +440,7 @@ function updateProgress(isPaymentFilled, isAdminVerified, isProcessDone, process
     document.querySelector("#stepPayment .floating-icon").className = "floating-icon icon-gold";
   }
 
-  // STEP 3: Verifikasi Admin
+  // STEP 3: Verifikasi Admin (Centang Ungu jika Admin Terverifikasi)
   if (isAdminVerified) {
     document.getElementById("stepVerification").className = "progress-item completed";
     document.querySelector("#stepVerification i").className = "fa-solid fa-check";
@@ -445,7 +455,7 @@ function updateProgress(isPaymentFilled, isAdminVerified, isProcessDone, process
     document.querySelector("#stepVerification .floating-icon").className = "floating-icon";
   }
 
-  // STEP 4: Pesanan Diproses / Finished
+  // STEP 4: Pesanan Diproses (Centang Ungu jika proses = done)
   if (isProcessDone) {
     document.getElementById("stepProcess").className = "progress-item completed";
     document.querySelector("#stepProcess i").className = "fa-solid fa-check";
