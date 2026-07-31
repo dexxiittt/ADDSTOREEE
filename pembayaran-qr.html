@@ -131,7 +131,7 @@
     </div>
   </div>
 
-  <!-- CONTAINER ACTION PEMBAYARAN -->
+<!-- CONTAINER ACTION PEMBAYARAN -->
 <div class="container">
 
   <h3>Tap Tombol Pembayaran Dibawah</h3>
@@ -142,22 +142,28 @@
 
   <div class="payment-card">
 
-    <div class="payment-icon">
-      <i class="fa-solid fa-mobile-screen-button"></i>
-    </div>
+    <!-- HEADER -->
+    <div class="payment-header">
 
-    <div class="payment-content">
-
-      <div class="payment-title">
-        Pembayaran Aman & Terenkripsi
+      <div class="payment-icon">
+        <i class="fa-solid fa-mobile-screen-button"></i>
       </div>
 
-      <div class="payment-desc">
-        Lanjutkan pembayaran melalui Midtrans. Pilih metode pembayaran yang diinginkan setelah menekan tombol di bawah.
+      <div class="payment-content">
+
+        <div class="payment-title">
+          Pembayaran Aman &amp; Terenkripsi
+        </div>
+
+        <div class="payment-desc">
+          Lanjutkan pembayaran melalui Midtrans. Pilih metode pembayaran yang diinginkan setelah menekan tombol di bawah.
+        </div>
+
       </div>
 
     </div>
 
+    <!-- BADGE -->
     <div class="payment-badge">
       <i class="fa-solid fa-shield-halved"></i>
       <span>100% Secure</span>
@@ -167,24 +173,33 @@
     <div class="payment-actions">
 
       <div class="payment-action-title">
-       Langkah Terakhir
+        Langkah Terakhir
       </div>
 
-      <button class="btn-primary btn-midtrans"
-              onclick="bayarSekarang()">
+      <button
+        class="btn-primary btn-midtrans"
+        onclick="bayarSekarang()">
+
         <i class="fa-solid fa-bolt"></i>
         <span>Tap untuk Pembayaran</span>
+
       </button>
 
-      <button class="btn-secondary"
-              onclick="cekStatus()">
+      <button
+        class="btn-secondary"
+        onclick="cekStatus()">
+
         <i class="fa-solid fa-rotate-right"></i>
         Cek Status Pembayaran
+
       </button>
 
-      <button class="btn-secondary"
-              onclick="kembaliProduk()">
+      <button
+        class="btn-secondary"
+        onclick="kembaliProduk()">
+
         Kembali ke Produk
+
       </button>
 
     </div>
