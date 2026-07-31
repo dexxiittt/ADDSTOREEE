@@ -81,18 +81,31 @@ async function bayarSekarang() {
     btnBayar.innerText = 'Memproses...';
   }
 
+  // 2. AMBIL PACKAGE ID & SUSUN INFORMASI PELANGGAN
+  const packageId = customer.packageId || customer.package_id || customer.paket || "";
+  
+  // Format gabungan: Nama|NoHP|Email (sesuai contoh di Google Sheet)
+  const customerInfo = [
+    customer.nama || "",
+    customer.telepon || "",
+    customer.email || ""
+  ].join("|");
+
   const amountStr = String(customer.total || "").replace(/[^0-9]/g, '');
   const amount = parseInt(amountStr, 10) || 1000;
 
   try {
     const uniqueOrderId = `${invoiceID}-${Date.now().toString().slice(-4)}`;
 
+    // 3. KIRIM REQUEST LENGKAP KE BACKEND VERCEL
     const response = await fetch('https://midtrans-backend-xi.vercel.app/api', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         orderId: uniqueOrderId,
-        amount: amount
+        amount: amount,
+        packageId: packageId,        // Dikirim ke Vercel -> custom_field1
+        customerInfo: customerInfo   // Dikirim ke Vercel -> custom_field2
       })
     });
     
@@ -101,19 +114,16 @@ async function bayarSekarang() {
     if (data.token) {
       window.snap.pay(data.token, {
         onSuccess: function(result) {
-          // PAKAI CUSTOM ALERT UNTUK SUKSES
           showAlert("Pembayaran berhasil diterima!", "Berhasil 🎉", "success", function() {
             window.location.href = "status-pembayaran.html?invoice=" + invoiceID;
           });
         },
         onPending: function(result) {
-          // PAKAI CUSTOM ALERT UNTUK PENDING
           showAlert("Menunggu pembayaran... Silakan selesaikan transaksi Anda.", "Pending", "info", function() {
             window.location.href = "status-pembayaran.html?invoice=" + invoiceID;
           });
         },
         onError: function(result) {
-          // PAKAI CUSTOM ALERT UNTUK ERROR
           showAlert("Pembayaran gagal! Silakan coba beberapa saat lagi.", "Gagal", "warning");
           resetButton(btnBayar);
         },
