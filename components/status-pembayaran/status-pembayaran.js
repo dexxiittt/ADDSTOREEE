@@ -324,8 +324,16 @@ function setSuccessUI(proses, tipsText) {
   ui.statusBox.classList.add("status-success");
 
   ui.statusBadgeText.innerText = "Pembayaran Berhasil";
-  ui.statusTitle.innerText = "Pembayaran Berhasil";
-  ui.statusDescription.innerText = "Pembayaran telah diterima dan berhasil diverifikasi oleh admin.";
+
+  if (proses === "done") {
+    ui.statusTitle.innerText = "Pesanan Selesai";
+    ui.statusDescription.innerText =
+    "Pesanan telah selesai diproses oleh Admin. Terima kasih sudah membeli di Addstoreapp.";
+  } else {
+    ui.statusTitle.innerText = "Pembayaran Berhasil";
+    ui.statusDescription.innerText =
+    "Pembayaran telah diterima dan berhasil diverifikasi oleh admin.";
+  }
   
   if (proses === "done") {
     ui.statusTipText.innerHTML = generateTipsHtml(tipsText, "Pesanan telah selesai diproses. Terima kasih telah berbelanja!");
