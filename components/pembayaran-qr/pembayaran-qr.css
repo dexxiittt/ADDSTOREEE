@@ -1197,6 +1197,79 @@ outline:none;
   transform: scale(0.97);
 }
 
+/* ==========================================
+   CUSTOM PREMIUM OVERRIDE FOR MIDTRANS SNAP
+   ========================================== */
+
+/* 1. Backdrop / Latar Belakang Overlay */
+#snap-container {
+  /* Ganti background hitam pekat dengan transparan halus */
+  background: rgba(15, 23, 42, 0.45) !important;
+  
+  /* Efek Blur Kaca Modern (Glassmorphism) */
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  
+  /* Transisi & Animasi Fade In */
+  animation: snapBackdropFade 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+  z-index: 999999 !important;
+}
+
+/* 2. Container iFrame Snap (Modal Pembayaran) */
+#snap-container iframe,
+#snap-midtrans {
+  /* Bentuk & Garis Tepi Modern */
+  border-radius: 24px !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  
+  /* Bayangan Premium Soft Shadow */
+  box-shadow: 
+    0 25px 50px -12px rgba(15, 23, 42, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset !important;
+  
+  /* Animasi Masuk Smooth dari Atas */
+  animation: snapSlideDown 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+  
+  /* Responsif & Posisi */
+  max-height: 90vh !important;
+  overflow: hidden !important;
+}
+
+/* ==========================================
+   ANIMASI KEYFRAMES
+   ========================================== */
+
+/* Animasi Kemunculan Latar Belakang */
+@keyframes snapBackdropFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Animasi Meluncur Smooth Dari Atas */
+@keyframes snapSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-40px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Penyesuaian Khusus Tampilan Mobile (Layar Kecil) */
+@media (max-width: 480px) {
+  #snap-container iframe,
+  #snap-midtrans {
+    width: 92% !important;
+    border-radius: 20px !important;
+  }
+}
+
 @media (max-width:768px){
 .paket-banner img{
 height:180px;
