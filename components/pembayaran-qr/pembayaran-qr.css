@@ -702,14 +702,14 @@ content:"";
 position:absolute;
 
 top:18px;
-right:18px;
+right:-55px;
 
-width:140px;
-height:140px;
+width:150px;
+height:150px;
 
 border-radius:50%;
+background: radial-gradient( circle, rgba(139,92,246,.20) 0%, rgba(139,92,246,.12) 35%, transparent 72% );
 
-background: radial-gradient( circle, rgba(139,92,246,.18), transparent 72% );
 pointer-events:none;
 z-index:0;
 }
