@@ -674,6 +674,38 @@ margin-bottom:30px;
 }
 
 /* =========================
+   PAYMENT SUPPORT
+========================= */
+
+.payment-support{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.payment-support img{
+  height:16px;
+  width:auto;
+  display:block;
+}
+
+.payment-more{
+  display:inline-flex;
+  align-items:center;
+
+  font-family:"Plus Jakarta Sans",sans-serif;
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.4px;
+  text-transform:uppercase;
+
+  color:#8b5cf6;
+  white-space:nowrap;
+}
+
+/* =========================
   PAYMENT CARD
 ========================= */
 
