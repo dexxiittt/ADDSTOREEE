@@ -287,36 +287,8 @@ function getStatusElements() {
 }
 
 /* ============================================================
-   STATUS UI THEMES (POIN 4 & 5: updateProgress HILANG DARI SINI)
+   STATUS UI THEMES & FUNCTIONS (UPGRADED VERSION)
    ============================================================ */
-// POIN 4: setPendingUI TANPA updateProgress("pending")
-function setPendingUI(tipsText) {
-  const ui = getStatusElements();
-
-  ui.invoiceBox.classList.remove("status-success", "status-expired");
-  ui.statusBox.classList.remove("status-success", "status-expired");
-  ui.invoiceBox.classList.add("status-pending");
-  ui.statusBox.classList.add("status-pending");
-
-  ui.statusBadgeText.innerText = "Menunggu Pembayaran";
-  ui.statusTitle.innerText = "Menunggu Pembayaran";
-  ui.statusDescription.innerText = "Silakan lakukan pembayaran sesuai nominal yang tertera pada invoice.";
-  ui.statusTipText.innerHTML = generateTipsHtml(tipsText, "Pastikan nominal pembayaran sesuai agar proses verifikasi oleh admin berjalan lebih cepat.");
-  ui.statusBadgeIcon.className = "fa-solid fa-stopwatch";
-  ui.statusIconFa.className = "fa-solid fa-hourglass-half";
-
-  document.getElementById("statusSectionIcon").className = "section-icon icon-gold";
-
-  document.getElementById("supportTitle").innerText = "Hubungi Admin";
-  document.getElementById("supportDescription").innerHTML = "Sudah melakukan pembayaran tetapi status masih <b>Pending</b>? Kirim bukti pembayaran ke admin agar proses verifikasi dapat segera dilakukan.";
-  document.getElementById("waButtonText").innerText = "Chat Admin Sekarang";
-  document.getElementById("waButtonIcon").className = "fa-brands fa-whatsapp";
-}
-
-/* ============================================================
-   STATUS & UI FUNCTIONS
-   ============================================================ */
-// POIN 5: setSuccessUI TANPA updateProgress("success", proses)
 function renderStatus(isPaymentFilled, isAdminVerified, isProcessDone, processStatus, tipsObj) {
   // 1. Cek Expired jika belum terverifikasi admin
   if (!isAdminVerified && checkIsExpired()) {
@@ -342,71 +314,119 @@ function renderStatus(isPaymentFilled, isAdminVerified, isProcessDone, processSt
   }
 }
 
+function setPendingUI(tipsText) {
+  const ui = getStatusElements();
+
+  ui.invoiceBox.classList.remove("status-success", "status-expired");
+  ui.statusBox.classList.remove("status-success", "status-expired");
+  ui.invoiceBox.classList.add("status-pending");
+  ui.statusBox.classList.add("status-pending");
+
+  ui.statusBadgeText.innerText = "Menunggu Pembayaran";
+  ui.statusTitle.innerText = "Menunggu Pembayaran";
+  ui.statusDescription.innerText = "Silakan lakukan pembayaran sesuai nominal yang tertera pada invoice.";
+  ui.statusTipText.innerHTML = generateTipsHtml(tipsText, "Pastikan nominal pembayaran sesuai agar proses verifikasi oleh admin berjalan lebih cepat.");
+  ui.statusBadgeIcon.className = "fa-solid fa-stopwatch";
+  ui.statusIconFa.className = "fa-solid fa-hourglass-half";
+
+  // Reset Section Header & Support Card Ke Mode WhatsApp Normal
+  const supportSectionTitle = document.getElementById("supportSectionTitle");
+  const supportSectionIcon = document.getElementById("supportSectionIcon");
+  if (supportSectionTitle) supportSectionTitle.innerText = "Hubungi Admin";
+  if (supportSectionIcon) {
+    supportSectionIcon.className = "section-icon icon-green";
+    supportSectionIcon.innerHTML = '<i class="fa-brands fa-whatsapp"></i>';
+  }
+
+  const waBox = document.querySelector(".wa-box");
+  if (waBox) waBox.classList.remove("expired");
+
+  const supportIconFa = document.getElementById("supportIconFa");
+  if (supportIconFa) supportIconFa.className = "fa-brands fa-whatsapp";
+
+  document.getElementById("supportTitle").innerText = "Hubungi Admin";
+  document.getElementById("supportDescription").innerHTML = "Sudah melakukan pembayaran tetapi status masih <b>Pending</b>? Kirim bukti pembayaran ke admin agar proses verifikasi dapat segera dilakukan.";
+
+  const waBtn = document.getElementById("waButton");
+  if (waBtn) {
+    waBtn.setAttribute("onclick", "chatAdmin()");
+    waBtn.style.backgroundColor = ""; 
+    waBtn.style.cursor = "pointer";
+  }
+  document.getElementById("waButtonText").innerText = "Chat Admin Sekarang";
+  document.getElementById("waButtonIcon").className = "fa-brands fa-whatsapp";
+}
+
 function setSuccessUI(proses, tipsText) {
   const ui = getStatusElements();
 
-  // Reset warna tema ke hijau (Success) - Tetap di luar switch
+  // Reset warna tema ke hijau (Success)
   ui.invoiceBox.classList.remove("status-pending", "status-expired");
   ui.statusBox.classList.remove("status-pending", "status-expired");
   ui.invoiceBox.classList.add("status-success");
   ui.statusBox.classList.add("status-success");
 
-  // Icon & Theme yang seragam untuk semua mode success - Tetap di luar switch
+  // Icon & Theme yang seragam
   ui.statusBadgeIcon.className = "fa-solid fa-check";
   ui.statusIconFa.className = "fa-solid fa-check";
-  document.getElementById("statusSectionIcon").className = "section-icon icon-green";
+
+  // Reset Section Header & Support Card Ke Mode WhatsApp Normal
+  const supportSectionTitle = document.getElementById("supportSectionTitle");
+  const supportSectionIcon = document.getElementById("supportSectionIcon");
+  if (supportSectionTitle) supportSectionTitle.innerText = "Hubungi Admin";
+  if (supportSectionIcon) {
+    supportSectionIcon.className = "section-icon icon-green";
+    supportSectionIcon.innerHTML = '<i class="fa-brands fa-whatsapp"></i>';
+  }
+
+  const waBox = document.querySelector(".wa-box");
+  if (waBox) waBox.classList.remove("expired");
+
+  const supportIconFa = document.getElementById("supportIconFa");
+  if (supportIconFa) supportIconFa.className = "fa-brands fa-whatsapp";
+
+  const waBtn = document.getElementById("waButton");
+  if (waBtn) {
+    waBtn.setAttribute("onclick", "chatAdmin()");
+    waBtn.style.backgroundColor = ""; 
+    waBtn.style.cursor = "pointer";
+  }
   document.getElementById("waButtonText").innerText = "Hubungi Admin";
   document.getElementById("waButtonIcon").className = "fa-brands fa-whatsapp";
 
-  // Switch Case: Badge dan Title dibuat sinkron di setiap mode
   switch (proses) {
     case "payment":
       ui.statusBadgeText.innerText = "Pembayaran Berhasil";
       ui.statusTitle.innerText = "Pembayaran Berhasil";
-      ui.statusDescription.innerText =
-        "Pembayaran berhasil diterima dan sedang dalam proses verifikasi oleh admin.";
-      ui.statusTipText.innerHTML = generateTipsHtml(
-        tipsText,
-        "Pembayaran berhasil diterima! Pesanan kamu sedang diverifikasi oleh admin."
-      );
+      ui.statusDescription.innerText = "Pembayaran berhasil diterima dan sedang dalam proses verifikasi oleh admin.";
+      ui.statusTipText.innerHTML = generateTipsHtml(tipsText, "Pembayaran berhasil diterima! Pesanan kamu sedang diverifikasi oleh admin.");
       document.getElementById("supportTitle").innerText = "Verifikasi Admin";
-      document.getElementById("supportDescription").innerHTML =
-        "Pembayaran telah berhasil diterima. Kirim pesan ke admin jika memerlukan bantuan selama proses verifikasi.";
+      document.getElementById("supportDescription").innerHTML = "Pembayaran telah berhasil diterima. Kirim pesan ke admin jika memerlukan bantuan selama proses verifikasi.";
       break;
 
     case "process":
       ui.statusBadgeText.innerText = "Pesanan Diproses";
       ui.statusTitle.innerText = "Pesanan Diproses";
-      ui.statusDescription.innerText =
-        "Pembayaran telah berhasil diverifikasi dan pesanan kamu sedang diproses oleh admin.";
-      ui.statusTipText.innerHTML = generateTipsHtml(
-        tipsText,
-        "Pesanan sedang diproses oleh admin. Terima kasih telah melakukan pembayaran."
-      );
+      ui.statusDescription.innerText = "Pembayaran telah berhasil diverifikasi dan pesanan kamu sedang diproses oleh admin.";
+      ui.statusTipText.innerHTML = generateTipsHtml(tipsText, "Pesanan sedang diproses oleh admin. Terima kasih telah melakukan pembayaran.");
       document.getElementById("supportTitle").innerText = "Pesanan Sedang Diproses";
-      document.getElementById("supportDescription").innerHTML =
-        "Pembayaran telah berhasil diverifikasi. Pesanan kamu sedang diproses oleh admin.";
+      document.getElementById("supportDescription").innerHTML = "Pembayaran telah berhasil diverifikasi. Pesanan kamu sedang diproses oleh admin.";
       break;
 
     case "done":
       ui.statusBadgeText.innerText = "Pesanan Selesai";
       ui.statusTitle.innerText = "Pesanan Selesai";
-      ui.statusDescription.innerText =
-        "Pesanan telah selesai diproses oleh Admin. Terima kasih sudah membeli di Addstoreapp.";
-      ui.statusTipText.innerHTML = generateTipsHtml(
-        tipsText,
-        "Pesanan telah selesai diproses. Terima kasih telah berbelanja!"
-      );
+      ui.statusDescription.innerText = "Pesanan telah selesai diproses oleh Admin. Terima kasih sudah membeli di Addstoreapp.";
+      ui.statusTipText.innerHTML = generateTipsHtml(tipsText, "Pesanan telah selesai diproses. Terima kasih telah berbelanja!");
       document.getElementById("supportTitle").innerText = "Pesanan Selesai ✨";
-      document.getElementById("supportDescription").innerHTML =
-        "Pesanan kamu telah selesai diproses fully oleh admin. Terima kasih telah berbelanja di <b>Addstoreapp</b>.";
+      document.getElementById("supportDescription").innerHTML = "Pesanan kamu telah selesai diproses fully oleh admin. Terima kasih telah berbelanja di <b>Addstoreapp</b>.";
       break;
   }
 }
 
 function setExpiredUI(tipsText) {
   const ui = getStatusElements();
-   
+
   ui.invoiceBox.classList.remove("status-pending", "status-success");
   ui.statusBox.classList.remove("status-pending", "status-success"); 
   ui.invoiceBox.classList.add("status-expired");
@@ -419,6 +439,7 @@ function setExpiredUI(tipsText) {
   ui.statusBadgeIcon.className = "fa-solid fa-xmark";
   ui.statusIconFa.className = "fa-solid fa-bell-slash"; 
 
+  // Timeline Step Icons
   const orderIcon = document.querySelector("#stepOrder i");
   const paymentIcon = document.querySelector("#stepPayment i");
   if (orderIcon) orderIcon.className = "fa-solid fa-xmark";
@@ -448,18 +469,35 @@ function setExpiredUI(tipsText) {
     stepPayment.appendChild(textRedPayment);
   }
 
-  document.getElementById("statusSectionIcon").className = "section-icon icon-red";
+  // --- EXPIRED UI UPGRADES ---
 
-  document.getElementById("supportTitle").innerText = "Generate Ulang Invoice"; 
+  // 1. Header Section Title & Icon (Atas Card)
+  const supportSectionTitle = document.getElementById("supportSectionTitle");
+  const supportSectionIcon = document.getElementById("supportSectionIcon");
+  if (supportSectionTitle) supportSectionTitle.innerText = "Invoice Kedaluwarsa";
+  if (supportSectionIcon) {
+    supportSectionIcon.className = "section-icon icon-red";
+    supportSectionIcon.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+  }
+
+  // 2. Tambah class .expired ke Support Card (.wa-box) untuk mentrigger CSS Merah
+  const waBox = document.querySelector(".wa-box");
+  if (waBox) waBox.classList.add("expired");
+
+  // 3. Icon & Teks Dalam Support Card
+  const supportIconFa = document.getElementById("supportIconFa");
+  if (supportIconFa) supportIconFa.className = "fa-solid fa-circle-exclamation";
+
+  document.getElementById("supportTitle").innerText = "Invoice Kedaluwarsa"; 
   document.getElementById("supportDescription").innerHTML = "Untuk melanjutkan pembelian paket, silakan klik tombol di bawah ini untuk membuat invoice baru."; 
-  
+
+  // 4. Action Button (Generate Ulang Invoice)
   const waBtn = document.getElementById("waButton") || document.querySelector(".support-action a"); 
   if (waBtn) { 
     waBtn.href = "javascript:void(0);";
     waBtn.setAttribute("onclick", "generateUlangInvoice()");
-    waBtn.style.backgroundColor = "#ef4444"; 
     waBtn.style.cursor = "pointer"; 
-    
+
     document.getElementById("waButtonText").innerText = "Generate Ulang Invoice Baru ⚡";
     document.getElementById("waButtonIcon").className = "fa-solid fa-rotate-right"; 
   }
