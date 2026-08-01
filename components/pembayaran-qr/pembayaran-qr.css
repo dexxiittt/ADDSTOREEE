@@ -679,7 +679,7 @@ margin-bottom:30px;
 
 .payment-card{
 position:relative;
-overflow:visible;
+overflow:hidden;
 
 display:block;
 padding: 70px 22px 22px;
@@ -701,8 +701,8 @@ transition:.25s;
 content:"";
 position:absolute;
 
-top:12px;
-right:12px;
+top:-70px;
+right:-70px;;
 
 width:120px;
 height:120px;
