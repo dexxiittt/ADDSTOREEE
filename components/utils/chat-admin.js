@@ -78,7 +78,7 @@ function chatAdmin() {
   const total = document.getElementById("total").innerText;
 
   // Format Pesan Pembayaran
-  const pesan = `Halo Admin, saya sudah melakukan pembayaran QRIS.
+  const pesan = `Halo Admin, saya sudah melakukan pembayaran.
 
 📌 Detail Pembayaran:
 Invoice: ${invoice}
