@@ -345,23 +345,23 @@ function renderStatus(isPaymentFilled, isAdminVerified, isProcessDone, processSt
 function setSuccessUI(proses, tipsText) {
   const ui = getStatusElements();
 
-  // Reset warna tema ke hijau (Success)
+  // Reset warna tema ke hijau (Success) - Tetap di luar switch
   ui.invoiceBox.classList.remove("status-pending", "status-expired");
   ui.statusBox.classList.remove("status-pending", "status-expired");
   ui.invoiceBox.classList.add("status-success");
   ui.statusBox.classList.add("status-success");
 
-  ui.statusBadgeText.innerText = "Pembayaran Berhasil";
+  // Icon & Theme yang seragam untuk semua mode success - Tetap di luar switch
   ui.statusBadgeIcon.className = "fa-solid fa-check";
   ui.statusIconFa.className = "fa-solid fa-check";
-
   document.getElementById("statusSectionIcon").className = "section-icon icon-green";
   document.getElementById("waButtonText").innerText = "Hubungi Admin";
   document.getElementById("waButtonIcon").className = "fa-brands fa-whatsapp";
 
-  // Switch Case 3 Mode Tampilan (payment, process, done)
+  // Switch Case: Setiap mode mengontrol badge & teks UI-nya sendiri
   switch (proses) {
     case "payment":
+      ui.statusBadgeText.innerText = "Pembayaran Berhasil";
       ui.statusTitle.innerText = "Verifikasi Admin";
       ui.statusDescription.innerText =
         "Pembayaran berhasil diterima dan sedang dalam proses verifikasi oleh admin.";
@@ -375,6 +375,7 @@ function setSuccessUI(proses, tipsText) {
       break;
 
     case "process":
+      ui.statusBadgeText.innerText = "Verifikasi Admin";
       ui.statusTitle.innerText = "Pembayaran Berhasil";
       ui.statusDescription.innerText =
         "Pembayaran telah diterima dan berhasil diverifikasi oleh admin.";
@@ -388,6 +389,7 @@ function setSuccessUI(proses, tipsText) {
       break;
 
     case "done":
+      ui.statusBadgeText.innerText = "Pesanan Selesai";
       ui.statusTitle.innerText = "Pesanan Selesai";
       ui.statusDescription.innerText =
         "Pesanan telah selesai diproses oleh Admin. Terima kasih sudah membeli di Addstoreapp.";
