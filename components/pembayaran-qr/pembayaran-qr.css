@@ -1198,49 +1198,48 @@ outline:none;
 }
 
 /* ==========================================
-   CUSTOM PREMIUM OVERRIDE FOR MIDTRANS SNAP
+   FORCE OVERRIDE MIDTRANS SNAP OVERLAY
    ========================================== */
 
-/* 1. Backdrop / Latar Belakang Overlay */
-#snap-container {
-  /* Ganti background hitam pekat dengan transparan halus */
-  background: rgba(15, 23, 42, 0.45) !important;
-  
-  /* Efek Blur Kaca Modern (Glassmorphism) */
-  backdrop-filter: blur(8px) !important;
+/* 1. Hilangkan latar hitam pekat bawaan Midtrans & ganti dengan Blur Glassmorphism */
+#snap-container,
+div[id*="snap-container"] {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(15, 23, 42, 0.45) !important; /* Gelap transparan halus */
+  backdrop-filter: blur(8px) !important; /* Efek blur premium */
   -webkit-backdrop-filter: blur(8px) !important;
-  
-  /* Transisi & Animasi Fade In */
-  animation: snapBackdropFade 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
   z-index: 999999 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  animation: snapFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
 }
 
-/* 2. Container iFrame Snap (Modal Pembayaran) */
-#snap-container iframe,
-#snap-midtrans {
-  /* Bentuk & Garis Tepi Modern */
+/* 2. Style Pop-up Modal iFrame Snap */
+#snap-container iframe, 
+iframe#snap-midtrans,
+iframe[id*="snap-midtrans"] {
   border-radius: 24px !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-  
-  /* Bayangan Premium Soft Shadow */
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
   box-shadow: 
-    0 25px 50px -12px rgba(15, 23, 42, 0.25),
+    0 25px 50px -12px rgba(15, 23, 42, 0.35),
     0 0 0 1px rgba(255, 255, 255, 0.1) inset !important;
-  
-  /* Animasi Masuk Smooth dari Atas */
-  animation: snapSlideDown 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
-  
-  /* Responsif & Posisi */
   max-height: 90vh !important;
-  overflow: hidden !important;
+  
+  /* Animasi Smooth Meluncur dari Atas */
+  animation: snapSlideDown 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
 }
 
 /* ==========================================
-   ANIMASI KEYFRAMES
+   ANIMASI SMOOTH
    ========================================== */
 
-/* Animasi Kemunculan Latar Belakang */
-@keyframes snapBackdropFade {
+/* Fade-in Latar */
+@keyframes snapFadeIn {
   from {
     opacity: 0;
   }
@@ -1249,11 +1248,11 @@ outline:none;
   }
 }
 
-/* Animasi Meluncur Smooth Dari Atas */
+/* Slide Down dari Atas ke Tengah */
 @keyframes snapSlideDown {
   from {
     opacity: 0;
-    transform: translateY(-40px) scale(0.95);
+    transform: translateY(-60px) scale(0.92);
   }
   to {
     opacity: 1;
@@ -1261,10 +1260,10 @@ outline:none;
   }
 }
 
-/* Penyesuaian Khusus Tampilan Mobile (Layar Kecil) */
+/* Penyesuaian di Layar HP/Mobile */
 @media (max-width: 480px) {
-  #snap-container iframe,
-  #snap-midtrans {
+  #snap-container iframe, 
+  iframe#snap-midtrans {
     width: 92% !important;
     border-radius: 20px !important;
   }
