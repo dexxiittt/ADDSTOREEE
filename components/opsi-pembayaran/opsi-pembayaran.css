@@ -409,9 +409,16 @@ display:none;
 }
 
 .payment-more{
-  font-size:11px;
+  display:inline-flex;
+  align-items:center;
+
+  font-family:"Plus Jakarta Sans",sans-serif;
+  font-size:10px;
   font-weight:600;
-  color:#7c3aed;
+  letter-spacing:.4px;
+  text-transform:uppercase;
+
+  color:#8b5cf6;
   white-space:nowrap;
 }
 
