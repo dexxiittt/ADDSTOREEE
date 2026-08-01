@@ -358,11 +358,11 @@ function setSuccessUI(proses, tipsText) {
   document.getElementById("waButtonText").innerText = "Hubungi Admin";
   document.getElementById("waButtonIcon").className = "fa-brands fa-whatsapp";
 
-  // Switch Case: Setiap mode mengontrol badge & teks UI-nya sendiri
+  // Switch Case: Badge dan Title dibuat sinkron di setiap mode
   switch (proses) {
     case "payment":
       ui.statusBadgeText.innerText = "Pembayaran Berhasil";
-      ui.statusTitle.innerText = "Verifikasi Admin";
+      ui.statusTitle.innerText = "Pembayaran Berhasil";
       ui.statusDescription.innerText =
         "Pembayaran berhasil diterima dan sedang dalam proses verifikasi oleh admin.";
       ui.statusTipText.innerHTML = generateTipsHtml(
@@ -375,10 +375,10 @@ function setSuccessUI(proses, tipsText) {
       break;
 
     case "process":
-      ui.statusBadgeText.innerText = "Verifikasi Admin";
-      ui.statusTitle.innerText = "Pembayaran Berhasil";
+      ui.statusBadgeText.innerText = "Pesanan Diproses";
+      ui.statusTitle.innerText = "Pesanan Diproses";
       ui.statusDescription.innerText =
-        "Pembayaran telah diterima dan berhasil diverifikasi oleh admin.";
+        "Pembayaran telah berhasil diverifikasi dan pesanan kamu sedang diproses oleh admin.";
       ui.statusTipText.innerHTML = generateTipsHtml(
         tipsText,
         "Pesanan sedang diproses oleh admin. Terima kasih telah melakukan pembayaran."
