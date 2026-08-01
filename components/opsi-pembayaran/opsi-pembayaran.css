@@ -595,8 +595,11 @@ transform:scale(0.995);
   letter-spacing:.4px;
   text-transform:uppercase;
 
-  color:#8b5cf6;
   white-space:nowrap;
+}
+
+.summary-row .payment-more{
+  color:#8b5cf6;
 }
 
 /* =========================
