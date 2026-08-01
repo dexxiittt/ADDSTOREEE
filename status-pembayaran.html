@@ -352,74 +352,83 @@ Silakan lakukan pembayaran sesuai nominal yang tertera pada invoice.
 
 <!-- KONTAK ADMIN -->
 <h3 class="section-title">
-
-<span class="section-icon icon-green">
-<i class="fa-brands fa-whatsapp"></i>
-</span>
-<span>Hubungi Admin</span>
+  <span id="statusSectionIcon" class="section-icon icon-green">
+    <i class="fa-brands fa-whatsapp"></i>
+  </span>
+  <span>Hubungi Admin</span>
 </h3>
 
 <div class="wa-box">
-<div class="support-header">
-<div id="supportIcon" class="support-icon">
-    <i id="supportIconFa"
-       class="fa-brands fa-whatsapp"></i>
-</div>
+  <div class="support-header">
+    <div id="supportIcon" class="support-icon">
+      <i id="supportIconFa" class="fa-brands fa-whatsapp"></i>
+    </div>
 
-<div>
-<div
-class="support-title"
-id="supportTitle">
-Hubungi Admin
-</div>
+    <div>
+      <div class="support-title" id="supportTitle">
+        Hubungi Admin
+      </div>
 
-<div
-class="support-description"
-id="supportDescription">
-Sudah melakukan pembayaran tetapi status masih <b>Pending</b>?
-<br><br>
-Kirim bukti pembayaran ke admin agar proses verifikasi dapat segera dilakukan.
-</div>
-</div>
-</div>
-
-<button onclick="chatAdmin()" id="waButton"class="wa-btn">
-<i id="waButtonIcon" class="fa-brands fa-whatsapp"></i>
-<span id="waButtonText">Chat Admin Sekarang</span>
-
-</button>
-</div>
-
-</div>
-
-  <!-- DYNAMIC TOAST UNTUK NOTIFIKASI SYSTEM -->
-  <div id="customDynamicToast" class="dynamic-toast">
-    <i id="toastIcon" class="fa-solid fa-circle-check"></i>
-    <span id="toastMessage">Pesanan sudah dibuat ⚡</span>
+      <div class="support-description" id="supportDescription">
+        Sudah melakukan pembayaran tetapi status masih <b>Pending</b>?
+        <br><br>
+        Kirim bukti pembayaran ke admin agar proses verifikasi dapat segera dilakukan.
+      </div>
+    </div>
   </div>
 
-  <div id="copyToast" class="copy-toast">
-    <i class="fa-solid fa-check"></i>
-    <span>Invoice berhasil disalin</span>
+  <button onclick="chatAdmin()" id="waButton" class="wa-btn">
+    <i id="waButtonIcon" class="fa-brands fa-whatsapp"></i>
+    <span id="waButtonText">Chat Admin Sekarang</span>
+  </button>
+</div>
+
+<!-- BOX GENERATE ULANG INVOICE (Sembunyi secara default, hanya tampil saat kadaluarsa) -->
+<div id="generateInvoiceBox" class="generate-invoice-card" style="display: none;">
+  <div class="generate-card-content">
+    <div class="generate-icon-wrapper">
+      <i class="fa-solid fa-rotate-right generate-rotate-icon"></i>
+    </div>
+    <div class="generate-info">
+      <h4>Generate Ulang Invoice</h4>
+      <p>Untuk melanjutkan pembelian paket, silakan klik tombol di bawah ini untuk membuat invoice baru.</p>
+    </div>
   </div>
+  <button type="button" class="btn-generate-invoice" onclick="generateUlangInvoice()">
+    <i class="fa-solid fa-arrows-rotate"></i>
+    <span>Generate Ulang Invoice Baru ⚡</span>
+  </button>
+</div>
 
-  <!-- LIBRARY DEPENDENCIES (Urutan penting agar PDF berjalan lancar) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!-- DYNAMIC TOAST UNTUK NOTIFIKASI SYSTEM -->
+<div id="customDynamicToast" class="dynamic-toast">
+  <i id="toastIcon" class="fa-solid fa-circle-check"></i>
+  <span id="toastMessage">Pesanan sudah dibuat ⚡</span>
+</div>
 
-  <!-- UTILS & COMPONENTS -->
-  <script src="components/utils/chat-admin.js"></script>
+<div id="copyToast" class="copy-toast">
+  <i class="fa-solid fa-check"></i>
+  <span>Invoice berhasil disalin</span>
+</div>
 
-  <!-- GENERATOR QR CODE VERIFIKASI -->
-  <script src="components/qrcode/qrcode.js"></script>
+<!-- LIBRARY DEPENDENCIES (Urutan penting agar PDF berjalan lancar) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-  <!-- DOWNLOAD PDF -->
-  <script src="components/pdf-download/pdf-download.js?v=3"></script>
+<!-- UTILS & COMPONENTS -->
+<script src="components/utils/chat-admin.js"></script>
 
-  <!-- SCRIPT UTAMA STATUS PEMBAYARAN -->
-  <script src="components/status-pembayaran/status-pembayaran.js?v=7"></script>
+<!-- GENERATOR QR CODE VERIFIKASI -->
+<script src="components/qrcode/qrcode.js"></script>
 
-    <!-- FOOTER -->
-  <div id="footer-container"></div>
-  <script src="components/footer.js"></script>
+<!-- DOWNLOAD PDF -->
+<script src="components/pdf-download/pdf-download.js?v=3"></script>
+
+<!-- SCRIPT UTAMA STATUS PEMBAYARAN -->
+<script src="components/status-pembayaran/status-pembayaran.js?v=7"></script>
+
+<!-- FOOTER -->
+<div id="footer-container"></div>
+<script src="components/footer.js"></script>
 </body>
 </html>
+
