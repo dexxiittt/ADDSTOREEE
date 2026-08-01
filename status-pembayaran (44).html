@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Status Pembayaran</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<link rel="stylesheet" href="components/pdf-download/pdf-download.css">
+
+<link rel="stylesheet"
+href="components/status-pembayaran/status-pembayaran.css">
+
+<link rel="stylesheet" href="components/footer.css">
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div id="navbar-placeholder"></div>
+  <script src="components/navbar.js"></script>
+
+<!-- HERO -->
+<div class="package-hero">
+
+<div class="package-hero-content">
+
+<h1>Status Pembayaran</h1>
+
+<p>
+Pembayaran pesanan kamu
+</p>
+
+</div>
+
+</div>
+
+<!-- RESULT LANGSUNG TAMPIL -->
+<div class="container" id="resultBox">
+
+<!-- IMAGE PRODUK -->
+<div id="productImageBox" class="product-image-box">
+  <img id="productImage" src="" alt="Produk">
+</div>
+
+<!-- INVOICE -->
+<div class="invoice-box" id="invoiceBox">
+<div class="invoice-number-box">
+<div class="invoice-label">
+
+<div class="floating-icon icon-green">
+<i class="fa-solid fa-receipt"></i>
+</div>
+
+<span>Invoice</span>
+
+</div>
+
+<div class="invoice-number">
+<span id="invoice"></span>
+
+<button class="copy-invoice-btn"
+onclick="copyInvoice()">
+<i class="fa-regular fa-copy"></i>
+</button>
+
+</div>
+
+</div>
+
+<div class="invoice-status">
+
+    <i id="statusBadgeIcon"
+       class="fa-solid fa-stopwatch"></i>
+
+    <span id="statusBadgeText">
+        Menunggu Pembayaran
+    </span>
+
+</div>
+    
+<div class="invoice-price" id="total"></div>
+<div class="invoice-time">
+<i class="fa-regular fa-clock"></i>
+<span id="time"></span>
+
+</div>
+
+<!-- DETAIL -->
+<h3 class="section-title">
+
+<span class="section-icon icon-purple">
+<i class="fa-solid fa-box-open"></i>
+</span>
+
+<span>Detail Pesanan</span>
+
+</h3>
+    
+<div class="summary-box">
+
+<!-- PRODUK -->
+<div class="summary-item">
+  <div>
+    <div class="paket-title" id="paket"></div>
+    <div class="paket-sub" id="paketDetail"></div>
+  </div>
+</div>
+
+<!-- SUBTOTAL -->
+<div class="summary-row">
+  <span>Subtotal</span>
+<div id="harga" class="price-box"></div>
+</div>
+
+<!-- DISKON -->
+<div class="summary-row">
+  <span>Diskon</span>
+  <span id="diskon"></span>
+</div>
+
+<!-- HEMAT -->
+<div class="summary-row">
+  <span>Hemat</span>
+  <span id="hemat"></span>
+</div>
+
+<!-- TOTAL -->
+<div class="summary-total">
+  <span>Total Bayar</span>
+  <span id="total2"></span>
+</div>
+
+</div>
+
+<!-- CUSTOMER -->
+<h3 class="section-title">
+
+<span class="section-icon icon-blue">
+<i class="fa-solid fa-user"></i>
+</span>
+
+<span>Informasi Customer</span>
+
+</h3>
+    
+<div class="detail-box">
+<div class="customer-item">
+
+<div class="customer-icon icon-blue">
+<i class="fa-solid fa-user"></i>
+</div>
+
+<div class="customer-content">
+
+<div class="customer-label">
+Nama Customer
+</div>
+
+<div class="customer-value" id="nama"></div>
+
+</div>
+
+</div>
+    
+<div class="customer-item">
+
+<div class="customer-icon icon-green">
+<i class="fa-solid fa-mobile-screen-button"></i>
+</div>
+
+<div class="customer-content">
+
+<div class="customer-label">
+Nomor WhatsApp
+</div>
+
+<div class="customer-value" id="wa"></div>
+
+</div>
+
+</div>
+    
+<div class="customer-item">
+
+<div class="customer-icon icon-gold">
+<i class="fa-solid fa-envelope"></i>
+</div>
+
+<div class="customer-content">
+
+<div class="customer-label">
+Email
+</div>
+
+<div class="customer-value" id="email"></div>
+
+</div>
+
+</div>
+
+<!-- STATUS -->
+
+<h3 class="section-title">
+<span
+id="statusSectionIcon"
+class="section-icon icon-gold">
+<i class="fa-solid fa-circle-exclamation"></i>
+</span>
+<span>Status Pembayaran</span>
+</h3>
+
+<div
+id="statusBox"
+
+class="status-box">
+
+  <div class="status-header">
+
+    <div
+id="statusIcon"
+
+class="status-icon">
+
+<i
+id="statusIconFa"
+
+class="fa-solid fa-hourglass-half">
+
+</i>
+
+</div>
+
+    <div>
+
+      <div class="status-title" id="statusTitle">
+Menunggu Pembayaran
+</div>
+
+      <div class="status-description"
+id="statusDescription">
+
+Silakan lakukan pembayaran sesuai nominal yang tertera pada invoice.
+
+      </div>
+
+    </div>
+
+  </div>
+
+      <!-- TIMELINE STATUS -->
+      <div class="payment-progress">
+
+  <!-- STEP 1 -->
+  <div id="stepOrder" class="progress-item completed">
+
+    <div class="floating-icon icon-purple">
+      <i class="fa-solid fa-check"></i>
+    </div>
+
+    <span>Pesanan Dibuat</span>
+
+  </div>
+
+  <!-- STEP 2 -->
+  <div id="stepPayment" class="progress-item current">
+
+    <div class="floating-icon icon-gold">
+      <i class="fa-solid fa-hourglass-half"></i>
+    </div>
+
+    <span>Menunggu Pembayaran</span>
+
+  </div>
+
+  <!-- STEP 3 -->
+  <div id="stepVerification" class="progress-item pending">
+
+    <div class="floating-icon icon-white">
+      <i class="fa-solid fa-circle"></i>
+    </div>
+
+    <span>Verifikasi Admin</span>
+
+  </div>
+
+  <!-- STEP 4 -->
+  <div id="stepProcess" class="progress-item pending">
+
+    <div class="floating-icon icon-white">
+      <i class="fa-solid fa-circle"></i>
+    </div>
+
+    <span>Pesanan Diproses</span>
+
+  </div>
+
+</div>
+        
+      <!-- END TIMELINE -->
+
+    </div>
+
+  </div>
+
+  <div class="status-total">
+
+  <div class="floating-icon icon-green">
+    <i class="fa-solid fa-sack-dollar"></i>
+  </div>
+
+  <b id="total3"></b>
+
+</div>
+
+<div class="status-tip" id="statusTip">
+
+  <span class="status-tip-shine"></span>
+
+  <div class="status-tip-content">
+
+    <div>
+
+      <div class="status-tip-header">
+
+        <div class="floating-icon icon-gold">
+          <i class="fa-solid fa-lightbulb"></i>
+        </div>
+
+        <b class="status-tip-title">
+          Informasi
+        </b>
+
+      </div>
+
+      <div id="statusTipText"></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+</div>
+
+<!-- KONTAK ADMIN -->
+<h3 class="section-title">
+
+<span class="section-icon icon-green">
+<i class="fa-brands fa-whatsapp"></i>
+</span>
+<span>Hubungi Admin</span>
+</h3>
+
+<div class="wa-box">
+<div class="support-header">
+<div id="supportIcon" class="support-icon">
+    <i id="supportIconFa"
+       class="fa-brands fa-whatsapp"></i>
+</div>
+
+<div>
+<div
+class="support-title"
+id="supportTitle">
+Hubungi Admin
+</div>
+
+<div
+class="support-description"
+id="supportDescription">
+Sudah melakukan pembayaran tetapi status masih <b>Pending</b>?
+<br><br>
+Kirim bukti pembayaran ke admin agar proses verifikasi dapat segera dilakukan.
+</div>
+</div>
+</div>
+
+<button onclick="chatAdmin()" id="waButton"class="wa-btn">
+<i id="waButtonIcon" class="fa-brands fa-whatsapp"></i>
+<span id="waButtonText">Chat Admin Sekarang</span>
+
+</button>
+</div>
+
+</div>
+
+  <!-- DYNAMIC TOAST UNTUK NOTIFIKASI SYSTEM -->
+  <div id="customDynamicToast" class="dynamic-toast">
+    <i id="toastIcon" class="fa-solid fa-circle-check"></i>
+    <span id="toastMessage">Pesanan sudah dibuat ⚡</span>
+  </div>
+
+  <div id="copyToast" class="copy-toast">
+    <i class="fa-solid fa-check"></i>
+    <span>Invoice berhasil disalin</span>
+  </div>
+
+  <!-- LIBRARY DEPENDENCIES (Urutan penting agar PDF berjalan lancar) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <!-- UTILS & COMPONENTS -->
+  <script src="components/utils/chat-admin.js"></script>
+
+  <!-- GENERATOR QR CODE VERIFIKASI -->
+  <script src="components/qrcode/qrcode.js"></script>
+
+  <!-- DOWNLOAD PDF -->
+  <script src="components/pdf-download/pdf-download.js?v=3"></script>
+
+  <!-- SCRIPT UTAMA STATUS PEMBAYARAN -->
+  <script src="components/status-pembayaran/status-pembayaran.js?v=7"></script>
+
+    <!-- FOOTER -->
+  <div id="footer-container"></div>
+  <script src="components/footer.js"></script>
+</body>
+</html>
