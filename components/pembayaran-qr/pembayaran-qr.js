@@ -51,15 +51,23 @@ async function bayarSekarang() {
   if (!customer) return;
 
   // 1. AMBIL ELEMEN TOMBOL & LAKUKAN SMOOTH SCROLL KE TOMBOL
-  const btnBayar = document.querySelector('.btn-midtrans');
-  if (btnBayar) {
-    // 💡 AUTOMATIC SMOOTH SCROLL PAS DI TENGAH TOMBOL
-    btnBayar.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  btnBayar.disabled = true;
+  btnBayar.style.opacity = "0.6";
+  btnBayar.innerHTML =
+  '<i class="fa-solid fa-spinner fa-spin"></i> Menghubungkan...';
 
-    btnBayar.disabled = true;
-    btnBayar.style.opacity = '0.6';
-    btnBayar.innerText = 'Memproses...';
-  }
+  const y =
+    btnBayar.getBoundingClientRect().top +
+    window.pageYOffset - 120;
+
+  window.scrollTo({
+    top: y,
+    behavior: "smooth"
+  });
+
+  await new Promise(resolve =>
+    setTimeout(resolve, 450)
+  );
 
   // 2. AMBIL PACKAGE ID & SUSUN INFORMASI PELANGGAN
   const packageId = customer.packageId || customer.package_id || customer.paket || "";
