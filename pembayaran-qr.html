@@ -227,40 +227,45 @@
     </div>
 
     <!-- ACTION -->
-    <div class="payment-actions">
+    <!-- ACTION PEMBAYARAN -->
+<div class="payment-actions">
 
-      <div class="payment-action-title">
-        <i class="fa-solid fa-circle-check"></i>
-        <span>SELESAIKAN PEMBAYARAN</span>
-      </div>
+  <div class="payment-action-title">
+    <i class="fa-solid fa-circle-check"></i>
+    <span>SELESAIKAN PEMBAYARAN</span>
+  </div>
 
-      <button
-        class="btn-primary btn-midtrans"
-        onclick="bayarSekarang()">
+  <!-- TAMBAHKAN DIV CONTAINER EMBED DI SINI (DI ATAS TOMBOL) -->
+  <div id="snap-embed-container" class="snap-embed-box"></div>
 
-        <i class="fa-solid fa-bolt"></i>
-        <span>Tap untuk Pembayaran</span>
+  <button
+    class="btn-primary btn-midtrans"
+    onclick="bayarSekarang()">
 
-      </button>
+    <i class="fa-solid fa-bolt"></i>
+    <span>Tap untuk Pembayaran</span>
 
-      <button
-        class="btn-secondary"
-        onclick="cekStatus()">
+  </button>
 
-        <i class="fa-solid fa-rotate-right"></i>
-        Cek Status Pembayaran
+  <button
+    class="btn-secondary"
+    onclick="cekStatus()">
 
-      </button>
+    <i class="fa-solid fa-rotate-right"></i>
+    Cek Status Pembayaran
 
-      <button
-        class="btn-secondary"
-        onclick="kembaliProduk()">
+  </button>
 
-        Kembali ke Produk
+  <button
+    class="btn-secondary"
+    onclick="kembaliProduk()">
 
-      </button>
+    Kembali ke Produk
 
-    </div>
+  </button>
+
+</div>
+
 
   </div>
 
