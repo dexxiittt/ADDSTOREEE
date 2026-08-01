@@ -260,9 +260,8 @@ function renderStatus(isPaymentFilled, isAdminVerified, isProcessDone, processSt
   } else if (isAdminVerified) {
     setSuccessUI("process", tipsObj?.tips_success);
   } else if (isPaymentFilled) {
-    setPendingUI(tipsObj?.tips_pending);
-    document.getElementById("statusTitle").innerText = "Verifikasi Admin";
-    document.getElementById("statusDescription").innerText = "Pembayaran sedang dicek dan diverifikasi oleh admin.";
+    // Langsung ubah UI ke mode Success "payment"
+    setSuccessUI("payment", tipsObj?.tips_pending);
   } else {
     setPendingUI(tipsObj?.tips_pending);
   }
@@ -314,43 +313,93 @@ function setPendingUI(tipsText) {
   document.getElementById("waButtonIcon").className = "fa-brands fa-whatsapp";
 }
 
+/* ============================================================
+   STATUS & UI FUNCTIONS
+   ============================================================ */
 // POIN 5: setSuccessUI TANPA updateProgress("success", proses)
+function renderStatus(isPaymentFilled, isAdminVerified, isProcessDone, processStatus, tipsObj) {
+  // 1. Cek Expired jika belum terverifikasi admin
+  if (!isAdminVerified && checkIsExpired()) {
+    setExpiredUI(tipsObj?.tips_expired);
+    return;
+  }
+
+  // 2. Kontrol timeline menggunakan ketiga boolean
+  updateProgress(isPaymentFilled, isAdminVerified, isProcessDone, processStatus);
+
+  // 3. Kontrol Banner UI Utama
+  if (isProcessDone) {
+    setSuccessUI("done", tipsObj?.tips_proses);
+    localStorage.removeItem("invoiceID");
+    localStorage.removeItem("invoiceCreatedAt");
+  } else if (isAdminVerified) {
+    setSuccessUI("process", tipsObj?.tips_success);
+  } else if (isPaymentFilled) {
+    // Pembayaran masuk -> Langsung ubah UI ke Success "payment"
+    setSuccessUI("payment", tipsObj?.tips_pending);
+  } else {
+    setPendingUI(tipsObj?.tips_pending);
+  }
+}
+
 function setSuccessUI(proses, tipsText) {
   const ui = getStatusElements();
 
+  // Reset warna tema ke hijau (Success)
   ui.invoiceBox.classList.remove("status-pending", "status-expired");
   ui.statusBox.classList.remove("status-pending", "status-expired");
   ui.invoiceBox.classList.add("status-success");
   ui.statusBox.classList.add("status-success");
 
   ui.statusBadgeText.innerText = "Pembayaran Berhasil";
-
-  if (proses === "done") {
-    ui.statusTitle.innerText = "Pesanan Selesai";
-    ui.statusDescription.innerText =
-    "Pesanan telah selesai diproses oleh Admin. Terima kasih sudah membeli di Addstoreapp.";
-  } else {
-    ui.statusTitle.innerText = "Pembayaran Berhasil";
-    ui.statusDescription.innerText =
-    "Pembayaran telah diterima dan berhasil diverifikasi oleh admin.";
-  }
-  
-  if (proses === "done") {
-    ui.statusTipText.innerHTML = generateTipsHtml(tipsText, "Pesanan telah selesai diproses. Terima kasih telah berbelanja!");
-    document.getElementById("supportTitle").innerText = "Pesanan Selesai ✨";
-    document.getElementById("supportDescription").innerHTML = "Pesanan kamu telah selesai diproses fully oleh admin. Terima kasih telah berbelanja di <b>Addstoreapp</b>.";
-  } else {
-    ui.statusTipText.innerHTML = generateTipsHtml(tipsText, "Pesanan sedang diproses oleh admin. Terima kasih telah melakukan pembayaran.");
-    document.getElementById("supportTitle").innerText = "Pesanan Sedang Diproses";
-    document.getElementById("supportDescription").innerHTML = "Pembayaran telah berhasil diverifikasi. Pesanan kamu sedang diproses oleh admin.";
-  }
-
   ui.statusBadgeIcon.className = "fa-solid fa-check";
   ui.statusIconFa.className = "fa-solid fa-check";
 
   document.getElementById("statusSectionIcon").className = "section-icon icon-green";
   document.getElementById("waButtonText").innerText = "Hubungi Admin";
   document.getElementById("waButtonIcon").className = "fa-brands fa-whatsapp";
+
+  // Switch Case 3 Mode Tampilan (payment, process, done)
+  switch (proses) {
+    case "payment":
+      ui.statusTitle.innerText = "Verifikasi Admin";
+      ui.statusDescription.innerText =
+        "Pembayaran berhasil diterima dan sedang dalam proses verifikasi oleh admin.";
+      ui.statusTipText.innerHTML = generateTipsHtml(
+        tipsText,
+        "Pembayaran berhasil diterima! Pesanan kamu sedang diverifikasi oleh admin."
+      );
+      document.getElementById("supportTitle").innerText = "Verifikasi Admin";
+      document.getElementById("supportDescription").innerHTML =
+        "Pembayaran telah berhasil diterima. Kirim pesan ke admin jika memerlukan bantuan selama proses verifikasi.";
+      break;
+
+    case "process":
+      ui.statusTitle.innerText = "Pembayaran Berhasil";
+      ui.statusDescription.innerText =
+        "Pembayaran telah diterima dan berhasil diverifikasi oleh admin.";
+      ui.statusTipText.innerHTML = generateTipsHtml(
+        tipsText,
+        "Pesanan sedang diproses oleh admin. Terima kasih telah melakukan pembayaran."
+      );
+      document.getElementById("supportTitle").innerText = "Pesanan Sedang Diproses";
+      document.getElementById("supportDescription").innerHTML =
+        "Pembayaran telah berhasil diverifikasi. Pesanan kamu sedang diproses oleh admin.";
+      break;
+
+    case "done":
+      ui.statusTitle.innerText = "Pesanan Selesai";
+      ui.statusDescription.innerText =
+        "Pesanan telah selesai diproses oleh Admin. Terima kasih sudah membeli di Addstoreapp.";
+      ui.statusTipText.innerHTML = generateTipsHtml(
+        tipsText,
+        "Pesanan telah selesai diproses. Terima kasih telah berbelanja!"
+      );
+      document.getElementById("supportTitle").innerText = "Pesanan Selesai ✨";
+      document.getElementById("supportDescription").innerHTML =
+        "Pesanan kamu telah selesai diproses fully oleh admin. Terima kasih telah berbelanja di <b>Addstoreapp</b>.";
+      break;
+  }
 }
 
 function setExpiredUI(tipsText) {
