@@ -42,7 +42,7 @@ function renderCustomer(customer) {
 }
 
 // ==========================================
-// 2. FUNGSI UTAMA MIDTRANS PEMBAYARAN
+// 2. FUNGSI UTAMA MIDTRANS PEMBAYARAN (UPDATED)
 // ==========================================
 async function bayarSekarang() {
   const invoiceID = getInvoice();
@@ -50,9 +50,12 @@ async function bayarSekarang() {
 
   if (!customer) return;
 
-  // 1. AMBIL ELEMEN TOMBOL & MATIKAN SEMENTARA (PREVENT SPAM CLICK)
+  // 1. AMBIL ELEMEN TOMBOL & LAKUKAN SMOOTH SCROLL KE TOMBOL
   const btnBayar = document.querySelector('.btn-midtrans');
   if (btnBayar) {
+    // 💡 AUTOMATIC SMOOTH SCROLL PAS DI TENGAH TOMBOL
+    btnBayar.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
     btnBayar.disabled = true;
     btnBayar.style.opacity = '0.6';
     btnBayar.innerText = 'Memproses...';
@@ -61,7 +64,6 @@ async function bayarSekarang() {
   // 2. AMBIL PACKAGE ID & SUSUN INFORMASI PELANGGAN
   const packageId = customer.packageId || customer.package_id || customer.paket || "";
   
-  // Format gabungan: Nama|NoHP|Email (sesuai contoh di Google Sheet)
   const customerInfo = [
     customer.nama || "",
     customer.telepon || "",
@@ -81,8 +83,8 @@ async function bayarSekarang() {
       body: JSON.stringify({
         orderId: uniqueOrderId,
         amount: amount,
-        packageId: packageId,        // Dikirim ke Vercel -> custom_field1
-        customerInfo: customerInfo   // Dikirim ke Vercel -> custom_field2
+        packageId: packageId,
+        customerInfo: customerInfo
       })
     });
     
