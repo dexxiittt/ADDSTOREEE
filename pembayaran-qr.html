@@ -134,88 +134,73 @@
 <!-- CONTAINER ACTION PEMBAYARAN -->
 <div class="container">
 
-  <h3>Tap Tombol Pembayaran Dibawah</h3>
-
-  <p class="qr-sub">
-    Pilih metode pembayaran yang diinginkan
-  </p>
-
   <div class="payment-card">
 
-    <!-- HEADER -->
-    <div class="payment-header">
+    <!-- ICON -->
+    <div class="payment-icon">
+      <i class="fa-solid fa-mobile-screen-button"></i>
+    </div>
 
-      <div class="payment-icon">
-        <i class="fa-solid fa-mobile-screen-button"></i>
+    <!-- TITLE -->
+    <h3>Tap Tombol Pembayaran Dibawah</h3>
+
+    <p class="qr-sub">
+      Pilih metode pembayaran yang diinginkan
+    </p>
+
+    <!-- PAYMENT METHODS -->
+    <div class="payment-methods">
+
+      <div class="payment-chip">
+        <img src="components/assets/payment/qris.svg" alt="QRIS">
       </div>
 
-      <div class="payment-content">
+      <div class="payment-chip">
+        <img src="components/assets/payment/gopay.svg" alt="GoPay">
+      </div>
 
-        <div class="payment-title">
-          Pembayaran Aman &amp; Terenkripsi
-        </div>
+      <div class="payment-chip">
+        <img src="components/assets/payment/dana.svg" alt="DANA">
+      </div>
 
-        <div class="payment-desc">
-          Pilih metode pembayaran yang diinginkan setelah menekan tombol di bawah.
-        </div>
+      <div class="payment-chip">
+        <img src="components/assets/payment/shopeepay.svg" alt="ShopeePay">
+      </div>
 
-        <!-- PAYMENT METHODS -->
-<div class="payment-methods">
+      <div class="payment-chip">
+        <img src="components/assets/payment/ovo.svg" alt="OVO">
+      </div>
 
-  <div class="payment-chip">
-    <img src="components/assets/payment/qris.svg" alt="QRIS">
-  </div>
+      <div class="payment-chip">
+        <img src="components/assets/payment/bca.svg" alt="BCA">
+      </div>
 
-  <div class="payment-chip">
-    <img src="components/assets/payment/gopay.svg" alt="GoPay">
-  </div>
+      <div class="payment-chip">
+        <img src="components/assets/payment/mandiri.svg" alt="Mandiri">
+      </div>
 
-  <div class="payment-chip">
-    <img src="components/assets/payment/dana.svg" alt="DANA">
-  </div>
+      <div class="payment-chip">
+        <img src="components/assets/payment/bni.svg" alt="BNI">
+      </div>
 
-  <div class="payment-chip">
-    <img src="components/assets/payment/shopeepay.svg" alt="ShopeePay">
-  </div>
+      <div class="payment-chip">
+        <img src="components/assets/payment/bri.svg" alt="BRI">
+      </div>
 
-  <div class="payment-chip">
-    <img src="components/assets/payment/ovo.svg" alt="OVO">
-  </div>
+      <div class="payment-chip">
+        <img src="components/assets/payment/visa.svg" alt="Visa">
+      </div>
 
-  <div class="payment-chip">
-    <img src="components/assets/payment/bca.svg" alt="BCA">
-  </div>
+      <div class="payment-chip">
+        <img src="components/assets/payment/mastercard.svg" alt="Mastercard">
+      </div>
 
-  <div class="payment-chip">
-    <img src="components/assets/payment/mandiri.svg" alt="Mandiri">
-  </div>
+      <div class="payment-chip">
+        <img src="components/assets/payment/multicard.svg" alt="Multi Card">
+      </div>
 
-  <div class="payment-chip">
-    <img src="components/assets/payment/bni.svg" alt="BNI">
-  </div>
-
-  <div class="payment-chip">
-    <img src="components/assets/payment/bri.svg" alt="BRI">
-  </div>
-
-  <div class="payment-chip">
-    <img src="components/assets/payment/visa.svg" alt="Visa">
-  </div>
-
-  <div class="payment-chip">
-    <img src="components/assets/payment/mastercard.svg" alt="Mastercard">
-  </div>
-
-  <div class="payment-chip">
-    <img src="components/assets/payment/multicard.svg" alt="Mastercard">
-  </div>
-
-  <div class="payment-chip payment-chip-more">
-    <span>Lainnya...</span>
-  </div>
-
-</div>
-
+      <div class="payment-chip payment-chip-more">
+        <span>Lainnya...</span>
       </div>
 
     </div>
@@ -223,49 +208,47 @@
     <!-- BADGE -->
     <div class="payment-badge">
       <i class="fa-solid fa-shield-halved"></i>
-      <span>Secure</span>
+      <span>100% Secure</span>
     </div>
 
     <!-- ACTION -->
-    <!-- ACTION PEMBAYARAN -->
-<div class="payment-actions">
+    <div class="payment-actions">
 
-  <div class="payment-action-title">
-    <i class="fa-solid fa-circle-check"></i>
-    <span>SELESAIKAN PEMBAYARAN</span>
-  </div>
+      <div class="payment-action-title">
+        <i class="fa-solid fa-circle-check"></i>
+        <span>SELESAIKAN PEMBAYARAN</span>
+      </div>
 
-  <!-- TAMBAHKAN DIV CONTAINER EMBED DI SINI (DI ATAS TOMBOL) -->
-  <div id="snap-embed-container" class="snap-embed-box"></div>
+      <!-- SNAP EMBED -->
+      <div id="snap-embed-container" class="snap-embed-box"></div>
 
-  <button
-    class="btn-primary btn-midtrans"
-    onclick="bayarSekarang()">
+      <button
+        class="btn-primary btn-midtrans"
+        onclick="bayarSekarang()">
 
-    <i class="fa-solid fa-bolt"></i>
-    <span>Tap untuk Pembayaran</span>
+        <i class="fa-solid fa-bolt"></i>
+        <span>Tap untuk Pembayaran</span>
 
-  </button>
+      </button>
 
-  <button
-    class="btn-secondary"
-    onclick="cekStatus()">
+      <button
+        class="btn-secondary"
+        onclick="cekStatus()">
 
-    <i class="fa-solid fa-rotate-right"></i>
-    Cek Status Pembayaran
+        <i class="fa-solid fa-rotate-right"></i>
+        Cek Status Pembayaran
 
-  </button>
+      </button>
 
-  <button
-    class="btn-secondary"
-    onclick="kembaliProduk()">
+      <button
+        class="btn-secondary"
+        onclick="kembaliProduk()">
 
-    Kembali ke Produk
+        Kembali ke Produk
 
-  </button>
+      </button>
 
-</div>
-
+    </div>
 
   </div>
 
