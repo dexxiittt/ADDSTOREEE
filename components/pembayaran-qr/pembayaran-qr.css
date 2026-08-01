@@ -369,6 +369,11 @@ color:#6b7280;
 line-height:1.6;
 }
 
+.summary-row > span:last-child{
+  font-weight:600;
+  color:#8b5cf6;
+}
+
 /* =========================
    PREMIUM PACKAGE BANNER
 ========================= */
