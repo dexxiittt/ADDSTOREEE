@@ -799,45 +799,6 @@ transform:rotate(-6deg);
 transition:.25s;
 }
 
-.payment-badge{
-position:absolute;
-
-top:18px;
-right:18px;
-
-display:inline-flex;
-align-items:center;
-gap:8px;
-
-width:fit-content;
-margin-left:auto;
-
-padding:8px 14px;
-
-border-radius:999px;
-background:rgba(139,92,246,.08);
-
-border:1px solid rgba(139,92,246,.16);
-backdrop-filter:blur(10px);
-
-font-family:"Plus Jakarta Sans",sans-serif;
-font-size:12px;
-font-weight:700;
-
-color:#7c3aed;
-}
-
-.payment-badge i{
-font-size:13px;
-color:#8b5cf6;
-}
-
-.payment-card:hover .payment-badge{
-background:rgba(139,92,246,.12);
-border-color:rgba(139,92,246,.28);
-transition:.25s;
-}
-
 .payment-actions{
 margin-top:26px;
 padding-top:22px;
