@@ -390,6 +390,23 @@ gap:2px;
 display:none;
 }
 
+/* =========================
+   PAYMENT SUPPORT
+========================= */
+
+.payment-support{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.payment-support img{
+  height:10px;
+  width:auto;
+  display:block;
+}
 
 /* =========================
    PRICE STYLE
