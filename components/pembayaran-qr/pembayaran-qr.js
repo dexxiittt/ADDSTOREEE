@@ -53,9 +53,16 @@ async function bayarSekarang() {
   const btnBayar = document.querySelector('.btn-midtrans');
   const embedBox = document.getElementById('snap-embed-container');
 
+  // 1. JIKA SNAP SEDANG TERBUKA, KLIK TOMBOL UNTUK MEMBATALKAN/MENUTUP
+  if (embedBox && embedBox.classList.contains('active')) {
+    batalPembayaran(btnBayar, embedBox);
+    return;
+  }
+
+  // 2. STATE AWAL: SPINNER MENGHUBUNGKAN
   if (btnBayar) {
     btnBayar.disabled = true;
-    btnBayar.style.opacity = "0.6";
+    btnBayar.style.opacity = "0.7";
     btnBayar.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menghubungkan...';
   }
 
@@ -86,11 +93,11 @@ async function bayarSekarang() {
     const data = await response.json();
 
     if (data.token) {
-      // 1. Tampilkan box embed & jalankan Smooth Scroll ke posisi box
+      // Tampilkan box embed & Smooth Scroll ke posisi box Snap
       embedBox.classList.add('active');
       embedBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-      // 2. Render Snap langsung DI DALAM CARD (Embedded Mode)
+      // Render Snap ke dalam card
       window.snap.embed(data.token, {
         embedId: 'snap-embed-container',
         onSuccess: function(result) {
@@ -105,13 +112,20 @@ async function bayarSekarang() {
         },
         onError: function(result) {
           showAlert("Pembayaran gagal! Silakan coba beberapa saat lagi.", "Gagal", "warning");
-          resetButton(btnBayar);
+          batalPembayaran(btnBayar, embedBox);
         },
         onClose: function() {
           console.log("User menutup pembayaran.");
-          resetButton(btnBayar);
+          batalPembayaran(btnBayar, embedBox);
         }
       });
+
+      // 3. BERUBAH MENJADI TOMBOL "BATALKAN PEMBAYARAN" (XMARK)
+      btnBayar.disabled = false;
+      btnBayar.style.opacity = "1";
+      btnBayar.classList.add('btn-cancel-mode');
+      btnBayar.innerHTML = '<i class="fa-solid fa-xmark"></i> Batalkan Pembayaran';
+
     } else {
       showAlert("Gagal mendapatkan token pembayaran dari server.", "Error", "warning");
       resetButton(btnBayar);
@@ -123,11 +137,21 @@ async function bayarSekarang() {
   }
 }
 
-// HELPER KEMBALIKAN TOMBOL KETIKA BATAL / ERROR
+// HELPER UNTUK MEMBATALKAN & MENUTUP FORM SNAP
+function batalPembayaran(btn, embedBox) {
+  if (embedBox) {
+    embedBox.classList.remove('active');
+    embedBox.innerHTML = '';
+  }
+  resetButton(btn);
+}
+
+// HELPER KEMBALIKAN TOMBOL KE TAMPILAN AWAL
 function resetButton(btn) {
   if (btn) {
     btn.disabled = false;
     btn.style.opacity = '1';
+    btn.classList.remove('btn-cancel-mode');
     btn.innerHTML = '<i class="fa-solid fa-bolt"></i> Tap untuk Pembayaran';
   }
 }
