@@ -1651,71 +1651,91 @@ color:#22c55e;
 }
 
 @keyframes badgeFloat{
-
-0%,100%{
-transform:translateY(0);
-}
-
-50%{
-transform:translateY(-3px);
-}
-
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-3px);}
 }
 
 @keyframes hourglassPremium{
-
-0%{
-transform:translateY(0) rotate(0deg);
-}
-
-22%{
-transform:translateY(0) rotate(0deg);
-}
-
-30%{
-transform:translateY(-4px) rotate(0deg);
-}
-
-40%{
-transform:translateY(-4px) rotate(180deg);
-}
-
-48%{
-transform:translateY(0) rotate(180deg);
-}
-
-72%{
-transform:translateY(0) rotate(180deg);
-}
-
-80%{
-transform:translateY(-4px) rotate(180deg);
-}
-
-90%{
-transform:translateY(-4px) rotate(360deg);
-}
-
-100%{
-transform:translateY(0) rotate(360deg);
-}
-
+0%{transform:translateY(0) rotate(0deg);}
+22%{transform:translateY(0) rotate(0deg);}
+30%{transform:translateY(-4px) rotate(0deg);}
+40%{transform:translateY(-4px) rotate(180deg);}
+48%{transform:translateY(0) rotate(180deg);}
+72%{transform:translateY(0) rotate(180deg);}
+80%{transform:translateY(-4px) rotate(180deg);}
+90%{transform:translateY(-4px) rotate(360deg);}
+100%{transform:translateY(0) rotate(360deg);}
 }
 
 @keyframes processBounce{
-
-0%{
-transform:scale(1);
+0%{transform:scale(1);}
+35%{ transform:scale(1.08);}
+100%{transform:scale(1);}
 }
 
-35%{
-transform:scale(1.08);
+/* ============================================================
+   PREMIUM EXPIRED THEME - SUPPORT CARD & BUTTON
+   ============================================================ */
+
+/* Icon Red Badge untuk Section Title */
+.icon-red {
+  background: #fee2e2 !important;
+  color: #ef4444 !important;
 }
 
-100%{
-transform:scale(1);
+/* Base Style Support Card saat Status Expired */
+.wa-box.expired {
+  background: linear-gradient(
+    135deg,
+    #fef2f2 0%,
+    #ffffff 100%
+  ) !important;
+  border: 1px solid #fca5a5 !important;
+  box-shadow: 0 12px 30px rgba(239, 68, 68, 0.12) !important;
 }
 
+/* Glow Merah di Pojok Kanan Atas Card */
+.wa-box.expired::before {
+  background: rgba(239, 68, 68, 0.15) !important;
+  filter: blur(60px) !important;
+}
+
+/* Icon Bulat Dalam Support Card (Circle Exclamation) */
+.wa-box.expired .support-icon {
+  background: #ffffff !important;
+  color: #ef4444 !important;
+  box-shadow: 0 8px 18px rgba(239, 68, 68, 0.2) !important;
+}
+
+/* Judul Support Card saat Expired */
+.wa-box.expired .support-title {
+  color: #dc2626 !important;
+}
+
+/* Deskripsi Support Card saat Expired */
+.wa-box.expired .support-description {
+  color: #4b5563 !important;
+}
+
+/* Tombol Generate Ulang Invoice (Versi Merah Premium) */
+.wa-box.expired .wa-btn {
+  background: linear-gradient(
+    135deg,
+    #ef4444 0%,
+    #dc2626 100%
+  ) !important;
+  box-shadow: 0 14px 30px rgba(239, 68, 68, 0.32) !important;
+}
+
+/* Effect Hover pada Tombol Expired */
+.wa-box.expired .wa-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 22px 40px rgba(239, 68, 68, 0.45) !important;
+}
+
+/* Effect Active / Click pada Tombol Expired */
+.wa-box.expired .wa-btn:active {
+  transform: scale(0.98);
 }
 
 /* ============================================================
@@ -1765,7 +1785,7 @@ transform:scale(1);
 }
 
 /* ==========================================
-   🔥 KODE TAMBAHAN UNTUK TEMATIK EXPIRED PERFECT
+   KODE TAMBAHAN UNTUK TEMATIK EXPIRED PERFECT
    ========================================== */
 
 /* 1. Perbaiki warna capsule badge "Invoice Kedaluwarsa" di atas */
