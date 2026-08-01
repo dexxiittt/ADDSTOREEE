@@ -42,11 +42,6 @@ function renderCustomer(customer) {
 }
 
 // ==========================================
-// GLOBAL CACHE TOKEN MIDTRANS
-// ==========================================
-let currentSnapToken = null; // Menyimpan token transaksi sementara
-
-// ==========================================
 // FUNGSI UTAMA MIDTRANS EMBEDDED PEMBAYARAN
 // ==========================================
 async function bayarSekarang() {
@@ -58,26 +53,25 @@ async function bayarSekarang() {
   const btnBayar = document.querySelector('.btn-midtrans');
   const embedBox = document.getElementById('snap-embed-container');
 
-  // 1. JIKA SNAP SEDANG TERBUKA -> KLIK UNTUK BATALKAN
+  // 1. JIKA SNAP SEDANG TERBUKA -> KLIK UNTUK MEMBATALKAN/SEMBUNYIKAN
   if (embedBox && embedBox.classList.contains('active')) {
-    batalPembayaran(btnBayar, embedBox);
+    sembunyikanSnap(btnBayar, embedBox);
     return;
   }
 
-  // 2. STATE LOADING
+  // 2. JIKA IFRAME MIDTRANS SUDAH ADA DI DOM -> LANGSUNG BUKA KEMBALI (INSTAN 0ms)
+  if (embedBox && embedBox.querySelector('iframe')) {
+    tampilkanSnap(btnBayar, embedBox);
+    return;
+  }
+
+  // 3. JIKA BELUM PERNAH DIMUAT -> TAMPILKAN SPINNER LOADING & FETCH TOKEN BARU
   if (btnBayar) {
     btnBayar.disabled = true;
     btnBayar.style.opacity = "0.7";
     btnBayar.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menghubungkan...';
   }
 
-  // 3. JIKA SUDAH PUNYA TOKEN DI CACHE, LANGSUNG GUNAKAN (TANPA RE-FETCH KE VERCEL)
-  if (currentSnapToken) {
-    renderSnapEmbed(currentSnapToken, btnBayar, embedBox, invoiceID);
-    return;
-  }
-
-  // 4. JIKA BELUM ADA TOKEN, MINTA KE SERVER VERCEL
   const packageId = customer.packageId || customer.package_id || customer.paket || "";
   const customerInfo = [
     customer.nama || "",
@@ -105,11 +99,8 @@ async function bayarSekarang() {
     const data = await response.json();
 
     if (data.token) {
-      // Simpan token ke variabel cache
-      currentSnapToken = data.token;
-      
-      // Render Embed Snap
-      renderSnapEmbed(currentSnapToken, btnBayar, embedBox, invoiceID);
+      // Render Snap Embed untuk pertama kali
+      renderSnapEmbed(data.token, btnBayar, embedBox, invoiceID);
     } else {
       showAlert("Gagal mendapatkan token pembayaran dari server.", "Error", "warning");
       resetButton(btnBayar);
@@ -122,51 +113,68 @@ async function bayarSekarang() {
 }
 
 // ==========================================
-// HELPER RENDER SNAP EMBED (REUSABLE)
+// HELPER RENDER SNAP EMBED (PERTAMA KALI)
 // ==========================================
 function renderSnapEmbed(token, btnBayar, embedBox, invoiceID) {
-  embedBox.classList.add('active');
-  embedBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
   window.snap.embed(token, {
     embedId: 'snap-embed-container',
     onSuccess: function(result) {
-      currentSnapToken = null; // Clear cache jika sukses
+      hancurkanSnap(btnBayar, embedBox);
       showAlert("Pembayaran berhasil diterima!", "Berhasil 🎉", "success", function() {
         window.location.href = "status-pembayaran.html?invoice=" + invoiceID;
       });
     },
     onPending: function(result) {
-      currentSnapToken = null; // Clear cache jika pending
+      hancurkanSnap(btnBayar, embedBox);
       showAlert("Menunggu pembayaran... Silakan selesaikan transaksi Anda.", "Pending", "info", function() {
         window.location.href = "status-pembayaran.html?invoice=" + invoiceID;
       });
     },
     onError: function(result) {
-      currentSnapToken = null; // Clear cache jika error
+      hancurkanSnap(btnBayar, embedBox);
       showAlert("Pembayaran gagal! Silakan coba beberapa saat lagi.", "Gagal", "warning");
-      batalPembayaran(btnBayar, embedBox);
     },
     onClose: function() {
       console.log("User menutup pembayaran.");
-      batalPembayaran(btnBayar, embedBox);
+      sembunyikanSnap(btnBayar, embedBox);
     }
   });
 
-  // UBAH TOMBOL MENJADI MODE BATAL
-  btnBayar.disabled = false;
-  btnBayar.style.opacity = "1";
-  btnBayar.classList.add('btn-cancel-mode');
-  btnBayar.innerHTML = '<i class="fa-solid fa-xmark"></i> Batalkan Pembayaran';
+  // Tampilkan Snap setelah selesai di-embed
+  tampilkanSnap(btnBayar, embedBox);
 }
 
 // ==========================================
-// HELPER MEMBATALKAN & RESET
+// HELPER TAMPILKAN, SEMBUNYIKAN & RESET
 // ==========================================
-function batalPembayaran(btn, embedBox) {
+
+// Tampilkan kembali Snap yang sudah dimuat ke layar
+function tampilkanSnap(btn, embedBox) {
+  if (embedBox) {
+    embedBox.classList.add('active');
+    embedBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  if (btn) {
+    btn.disabled = false;
+    btn.style.opacity = "1";
+    btn.classList.add('btn-cancel-mode');
+    btn.innerHTML = '<i class="fa-solid fa-xmark"></i> Batalkan Pembayaran';
+  }
+}
+
+// Sembunyikan Snap (Keep-Alive) tanpa menghapus iframe dari DOM
+function sembunyikanSnap(btn, embedBox) {
   if (embedBox) {
     embedBox.classList.remove('active');
-    embedBox.innerHTML = ''; // Kosongkan iframe Snap
+  }
+  resetButton(btn);
+}
+
+// Hapus total iframe jika transaksi selesai / error
+function hancurkanSnap(btn, embedBox) {
+  if (embedBox) {
+    embedBox.classList.remove('active');
+    embedBox.innerHTML = '';
   }
   resetButton(btn);
 }
