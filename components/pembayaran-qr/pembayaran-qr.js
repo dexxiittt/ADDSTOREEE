@@ -42,7 +42,7 @@ function renderCustomer(customer) {
 }
 
 // ==========================================
-// 2. FUNGSI UTAMA MIDTRANS PEMBAYARAN (FIXED)
+// FUNGSI UTAMA MIDTRANS EMBEDDED PEMBAYARAN
 // ==========================================
 async function bayarSekarang() {
   const invoiceID = getInvoice();
@@ -50,27 +50,15 @@ async function bayarSekarang() {
 
   if (!customer) return;
 
-  // 1. AMBIL ELEMEN TOMBOL DAHULU (PENTING!)
   const btnBayar = document.querySelector('.btn-midtrans');
+  const embedBox = document.getElementById('snap-embed-container');
 
-  // 2. LAKUKAN SMOOTH SCROLL DAN PERUBAHAN STATUS TOMBOL
   if (btnBayar) {
     btnBayar.disabled = true;
     btnBayar.style.opacity = "0.6";
     btnBayar.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menghubungkan...';
-
-    // Smooth scroll ke tombol
-    const y = btnBayar.getBoundingClientRect().top + window.pageYOffset - 120;
-    window.scrollTo({
-      top: y,
-      behavior: "smooth"
-    });
   }
 
-  // Beri jeda sebentar agar animasi scroll selesai
-  await new Promise(resolve => setTimeout(resolve, 400));
-
-  // 3. AMBIL PACKAGE ID & SUSUN INFORMASI PELANGGAN
   const packageId = customer.packageId || customer.package_id || customer.paket || "";
   const customerInfo = [
     customer.nama || "",
@@ -84,7 +72,6 @@ async function bayarSekarang() {
   try {
     const uniqueOrderId = `${invoiceID}-${Date.now().toString().slice(-4)}`;
 
-    // 4. KIRIM REQUEST LENGKAP KE BACKEND VERCEL
     const response = await fetch('https://midtrans-backend-xi.vercel.app/api', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -99,7 +86,13 @@ async function bayarSekarang() {
     const data = await response.json();
 
     if (data.token) {
-      window.snap.pay(data.token, {
+      // 1. Tampilkan box embed & jalankan Smooth Scroll ke posisi box
+      embedBox.classList.add('active');
+      embedBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      // 2. Render Snap langsung DI DALAM CARD (Embedded Mode)
+      window.snap.embed(data.token, {
+        embedId: 'snap-embed-container',
         onSuccess: function(result) {
           showAlert("Pembayaran berhasil diterima!", "Berhasil 🎉", "success", function() {
             window.location.href = "status-pembayaran.html?invoice=" + invoiceID;
@@ -115,7 +108,7 @@ async function bayarSekarang() {
           resetButton(btnBayar);
         },
         onClose: function() {
-          console.log("User menutup halaman pembayaran.");
+          console.log("User menutup pembayaran.");
           resetButton(btnBayar);
         }
       });
