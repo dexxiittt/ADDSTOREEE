@@ -701,15 +701,15 @@ transition:.25s;
 content:"";
 position:absolute;
 
-top:-70px;
-right:-70px;
+top:18px;
+right:18px;
 
-width:180px;
-height:180px;
+width:140px;
+height:140px;
 
 border-radius:50%;
 
-background:radial-gradient( circle, rgba(139,92,246,.22), transparent 72% );
+background: radial-gradient( circle, rgba(139,92,246,.18), transparent 72% );
 pointer-events:none;
 z-index:0;
 }
@@ -718,15 +718,15 @@ z-index:0;
 content:"";
 position:absolute;
 
-left:-80px;
-bottom:-80px;
+left:20px;
+bottom:20px;
 
-width:200px;
-height:200px;
+width:160px;
+height:160px;
 
 border-radius:50%;
 
-background:radial-gradient( circle, rgba(99,102,241,.10), transparent 74%);
+background: radial-gradient( circle, rgba(99,102,241,.08), transparent 74% );
 pointer-events:none;
 z-index:0;
 }
