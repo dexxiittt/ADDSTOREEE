@@ -97,3 +97,12 @@ Mohon dicek ya 🙏`;
 
   openWhatsApp(pesan);
 }
+
+/* ============================================================
+   FUNGSI 3: CHAT GENERAL / FOOTER
+   ============================================================ */
+function chatAdminGeneral() {
+  const message = "Halo admin, saya ingin melihat semua produk aplikasi premium";
+  openWhatsApp(message);
+}
+
