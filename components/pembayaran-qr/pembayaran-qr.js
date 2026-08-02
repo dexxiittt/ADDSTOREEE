@@ -83,19 +83,19 @@ async function bayarSekarang() {
   const amount = parseInt(amountStr, 10) || 1000;
 
       try {
-      const uniqueOrderId = `${invoiceID}-${Date.now().toString().slice(-4)}`;
+  const uniqueOrderId = `${invoiceID}-${Date.now().toString().slice(-4)}`;
 
-      // URL Backend Vercel Baru (ditambahkan /api di akhir)
-      const response = await fetch('https://midtrans-backend-5im206op0-dexxiittts-projects.vercel.app/api', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          orderId: uniqueOrderId,
-          amount: amount,
-          packageId: packageId,
-          customerInfo: customerInfo
-        })
-      });
+  // Menggunakan URL Vercel
+  const response = await fetch('https://midtrans-backend-eb2mogd3s-dexxiittts-projects.vercel.app/api', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      orderId: uniqueOrderId,
+      amount: amount,
+      packageId: packageId,
+      customerInfo: customerInfo
+    })
+  });
 
       const data = await response.json();
 
