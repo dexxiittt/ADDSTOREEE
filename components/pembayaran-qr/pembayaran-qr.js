@@ -86,7 +86,7 @@ async function bayarSekarang() {
       const uniqueOrderId = `${invoiceID}-${Date.now().toString().slice(-4)}`;
 
       // ✅ Pakai Domain Production Utama Vercel (Tanpa Kode Acak)
-      const response = await fetch('https://midtrans-backend-dexxiittts-projects.vercel.app/api', {
+      const response = await fetch('https://midtrans-backend-xi.vercel.app/api', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
