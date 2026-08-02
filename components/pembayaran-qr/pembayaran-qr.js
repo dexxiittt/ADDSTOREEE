@@ -253,7 +253,7 @@ function redirectStatus(invoice) {
 // 4. NAVIGATION
 // ==========================================
 function kembaliProduk() {
-  window.location.href = "preview-index.html";
+  window.location.href = "home-page.html";
 }
 
 // ==========================================
