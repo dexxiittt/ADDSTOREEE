@@ -82,20 +82,20 @@ async function bayarSekarang() {
   const amountStr = String(customer.total || "").replace(/[^0-9]/g, '');
   const amount = parseInt(amountStr, 10) || 1000;
 
-      try {
-  const uniqueOrderId = `${invoiceID}-${Date.now().toString().slice(-4)}`;
+            try {
+      const uniqueOrderId = `${invoiceID}-${Date.now().toString().slice(-4)}`;
 
-  // Menggunakan URL Vercel
-  const response = await fetch('https://midtrans-backend-eb2mogd3s-dexxiittts-projects.vercel.app/api', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      orderId: uniqueOrderId,
-      amount: amount,
-      packageId: packageId,
-      customerInfo: customerInfo
-    })
-  });
+      // ✅ Pakai Domain Production Utama Vercel (Tanpa Kode Acak)
+      const response = await fetch('https://midtrans-backend-dexxiittts-projects.vercel.app/api', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          orderId: uniqueOrderId,
+          amount: amount,
+          packageId: packageId,
+          customerInfo: customerInfo
+        })
+      });
 
       const data = await response.json();
 
