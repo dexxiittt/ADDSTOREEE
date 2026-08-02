@@ -82,21 +82,22 @@ async function bayarSekarang() {
   const amountStr = String(customer.total || "").replace(/[^0-9]/g, '');
   const amount = parseInt(amountStr, 10) || 1000;
 
-  try {
-    const uniqueOrderId = `${invoiceID}-${Date.now().toString().slice(-4)}`;
+      try {
+      const uniqueOrderId = `${invoiceID}-${Date.now().toString().slice(-4)}`;
 
-    const response = await fetch('https://midtrans-backend-xi.vercel.app/api', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        orderId: uniqueOrderId,
-        amount: amount,
-        packageId: packageId,
-        customerInfo: customerInfo
-      })
-    });
+      // URL Backend Vercel Baru (ditambahkan /api di akhir)
+      const response = await fetch('https://midtrans-backend-5im206op0-dexxiittts-projects.vercel.app/api', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          orderId: uniqueOrderId,
+          amount: amount,
+          packageId: packageId,
+          customerInfo: customerInfo
+        })
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
     if (data.token) {
       // Render Snap Embed untuk pertama kali
