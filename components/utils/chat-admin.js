@@ -106,3 +106,7 @@ function chatAdminGeneral() {
   openWhatsApp(message);
 }
 
+/* Tambahkan di baris paling bawah components/utils/chat-admin.js */
+window.chatAdminGeneral = chatAdminGeneral;
+window.chatAdmin = chatAdmin;
+window.chatAdminTransaksi = chatAdminTransaksi;
