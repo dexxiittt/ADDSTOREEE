@@ -4,14 +4,24 @@
 const ADMIN_NUMBER = "6285881500868";
 
 /**
- * Fungsi pembantu untuk membuka WhatsApp di tab baru
+ * Fungsi pembantu untuk membuka WhatsApp
+ * - Buka aplikasi WhatsApp langsung jika di HP
+ * - Buka WhatsApp Web di tab baru jika di PC / Laptop
  * @param {string} message - Teks pesan yang akan dikirim
  */
 function openWhatsApp(message) {
-  window.open(
-    `https://wa.me/${ADMIN_NUMBER}?text=${encodeURIComponent(message)}`,
-    "_blank"
-  );
+  const encodedMessage = encodeURIComponent(message);
+  
+  // Deteksi apakah user membuka dari HP (Mobile)
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+  if (isMobile) {
+    // Gunakan protokol whatsapp:// agar HP langsung membuka APLIKASI WhatsApp
+    window.location.href = `whatsapp://send?phone=${ADMIN_NUMBER}&text=${encodedMessage}`;
+  } else {
+    // Jika di Laptop/Desktop, buka WhatsApp Web di tab baru
+    window.open(`https://wa.me/${ADMIN_NUMBER}?text=${encodedMessage}`, "_blank");
+  }
 }
 
 /* ============================================================
@@ -68,14 +78,14 @@ function chatAdmin() {
   const localData = JSON.parse(localStorage.getItem("paymentData")) || {};
   const packageId = window.rawPackageId || localData.packageId || localData.package_id || "-";
 
-  // Ambil data dari DOM
+  // Ambil data dari DOM (dengan proteksi null safe)
   const invoice = window.rawInvoice || (document.getElementById("invoice") ? document.getElementById("invoice").innerText.replace("INV", "") : "");
-  const nama = document.getElementById("nama").innerText;
-  const wa = document.getElementById("wa").innerText;
-  const email = document.getElementById("email").innerText;
-  const paket = document.getElementById("paket").innerText;
-  const detail = document.getElementById("paketDetail").innerText;
-  const total = document.getElementById("total").innerText;
+  const nama = document.getElementById("nama") ? document.getElementById("nama").innerText : "";
+  const wa = document.getElementById("wa") ? document.getElementById("wa").innerText : "";
+  const email = document.getElementById("email") ? document.getElementById("email").innerText : "";
+  const paket = document.getElementById("paket") ? document.getElementById("paket").innerText : "";
+  const detail = document.getElementById("paketDetail") ? document.getElementById("paketDetail").innerText : "";
+  const total = document.getElementById("total") ? document.getElementById("total").innerText : "";
 
   // Format Pesan Pembayaran
   const pesan = `Halo Admin, saya sudah melakukan pembayaran.
@@ -106,7 +116,9 @@ function chatAdminGeneral() {
   openWhatsApp(message);
 }
 
-/* Tambahkan di baris paling bawah components/utils/chat-admin.js */
+/* ============================================================
+   EXPORT GLOBAL (Agar bisa dipanggil dari HTML / Footer)
+   ============================================================ */
 window.chatAdminGeneral = chatAdminGeneral;
 window.chatAdmin = chatAdmin;
 window.chatAdminTransaksi = chatAdminTransaksi;
