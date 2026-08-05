@@ -318,33 +318,42 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
   })
   .catch(err => { console.error("Sheet error:", err); });
 
-/* ===== EVENT LISTENERS ===== */
+/* ===== EVENT LISTENERS (CLICK CARD / TOGGLE) ===== */
 document.addEventListener("click", function(e) {
-  const btn = e.target.closest(".toggle-detail");
-  if (!btn) return;
+  // 1. Jika yang diklik adalah link paket langsung (<a>), biarkan membuka halaman paket
+  if (e.target.closest("a")) return;
 
-  // Gagalkan event bawaan jika card dalam keadaan disabled
-  const card = btn.closest(".glass-card");
-  if (card.classList.contains("card-disabled")) return;
+  // 2. Ambil card terdekat
+  const card = e.target.closest(".glass-card");
+  if (!card || card.classList.contains("card-disabled")) return;
 
   const detail = card.querySelector(".package-detail");
+  const btn = card.querySelector(".toggle-detail");
   if (!detail) return;
 
   const isOpen = detail.classList.contains("open");
-  document.querySelectorAll(".package-detail.open").forEach(d => { d.classList.remove("open"); });
-  document.querySelectorAll(".toggle-detail").forEach(b => { b.textContent = "Selengkapnya..."; });
 
-  if (!isOpen) {
+  // 3. Tutup SEMUA card lain yang sedang terbuka (Efek Accordion)
+  document.querySelectorAll(".glass-card").forEach(c => {
+    if (c !== card) {
+      c.classList.remove("is-expanded");
+      const d = c.querySelector(".package-detail");
+      const b = c.querySelector(".toggle-detail");
+      if (d) d.classList.remove("open");
+      if (b) b.textContent = "Selengkapnya...";
+    }
+  });
+
+  // 4. Buka / Tutup Card yang diklik
+  if (isOpen) {
+    detail.classList.remove("open");
+    card.classList.remove("is-expanded");
+    if (btn) btn.textContent = "Selengkapnya...";
+  } else {
     detail.classList.add("open");
-    card.scrollIntoView({ behavior: "smooth", block: "center" });
-    btn.textContent = "Tutup";
+    card.classList.add("is-expanded");
+    if (btn) btn.textContent = "Tutup";
+    card.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 });
 
-document.documentElement.style.scrollBehavior = "smooth";
-let scrollTimeout;
-window.addEventListener("scroll", () => {
-  document.body.classList.add("is-scrolling");
-  clearTimeout(scrollTimeout);
-  scrollTimeout = setTimeout(() => { document.body.classList.remove("is-scrolling"); }, 120);
-});
