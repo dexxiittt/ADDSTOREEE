@@ -814,7 +814,7 @@
 }
 
 /* ====================================================================
-   EFEK FADE & ACCORDION CARD EXPAND
+   EFEK FADE & ACCORDION CARD EXPAND (UPGRADED SMOOTH & PREVIEW)
    ==================================================================== */
 
 /* Kursor interaktif pada card */
@@ -837,23 +837,47 @@
   position: relative;
 }
 
-/* Efek Fade / Memudar di bagian bawah paket pertama */
+/* Container Detail Paket (Dalam keadaan tertutup, mengintip paket ke-2) */
+.package-detail {
+  display: block; /* Mengabaikan grid-template-rows bawaan agar max-height berfungsi */
+  max-height: 34px; /* Memberi ruang agar bagian atas paket ke-2 mengintip */
+  overflow: hidden;
+  opacity: 0.8;
+  transition: max-height 0.45s cubic-bezier(.22, 1, .36, 1), opacity 0.35s ease;
+}
+
+/* Saat Card Dibuka / Memanjang */
+.package-detail.open {
+  max-height: 1500px; /* Cukup tinggi untuk menampilkan seluruh isi paket */
+  opacity: 1;
+}
+
+/* Efek Fade / Memudar Gradasi Halus & Smooth (Lebih Tinggi & Multi-Stop) */
 .card-fade-overlay {
   position: absolute;
   bottom: 0;
-  left: 0;
-  right: 0;
-  height: 28px;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.95) 100%);
+  left: -2px;
+  right: -2px;
+  height: 65px; /* Diperpanjang dari 28px agar efek memudar lebih landai dan smooth */
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.25) 25%,
+    rgba(255, 255, 255, 0.65) 60%,
+    rgba(255, 255, 255, 0.92) 88%,
+    rgba(255, 255, 255, 1) 100%
+  );
   pointer-events: none;
   z-index: 2;
-  transition: opacity 0.35s ease;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
   opacity: 1;
+  visibility: visible;
 }
 
 /* Hilangkan efek fade ketika card memanjang / terbuka */
 .glass-card.is-expanded .card-fade-overlay {
   opacity: 0;
+  visibility: hidden;
 }
 
 /* ====================================================================
