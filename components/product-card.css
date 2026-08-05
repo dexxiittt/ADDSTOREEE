@@ -1072,3 +1072,29 @@ body.is-scrolling * { animation-play-state: paused !important; }
   /* Layout Grid: 2 Kolom */
   #product-cards, #preview-card-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ====================================================================
+   HILANGKAN HIGHLIGHT / AREA KLIK BIRU PADA CARD
+   ==================================================================== */
+
+.glass-card,
+.glass-card *,
+.toggle-detail,
+.package-row {
+  /* Hilangkan efek kotak transparan biru bawaan browser HP saat di-tap */
+  -webkit-tap-highlight-color: transparent;
+  
+  /* Hilangkan garis outline fokus bawaan */
+  outline: none;
+}
+
+/* Memastikan saat tombol/link aktif tidak memicu warna biru */
+.glass-card:focus,
+.glass-card:active,
+.package-row:focus,
+.package-row:active,
+.toggle-detail:focus,
+.toggle-detail:active {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
