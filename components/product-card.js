@@ -173,7 +173,7 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
 
           <h3>${prod.title}</h3>
 
-          ${(() => {
+            ${(() => {
             const sortedItems = [...prod.items];
             
             const mainItems = sortedItems
@@ -184,17 +184,34 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
               .filter(i => i.group === "detail")
               .sort((a, b) => (Number(a.product_order) || 999) - (Number(b.product_order) || 999));
 
-            return `
-              ${mainItems.map(i => {
-                let cls = "package-row";
-                const price = Number(String(i.price).replace(/[^\d]/g, "")) || 0;
-                const discount = parseDiscount(i.promo_text);
-                let priceHTML = `<b>${formatPrice(price)}</b>`;
+            // Ambil hanya 1 paket pertama untuk ditampilkan awal
+            const firstMainItem = mainItems[0] || detailItems[0];
+            const hiddenMainItems = mainItems.slice(1);
+            const hiddenDetailItems = mainItems[0] ? detailItems : detailItems.slice(1);
+            const hasMore = hiddenMainItems.length > 0 || hiddenDetailItems.length > 0;
 
-                if (discount !== null) {
-                  const sheetFinalPrice = Number(String(i.final_price).replace(/[^\d]/g, "")) || 0;
-                  const finalPrice = sheetFinalPrice > 0 ? sheetFinalPrice : Math.round(price - (price * discount / 100));
+            // Helper function untuk render baris paket
+            const renderPackageRow = (i, isDetailRow = false) => {
+              let cls = isDetailRow ? "package-row role" : "package-row";
+              const price = Number(String(i.price).replace(/[^\d]/g, "")) || 0;
+              const discount = parseDiscount(i.promo_text);
+              let priceHTML = `<b>${formatPrice(price)}</b>`;
 
+              if (discount !== null) {
+                const sheetFinalPrice = Number(String(i.final_price).replace(/[^\d]/g, "")) || 0;
+                const finalPrice = sheetFinalPrice > 0 ? sheetFinalPrice : Math.round(price - (price * discount / 100));
+
+                if (isDetailRow) {
+                  priceHTML = `
+                    <div class="price-line promo-left">
+                      <span class="discount-badge">${discount}%</span>
+                      <div class="price-wrap">
+                        <span class="price-old">${formatPrice(price)}</span>
+                        <span class="price-new">${formatPrice(finalPrice)}</span>
+                      </div>
+                    </div>
+                  `;
+                } else {
                   priceHTML = `
                     <span class="discount-badge">${discount}%</span>
                     <div class="price-wrap">
@@ -203,118 +220,70 @@ fetch("https://opensheet.elk.sh/1JtmaN7ASwvnQzoOKPqVA3Uy85fcNfcLTArYOyQZRV08/PRO
                     </div>
                   `;
                 }
+              }
 
-                if (i.is_featured) {
-                  const [color, glow] = i.is_featured.split(":");
-                  cls += ` featured featured-${color}`;
-                  if (glow) cls += ` glow-${glow}`;
+              if (i.is_featured && (!isDetailRow || !isNoGar(i))) {
+                const [color, glow] = i.is_featured.split(":");
+                cls += ` featured featured-${color}`;
+                if (glow) cls += ` glow-${glow}`;
+              }
+
+              if (isNoGar(i)) cls += " nogar";
+
+              let badgeStatusHTML = "";
+              if (i.badge_status) {
+                const statusKey = String(i.badge_status).toLowerCase().trim();
+                if (statusKey === "soldout" || statusKey === "sold out") {
+                  cls += " soldout";
+                  badgeStatusHTML = `<span class="badge-tape tape-blue">Sold Out</span>`;
+                } else if (statusKey === "expired") {
+                  cls += " expired";
+                  badgeStatusHTML = `<span class="badge-tape tape-red">Expired</span>`;
                 }
+              }
 
-                if (isNoGar(i)) {
-                  cls += " nogar";
-                }
-
-                let badgeStatusHTML = "";
-                if (i.badge_status) {
-                  const statusKey = String(i.badge_status).toLowerCase().trim();
-                  if (statusKey === "soldout" || statusKey === "sold out") {
-                    cls += " soldout";
-                    badgeStatusHTML = `<span class="badge-tape tape-blue">Sold Out</span>`;
-                  } else if (statusKey === "expired") {
-                    cls += " expired";
-                    badgeStatusHTML = `<span class="badge-tape tape-red">Expired</span>`;
-                  }
-                }
-
-                return `
-                  <a href="package.html?package_id=${i.package_id}" class="${cls}">
-                    ${badgeStatusHTML}
-                    <span>
-                      ${i.package} ${i.duration}
-                      ${i.badge_label 
-                        ? `<em class="role-badge">
-                             ${i.badge_icon ?? ""} ${i.badge_label}
-                             ${garBadge(i)}
-                           </em>`
-                        : garBadge(i)
-                      }
-                    </span>
-                    <div class="price-line promo-left">
-                      ${priceHTML}
-                    </div>
-                  </a>
-                `;
-              }).join("")}
-
-              ${detailItems.length ? `<button class="toggle-detail">Selengkapnya...</button>` : ``}
-
-              <div class="package-detail">
-                <div class="role-section">
-                  <div class="role-title">Role Access</div>
-
-                  ${detailItems.map(i => {
-                    let cls = "package-row role";
-
-                    if (i.is_featured && !isNoGar(i)) {
-                      const [color, glow] = i.is_featured.split(":");
-                      cls += ` featured featured-${color}`;
-                      if (glow) cls += ` glow-${glow}`;
+              return `
+                <a href="package.html?package_id=${i.package_id}" class="${cls}">
+                  ${badgeStatusHTML}
+                  <span>
+                    ${i.package} ${i.duration}
+                    ${i.badge_label 
+                      ? `<em class="role-badge">
+                           ${i.badge_icon ?? ""} ${i.badge_label}
+                           ${garBadge(i)}
+                         </em>`
+                      : garBadge(i)
                     }
+                  </span>
+                  ${isDetailRow ? priceHTML : `<div class="price-line promo-left">${priceHTML}</div>`}
+                </a>
+              `;
+            };
 
-                    if (isNoGar(i)) {
-                      cls += " nogar";
-                    }
+            return `
+              <div class="package-wrapper">
+                <!-- Paket Pertama (Selalu Keluar) -->
+                ${firstMainItem ? renderPackageRow(firstMainItem, false) : ''}
+                
+                <!-- Efek Fade Memudar ke Bawah -->
+                ${hasMore ? `<div class="card-fade-overlay"></div>` : ''}
 
-                    let badgeStatusHTML = "";
-                    if (i.badge_status) {
-                      const statusKey = String(i.badge_status).toLowerCase().trim();
-                      if (statusKey === "soldout" || statusKey === "sold out") {
-                        cls += " soldout";
-                        badgeStatusHTML = `<span class="badge-tape tape-blue">Sold Out</span>`;
-                      } else if (statusKey === "expired") {
-                        cls += " expired";
-                        badgeStatusHTML = `<span class="badge-tape tape-red">Expired</span>`;
-                      }
-                    }
+                <!-- Paket Sisa yang Tersembunyi -->
+                <div class="package-detail">
+                  <div>
+                    ${hiddenMainItems.map(i => renderPackageRow(i, false)).join("")}
 
-                    const price = Number(String(i.price).replace(/[^\d]/g, "")) || 0;
-                    const discount = parseDiscount(i.promo_text);
-                    let priceHTML = `<b>${formatPrice(price)}</b>`;
-
-                    if (discount !== null) {
-                      const sheetFinalPrice = Number(String(i.final_price).replace(/[^\d]/g, "")) || 0;
-                      const finalPrice = sheetFinalPrice > 0 ? sheetFinalPrice : Math.round(price - (price * discount / 100));
-
-                      priceHTML = `
-                        <div class="price-line promo-left">
-                          <span class="discount-badge">${discount}%</span>
-                          <div class="price-wrap">
-                            <span class="price-old">${formatPrice(price)}</span>
-                            <span class="price-new">${formatPrice(finalPrice)}</span>
-                          </div>
-                        </div>
-                      `;
-                    }
-
-                    return `
-                      <a href="package.html?package_id=${i.package_id}" class="${cls}" onclick="event.stopPropagation();">
-                        ${badgeStatusHTML}
-                        <span>
-                          ${i.package} ${i.duration}
-                          ${i.badge_label 
-                            ? `<em class="role-badge">
-                                 ${i.badge_icon ?? ""} ${i.badge_label}
-                                 ${garBadge(i)}
-                               </em>`
-                            : garBadge(i)
-                          }
-                        </span>
-                        ${priceHTML}
-                      </a>
-                    `;
-                  }).join("")}
+                    ${hiddenDetailItems.length ? `
+                      <div class="role-section">
+                        <div class="role-title">Role Access</div>
+                        ${hiddenDetailItems.map(i => renderPackageRow(i, true)).join("")}
+                      </div>
+                    ` : ``}
+                  </div>
                 </div>
               </div>
+
+              ${hasMore ? `<button class="toggle-detail">Selengkapnya...</button>` : ``}
             `;
           })()}
 
