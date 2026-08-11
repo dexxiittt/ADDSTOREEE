@@ -601,14 +601,14 @@ if (notFoundButton) {
 }
 
 // =============================
-// EVENT LISTENER INFORMASI PENTING (INTEGRASI CSS ANIMASI)
+// EVENT LISTENER INFORMASI PENTING (PERBAIKAN)
 // =============================
 if (infoMore) {
   infoMore.addEventListener("click", (e) => {
     e.preventDefault();
     infoCard.classList.add("active");
     if (infoIcon) infoIcon.classList.add("active");
-    if (infoContent) infoContent.classList.open("open");
+    if (infoContent) infoContent.classList.add("open"); // <-- Diubah ke .add()
     if (infoClose) infoClose.style.display = "block";
     infoMore.style.display = "none";
   });
